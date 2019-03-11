@@ -60,12 +60,6 @@ int main(int argc, char const *argv[]) {
     parser->setModel(brain->getModel());
     parser->writeFile("./res/output.xml");
 
-    free(brain);
-
-    parser->readFile("./res/output.xml");
-    brain = new SimpleBrain(parser->getModel());
-    brain->describe();
-
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
         startTime = getTime();
