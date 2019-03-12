@@ -8,7 +8,7 @@ void Model::describe() {
         } else if (this->neurons[i].type == Model::typeInput) {
             setPrintColor(ANSI_COLOR_CYAN);
         }
-        printf("Neuron %d: type %d\t\t\tvalue %.5f\tenabled %d\terror: %f\n", i, this->neurons[i].type, this->neurons[i].value, this->neurons[i].enabled, this->neurons[i].error);
+        printf("Neuron %d: type %d\t\t\tvalue %.5f\tenabled %d\n", i, this->neurons[i].type, this->neurons[i].value, this->neurons[i].enabled);
         if (this->neurons[i].type == Model::typeOutput || this->neurons[i].type == Model::typeInput) {
             setPrintColor(ANSI_COLOR_RESET);
         }

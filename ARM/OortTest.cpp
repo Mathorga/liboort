@@ -6,7 +6,7 @@
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
     uint16_t outputNum = 1;
-    char *modelFileName = (char *) "./res/modelTest.xml";
+    char *modelFileName = NULL;
     double *expectedOutput;
 
     double startTime = 0;
@@ -16,49 +16,38 @@ int main(int argc, char const *argv[]) {
     double *output;
 
     // Input check.
-    if (argc > 3) {
-        printf("Usage: %s [inputNum] [outputNum]\n", argv[0]);
+    if (argc > 2) {
+        printf("Usage: %s [modelFile]\n", argv[0]);
         return -1;
     }
     if (argc > 1) {
-        inputNum = atoi(argv[1]);
-    }
-    if (argc > 2) {
-        outputNum = atoi(argv[2]);
+        modelFileName = (char *) argv[1];
     }
 
-    SimpleBrain *brain = new SimpleBrain(inputNum, outputNum);
+    // Get Model from file and create Brain from it.
     ModelParser *parser = new ModelParser();
-
     parser->readFile(modelFileName);
-    printf("\nParsed File\n");
+    SimpleBrain *brain = new SimpleBrain(parser->getModel());
 
     brain->describe();
     brain->run();
 
-    brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    brain->run();
-    // brain->describe();
-
-    brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    brain->run();
-    // brain->describe();
-
-    brain->addSynapse(3, brain->getNeuronsNum() - 1);
-    brain->run();
-    // brain->describe();
+    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    // brain->run();
+    //
+    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    // brain->run();
+    //
+    // brain->addSynapse(3, brain->getNeuronsNum() - 1);
+    // brain->run();
 
     expectedOutput = (double *) malloc(outputNum * sizeof(double));
     expectedOutput[0] = 0.5;
     brain->setExpectedOutput(expectedOutput);
     printf("\n\n%f\n\n", expectedOutput[0]);
 
-    free(brain);
-
-    brain = new SimpleBrain(parser->getModel());
-    brain->describe();
-    parser->setModel(brain->getModel());
-    parser->writeFile("./res/output.xml");
+    // parser->setModel(brain->getModel());
+    // parser->writeFile("./res/output.xml");
 
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
