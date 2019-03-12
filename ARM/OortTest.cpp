@@ -24,7 +24,7 @@ int main(int argc, char const *argv[]) {
         modelFileName = (char *) argv[1];
     }
 
-    // Get Model from file and create Brain from it.
+    // Get Model from file and create a Brain from it.
     ModelParser *parser = new ModelParser();
     parser->readFile(modelFileName);
     SimpleBrain *brain = new SimpleBrain(parser->getModel());

@@ -20,7 +20,7 @@ exe: $(OORT) $(OORT_TEST)
 $(OORT): Oort.o SimpleBrain.o Model.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $^ -o $@ -lm $(CCOMP_LIBS)
 
-$(OORT_TEST): OortTest.o SimpleBrain.o ModelParser.o Model.o utils.o
+$(OORT_TEST): OortTest.o SimpleBrain.o ModelParser.o Model.o Knowledge.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $^ -o $@ -lm $(CCOMP_LIBS)
 
 clean:
