@@ -26,6 +26,24 @@ void Model::describe() {
     return;
 }
 
+void Model::randomizeInputValues() {
+    // Generate random seed.
+    srand(time(NULL));
+
+    for (uint16_t i = 0; i < this->inputNum; i++) {
+        this->neurons[i].value = dRandBetween(0, 1);
+    }
+}
+
+void Model::randomizeSynapsesWeights() {
+    // Generate random seed.
+    srand(time(NULL));
+
+    for (uint16_t i = 0; i < this->synapsesNum; i++) {
+        this->synapses[i].weight = dRandBetween(-1, 1);
+    }
+}
+
 uint16_t Model::getInputNum() {
     return this->inputNum;
 }

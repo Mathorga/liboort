@@ -61,6 +61,10 @@ SimpleBrain::SimpleBrain(Model *inputModel) {
 
     //TODO Take the learning rate as an input.
     this->learningRate = 0.2;
+
+    //TODO Remove.
+    this->model->randomizeInputValues();
+    this->model->randomizeSynapsesWeights();
 }
 
 void SimpleBrain::run() {

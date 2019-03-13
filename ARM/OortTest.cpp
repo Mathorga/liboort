@@ -49,10 +49,8 @@ int main(int argc, char const *argv[]) {
     brain->setExpectedOutput(expectedOutput);
     printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
 
-    // parser->setModel(brain->getModel());
-    // parser->writeFile("./res/output.xml");
-
     // Main loop of the program.
+    double op;
     for (uint16_t i = 0;; i ++) {
         startTime = getTime();
         brain->run();
@@ -61,7 +59,12 @@ int main(int argc, char const *argv[]) {
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(100000);
-        printf("Time: %f s\n", execTime);
+        // printf("Time: %f s\n", execTime);
+        // printf("\nnow: %f\tbefore: %f\n", std::abs(0.5f - brain->getOutput()[0]), std::abs(0.5f - op));
+        if (std::abs(0.5f - brain->getOutput()[0]) > std::abs(0.5f - op)) {
+            brain->describe();
+        }
+        op = brain->getOutput()[0];
         printf("Output: %f\n", brain->getOutput()[0]);
     }
 

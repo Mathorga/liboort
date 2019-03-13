@@ -45,6 +45,8 @@ public:
     } _Synapse;
 
     void describe();
+    void randomizeInputValues();
+    void randomizeSynapsesWeights();
 
     uint16_t getInputNum();
     uint16_t getOutputNum();
