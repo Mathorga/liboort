@@ -32,19 +32,22 @@ int main(int argc, char const *argv[]) {
     brain->describe();
     brain->run();
 
-    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    // brain->run();
-    //
-    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    // brain->run();
-    //
-    // brain->addSynapse(3, brain->getNeuronsNum() - 1);
-    // brain->run();
+    brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    brain->run();
+    brain->describe();
+
+    brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    brain->run();
+    brain->describe();
+
+    brain->addSynapse(3, brain->getNeuronsNum() - 1);
+    brain->run();
+    brain->describe();
 
     expectedOutput = (double *) malloc(outputNum * sizeof(double));
     expectedOutput[0] = 0.5;
     brain->setExpectedOutput(expectedOutput);
-    printf("\n\n%f\n\n", expectedOutput[0]);
+    printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
 
     // parser->setModel(brain->getModel());
     // parser->writeFile("./res/output.xml");
@@ -57,9 +60,9 @@ int main(int argc, char const *argv[]) {
         // brain->run();
         endTime = getTime();
         execTime = endTime - startTime;
-        // usleep(10000);
-        // printf("Time: %f s\n", execTime);
-        // printf("Output: %f\n", brain->getOutput()[0]);
+        usleep(100000);
+        printf("Time: %f s\n", execTime);
+        printf("Output: %f\n", brain->getOutput()[0]);
     }
 
     return 0;

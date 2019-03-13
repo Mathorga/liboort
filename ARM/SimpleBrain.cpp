@@ -58,6 +58,9 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
 
 SimpleBrain::SimpleBrain(Model *inputModel) {
     this->model = inputModel;
+
+    //TODO Take the learning rate as an input.
+    this->learningRate = 0.2;
 }
 
 void SimpleBrain::run() {

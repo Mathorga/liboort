@@ -51,8 +51,8 @@ public:
     uint16_t getHiddenNum();
     uint16_t getNeuronsNum();
     uint16_t getSynapsesNum();
-    _Neuron *getNeurons();
-    _Synapse *getSynapses();
+    _Neuron* getNeurons();
+    _Synapse* getSynapses();
 
     void setInputNum(uint16_t num);
     void setOutputNum(uint16_t num);
@@ -80,8 +80,8 @@ private:
     // of two arrays, one for neurons and one for synapses. The need for information
     // on edges lead to discard the adjacency-list and the adjacency matrix
     // representation of graphs.
-    _Neuron *neurons;
-    _Synapse *synapses;
+    _Neuron* neurons;
+    _Synapse* synapses;
 };
 
 #endif
