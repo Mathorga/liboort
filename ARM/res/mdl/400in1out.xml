@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network>
+	<neurons num="401" inputs="400" outputs="1">
+		<neuron num="0" type="0" enabled="1"/>
+		<neuron num="1" type="0" enabled="1"/>
+		<neuron num="2" type="0" enabled="1"/>
+		<neuron num="3" type="0" enabled="1"/>
+		<neuron num="4" type="0" enabled="1"/>
+		<neuron num="5" type="0" enabled="1"/>
+		<neuron num="6" type="0" enabled="1"/>
+		<neuron num="7" type="0" enabled="1"/>
+		<neuron num="8" type="0" enabled="1"/>
+		<neuron num="9" type="0" enabled="1"/>
+		<neuron num="10" type="0" enabled="1"/>
+		<neuron num="11" type="0" enabled="1"/>
+		<neuron num="12" type="0" enabled="1"/>
+		<neuron num="13" type="0" enabled="1"/>
+		<neuron num="14" type="0" enabled="1"/>
+		<neuron num="15" type="0" enabled="1"/>
+		<neuron num="16" type="0" enabled="1"/>
+		<neuron num="17" type="0" enabled="1"/>
+		<neuron num="18" type="0" enabled="1"/>
+		<neuron num="19" type="0" enabled="1"/>
+		<neuron num="20" type="0" enabled="1"/>
+		<neuron num="21" type="0" enabled="1"/>
+		<neuron num="22" type="0" enabled="1"/>
+		<neuron num="23" type="0" enabled="1"/>
+		<neuron num="24" type="0" enabled="1"/>
+		<neuron num="25" type="0" enabled="1"/>
+		<neuron num="26" type="0" enabled="1"/>
+		<neuron num="27" type="0" enabled="1"/>
+		<neuron num="28" type="0" enabled="1"/>
+		<neuron num="29" type="0" enabled="1"/>
+		<neuron num="30" type="0" enabled="1"/>
+		<neuron num="31" type="0" enabled="1"/>
+		<neuron num="32" type="0" enabled="1"/>
+		<neuron num="33" type="0" enabled="1"/>
+		<neuron num="34" type="0" enabled="1"/>
+		<neuron num="35" type="0" enabled="1"/>
+		<neuron num="36" type="0" enabled="1"/>
+		<neuron num="37" type="0" enabled="1"/>
+		<neuron num="38" type="0" enabled="1"/>
+		<neuron num="39" type="0" enabled="1"/>
+		<neuron num="40" type="0" enabled="1"/>
+		<neuron num="41" type="0" enabled="1"/>
+		<neuron num="42" type="0" enabled="1"/>
+		<neuron num="43" type="0" enabled="1"/>
+		<neuron num="44" type="0" enabled="1"/>
+		<neuron num="45" type="0" enabled="1"/>
+		<neuron num="46" type="0" enabled="1"/>
+		<neuron num="47" type="0" enabled="1"/>
+		<neuron num="48" type="0" enabled="1"/>
+		<neuron num="49" type="0" enabled="1"/>
+		<neuron num="50" type="0" enabled="1"/>
+		<neuron num="51" type="0" enabled="1"/>
+		<neuron num="52" type="0" enabled="1"/>
+		<neuron num="53" type="0" enabled="1"/>
+		<neuron num="54" type="0" enabled="1"/>
+		<neuron num="55" type="0" enabled="1"/>
+		<neuron num="56" type="0" enabled="1"/>
+		<neuron num="57" type="0" enabled="1"/>
+		<neuron num="58" type="0" enabled="1"/>
+		<neuron num="59" type="0" enabled="1"/>
+		<neuron num="60" type="0" enabled="1"/>
+		<neuron num="61" type="0" enabled="1"/>
+		<neuron num="62" type="0" enabled="1"/>
+		<neuron num="63" type="0" enabled="1"/>
+		<neuron num="64" type="0" enabled="1"/>
+		<neuron num="65" type="0" enabled="1"/>
+		<neuron num="66" type="0" enabled="1"/>
+		<neuron num="67" type="0" enabled="1"/>
+		<neuron num="68" type="0" enabled="1"/>
+		<neuron num="69" type="0" enabled="1"/>
+		<neuron num="70" type="0" enabled="1"/>
+		<neuron num="71" type="0" enabled="1"/>
+		<neuron num="72" type="0" enabled="1"/>
+		<neuron num="73" type="0" enabled="1"/>
+		<neuron num="74" type="0" enabled="1"/>
+		<neuron num="75" type="0" enabled="1"/>
+		<neuron num="76" type="0" enabled="1"/>
+		<neuron num="77" type="0" enabled="1"/>
+		<neuron num="78" type="0" enabled="1"/>
+		<neuron num="79" type="0" enabled="1"/>
+		<neuron num="80" type="0" enabled="1"/>
+		<neuron num="81" type="0" enabled="1"/>
+		<neuron num="82" type="0" enabled="1"/>
+		<neuron num="83" type="0" enabled="1"/>
+		<neuron num="84" type="0" enabled="1"/>
+		<neuron num="85" type="0" enabled="1"/>
+		<neuron num="86" type="0" enabled="1"/>
+		<neuron num="87" type="0" enabled="1"/>
+		<neuron num="88" type="0" enabled="1"/>
+		<neuron num="89" type="0" enabled="1"/>
+		<neuron num="90" type="0" enabled="1"/>
+		<neuron num="91" type="0" enabled="1"/>
+		<neuron num="92" type="0" enabled="1"/>
+		<neuron num="93" type="0" enabled="1"/>
+		<neuron num="94" type="0" enabled="1"/>
+		<neuron num="95" type="0" enabled="1"/>
+		<neuron num="96" type="0" enabled="1"/>
+		<neuron num="97" type="0" enabled="1"/>
+		<neuron num="98" type="0" enabled="1"/>
+		<neuron num="99" type="0" enabled="1"/>
+		<neuron num="100" type="0" enabled="1"/>
+		<neuron num="101" type="0" enabled="1"/>
+		<neuron num="102" type="0" enabled="1"/>
+		<neuron num="103" type="0" enabled="1"/>
+		<neuron num="104" type="0" enabled="1"/>
+		<neuron num="105" type="0" enabled="1"/>
+		<neuron num="106" type="0" enabled="1"/>
+		<neuron num="107" type="0" enabled="1"/>
+		<neuron num="108" type="0" enabled="1"/>
+		<neuron num="109" type="0" enabled="1"/>
+		<neuron num="110" type="0" enabled="1"/>
+		<neuron num="111" type="0" enabled="1"/>
+		<neuron num="112" type="0" enabled="1"/>
+		<neuron num="113" type="0" enabled="1"/>
+		<neuron num="114" type="0" enabled="1"/>
+		<neuron num="115" type="0" enabled="1"/>
+		<neuron num="116" type="0" enabled="1"/>
+		<neuron num="117" type="0" enabled="1"/>
+		<neuron num="118" type="0" enabled="1"/>
+		<neuron num="119" type="0" enabled="1"/>
+		<neuron num="120" type="0" enabled="1"/>
+		<neuron num="121" type="0" enabled="1"/>
+		<neuron num="122" type="0" enabled="1"/>
+		<neuron num="123" type="0" enabled="1"/>
+		<neuron num="124" type="0" enabled="1"/>
+		<neuron num="125" type="0" enabled="1"/>
+		<neuron num="126" type="0" enabled="1"/>
+		<neuron num="127" type="0" enabled="1"/>
+		<neuron num="128" type="0" enabled="1"/>
+		<neuron num="129" type="0" enabled="1"/>
+		<neuron num="130" type="0" enabled="1"/>
+		<neuron num="131" type="0" enabled="1"/>
+		<neuron num="132" type="0" enabled="1"/>
+		<neuron num="133" type="0" enabled="1"/>
+		<neuron num="134" type="0" enabled="1"/>
+		<neuron num="135" type="0" enabled="1"/>
+		<neuron num="136" type="0" enabled="1"/>
+		<neuron num="137" type="0" enabled="1"/>
+		<neuron num="138" type="0" enabled="1"/>
+		<neuron num="139" type="0" enabled="1"/>
+		<neuron num="140" type="0" enabled="1"/>
+		<neuron num="141" type="0" enabled="1"/>
+		<neuron num="142" type="0" enabled="1"/>
+		<neuron num="143" type="0" enabled="1"/>
+		<neuron num="144" type="0" enabled="1"/>
+		<neuron num="145" type="0" enabled="1"/>
+		<neuron num="146" type="0" enabled="1"/>
+		<neuron num="147" type="0" enabled="1"/>
+		<neuron num="148" type="0" enabled="1"/>
+		<neuron num="149" type="0" enabled="1"/>
+		<neuron num="150" type="0" enabled="1"/>
+		<neuron num="151" type="0" enabled="1"/>
+		<neuron num="152" type="0" enabled="1"/>
+		<neuron num="153" type="0" enabled="1"/>
+		<neuron num="154" type="0" enabled="1"/>
+		<neuron num="155" type="0" enabled="1"/>
+		<neuron num="156" type="0" enabled="1"/>
+		<neuron num="157" type="0" enabled="1"/>
+		<neuron num="158" type="0" enabled="1"/>
+		<neuron num="159" type="0" enabled="1"/>
+		<neuron num="160" type="0" enabled="1"/>
+		<neuron num="161" type="0" enabled="1"/>
+		<neuron num="162" type="0" enabled="1"/>
+		<neuron num="163" type="0" enabled="1"/>
+		<neuron num="164" type="0" enabled="1"/>
+		<neuron num="165" type="0" enabled="1"/>
+		<neuron num="166" type="0" enabled="1"/>
+		<neuron num="167" type="0" enabled="1"/>
+		<neuron num="168" type="0" enabled="1"/>
+		<neuron num="169" type="0" enabled="1"/>
+		<neuron num="170" type="0" enabled="1"/>
+		<neuron num="171" type="0" enabled="1"/>
+		<neuron num="172" type="0" enabled="1"/>
+		<neuron num="173" type="0" enabled="1"/>
+		<neuron num="174" type="0" enabled="1"/>
+		<neuron num="175" type="0" enabled="1"/>
+		<neuron num="176" type="0" enabled="1"/>
+		<neuron num="177" type="0" enabled="1"/>
+		<neuron num="178" type="0" enabled="1"/>
+		<neuron num="179" type="0" enabled="1"/>
+		<neuron num="180" type="0" enabled="1"/>
+		<neuron num="181" type="0" enabled="1"/>
+		<neuron num="182" type="0" enabled="1"/>
+		<neuron num="183" type="0" enabled="1"/>
+		<neuron num="184" type="0" enabled="1"/>
+		<neuron num="185" type="0" enabled="1"/>
+		<neuron num="186" type="0" enabled="1"/>
+		<neuron num="187" type="0" enabled="1"/>
+		<neuron num="188" type="0" enabled="1"/>
+		<neuron num="189" type="0" enabled="1"/>
+		<neuron num="190" type="0" enabled="1"/>
+		<neuron num="191" type="0" enabled="1"/>
+		<neuron num="192" type="0" enabled="1"/>
+		<neuron num="193" type="0" enabled="1"/>
+		<neuron num="194" type="0" enabled="1"/>
+		<neuron num="195" type="0" enabled="1"/>
+		<neuron num="196" type="0" enabled="1"/>
+		<neuron num="197" type="0" enabled="1"/>
+		<neuron num="198" type="0" enabled="1"/>
+		<neuron num="199" type="0" enabled="1"/>
+		<neuron num="200" type="0" enabled="1"/>
+		<neuron num="201" type="0" enabled="1"/>
+		<neuron num="202" type="0" enabled="1"/>
+		<neuron num="203" type="0" enabled="1"/>
+		<neuron num="204" type="0" enabled="1"/>
+		<neuron num="205" type="0" enabled="1"/>
+		<neuron num="206" type="0" enabled="1"/>
+		<neuron num="207" type="0" enabled="1"/>
+		<neuron num="208" type="0" enabled="1"/>
+		<neuron num="209" type="0" enabled="1"/>
+		<neuron num="210" type="0" enabled="1"/>
+		<neuron num="211" type="0" enabled="1"/>
+		<neuron num="212" type="0" enabled="1"/>
+		<neuron num="213" type="0" enabled="1"/>
+		<neuron num="214" type="0" enabled="1"/>
+		<neuron num="215" type="0" enabled="1"/>
+		<neuron num="216" type="0" enabled="1"/>
+		<neuron num="217" type="0" enabled="1"/>
+		<neuron num="218" type="0" enabled="1"/>
+		<neuron num="219" type="0" enabled="1"/>
+		<neuron num="220" type="0" enabled="1"/>
+		<neuron num="221" type="0" enabled="1"/>
+		<neuron num="222" type="0" enabled="1"/>
+		<neuron num="223" type="0" enabled="1"/>
+		<neuron num="224" type="0" enabled="1"/>
+		<neuron num="225" type="0" enabled="1"/>
+		<neuron num="226" type="0" enabled="1"/>
+		<neuron num="227" type="0" enabled="1"/>
+		<neuron num="228" type="0" enabled="1"/>
+		<neuron num="229" type="0" enabled="1"/>
+		<neuron num="230" type="0" enabled="1"/>
+		<neuron num="231" type="0" enabled="1"/>
+		<neuron num="232" type="0" enabled="1"/>
+		<neuron num="233" type="0" enabled="1"/>
+		<neuron num="234" type="0" enabled="1"/>
+		<neuron num="235" type="0" enabled="1"/>
+		<neuron num="236" type="0" enabled="1"/>
+		<neuron num="237" type="0" enabled="1"/>
+		<neuron num="238" type="0" enabled="1"/>
+		<neuron num="239" type="0" enabled="1"/>
+		<neuron num="240" type="0" enabled="1"/>
+		<neuron num="241" type="0" enabled="1"/>
+		<neuron num="242" type="0" enabled="1"/>
+		<neuron num="243" type="0" enabled="1"/>
+		<neuron num="244" type="0" enabled="1"/>
+		<neuron num="245" type="0" enabled="1"/>
+		<neuron num="246" type="0" enabled="1"/>
+		<neuron num="247" type="0" enabled="1"/>
+		<neuron num="248" type="0" enabled="1"/>
+		<neuron num="249" type="0" enabled="1"/>
+		<neuron num="250" type="0" enabled="1"/>
+		<neuron num="251" type="0" enabled="1"/>
+		<neuron num="252" type="0" enabled="1"/>
+		<neuron num="253" type="0" enabled="1"/>
+		<neuron num="254" type="0" enabled="1"/>
+		<neuron num="255" type="0" enabled="1"/>
+		<neuron num="256" type="0" enabled="1"/>
+		<neuron num="257" type="0" enabled="1"/>
+		<neuron num="258" type="0" enabled="1"/>
+		<neuron num="259" type="0" enabled="1"/>
+		<neuron num="260" type="0" enabled="1"/>
+		<neuron num="261" type="0" enabled="1"/>
+		<neuron num="262" type="0" enabled="1"/>
+		<neuron num="263" type="0" enabled="1"/>
+		<neuron num="264" type="0" enabled="1"/>
+		<neuron num="265" type="0" enabled="1"/>
+		<neuron num="266" type="0" enabled="1"/>
+		<neuron num="267" type="0" enabled="1"/>
+		<neuron num="268" type="0" enabled="1"/>
+		<neuron num="269" type="0" enabled="1"/>
+		<neuron num="270" type="0" enabled="1"/>
+		<neuron num="271" type="0" enabled="1"/>
+		<neuron num="272" type="0" enabled="1"/>
+		<neuron num="273" type="0" enabled="1"/>
+		<neuron num="274" type="0" enabled="1"/>
+		<neuron num="275" type="0" enabled="1"/>
+		<neuron num="276" type="0" enabled="1"/>
+		<neuron num="277" type="0" enabled="1"/>
+		<neuron num="278" type="0" enabled="1"/>
+		<neuron num="279" type="0" enabled="1"/>
+		<neuron num="280" type="0" enabled="1"/>
+		<neuron num="281" type="0" enabled="1"/>
+		<neuron num="282" type="0" enabled="1"/>
+		<neuron num="283" type="0" enabled="1"/>
+		<neuron num="284" type="0" enabled="1"/>
+		<neuron num="285" type="0" enabled="1"/>
+		<neuron num="286" type="0" enabled="1"/>
+		<neuron num="287" type="0" enabled="1"/>
+		<neuron num="288" type="0" enabled="1"/>
+		<neuron num="289" type="0" enabled="1"/>
+		<neuron num="290" type="0" enabled="1"/>
+		<neuron num="291" type="0" enabled="1"/>
+		<neuron num="292" type="0" enabled="1"/>
+		<neuron num="293" type="0" enabled="1"/>
+		<neuron num="294" type="0" enabled="1"/>
+		<neuron num="295" type="0" enabled="1"/>
+		<neuron num="296" type="0" enabled="1"/>
+		<neuron num="297" type="0" enabled="1"/>
+		<neuron num="298" type="0" enabled="1"/>
+		<neuron num="299" type="0" enabled="1"/>
+		<neuron num="300" type="0" enabled="1"/>
+		<neuron num="301" type="0" enabled="1"/>
+		<neuron num="302" type="0" enabled="1"/>
+		<neuron num="303" type="0" enabled="1"/>
+		<neuron num="304" type="0" enabled="1"/>
+		<neuron num="305" type="0" enabled="1"/>
+		<neuron num="306" type="0" enabled="1"/>
+		<neuron num="307" type="0" enabled="1"/>
+		<neuron num="308" type="0" enabled="1"/>
+		<neuron num="309" type="0" enabled="1"/>
+		<neuron num="310" type="0" enabled="1"/>
+		<neuron num="311" type="0" enabled="1"/>
+		<neuron num="312" type="0" enabled="1"/>
+		<neuron num="313" type="0" enabled="1"/>
+		<neuron num="314" type="0" enabled="1"/>
+		<neuron num="315" type="0" enabled="1"/>
+		<neuron num="316" type="0" enabled="1"/>
+		<neuron num="317" type="0" enabled="1"/>
+		<neuron num="318" type="0" enabled="1"/>
+		<neuron num="319" type="0" enabled="1"/>
+		<neuron num="320" type="0" enabled="1"/>
+		<neuron num="321" type="0" enabled="1"/>
+		<neuron num="322" type="0" enabled="1"/>
+		<neuron num="323" type="0" enabled="1"/>
+		<neuron num="324" type="0" enabled="1"/>
+		<neuron num="325" type="0" enabled="1"/>
+		<neuron num="326" type="0" enabled="1"/>
+		<neuron num="327" type="0" enabled="1"/>
+		<neuron num="328" type="0" enabled="1"/>
+		<neuron num="329" type="0" enabled="1"/>
+		<neuron num="330" type="0" enabled="1"/>
+		<neuron num="331" type="0" enabled="1"/>
+		<neuron num="332" type="0" enabled="1"/>
+		<neuron num="333" type="0" enabled="1"/>
+		<neuron num="334" type="0" enabled="1"/>
+		<neuron num="335" type="0" enabled="1"/>
+		<neuron num="336" type="0" enabled="1"/>
+		<neuron num="337" type="0" enabled="1"/>
+		<neuron num="338" type="0" enabled="1"/>
+		<neuron num="339" type="0" enabled="1"/>
+		<neuron num="340" type="0" enabled="1"/>
+		<neuron num="341" type="0" enabled="1"/>
+		<neuron num="342" type="0" enabled="1"/>
+		<neuron num="343" type="0" enabled="1"/>
+		<neuron num="344" type="0" enabled="1"/>
+		<neuron num="345" type="0" enabled="1"/>
+		<neuron num="346" type="0" enabled="1"/>
+		<neuron num="347" type="0" enabled="1"/>
+		<neuron num="348" type="0" enabled="1"/>
+		<neuron num="349" type="0" enabled="1"/>
+		<neuron num="350" type="0" enabled="1"/>
+		<neuron num="351" type="0" enabled="1"/>
+		<neuron num="352" type="0" enabled="1"/>
+		<neuron num="353" type="0" enabled="1"/>
+		<neuron num="354" type="0" enabled="1"/>
+		<neuron num="355" type="0" enabled="1"/>
+		<neuron num="356" type="0" enabled="1"/>
+		<neuron num="357" type="0" enabled="1"/>
+		<neuron num="358" type="0" enabled="1"/>
+		<neuron num="359" type="0" enabled="1"/>
+		<neuron num="360" type="0" enabled="1"/>
+		<neuron num="361" type="0" enabled="1"/>
+		<neuron num="362" type="0" enabled="1"/>
+		<neuron num="363" type="0" enabled="1"/>
+		<neuron num="364" type="0" enabled="1"/>
+		<neuron num="365" type="0" enabled="1"/>
+		<neuron num="366" type="0" enabled="1"/>
+		<neuron num="367" type="0" enabled="1"/>
+		<neuron num="368" type="0" enabled="1"/>
+		<neuron num="369" type="0" enabled="1"/>
+		<neuron num="370" type="0" enabled="1"/>
+		<neuron num="371" type="0" enabled="1"/>
+		<neuron num="372" type="0" enabled="1"/>
+		<neuron num="373" type="0" enabled="1"/>
+		<neuron num="374" type="0" enabled="1"/>
+		<neuron num="375" type="0" enabled="1"/>
+		<neuron num="376" type="0" enabled="1"/>
+		<neuron num="377" type="0" enabled="1"/>
+		<neuron num="378" type="0" enabled="1"/>
+		<neuron num="379" type="0" enabled="1"/>
+		<neuron num="380" type="0" enabled="1"/>
+		<neuron num="381" type="0" enabled="1"/>
+		<neuron num="382" type="0" enabled="1"/>
+		<neuron num="383" type="0" enabled="1"/>
+		<neuron num="384" type="0" enabled="1"/>
+		<neuron num="385" type="0" enabled="1"/>
+		<neuron num="386" type="0" enabled="1"/>
+		<neuron num="387" type="0" enabled="1"/>
+		<neuron num="388" type="0" enabled="1"/>
+		<neuron num="389" type="0" enabled="1"/>
+		<neuron num="390" type="0" enabled="1"/>
+		<neuron num="391" type="0" enabled="1"/>
+		<neuron num="392" type="0" enabled="1"/>
+		<neuron num="393" type="0" enabled="1"/>
+		<neuron num="394" type="0" enabled="1"/>
+		<neuron num="395" type="0" enabled="1"/>
+		<neuron num="396" type="0" enabled="1"/>
+		<neuron num="397" type="0" enabled="1"/>
+		<neuron num="398" type="0" enabled="1"/>
+		<neuron num="399" type="0" enabled="1"/>
+		<neuron num="400" type="1" enabled="1"/>
+	</neurons>
+	<synapses num="400">
+		<synapse num="0" input="0" output="400" weight="0.624185" enabled="1"/>
+		<synapse num="1" input="1" output="400" weight="-0.064726" enabled="1"/>
+		<synapse num="2" input="2" output="400" weight="0.372782" enabled="1"/>
+		<synapse num="3" input="3" output="400" weight="0.547033" enabled="1"/>
+		<synapse num="4" input="4" output="400" weight="0.450166" enabled="1"/>
+		<synapse num="5" input="5" output="400" weight="0.314057" enabled="1"/>
+		<synapse num="6" input="6" output="400" weight="-0.149750" enabled="1"/>
+		<synapse num="7" input="7" output="400" weight="0.632208" enabled="1"/>
+		<synapse num="8" input="8" output="400" weight="0.914748" enabled="1"/>
+		<synapse num="9" input="9" output="400" weight="0.762632" enabled="1"/>
+		<synapse num="10" input="10" output="400" weight="0.912145" enabled="1"/>
+		<synapse num="11" input="11" output="400" weight="-0.279539" enabled="1"/>
+		<synapse num="12" input="12" output="400" weight="0.861072" enabled="1"/>
+		<synapse num="13" input="13" output="400" weight="-0.187662" enabled="1"/>
+		<synapse num="14" input="14" output="400" weight="-0.635015" enabled="1"/>
+		<synapse num="15" input="15" output="400" weight="0.848611" enabled="1"/>
+		<synapse num="16" input="16" output="400" weight="0.030718" enabled="1"/>
+		<synapse num="17" input="17" output="400" weight="-0.670061" enabled="1"/>
+		<synapse num="18" input="18" output="400" weight="0.358859" enabled="1"/>
+		<synapse num="19" input="19" output="400" weight="0.128017" enabled="1"/>
+		<synapse num="20" input="20" output="400" weight="-0.334940" enabled="1"/>
+		<synapse num="21" input="21" output="400" weight="-0.071910" enabled="1"/>
+		<synapse num="22" input="22" output="400" weight="-0.060023" enabled="1"/>
+		<synapse num="23" input="23" output="400" weight="0.490570" enabled="1"/>
+		<synapse num="24" input="24" output="400" weight="-0.876329" enabled="1"/>
+		<synapse num="25" input="25" output="400" weight="-0.588023" enabled="1"/>
+		<synapse num="26" input="26" output="400" weight="-0.149491" enabled="1"/>
+		<synapse num="27" input="27" output="400" weight="-0.139828" enabled="1"/>
+		<synapse num="28" input="28" output="400" weight="-0.934505" enabled="1"/>
+		<synapse num="29" input="29" output="400" weight="0.803271" enabled="1"/>
+		<synapse num="30" input="30" output="400" weight="-0.080166" enabled="1"/>
+		<synapse num="31" input="31" output="400" weight="0.689680" enabled="1"/>
+		<synapse num="32" input="32" output="400" weight="-0.261454" enabled="1"/>
+		<synapse num="33" input="33" output="400" weight="-0.707384" enabled="1"/>
+		<synapse num="34" input="34" output="400" weight="0.236712" enabled="1"/>
+		<synapse num="35" input="35" output="400" weight="-0.811288" enabled="1"/>
+		<synapse num="36" input="36" output="400" weight="0.606673" enabled="1"/>
+		<synapse num="37" input="37" output="400" weight="-0.913037" enabled="1"/>
+		<synapse num="38" input="38" output="400" weight="0.820919" enabled="1"/>
+		<synapse num="39" input="39" output="400" weight="0.521420" enabled="1"/>
+		<synapse num="40" input="40" output="400" weight="0.849594" enabled="1"/>
+		<synapse num="41" input="41" output="400" weight="0.733064" enabled="1"/>
+		<synapse num="42" input="42" output="400" weight="-0.758118" enabled="1"/>
+		<synapse num="43" input="43" output="400" weight="0.710667" enabled="1"/>
+		<synapse num="44" input="44" output="400" weight="-0.454598" enabled="1"/>
+		<synapse num="45" input="45" output="400" weight="-0.393133" enabled="1"/>
+		<synapse num="46" input="46" output="400" weight="0.559277" enabled="1"/>
+		<synapse num="47" input="47" output="400" weight="0.576120" enabled="1"/>
+		<synapse num="48" input="48" output="400" weight="-0.063194" enabled="1"/>
+		<synapse num="49" input="49" output="400" weight="-0.081864" enabled="1"/>
+		<synapse num="50" input="50" output="400" weight="-0.295863" enabled="1"/>
+		<synapse num="51" input="51" output="400" weight="0.601866" enabled="1"/>
+		<synapse num="52" input="52" output="400" weight="0.846226" enabled="1"/>
+		<synapse num="53" input="53" output="400" weight="0.644114" enabled="1"/>
+		<synapse num="54" input="54" output="400" weight="0.092437" enabled="1"/>
+		<synapse num="55" input="55" output="400" weight="0.969897" enabled="1"/>
+		<synapse num="56" input="56" output="400" weight="-0.943909" enabled="1"/>
+		<synapse num="57" input="57" output="400" weight="0.942946" enabled="1"/>
+		<synapse num="58" input="58" output="400" weight="-0.169931" enabled="1"/>
+		<synapse num="59" input="59" output="400" weight="-0.878415" enabled="1"/>
+		<synapse num="60" input="60" output="400" weight="0.746217" enabled="1"/>
+		<synapse num="61" input="61" output="400" weight="0.749904" enabled="1"/>
+		<synapse num="62" input="62" output="400" weight="0.811265" enabled="1"/>
+		<synapse num="63" input="63" output="400" weight="-0.515237" enabled="1"/>
+		<synapse num="64" input="64" output="400" weight="-0.957481" enabled="1"/>
+		<synapse num="65" input="65" output="400" weight="0.047977" enabled="1"/>
+		<synapse num="66" input="66" output="400" weight="-0.326526" enabled="1"/>
+		<synapse num="67" input="67" output="400" weight="0.649192" enabled="1"/>
+		<synapse num="68" input="68" output="400" weight="0.134940" enabled="1"/>
+		<synapse num="69" input="69" output="400" weight="-0.505607" enabled="1"/>
+		<synapse num="70" input="70" output="400" weight="0.170612" enabled="1"/>
+		<synapse num="71" input="71" output="400" weight="-0.015466" enabled="1"/>
+		<synapse num="72" input="72" output="400" weight="-0.772543" enabled="1"/>
+		<synapse num="73" input="73" output="400" weight="0.412494" enabled="1"/>
+		<synapse num="74" input="74" output="400" weight="-0.304799" enabled="1"/>
+		<synapse num="75" input="75" output="400" weight="-0.227141" enabled="1"/>
+		<synapse num="76" input="76" output="400" weight="-0.980640" enabled="1"/>
+		<synapse num="77" input="77" output="400" weight="-0.745522" enabled="1"/>
+		<synapse num="78" input="78" output="400" weight="-0.651021" enabled="1"/>
+		<synapse num="79" input="79" output="400" weight="-0.043834" enabled="1"/>
+		<synapse num="80" input="80" output="400" weight="0.172614" enabled="1"/>
+		<synapse num="81" input="81" output="400" weight="0.053116" enabled="1"/>
+		<synapse num="82" input="82" output="400" weight="-0.441967" enabled="1"/>
+		<synapse num="83" input="83" output="400" weight="0.018840" enabled="1"/>
+		<synapse num="84" input="84" output="400" weight="-0.302770" enabled="1"/>
+		<synapse num="85" input="85" output="400" weight="0.650469" enabled="1"/>
+		<synapse num="86" input="86" output="400" weight="-0.011262" enabled="1"/>
+		<synapse num="87" input="87" output="400" weight="-0.246679" enabled="1"/>
+		<synapse num="88" input="88" output="400" weight="0.593415" enabled="1"/>
+		<synapse num="89" input="89" output="400" weight="0.818807" enabled="1"/>
+		<synapse num="90" input="90" output="400" weight="-0.125094" enabled="1"/>
+		<synapse num="91" input="91" output="400" weight="0.339632" enabled="1"/>
+		<synapse num="92" input="92" output="400" weight="0.568711" enabled="1"/>
+		<synapse num="93" input="93" output="400" weight="-0.313829" enabled="1"/>
+		<synapse num="94" input="94" output="400" weight="0.824395" enabled="1"/>
+		<synapse num="95" input="95" output="400" weight="0.611230" enabled="1"/>
+		<synapse num="96" input="96" output="400" weight="0.734148" enabled="1"/>
+		<synapse num="97" input="97" output="400" weight="-0.502131" enabled="1"/>
+		<synapse num="98" input="98" output="400" weight="0.260422" enabled="1"/>
+		<synapse num="99" input="99" output="400" weight="-0.130912" enabled="1"/>
+		<synapse num="100" input="100" output="400" weight="-0.007737" enabled="1"/>
+		<synapse num="101" input="101" output="400" weight="-0.568966" enabled="1"/>
+		<synapse num="102" input="102" output="400" weight="0.853623" enabled="1"/>
+		<synapse num="103" input="103" output="400" weight="0.219720" enabled="1"/>
+		<synapse num="104" input="104" output="400" weight="0.843528" enabled="1"/>
+		<synapse num="105" input="105" output="400" weight="-0.451177" enabled="1"/>
+		<synapse num="106" input="106" output="400" weight="0.992579" enabled="1"/>
+		<synapse num="107" input="107" output="400" weight="0.862888" enabled="1"/>
+		<synapse num="108" input="108" output="400" weight="-0.196698" enabled="1"/>
+		<synapse num="109" input="109" output="400" weight="-0.658442" enabled="1"/>
+		<synapse num="110" input="110" output="400" weight="-0.180945" enabled="1"/>
+		<synapse num="111" input="111" output="400" weight="0.975916" enabled="1"/>
+		<synapse num="112" input="112" output="400" weight="0.394675" enabled="1"/>
+		<synapse num="113" input="113" output="400" weight="0.377087" enabled="1"/>
+		<synapse num="114" input="114" output="400" weight="-0.005244" enabled="1"/>
+		<synapse num="115" input="115" output="400" weight="-0.908095" enabled="1"/>
+		<synapse num="116" input="116" output="400" weight="0.027557" enabled="1"/>
+		<synapse num="117" input="117" output="400" weight="0.983494" enabled="1"/>
+		<synapse num="118" input="118" output="400" weight="-0.154775" enabled="1"/>
+		<synapse num="119" input="119" output="400" weight="-0.379028" enabled="1"/>
+		<synapse num="120" input="120" output="400" weight="0.802301" enabled="1"/>
+		<synapse num="121" input="121" output="400" weight="0.720131" enabled="1"/>
+		<synapse num="122" input="122" output="400" weight="0.960604" enabled="1"/>
+		<synapse num="123" input="123" output="400" weight="0.371012" enabled="1"/>
+		<synapse num="124" input="124" output="400" weight="-0.593697" enabled="1"/>
+		<synapse num="125" input="125" output="400" weight="0.784999" enabled="1"/>
+		<synapse num="126" input="126" output="400" weight="-0.017758" enabled="1"/>
+		<synapse num="127" input="127" output="400" weight="-0.859549" enabled="1"/>
+		<synapse num="128" input="128" output="400" weight="-0.717132" enabled="1"/>
+		<synapse num="129" input="129" output="400" weight="-0.757336" enabled="1"/>
+		<synapse num="130" input="130" output="400" weight="0.009539" enabled="1"/>
+		<synapse num="131" input="131" output="400" weight="0.275130" enabled="1"/>
+		<synapse num="132" input="132" output="400" weight="-0.326302" enabled="1"/>
+		<synapse num="133" input="133" output="400" weight="-0.136838" enabled="1"/>
+		<synapse num="134" input="134" output="400" weight="-0.505149" enabled="1"/>
+		<synapse num="135" input="135" output="400" weight="-0.482775" enabled="1"/>
+		<synapse num="136" input="136" output="400" weight="0.411986" enabled="1"/>
+		<synapse num="137" input="137" output="400" weight="-0.512570" enabled="1"/>
+		<synapse num="138" input="138" output="400" weight="-0.619886" enabled="1"/>
+		<synapse num="139" input="139" output="400" weight="-0.784713" enabled="1"/>
+		<synapse num="140" input="140" output="400" weight="-0.171012" enabled="1"/>
+		<synapse num="141" input="141" output="400" weight="0.199168" enabled="1"/>
+		<synapse num="142" input="142" output="400" weight="-0.808797" enabled="1"/>
+		<synapse num="143" input="143" output="400" weight="-0.776337" enabled="1"/>
+		<synapse num="144" input="144" output="400" weight="-0.423744" enabled="1"/>
+		<synapse num="145" input="145" output="400" weight="0.185959" enabled="1"/>
+		<synapse num="146" input="146" output="400" weight="-0.684432" enabled="1"/>
+		<synapse num="147" input="147" output="400" weight="0.603812" enabled="1"/>
+		<synapse num="148" input="148" output="400" weight="0.169453" enabled="1"/>
+		<synapse num="149" input="149" output="400" weight="0.160793" enabled="1"/>
+		<synapse num="150" input="150" output="400" weight="-0.775216" enabled="1"/>
+		<synapse num="151" input="151" output="400" weight="-0.028246" enabled="1"/>
+		<synapse num="152" input="152" output="400" weight="-0.119076" enabled="1"/>
+		<synapse num="153" input="153" output="400" weight="-0.814612" enabled="1"/>
+		<synapse num="154" input="154" output="400" weight="-0.657234" enabled="1"/>
+		<synapse num="155" input="155" output="400" weight="0.287227" enabled="1"/>
+		<synapse num="156" input="156" output="400" weight="0.970386" enabled="1"/>
+		<synapse num="157" input="157" output="400" weight="0.325007" enabled="1"/>
+		<synapse num="158" input="158" output="400" weight="0.427678" enabled="1"/>
+		<synapse num="159" input="159" output="400" weight="-0.746746" enabled="1"/>
+		<synapse num="160" input="160" output="400" weight="0.567671" enabled="1"/>
+		<synapse num="161" input="161" output="400" weight="-0.562783" enabled="1"/>
+		<synapse num="162" input="162" output="400" weight="0.528385" enabled="1"/>
+		<synapse num="163" input="163" output="400" weight="-0.758631" enabled="1"/>
+		<synapse num="164" input="164" output="400" weight="0.300379" enabled="1"/>
+		<synapse num="165" input="165" output="400" weight="-0.976765" enabled="1"/>
+		<synapse num="166" input="166" output="400" weight="-0.241406" enabled="1"/>
+		<synapse num="167" input="167" output="400" weight="-0.287635" enabled="1"/>
+		<synapse num="168" input="168" output="400" weight="-0.489335" enabled="1"/>
+		<synapse num="169" input="169" output="400" weight="0.138708" enabled="1"/>
+		<synapse num="170" input="170" output="400" weight="-0.072348" enabled="1"/>
+		<synapse num="171" input="171" output="400" weight="0.339654" enabled="1"/>
+		<synapse num="172" input="172" output="400" weight="-0.662124" enabled="1"/>
+		<synapse num="173" input="173" output="400" weight="0.118855" enabled="1"/>
+		<synapse num="174" input="174" output="400" weight="0.563317" enabled="1"/>
+		<synapse num="175" input="175" output="400" weight="-0.085869" enabled="1"/>
+		<synapse num="176" input="176" output="400" weight="-0.695186" enabled="1"/>
+		<synapse num="177" input="177" output="400" weight="0.878884" enabled="1"/>
+		<synapse num="178" input="178" output="400" weight="-0.482056" enabled="1"/>
+		<synapse num="179" input="179" output="400" weight="0.474266" enabled="1"/>
+		<synapse num="180" input="180" output="400" weight="0.039677" enabled="1"/>
+		<synapse num="181" input="181" output="400" weight="-0.257272" enabled="1"/>
+		<synapse num="182" input="182" output="400" weight="-0.553980" enabled="1"/>
+		<synapse num="183" input="183" output="400" weight="0.920601" enabled="1"/>
+		<synapse num="184" input="184" output="400" weight="-0.071884" enabled="1"/>
+		<synapse num="185" input="185" output="400" weight="-0.211214" enabled="1"/>
+		<synapse num="186" input="186" output="400" weight="0.207828" enabled="1"/>
+		<synapse num="187" input="187" output="400" weight="-0.101498" enabled="1"/>
+		<synapse num="188" input="188" output="400" weight="-0.886207" enabled="1"/>
+		<synapse num="189" input="189" output="400" weight="-0.364494" enabled="1"/>
+		<synapse num="190" input="190" output="400" weight="0.151757" enabled="1"/>
+		<synapse num="191" input="191" output="400" weight="0.681464" enabled="1"/>
+		<synapse num="192" input="192" output="400" weight="0.072723" enabled="1"/>
+		<synapse num="193" input="193" output="400" weight="-0.319859" enabled="1"/>
+		<synapse num="194" input="194" output="400" weight="0.922833" enabled="1"/>
+		<synapse num="195" input="195" output="400" weight="-0.626898" enabled="1"/>
+		<synapse num="196" input="196" output="400" weight="-0.296623" enabled="1"/>
+		<synapse num="197" input="197" output="400" weight="-0.318573" enabled="1"/>
+		<synapse num="198" input="198" output="400" weight="0.085466" enabled="1"/>
+		<synapse num="199" input="199" output="400" weight="0.214042" enabled="1"/>
+		<synapse num="200" input="200" output="400" weight="0.820134" enabled="1"/>
+		<synapse num="201" input="201" output="400" weight="-0.986882" enabled="1"/>
+		<synapse num="202" input="202" output="400" weight="-0.446304" enabled="1"/>
+		<synapse num="203" input="203" output="400" weight="-0.841990" enabled="1"/>
+		<synapse num="204" input="204" output="400" weight="0.131973" enabled="1"/>
+		<synapse num="205" input="205" output="400" weight="-0.882987" enabled="1"/>
+		<synapse num="206" input="206" output="400" weight="0.072141" enabled="1"/>
+		<synapse num="207" input="207" output="400" weight="0.436786" enabled="1"/>
+		<synapse num="208" input="208" output="400" weight="0.995897" enabled="1"/>
+		<synapse num="209" input="209" output="400" weight="0.590085" enabled="1"/>
+		<synapse num="210" input="210" output="400" weight="-0.088947" enabled="1"/>
+		<synapse num="211" input="211" output="400" weight="0.035574" enabled="1"/>
+		<synapse num="212" input="212" output="400" weight="-0.667187" enabled="1"/>
+		<synapse num="213" input="213" output="400" weight="0.357073" enabled="1"/>
+		<synapse num="214" input="214" output="400" weight="-0.043825" enabled="1"/>
+		<synapse num="215" input="215" output="400" weight="0.260929" enabled="1"/>
+		<synapse num="216" input="216" output="400" weight="-0.854141" enabled="1"/>
+		<synapse num="217" input="217" output="400" weight="-0.835997" enabled="1"/>
+		<synapse num="218" input="218" output="400" weight="-0.840569" enabled="1"/>
+		<synapse num="219" input="219" output="400" weight="-0.740348" enabled="1"/>
+		<synapse num="220" input="220" output="400" weight="-0.200491" enabled="1"/>
+		<synapse num="221" input="221" output="400" weight="0.311188" enabled="1"/>
+		<synapse num="222" input="222" output="400" weight="0.941116" enabled="1"/>
+		<synapse num="223" input="223" output="400" weight="0.872232" enabled="1"/>
+		<synapse num="224" input="224" output="400" weight="0.991329" enabled="1"/>
+		<synapse num="225" input="225" output="400" weight="0.863949" enabled="1"/>
+		<synapse num="226" input="226" output="400" weight="-0.754666" enabled="1"/>
+		<synapse num="227" input="227" output="400" weight="-0.305294" enabled="1"/>
+		<synapse num="228" input="228" output="400" weight="-0.454625" enabled="1"/>
+		<synapse num="229" input="229" output="400" weight="0.330800" enabled="1"/>
+		<synapse num="230" input="230" output="400" weight="0.908748" enabled="1"/>
+		<synapse num="231" input="231" output="400" weight="-0.634491" enabled="1"/>
+		<synapse num="232" input="232" output="400" weight="0.343918" enabled="1"/>
+		<synapse num="233" input="233" output="400" weight="-0.537556" enabled="1"/>
+		<synapse num="234" input="234" output="400" weight="-0.476481" enabled="1"/>
+		<synapse num="235" input="235" output="400" weight="-0.524109" enabled="1"/>
+		<synapse num="236" input="236" output="400" weight="-0.420544" enabled="1"/>
+		<synapse num="237" input="237" output="400" weight="0.595661" enabled="1"/>
+		<synapse num="238" input="238" output="400" weight="0.912677" enabled="1"/>
+		<synapse num="239" input="239" output="400" weight="-0.424647" enabled="1"/>
+		<synapse num="240" input="240" output="400" weight="0.185746" enabled="1"/>
+		<synapse num="241" input="241" output="400" weight="-0.176271" enabled="1"/>
+		<synapse num="242" input="242" output="400" weight="0.610927" enabled="1"/>
+		<synapse num="243" input="243" output="400" weight="0.518559" enabled="1"/>
+		<synapse num="244" input="244" output="400" weight="-0.819198" enabled="1"/>
+		<synapse num="245" input="245" output="400" weight="-0.432897" enabled="1"/>
+		<synapse num="246" input="246" output="400" weight="-0.220512" enabled="1"/>
+		<synapse num="247" input="247" output="400" weight="-0.673339" enabled="1"/>
+		<synapse num="248" input="248" output="400" weight="-0.268894" enabled="1"/>
+		<synapse num="249" input="249" output="400" weight="-0.061081" enabled="1"/>
+		<synapse num="250" input="250" output="400" weight="-0.413687" enabled="1"/>
+		<synapse num="251" input="251" output="400" weight="0.530615" enabled="1"/>
+		<synapse num="252" input="252" output="400" weight="-0.749894" enabled="1"/>
+		<synapse num="253" input="253" output="400" weight="-0.472572" enabled="1"/>
+		<synapse num="254" input="254" output="400" weight="0.402847" enabled="1"/>
+		<synapse num="255" input="255" output="400" weight="-0.758565" enabled="1"/>
+		<synapse num="256" input="256" output="400" weight="-0.608623" enabled="1"/>
+		<synapse num="257" input="257" output="400" weight="0.648180" enabled="1"/>
+		<synapse num="258" input="258" output="400" weight="-0.063859" enabled="1"/>
+		<synapse num="259" input="259" output="400" weight="-0.063248" enabled="1"/>
+		<synapse num="260" input="260" output="400" weight="-0.021020" enabled="1"/>
+		<synapse num="261" input="261" output="400" weight="-0.155111" enabled="1"/>
+		<synapse num="262" input="262" output="400" weight="0.302261" enabled="1"/>
+		<synapse num="263" input="263" output="400" weight="-0.677102" enabled="1"/>
+		<synapse num="264" input="264" output="400" weight="0.307333" enabled="1"/>
+		<synapse num="265" input="265" output="400" weight="0.825781" enabled="1"/>
+		<synapse num="266" input="266" output="400" weight="-0.201212" enabled="1"/>
+		<synapse num="267" input="267" output="400" weight="0.886789" enabled="1"/>
+		<synapse num="268" input="268" output="400" weight="0.421441" enabled="1"/>
+		<synapse num="269" input="269" output="400" weight="-0.288535" enabled="1"/>
+		<synapse num="270" input="270" output="400" weight="-0.537858" enabled="1"/>
+		<synapse num="271" input="271" output="400" weight="-0.392813" enabled="1"/>
+		<synapse num="272" input="272" output="400" weight="0.535195" enabled="1"/>
+		<synapse num="273" input="273" output="400" weight="-0.926931" enabled="1"/>
+		<synapse num="274" input="274" output="400" weight="-0.874254" enabled="1"/>
+		<synapse num="275" input="275" output="400" weight="0.715997" enabled="1"/>
+		<synapse num="276" input="276" output="400" weight="-0.359828" enabled="1"/>
+		<synapse num="277" input="277" output="400" weight="-0.094766" enabled="1"/>
+		<synapse num="278" input="278" output="400" weight="-0.957342" enabled="1"/>
+		<synapse num="279" input="279" output="400" weight="0.371278" enabled="1"/>
+		<synapse num="280" input="280" output="400" weight="0.844153" enabled="1"/>
+		<synapse num="281" input="281" output="400" weight="-0.371030" enabled="1"/>
+		<synapse num="282" input="282" output="400" weight="-0.098107" enabled="1"/>
+		<synapse num="283" input="283" output="400" weight="-0.905741" enabled="1"/>
+		<synapse num="284" input="284" output="400" weight="0.156399" enabled="1"/>
+		<synapse num="285" input="285" output="400" weight="-0.695261" enabled="1"/>
+		<synapse num="286" input="286" output="400" weight="-0.664305" enabled="1"/>
+		<synapse num="287" input="287" output="400" weight="0.547775" enabled="1"/>
+		<synapse num="288" input="288" output="400" weight="0.952920" enabled="1"/>
+		<synapse num="289" input="289" output="400" weight="0.271836" enabled="1"/>
+		<synapse num="290" input="290" output="400" weight="-0.515473" enabled="1"/>
+		<synapse num="291" input="291" output="400" weight="-0.068100" enabled="1"/>
+		<synapse num="292" input="292" output="400" weight="-0.883275" enabled="1"/>
+		<synapse num="293" input="293" output="400" weight="0.786789" enabled="1"/>
+		<synapse num="294" input="294" output="400" weight="0.254798" enabled="1"/>
+		<synapse num="295" input="295" output="400" weight="0.424058" enabled="1"/>
+		<synapse num="296" input="296" output="400" weight="0.612569" enabled="1"/>
+		<synapse num="297" input="297" output="400" weight="-0.946414" enabled="1"/>
+		<synapse num="298" input="298" output="400" weight="0.310846" enabled="1"/>
+		<synapse num="299" input="299" output="400" weight="0.034011" enabled="1"/>
+		<synapse num="300" input="300" output="400" weight="-0.234949" enabled="1"/>
+		<synapse num="301" input="301" output="400" weight="0.772989" enabled="1"/>
+		<synapse num="302" input="302" output="400" weight="0.641198" enabled="1"/>
+		<synapse num="303" input="303" output="400" weight="-0.699754" enabled="1"/>
+		<synapse num="304" input="304" output="400" weight="0.846058" enabled="1"/>
+		<synapse num="305" input="305" output="400" weight="0.766944" enabled="1"/>
+		<synapse num="306" input="306" output="400" weight="-0.983757" enabled="1"/>
+		<synapse num="307" input="307" output="400" weight="-0.513770" enabled="1"/>
+		<synapse num="308" input="308" output="400" weight="-0.327822" enabled="1"/>
+		<synapse num="309" input="309" output="400" weight="-0.941099" enabled="1"/>
+		<synapse num="310" input="310" output="400" weight="0.857507" enabled="1"/>
+		<synapse num="311" input="311" output="400" weight="-0.483670" enabled="1"/>
+		<synapse num="312" input="312" output="400" weight="-0.312129" enabled="1"/>
+		<synapse num="313" input="313" output="400" weight="-0.240600" enabled="1"/>
+		<synapse num="314" input="314" output="400" weight="-0.389410" enabled="1"/>
+		<synapse num="315" input="315" output="400" weight="0.844270" enabled="1"/>
+		<synapse num="316" input="316" output="400" weight="0.064139" enabled="1"/>
+		<synapse num="317" input="317" output="400" weight="-0.053716" enabled="1"/>
+		<synapse num="318" input="318" output="400" weight="0.392045" enabled="1"/>
+		<synapse num="319" input="319" output="400" weight="0.017059" enabled="1"/>
+		<synapse num="320" input="320" output="400" weight="-0.781880" enabled="1"/>
+		<synapse num="321" input="321" output="400" weight="0.876573" enabled="1"/>
+		<synapse num="322" input="322" output="400" weight="0.948959" enabled="1"/>
+		<synapse num="323" input="323" output="400" weight="-0.665155" enabled="1"/>
+		<synapse num="324" input="324" output="400" weight="0.663361" enabled="1"/>
+		<synapse num="325" input="325" output="400" weight="0.203756" enabled="1"/>
+		<synapse num="326" input="326" output="400" weight="0.758902" enabled="1"/>
+		<synapse num="327" input="327" output="400" weight="0.275931" enabled="1"/>
+		<synapse num="328" input="328" output="400" weight="0.257343" enabled="1"/>
+		<synapse num="329" input="329" output="400" weight="0.069749" enabled="1"/>
+		<synapse num="330" input="330" output="400" weight="-0.690059" enabled="1"/>
+		<synapse num="331" input="331" output="400" weight="-0.977606" enabled="1"/>
+		<synapse num="332" input="332" output="400" weight="-0.157263" enabled="1"/>
+		<synapse num="333" input="333" output="400" weight="0.951139" enabled="1"/>
+		<synapse num="334" input="334" output="400" weight="-0.677360" enabled="1"/>
+		<synapse num="335" input="335" output="400" weight="-0.311205" enabled="1"/>
+		<synapse num="336" input="336" output="400" weight="0.718083" enabled="1"/>
+		<synapse num="337" input="337" output="400" weight="-0.661117" enabled="1"/>
+		<synapse num="338" input="338" output="400" weight="0.175025" enabled="1"/>
+		<synapse num="339" input="339" output="400" weight="-0.609739" enabled="1"/>
+		<synapse num="340" input="340" output="400" weight="-0.602216" enabled="1"/>
+		<synapse num="341" input="341" output="400" weight="0.032532" enabled="1"/>
+		<synapse num="342" input="342" output="400" weight="-0.093409" enabled="1"/>
+		<synapse num="343" input="343" output="400" weight="0.085655" enabled="1"/>
+		<synapse num="344" input="344" output="400" weight="0.791932" enabled="1"/>
+		<synapse num="345" input="345" output="400" weight="0.517181" enabled="1"/>
+		<synapse num="346" input="346" output="400" weight="-0.070075" enabled="1"/>
+		<synapse num="347" input="347" output="400" weight="-0.143929" enabled="1"/>
+		<synapse num="348" input="348" output="400" weight="-0.536535" enabled="1"/>
+		<synapse num="349" input="349" output="400" weight="-0.678030" enabled="1"/>
+		<synapse num="350" input="350" output="400" weight="0.873130" enabled="1"/>
+		<synapse num="351" input="351" output="400" weight="-0.318415" enabled="1"/>
+		<synapse num="352" input="352" output="400" weight="-0.801457" enabled="1"/>
+		<synapse num="353" input="353" output="400" weight="0.822089" enabled="1"/>
+		<synapse num="354" input="354" output="400" weight="0.016430" enabled="1"/>
+		<synapse num="355" input="355" output="400" weight="0.861904" enabled="1"/>
+		<synapse num="356" input="356" output="400" weight="0.025845" enabled="1"/>
+		<synapse num="357" input="357" output="400" weight="-0.224667" enabled="1"/>
+		<synapse num="358" input="358" output="400" weight="0.137835" enabled="1"/>
+		<synapse num="359" input="359" output="400" weight="-0.716812" enabled="1"/>
+		<synapse num="360" input="360" output="400" weight="0.845082" enabled="1"/>
+		<synapse num="361" input="361" output="400" weight="0.447776" enabled="1"/>
+		<synapse num="362" input="362" output="400" weight="-0.694418" enabled="1"/>
+		<synapse num="363" input="363" output="400" weight="-0.312181" enabled="1"/>
+		<synapse num="364" input="364" output="400" weight="0.398916" enabled="1"/>
+		<synapse num="365" input="365" output="400" weight="-0.371778" enabled="1"/>
+		<synapse num="366" input="366" output="400" weight="0.376614" enabled="1"/>
+		<synapse num="367" input="367" output="400" weight="0.116999" enabled="1"/>
+		<synapse num="368" input="368" output="400" weight="-0.032895" enabled="1"/>
+		<synapse num="369" input="369" output="400" weight="-0.448361" enabled="1"/>
+		<synapse num="370" input="370" output="400" weight="0.507260" enabled="1"/>
+		<synapse num="371" input="371" output="400" weight="0.364890" enabled="1"/>
+		<synapse num="372" input="372" output="400" weight="0.584171" enabled="1"/>
+		<synapse num="373" input="373" output="400" weight="-0.586148" enabled="1"/>
+		<synapse num="374" input="374" output="400" weight="-0.549455" enabled="1"/>
+		<synapse num="375" input="375" output="400" weight="0.376103" enabled="1"/>
+		<synapse num="376" input="376" output="400" weight="0.931033" enabled="1"/>
+		<synapse num="377" input="377" output="400" weight="0.380471" enabled="1"/>
+		<synapse num="378" input="378" output="400" weight="-0.767826" enabled="1"/>
+		<synapse num="379" input="379" output="400" weight="-0.605502" enabled="1"/>
+		<synapse num="380" input="380" output="400" weight="0.702441" enabled="1"/>
+		<synapse num="381" input="381" output="400" weight="-0.894696" enabled="1"/>
+		<synapse num="382" input="382" output="400" weight="0.076083" enabled="1"/>
+		<synapse num="383" input="383" output="400" weight="0.900984" enabled="1"/>
+		<synapse num="384" input="384" output="400" weight="0.927393" enabled="1"/>
+		<synapse num="385" input="385" output="400" weight="-0.907487" enabled="1"/>
+		<synapse num="386" input="386" output="400" weight="0.762888" enabled="1"/>
+		<synapse num="387" input="387" output="400" weight="-0.046762" enabled="1"/>
+		<synapse num="388" input="388" output="400" weight="-0.132154" enabled="1"/>
+		<synapse num="389" input="389" output="400" weight="-0.099277" enabled="1"/>
+		<synapse num="390" input="390" output="400" weight="0.236426" enabled="1"/>
+		<synapse num="391" input="391" output="400" weight="-0.287072" enabled="1"/>
+		<synapse num="392" input="392" output="400" weight="-0.651500" enabled="1"/>
+		<synapse num="393" input="393" output="400" weight="0.542007" enabled="1"/>
+		<synapse num="394" input="394" output="400" weight="0.400747" enabled="1"/>
+		<synapse num="395" input="395" output="400" weight="0.747416" enabled="1"/>
+		<synapse num="396" input="396" output="400" weight="-0.829770" enabled="1"/>
+		<synapse num="397" input="397" output="400" weight="-0.222639" enabled="1"/>
+		<synapse num="398" input="398" output="400" weight="-0.135585" enabled="1"/>
+		<synapse num="399" input="399" output="400" weight="0.137335" enabled="1"/>
+	</synapses>
+</network>
+

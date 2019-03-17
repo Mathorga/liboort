@@ -29,7 +29,10 @@ int main(int argc, char const *argv[]) {
     // parser->readFile(modelFileName);
     // SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
-    SimpleBrain* brain = new SimpleBrain(1000, 1);
+    SimpleBrain* brain = new SimpleBrain(1600, 1);
+    ModelParser* parser = new ModelParser();
+    parser->setModel(brain->getModel());
+    parser->writeFile("./res/mdl/1600in1out.xml");
 
     // brain->describe();
     brain->run();
