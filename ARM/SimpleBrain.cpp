@@ -39,7 +39,7 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
     // Synapses' allocation and initialization.
     this->model->setSynapses((Model::_Synapse *) malloc(this->model->getSynapsesNum() * sizeof(Model::_Synapse)));
     for (uint32_t i = 0; i < this->model->getSynapsesNum(); i++) {
-        this->model->getSynapses()[i].weight = this->baseWeight;//dRandBetween(this->baseWeight - 1, this->baseWeight + 1);
+        this->model->getSynapses()[i].weight = dRandBetween(this->baseWeight - 1, this->baseWeight + 1);//this->baseWeight;
         this->model->getSynapses()[i].enabled = true;
     }
 

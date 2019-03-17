@@ -6,14 +6,14 @@
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
     uint16_t outputNum = 1;
-    char *modelFileName = NULL;
-    double *expectedOutput;
+    char* modelFileName = NULL;
+    double* expectedOutput;
 
     double startTime = 0;
     double endTime = 0;
     double execTime = 0;
 
-    double *output;
+    double* output;
 
     // Input check.
     if (argc > 2) {
@@ -25,26 +25,28 @@ int main(int argc, char const *argv[]) {
     }
 
     // Get Model from file and create a Brain from it.
-    ModelParser *parser = new ModelParser();
-    parser->readFile(modelFileName);
-    SimpleBrain *brain = new SimpleBrain(parser->getModel());
+    // ModelParser* parser = new ModelParser();
+    // parser->readFile(modelFileName);
+    // SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
-    brain->describe();
+    SimpleBrain* brain = new SimpleBrain(1000, 1);
+
+    // brain->describe();
     brain->run();
 
-    brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    brain->run();
-    brain->describe();
+    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    // brain->run();
+    // brain->describe();
+    //
+    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
+    // brain->run();
+    // brain->describe();
+    //
+    // brain->addSynapse(3, brain->getNeuronsNum() - 1);
+    // brain->run();
+    // brain->describe();
 
-    brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    brain->run();
-    brain->describe();
-
-    brain->addSynapse(3, brain->getNeuronsNum() - 1);
-    brain->run();
-    brain->describe();
-
-    expectedOutput = (double *) malloc(outputNum * sizeof(double));
+    expectedOutput = (double*) malloc(outputNum * sizeof(double));
     expectedOutput[0] = 0.5;
     brain->setExpectedOutput(expectedOutput);
     printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
@@ -59,10 +61,10 @@ int main(int argc, char const *argv[]) {
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(100000);
-        // printf("Time: %f s\n", execTime);
+        printf("Time: %f s\n", execTime);
         // printf("\nnow: %f\tbefore: %f\n", std::abs(0.5f - brain->getOutput()[0]), std::abs(0.5f - op));
         if (std::abs(0.5f - brain->getOutput()[0]) > std::abs(0.5f - op)) {
-            brain->describe();
+            // brain->describe();
         }
         op = brain->getOutput()[0];
         printf("Output: %f\n", brain->getOutput()[0]);
