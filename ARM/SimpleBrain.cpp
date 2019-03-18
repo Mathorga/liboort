@@ -11,7 +11,7 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
     this->model->setNeuronsNum(inputNum + outputNum);
     this->model->setSynapsesNum(inputNum * outputNum);
 
-    this->learningRate = 0.2;
+    this->learningRate = 0.01;
 
     this->baseWeight = 0;
     this->baseValue = 0;
@@ -60,11 +60,11 @@ SimpleBrain::SimpleBrain(Model *inputModel) {
     this->model = inputModel;
 
     //TODO Take the learning rate as an input.
-    this->learningRate = 0.2;
+    this->learningRate = 0.02;
 
     //TODO Remove.
     this->model->randomizeInputValues();
-    this->model->randomizeSynapsesWeights();
+    // this->model->randomizeSynapsesWeights();
 }
 
 void SimpleBrain::run() {

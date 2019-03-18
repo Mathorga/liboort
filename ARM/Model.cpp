@@ -32,6 +32,7 @@ void Model::randomizeInputValues() {
 
     for (uint16_t i = 0; i < this->inputNum; i++) {
         this->neurons[i].value = dRandBetween(0, 1);
+        // printf("\n%f\n", this->neurons[i].value);
     }
 }
 

@@ -21,21 +21,21 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
     if (argc > 1) {
-        modelFileName = (char *) argv[1];
+        modelFileName = (char*) argv[1];
     }
 
     // Get Model from file and create a Brain from it.
-    // ModelParser* parser = new ModelParser();
-    // parser->readFile(modelFileName);
-    // SimpleBrain* brain = new SimpleBrain(parser->getModel());
-
-    SimpleBrain* brain = new SimpleBrain(1600, 1);
     ModelParser* parser = new ModelParser();
-    parser->setModel(brain->getModel());
-    parser->writeFile("./res/mdl/1600in1out.xml");
+    parser->readFile(modelFileName);
+    SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
-    // brain->describe();
+    // SimpleBrain* brain = new SimpleBrain(400, 1);
+    // ModelParser* parser = new ModelParser();
+    // parser->setModel(brain->getModel());
+    // parser->writeFile("./res/mdl/400in1out.xml");
+
     brain->run();
+    // brain->describe();
 
     // brain->addNeuron(0, brain->getNeuronsNum() - 1);
     // brain->run();
@@ -63,14 +63,14 @@ int main(int argc, char const *argv[]) {
         // brain->run();
         endTime = getTime();
         execTime = endTime - startTime;
-        usleep(100000);
-        printf("Time: %f s\n", execTime);
+        // usleep(10000);
+        // printf("Time: %f s\n", execTime);
         // printf("\nnow: %f\tbefore: %f\n", std::abs(0.5f - brain->getOutput()[0]), std::abs(0.5f - op));
         if (std::abs(0.5f - brain->getOutput()[0]) > std::abs(0.5f - op)) {
             // brain->describe();
         }
         op = brain->getOutput()[0];
-        printf("Output: %f\n", brain->getOutput()[0]);
+        printf("Output: %.15f\n", brain->getOutput()[0]);
     }
 
     return 0;
