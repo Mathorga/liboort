@@ -60,7 +60,7 @@ SimpleBrain::SimpleBrain(Model *inputModel) {
     this->model = inputModel;
 
     //TODO Take the learning rate as an input.
-    this->learningRate = 0.02;
+    this->learningRate = 0.0005;
 
     //TODO Remove.
     this->model->randomizeInputValues();
@@ -76,7 +76,7 @@ void SimpleBrain::run() {
     return;
 }
 
-void SimpleBrain::setExpectedOutput(double *expectedOutput) {
+void SimpleBrain::setExpectedOutput(float* expectedOutput) {
     this->expectedOutput = expectedOutput;
     printf("\n\n%f\n\n", this->expectedOutput[0]);
     return;
@@ -137,14 +137,14 @@ void SimpleBrain::computeError() {
 
             // The neuron is complete, so calculate its competers' errors.
             // Calculate the sum of the weights coming to the current neuron.
-            double incomingWeight = 0;
+            float incomingWeight = 0;
             for (uint16_t j = 0; j < this->model->getSynapsesNum(); j++) {
                 if (this->model->getSynapses()[j].outputNeuron == neuronsBuffer[i]) {
                     incomingWeight += this->model->getSynapses()[j].weight;
                 }
             }
             // Update the errors of the neurons that compete to the current one and correct their weights.
-            // #pragma omp parallel for
+            #pragma omp parallel for
             for (uint16_t j = 0; j < this->model->getSynapsesNum(); j++) {
                 if (this->model->getSynapses()[j].outputNeuron == neuronsBuffer[i]) {
                     // Compute the partial error.
@@ -164,11 +164,14 @@ void SimpleBrain::adjustWeights() {
     // Loop through synapses to update the weights.
     #pragma omp parallel for
     for (uint16_t i = 0; i < this->model->getSynapsesNum(); i++) {
-        this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
+        // Apply the delta rule.
+        // this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
+        // Apply the customized delta rule.
+        this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * /*this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * */this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
     }
 }
 
-void SimpleBrain::setInput(double *input) {
+void SimpleBrain::setInput(float* input) {
     uint16_t inputPosition = 0;
     for (uint16_t i = 0; i < this->model->getNeuronsNum(); i ++) {
         if (this->model->getNeurons()[i].type == Model::typeInput) {
@@ -179,8 +182,8 @@ void SimpleBrain::setInput(double *input) {
     return;
 }
 
-double *SimpleBrain::getOutput() {
-    double *output = (double *) malloc(this->model->getOutputNum() * sizeof(double));
+float* SimpleBrain::getOutput() {
+    float* output = (float*) malloc(this->model->getOutputNum() * sizeof(float));
     uint16_t outputPosition = 0;
     for (uint16_t i = 0; i < this->model->getNeuronsNum(); i ++) {
         if (this->model->getNeurons()[i].type == Model::typeOutput) {
@@ -223,13 +226,13 @@ Model::_Synapse *SimpleBrain::getSynapses() {
     return this->model->getSynapses();
 }
 
-double SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
+float SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
     // Recursion base case.
     if (this->model->getNeurons()[neuronNum].type == Model::typeInput) {
         return this->model->getNeurons()[neuronNum].value;
     }
 
-    double value = 0;
+    float value = 0;
 
     for (uint16_t i = 0; i < this->model->getSynapsesNum(); i++) {
         if (this->model->getSynapses()[i].enabled && this->model->getSynapses()[i].outputNeuron == neuronNum) {
@@ -243,7 +246,7 @@ double SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
     return this->model->getNeurons()[neuronNum].value;
 }
 
-double SimpleBrain::activate(double input) {
+float SimpleBrain::activate(float input) {
     // Sigmoid function.
     return (1 / (1 + (pow(M_E, -(input)))));
 
@@ -251,7 +254,7 @@ double SimpleBrain::activate(double input) {
     // return tanh(input);
 }
 
-double SimpleBrain::dActivate(double input) {
+float SimpleBrain::dActivate(float input) {
     // Sigmoid derivative.
     return this->activate(input) * (1 - this->activate(input));
 }

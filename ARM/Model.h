@@ -28,11 +28,11 @@ public:
     // Definition of the neuron data type.
     typedef struct {
         NeuronType type;
-        double value;
-        double dValue;
-        double error;
-        double delta;
-        double partialDelta;
+        float value;
+        float dValue;
+        float error;
+        float delta;
+        float partialDelta;
         bool enabled;
     } _Neuron;
 
@@ -40,7 +40,7 @@ public:
     typedef struct {
         uint16_t inputNeuron;
         uint16_t outputNeuron;
-        double weight;
+        float weight;
         bool enabled;
     } _Synapse;
 

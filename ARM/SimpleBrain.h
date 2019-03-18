@@ -10,9 +10,9 @@ public:
 
     void run();
     void correct();
-    void setInput(double *input);
-    void setExpectedOutput(double *expectedOutput);
-    double *getOutput();
+    void setInput(float *input);
+    void setExpectedOutput(float *expectedOutput);
+    float *getOutput();
 
     uint16_t getInputNum();
     uint16_t getOutputNum();
@@ -22,9 +22,9 @@ public:
     Model* getModel();
     Model::_Neuron *getNeurons();
     Model::_Synapse *getSynapses();
-    double calculateNeuronValue(uint16_t neuronNum);
-    double activate(double input);
-    double dActivate(double input);
+    float calculateNeuronValue(uint16_t neuronNum);
+    float activate(float input);
+    float dActivate(float input);
     void randomlyAddSynapse();
     void randomlyAddNeuron();
     bool addSynapse(uint16_t inputNeuron, uint16_t outputNeuron);
@@ -36,8 +36,8 @@ protected:
     void adjustWeights();
 
 private:
-    double baseWeight;
-    double baseValue;
+    float baseWeight;
+    float baseValue;
 };
 
 #endif

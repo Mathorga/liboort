@@ -23,11 +23,11 @@ public:
     // Bacpropagate the error of the net and correct weights.
     virtual void correct() = 0;
     // Set the input of the net via an array of values.
-    virtual void setInput(double* input) = 0;
+    virtual void setInput(float* input) = 0;
     // Set the expected output to calculate the error for training.
-    virtual void setExpectedOutput(double* expectedOutput) = 0;
+    virtual void setExpectedOutput(float* expectedOutput) = 0;
     // Return an array containing all the values of the output neurons.
-    virtual double *getOutput() = 0;
+    virtual float *getOutput() = 0;
 
     // Return the number of input neurons of the net.
     virtual uint16_t getInputNum() = 0;
@@ -48,11 +48,11 @@ public:
     virtual Model::_Synapse* getSynapses() = 0;
 
     // Compute the value of a neuron of the net.
-    virtual double calculateNeuronValue(uint16_t neuronNum) = 0;
+    virtual float calculateNeuronValue(uint16_t neuronNum) = 0;
     // Activation function of the neurons of the net.
-    virtual double activate(double input) = 0;
+    virtual float activate(float input) = 0;
     // Derivative of the activation function of the neurons of the net.
-    virtual double dActivate(double input) = 0;
+    virtual float dActivate(float input) = 0;
 
     // Mutate the net by adding a synapse.
     virtual bool addSynapse(uint16_t inputNeuron, uint16_t outputNeuron) = 0;
@@ -68,9 +68,9 @@ protected:
     Model* model;
 
     // Learning rate of the net.
-    double learningRate;
+    float learningRate;
 
-    double* expectedOutput;
+    float* expectedOutput;
 
     // Compute all the errors of the neurons of the net.
     virtual void computeError() = 0;
