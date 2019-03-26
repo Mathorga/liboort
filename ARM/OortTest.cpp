@@ -49,6 +49,16 @@ int main(int argc, char const *argv[]) {
     // brain->run();
     // brain->describe();
 
+
+
+    uint8_t a = 37;
+    uint8_t b = 201;
+    uint8_t c = (a * b) / 255;
+    printf("\n%d * %d = %d\n", a, b, c);
+
+
+
+
     expectedOutput = (float*) malloc(outputNum * sizeof(float));
     expectedOutput[0] = 0.5;
     brain->setExpectedOutput(expectedOutput);

@@ -134,7 +134,7 @@ void SimpleBrain::computeError() {
                 neuronsBuffer[size - 1] = neuron;
             }
 
-            // If the neuron is of kind output calculate its error and delta.
+            // If the neuron is of kind output calculate its error.
             if (this->model->getNeurons()[neuronsBuffer[i]].type == Model::typeOutput) {
                 this->model->getNeurons()[neuronsBuffer[i]].error = this->expectedOutput[neuronsBuffer[i] - this->model->getInputNum()] - this->model->getNeurons()[neuronsBuffer[i]].value;
             }
