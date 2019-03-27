@@ -1,6 +1,6 @@
 CCOMP			= gcc
 CCOMP_FLAGS		= -std=c++17 -g -fopenmp
-CCOMP_LIBS		= -lm -lstdc++ -lrt -lgomp -L ./lib/opennn -lopennn
+CCOMP_LIBS		= -lstdc++ -lrt -lgomp -L ./lib/opennn -lopennn -lm
 CLINK_FLAGS		=
 
 BIN_DIR			= ./bin
@@ -27,7 +27,7 @@ $(OORT_TEST): OortTest.o SimpleBrain.o ModelParser.o Model.o Knowledge.o utils.o
 $(OPENNN_TEST): OpenNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $^ -o $@ $(CCOMP_LIBS)
 
-$(OORTNN_TEST): OortNNTest.o
+$(OORTNN_TEST): OortNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $^ -o $@ $(CCOMP_LIBS)
 
 clean:
