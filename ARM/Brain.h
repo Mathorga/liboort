@@ -72,6 +72,9 @@ protected:
 
     float* expectedOutput;
 
+    // Computes all the values of the neurons of the net, in order to calculate the outputs.
+    virtual void computeValue() = 0;
+
     // Compute all the errors of the neurons of the net.
     virtual void computeError() = 0;
 

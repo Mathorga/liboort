@@ -13,7 +13,7 @@ RM				= rm -rf
 
 all: clean exe
 
-exe: $(OORT_TEST) $(OORTNN_TEST) #$(OORT) $(OPENNN_TEST)
+exe: $(OORT_TEST) #$(OORTNN_TEST) $(OORT) $(OPENNN_TEST)
 
 %.o: %.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $<

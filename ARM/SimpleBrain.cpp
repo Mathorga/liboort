@@ -164,6 +164,76 @@ void SimpleBrain::computeError() {
     return;
 }
 
+void SimpleBrain::computeValue() {
+    uint16_t size = this->model->getNeuronsNum();
+    uint16_t pos = 0;
+    uint16_t *bufferHead = (uint16_t *) malloc(size * sizeof(uint16_t));
+    uint16_t *neuronsBuffer = bufferHead;
+
+    // Initialize the buffer.
+    for (uint16_t i = 0; i < size; i++) {
+        neuronsBuffer[i] = i;
+    }
+
+    // Compute errors based on the expected output.
+    for (uint16_t i = 0; i < size; i++) {
+        // Check if the neuron is input (no need to calculate the error).
+        if (this->model->getNeurons()[i].type == Model::typeInput) {
+            // Remove the neuron.
+            pos++;
+        } else {
+            // Check if the neuron is complete (i.e. it doesn't compete to any neuron in the rest of the buffer).
+            // Loop through synapses coming from current neuron.
+            for (uint16_t j = 0; j < this->model->getSynapsesNum(); j++) {
+                if (this->model->getSynapses()[j].inputNeuron == neuronsBuffer[i]) {
+                    // Loop through neurons coming next.
+                    for (uint16_t k = pos; k < size; k ++) {
+                        if (this->model->getSynapses()[j].outputNeuron == neuronsBuffer[k]) {
+                            goto incomplete;
+                        }
+                    }
+                }
+            }
+            if (false) {
+                incomplete:
+                // The neuron is incomplete, so put it at the end of the buffer.
+                uint16_t neuron = neuronsBuffer[i];
+                for (uint16_t j = pos + 1; j < size; j++) {
+                    neuronsBuffer[j - 1] = neuronsBuffer[j];
+                }
+                neuronsBuffer[size - 1] = neuron;
+            }
+
+            // If the neuron is of kind output calculate its error.
+            if (this->model->getNeurons()[neuronsBuffer[i]].type == Model::typeOutput) {
+                this->model->getNeurons()[neuronsBuffer[i]].error = this->expectedOutput[neuronsBuffer[i] - this->model->getInputNum()] - this->model->getNeurons()[neuronsBuffer[i]].value;
+            }
+
+            // The neuron is complete, so calculate its competers' errors.
+            // Calculate the sum of the weights coming to the current neuron.
+            float incomingWeight = 0;
+            for (uint16_t j = 0; j < this->model->getSynapsesNum(); j++) {
+                if (this->model->getSynapses()[j].outputNeuron == neuronsBuffer[i]) {
+                    incomingWeight += this->model->getSynapses()[j].weight;
+                }
+            }
+            // Update the errors of the neurons that compete to the current one and correct their weights.
+            #pragma omp parallel for
+            for (uint16_t j = 0; j < this->model->getSynapsesNum(); j++) {
+                if (this->model->getSynapses()[j].outputNeuron == neuronsBuffer[i]) {
+                    // Compute the partial error.
+                    this->model->getNeurons()[this->model->getSynapses()[j].inputNeuron].error += this->model->getNeurons()[neuronsBuffer[i]].error * (this->model->getSynapses()[j].weight / incomingWeight);
+                }
+            }
+            // Remove the neuron from the buffer.
+            pos++;
+        }
+    }
+
+    free(bufferHead);
+    return;
+}
+
 void SimpleBrain::adjustWeights() {
     // Loop through synapses to update the weights.
     #pragma omp parallel for

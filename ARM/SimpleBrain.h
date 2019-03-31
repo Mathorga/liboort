@@ -32,6 +32,7 @@ public:
     void describe();
 
 protected:
+    void computeValue();
     void computeError();
     void adjustWeights();
 
