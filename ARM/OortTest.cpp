@@ -29,12 +29,13 @@ int main(int argc, char const *argv[]) {
     parser->readFile(modelFileName);
     SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
-    // SimpleBrain* brain = new SimpleBrain(400, 1);
-    // ModelParser* parser = new ModelParser();
-    // parser->setModel(brain->getModel());
-    // parser->writeFile("./res/mdl/400in1out.xml");
+    // SimpleBrain* testBrain = new SimpleBrain(8000, 1);
+    // ModelParser* testParser = new ModelParser();
+    // testParser->setModel(testBrain->getModel());
+    // testParser->writeFile("./res/mdl/8000in1out.xml");
 
     brain->run();
+    brain->describe();
     // brain->describe();
 
     // brain->addNeuron(0, brain->getNeuronsNum() - 1);
@@ -70,16 +71,12 @@ int main(int argc, char const *argv[]) {
         startTime = getTime();
         brain->run();
         brain->correct();
+        // brain->describe();
         // brain->run();
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(10000);
-        // printf("Time: %f s\n", execTime);
-        // printf("\nnow: %f\tbefore: %f\n", std::abs(0.5f - brain->getOutput()[0]), std::abs(0.5f - op));
-        if (std::abs(0.5f - brain->getOutput()[0]) > std::abs(0.5f - op)) {
-            // brain->describe();
-        }
-        op = brain->getOutput()[0];
+        printf("Time: %f s\n", execTime);
         printf("Output: %.7f\n", brain->getOutput()[0]);
     }
 
