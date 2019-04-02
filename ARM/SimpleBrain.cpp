@@ -61,7 +61,6 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
 SimpleBrain::SimpleBrain(Model *inputModel) {
     this->model = inputModel;
 
-    //TODO? Take the learning rate as an input.
     // Calculate the learning rate based on the number of neurons:
     // the greater the number of neurons, the lower the learning rate.
     this->learningRate = 1 / (float) this->model->getNeuronsNum();
@@ -252,7 +251,7 @@ void SimpleBrain::adjustWeights() {
         // Apply the delta rule.
         // this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
         // Apply the customized delta rule.
-        this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * /*this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * */this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
+        this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
     }
 }
 
@@ -311,25 +310,25 @@ Model::_Synapse *SimpleBrain::getSynapses() {
     return this->model->getSynapses();
 }
 
-float SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
-    // Recursion base case.
-    if (this->model->getNeurons()[neuronNum].type == Model::typeInput) {
-        return this->model->getNeurons()[neuronNum].value;
-    }
-
-    float value = 0;
-
-    for (uint16_t i = 0; i < this->model->getSynapsesNum(); i++) {
-        if (this->model->getSynapses()[i].enabled && this->model->getSynapses()[i].outputNeuron == neuronNum) {
-            value += this->calculateNeuronValue(this->model->getSynapses()[i].inputNeuron) * this->model->getSynapses()[i].weight;
-        }
-    }
-
-    this->model->getNeurons()[neuronNum].value = activate(value);
-    this->model->getNeurons()[neuronNum].dValue = dActivate(value);
-
-    return this->model->getNeurons()[neuronNum].value;
-}
+// float SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
+//     // Recursion base case.
+//     if (this->model->getNeurons()[neuronNum].type == Model::typeInput) {
+//         return this->model->getNeurons()[neuronNum].value;
+//     }
+//
+//     float value = 0;
+//
+//     for (uint16_t i = 0; i < this->model->getSynapsesNum(); i++) {
+//         if (this->model->getSynapses()[i].enabled && this->model->getSynapses()[i].outputNeuron == neuronNum) {
+//             value += this->calculateNeuronValue(this->model->getSynapses()[i].inputNeuron) * this->model->getSynapses()[i].weight;
+//         }
+//     }
+//
+//     this->model->getNeurons()[neuronNum].value = activate(value);
+//     this->model->getNeurons()[neuronNum].dValue = dActivate(value);
+//
+//     return this->model->getNeurons()[neuronNum].value;
+// }
 
 float SimpleBrain::activate(float input) {
     // Sigmoid function.

@@ -48,7 +48,7 @@ public:
     virtual Model::_Synapse* getSynapses() = 0;
 
     // Compute the value of a neuron of the net.
-    virtual float calculateNeuronValue(uint16_t neuronNum) = 0;
+    // virtual float calculateNeuronValue(uint16_t neuronNum) = 0;
     // Activation function of the neurons of the net.
     virtual float activate(float input) = 0;
     // Derivative of the activation function of the neurons of the net.

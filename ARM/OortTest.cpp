@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
     float* output;
 
     // Input check.
-    if (argc > 2) {
+    if (argc > 2 || argc <= 1) {
         printf("Usage: %s [modelFile]\n", argv[0]);
         return -1;
     }
@@ -35,7 +35,6 @@ int main(int argc, char const *argv[]) {
     // testParser->writeFile("./res/mdl/8000in1out.xml");
 
     brain->run();
-    brain->describe();
     // brain->describe();
 
     // brain->addNeuron(0, brain->getNeuronsNum() - 1);
@@ -60,8 +59,20 @@ int main(int argc, char const *argv[]) {
 
 
 
+    srand(time(NULL));
+    uint8_t* image = (uint8_t*) malloc(400 * sizeof(uint8_t));
+    for (uint16_t i = 0; i < 400; i++) {
+        image[i] = iRandBetween(0, 255);
+    }
+    dump(image, 20, "./res/dump.ppm");
+
+
+    dump(readImage("/home/luka/Pictures/IMG-20181105-WA0072.ppm", 20), 20, "./res/dump2.ppm");
+
+
+
     expectedOutput = (float*) malloc(outputNum * sizeof(float));
-    expectedOutput[0] = 0.5;
+    expectedOutput[0] = 0.6;
     brain->setExpectedOutput(expectedOutput);
     printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
 
@@ -76,7 +87,7 @@ int main(int argc, char const *argv[]) {
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(10000);
-        printf("Time: %f s\n", execTime);
+        // printf("Time: %f s\n", execTime);
         printf("Output: %.7f\n", brain->getOutput()[0]);
     }
 

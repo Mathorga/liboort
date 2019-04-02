@@ -22,7 +22,7 @@ public:
     Model* getModel();
     Model::_Neuron *getNeurons();
     Model::_Synapse *getSynapses();
-    float calculateNeuronValue(uint16_t neuronNum);
+    // float calculateNeuronValue(uint16_t neuronNum);
     float activate(float input);
     float dActivate(float input);
     void randomlyAddSynapse();

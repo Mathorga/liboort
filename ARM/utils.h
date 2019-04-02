@@ -1,5 +1,6 @@
 #ifndef __UTILS__
 #define __UTILS__
+#define IDX(i, j, n) ((i) * (n) + (j))
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,8 +21,11 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 double dRandBetween(double low, double high);
-void setPrintColor(const char *color);
+int iRandBetween(int low, int high);
+void setPrintColor(const char* color);
 double getTime();
 double getNanoTime();
+void dump(const uint8_t* image, unsigned int n, const char* filename);
+uint8_t* readImage(const char* filename, const uint8_t n);
 
 #endif
