@@ -2,6 +2,9 @@
 #include "SimpleBrain.h"
 #include "ModelParser.h"
 #include "utils.h"
+#include "opencv2/opencv.hpp"
+
+using namespace cv;
 
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
@@ -12,6 +15,10 @@ int main(int argc, char const *argv[]) {
     double startTime = 0;
     double endTime = 0;
     double execTime = 0;
+
+    Mat im;
+    im = imread("/home/luka/Pictures/IMG-20181105-WA0072.ppm");
+    std::cout << "M = " << std::endl << " " << im << std::endl << std::endl;
 
     float* output;
 

@@ -1,6 +1,9 @@
 CCOMP			= gcc
-CCOMP_FLAGS		= -std=c++17 -g -fopenmp
-CCOMP_LIBS		= -lstdc++ -lrt -lgomp -L ./lib/opennn -lopennn -lm
+CCOMP_FLAGS		= -std=c++17 -g -fopenmp -Ilib/opencv/include/opencv4
+OPENNN_LIBS		= -L ./lib/opennn -lopennn
+OPENCV_3P_LIBS	= -L ./lib/opencv/lib/opencv4/3rdparty -lade -lIlmImf -lippiw -lippicv -littnotify -llibjasper -llibjpeg-turbo -llibpng -llibprotobuf -llibtiff -llibwebp -lquirc -lzlib
+OPENCV_LIBS		= -L ./lib/opencv/lib -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lopencv_highgui -lopencv_imgproc -lopencv_video -lopencv_objdetect
+CCOMP_LIBS		= $(OPENNN_LIBS) $(OPENCV_LIBS) $(OPENCV_3P_LIBS) -lstdc++ -lrt -lgomp -lpthread -ldl -lm
 CLINK_FLAGS		=
 
 BIN_DIR			= ./bin
