@@ -16,9 +16,51 @@ int main(int argc, char const *argv[]) {
     double endTime = 0;
     double execTime = 0;
 
-    Mat im;
-    im = imread("/home/luka/Pictures/IMG-20181105-WA0072.ppm");
-    std::cout << "M = " << std::endl << " " << im << std::endl << std::endl;
+
+
+
+
+    VideoCapture cap(0);
+    cap.set(CAP_PROP_FRAME_WIDTH, 160);
+    cap.set(CAP_PROP_FRAME_HEIGHT, 120);
+
+    // Check if VideoCapture opened successfully.
+    if (!cap.isOpened()) {
+        printf("Error opening video stream or file\n");
+        return -1;
+    }
+
+    while (true) {
+        Mat frame;
+        // Capture frame-by-frame
+        cap >> frame;
+
+        // If the frame is empty, break immediately
+        if (frame.empty()) {
+            break;
+        }
+        // std::cout << im << std::endl;
+
+        // resize(frame, frame, Size(50, 50));
+        // Rect rectCrop(80, 60, 120, 120);
+        // Mat croppedImage = frame(rectCrop);
+        // Display the resulting frame
+        imshow("Frame", frame);
+
+        // Press  ESC on keyboard to exit
+        char c = (char) waitKey(25);
+        if (c == 27) {
+            break;
+        }
+    }
+    // When everything done, release the video capture object.
+    cap.release();
+
+    // Closes all the frames.
+    destroyAllWindows();
+
+
+    // std::cout << "M = " << std::endl << " " << im << std::endl << std::endl;
 
     float* output;
 

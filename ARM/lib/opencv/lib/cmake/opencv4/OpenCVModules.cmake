@@ -16,7 +16,7 @@ set(CMAKE_IMPORT_FILE_VERSION 1)
 set(_targetsDefined)
 set(_targetsNotDefined)
 set(_expectedTargets)
-foreach(_expectedTarget zlib libjpeg-turbo libtiff libwebp libjasper libpng IlmImf ippiw libprotobuf quirc ittnotify ade opencv_core opencv_flann opencv_imgproc opencv_ml opencv_photo opencv_dnn opencv_gapi opencv_imgcodecs opencv_videoio opencv_highgui opencv_features2d opencv_calib3d opencv_objdetect opencv_stitching opencv_video)
+foreach(_expectedTarget libjpeg-turbo libtiff libwebp libjasper IlmImf ippiw libprotobuf quirc ittnotify ade opencv_core opencv_flann opencv_imgproc opencv_ml opencv_photo opencv_dnn opencv_gapi opencv_imgcodecs opencv_videoio opencv_highgui opencv_features2d opencv_calib3d opencv_objdetect opencv_stitching opencv_video)
   list(APPEND _expectedTargets ${_expectedTarget})
   if(NOT TARGET ${_expectedTarget})
     list(APPEND _targetsNotDefined ${_expectedTarget})
@@ -44,9 +44,6 @@ get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
 get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
 get_filename_component(_IMPORT_PREFIX "${_IMPORT_PREFIX}" PATH)
 
-# Create imported target zlib
-add_library(zlib STATIC IMPORTED)
-
 # Create imported target libjpeg-turbo
 add_library(libjpeg-turbo STATIC IMPORTED)
 
@@ -54,7 +51,7 @@ add_library(libjpeg-turbo STATIC IMPORTED)
 add_library(libtiff STATIC IMPORTED)
 
 set_target_properties(libtiff PROPERTIES
-  INTERFACE_LINK_LIBRARIES "zlib"
+  INTERFACE_LINK_LIBRARIES "/usr/lib/x86_64-linux-gnu/libz.so"
 )
 
 # Create imported target libwebp
@@ -63,18 +60,11 @@ add_library(libwebp STATIC IMPORTED)
 # Create imported target libjasper
 add_library(libjasper STATIC IMPORTED)
 
-# Create imported target libpng
-add_library(libpng STATIC IMPORTED)
-
-set_target_properties(libpng PROPERTIES
-  INTERFACE_LINK_LIBRARIES "zlib"
-)
-
 # Create imported target IlmImf
 add_library(IlmImf STATIC IMPORTED)
 
 set_target_properties(IlmImf PROPERTIES
-  INTERFACE_LINK_LIBRARIES "zlib"
+  INTERFACE_LINK_LIBRARIES "/usr/lib/x86_64-linux-gnu/libz.so"
 )
 
 # Create imported target ippiw
@@ -100,7 +90,7 @@ add_library(ade STATIC IMPORTED)
 add_library(opencv_core STATIC IMPORTED)
 
 set_target_properties(opencv_core PROPERTIES
-  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>;\$<LINK_ONLY:zlib>;\$<LINK_ONLY:ittnotify>"
+  INTERFACE_LINK_LIBRARIES "\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>;/usr/lib/x86_64-linux-gnu/libz.so;\$<LINK_ONLY:ittnotify>"
 )
 
 # Create imported target opencv_flann
@@ -149,7 +139,7 @@ set_target_properties(opencv_gapi PROPERTIES
 add_library(opencv_imgcodecs STATIC IMPORTED)
 
 set_target_properties(opencv_imgcodecs PROPERTIES
-  INTERFACE_LINK_LIBRARIES "opencv_core;opencv_imgproc;\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>;\$<LINK_ONLY:zlib>;\$<LINK_ONLY:libjpeg-turbo>;\$<LINK_ONLY:libwebp>;\$<LINK_ONLY:libpng>;\$<LINK_ONLY:libtiff>;\$<LINK_ONLY:libjasper>;\$<LINK_ONLY:IlmImf>"
+  INTERFACE_LINK_LIBRARIES "opencv_core;opencv_imgproc;\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>;/usr/lib/x86_64-linux-gnu/libz.so;\$<LINK_ONLY:libjpeg-turbo>;\$<LINK_ONLY:libwebp>;/usr/lib/x86_64-linux-gnu/libpng.so;/usr/lib/x86_64-linux-gnu/libz.so;\$<LINK_ONLY:libtiff>;\$<LINK_ONLY:libjasper>;\$<LINK_ONLY:IlmImf>"
 )
 
 # Create imported target opencv_videoio
@@ -163,7 +153,7 @@ set_target_properties(opencv_videoio PROPERTIES
 add_library(opencv_highgui STATIC IMPORTED)
 
 set_target_properties(opencv_highgui PROPERTIES
-  INTERFACE_LINK_LIBRARIES "opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>"
+  INTERFACE_LINK_LIBRARIES "opencv_core;opencv_imgproc;opencv_imgcodecs;opencv_videoio;\$<LINK_ONLY:dl>;\$<LINK_ONLY:m>;\$<LINK_ONLY:pthread>;\$<LINK_ONLY:rt>;\$<LINK_ONLY:ippiw>;\$<LINK_ONLY:ippicv>;\$<LINK_ONLY:gtk-x11-2.0>;\$<LINK_ONLY:gdk-x11-2.0>;\$<LINK_ONLY:pangocairo-1.0>;\$<LINK_ONLY:atk-1.0>;\$<LINK_ONLY:cairo>;\$<LINK_ONLY:gdk_pixbuf-2.0>;\$<LINK_ONLY:gio-2.0>;\$<LINK_ONLY:pangoft2-1.0>;\$<LINK_ONLY:pango-1.0>;\$<LINK_ONLY:gobject-2.0>;\$<LINK_ONLY:glib-2.0>;\$<LINK_ONLY:fontconfig>;\$<LINK_ONLY:freetype>;\$<LINK_ONLY:gthread-2.0>"
 )
 
 # Create imported target opencv_features2d
