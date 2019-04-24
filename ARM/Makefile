@@ -5,29 +5,29 @@ CLINK_FLAGS		=
 
 OPENNN_LIBS		= -L ./lib/opennn -lopennn
 OPENCV_3P_LIBS	= -L ./lib/opencv/lib/opencv4/3rdparty -lade \
-													   -lIlmImf \
-													   -lippiw \
-													   -lippicv \
-													   -littnotify \
-													   -llibjasper \
-													   -llibjpeg-turbo \
-													   -llibpng \
-													   -llibprotobuf \
-													   -llibtiff \
-													   -llibwebp \
-													   -lquirc \
-													   -lzlib \
-													   `pkg-config --libs gtk+-2.0`
+                                                       -lIlmImf \
+                                                       -lippiw \
+                                                       -lippicv \
+                                                       -littnotify \
+                                                       -llibjasper \
+                                                       -llibjpeg-turbo \
+                                                       -llibpng \
+                                                       -llibprotobuf \
+                                                       -llibtiff \
+                                                       -llibwebp \
+                                                       -lquirc \
+                                                       -lzlib \
+                                                       `pkg-config --libs gtk+-2.0`
 OPENCV_LIBS		= -L ./lib/opencv/lib -lopencv_video \
-									  -lopencv_videoio \
-									  -lopencv_imgcodecs \
-									  -lopencv_imgproc \
-									  -lopencv_core \
-									  -lopencv_highgui \
-									  -lopencv_video \
-									  -lopencv_videoio \
-									  -lopencv_objdetect \
-									  $(OPENCV_3P_LIBS)
+                                      -lopencv_videoio \
+                                      -lopencv_imgcodecs \
+                                      -lopencv_imgproc \
+                                      -lopencv_core \
+                                      -lopencv_highgui \
+                                      -lopencv_video \
+                                      -lopencv_videoio \
+                                      -lopencv_objdetect \
+                                      $(OPENCV_3P_LIBS)
 #OPENCV_LIBS		= `pkg-config --libs opencv`
 LIBS			= $(OPENNN_LIBS) $(OPENCV_LIBS) -lstdc++ -lrt -lgomp -lpthread -ldl -lm
 
