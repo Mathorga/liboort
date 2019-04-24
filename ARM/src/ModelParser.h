@@ -15,9 +15,9 @@ Copyright (C) 2019  Luka Micheletti
 
 #include "Model.h"
 #include "utils.h"
-#include "./lib/rapidxml-1.13/rapidxml.hpp"
-#include "./lib/rapidxml-1.13/rapidxml_utils.hpp"
-#include "./lib/rapidxml-1.13/rapidxml_print.hpp"
+#include "../lib/rapidxml-1.13/rapidxml.hpp"
+#include "../lib/rapidxml-1.13/rapidxml_utils.hpp"
+#include "../lib/rapidxml-1.13/rapidxml_print.hpp"
 
 class ModelParser {
 public:

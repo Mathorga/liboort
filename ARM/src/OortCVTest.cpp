@@ -1,8 +1,12 @@
 #include "opencv2/opencv.hpp"
+#include "utils.h"
 
 using namespace cv;
 
 int main(int argc, char const *argv[]) {
+    double startTime = 0;
+    double endTime = 0;
+    double execTime = 0;
     VideoCapture cap(0);
     cap.set(CAP_PROP_FRAME_WIDTH, 160);
     cap.set(CAP_PROP_FRAME_HEIGHT, 120);
@@ -15,6 +19,9 @@ int main(int argc, char const *argv[]) {
 
     while (true) {
         Mat frame;
+
+        startTime = getTime();
+
         // Capture frame-by-frame
         cap >> frame;
 
@@ -24,14 +31,20 @@ int main(int argc, char const *argv[]) {
         }
 
         // Crop the frame.
-        Rect rectCrop(20, 0, 140, 120);
-        frame = frame(rectCrop);
+        // Rect rectCrop(20, 0, 140, 120);
+        // frame = frame(rectCrop);
 
         // Resize the frame.
-        resize(frame, frame, Size(50, 50));
+        resize(frame, frame, Size(24, 18));
+
+        // printf("A pixel of the frame: %d - %d - %d\n", frame.at<Vec3b>(10, 10).val[0], frame.at<Vec3b>(10, 10).val[1], frame.at<Vec3b>(10, 10).val[2]);
 
         // Display the resulting frame
         imshow("Frame", frame);
+
+        endTime = getTime();
+        execTime = endTime - startTime;
+        printf("Time: %f s\n", execTime);
 
         // Press  ESC on keyboard to exit
         char c = (char) waitKey(25);
