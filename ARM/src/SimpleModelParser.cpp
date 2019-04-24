@@ -1,7 +1,7 @@
-#include "ModelParser.h"
+#include "SimpleModelParser.h"
 
-void ModelParser::readFile(char* fileName) {
-    this->model = new Model();
+void SimpleModelParser::readFile(char* fileName) {
+    this->model = new SimpleModel();
 
     rapidxml::file<> modelFile(fileName);
     rapidxml::xml_document<> doc;
@@ -23,7 +23,7 @@ void ModelParser::readFile(char* fileName) {
                 }
             }
 
-            this->model->setNeurons((Model::_Neuron*) malloc(this->model->getNeuronsNum() * sizeof(Model::_Neuron)));
+            this->model->setNeurons((SimpleModel::_Neuron*) malloc(this->model->getNeuronsNum() * sizeof(SimpleModel::_Neuron)));
 
             // Neurons data.
             node = node->first_node();
@@ -33,7 +33,7 @@ void ModelParser::readFile(char* fileName) {
                     // Neuron data.
                     for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
                         if (strcmp(attr->name(), "type") == 0) {
-                            this->model->getNeurons()[position].type = (Model::NeuronType) atoi(attr->value());
+                            this->model->getNeurons()[position].type = (SimpleModel::NeuronType) atoi(attr->value());
                         } else if (strcmp(attr->name(), "enabled") == 0) {
                             this->model->getNeurons()[position].enabled = (bool) atoi(attr->value());
                         }
@@ -61,7 +61,7 @@ void ModelParser::readFile(char* fileName) {
                 }
             }
 
-            this->model->setSynapses((Model::_Synapse*) malloc(this->model->getSynapsesNum() * sizeof(Model::_Synapse)));
+            this->model->setSynapses((SimpleModel::_Synapse*) malloc(this->model->getSynapsesNum() * sizeof(SimpleModel::_Synapse)));
 
             // Synapses data.
             node = node->first_node();
@@ -92,7 +92,7 @@ void ModelParser::readFile(char* fileName) {
     }
 }
 
-void ModelParser::writeFile(char* fileName) {
+void SimpleModelParser::writeFile(char* fileName) {
     char buffer[12];
     rapidxml::xml_document<> doc;
 
@@ -158,10 +158,10 @@ void ModelParser::writeFile(char* fileName) {
     doc.clear();
 }
 
-Model *ModelParser::getModel() {
+SimpleModel* SimpleModelParser::getModel() {
     return this->model;
 }
 
-void ModelParser::setModel(Model *inputModel) {
+void SimpleModelParser::setModel(SimpleModel *inputModel) {
     this->model = inputModel;
 }

@@ -10,16 +10,16 @@ Copyright (C) 2019  Luka Micheletti
 ********************************************************************************
 */
 
-#ifndef __MODEL_PARSER__
-#define __MODEL_PARSER__
+#ifndef __SIMPLE_MODEL_PARSER__
+#define __SIMPLE_MODEL_PARSER__
 
-#include "Model.h"
+#include "SimpleModel.h"
 #include "utils.h"
 #include "../lib/rapidxml-1.13/rapidxml.hpp"
 #include "../lib/rapidxml-1.13/rapidxml_utils.hpp"
 #include "../lib/rapidxml-1.13/rapidxml_print.hpp"
 
-class ModelParser {
+class SimpleModelParser {
 public:
     // Read a Model from a file and store it in this->model.
     void readFile(char *fileName);
@@ -27,12 +27,12 @@ public:
     void writeFile(char *fileName);
 
     // Returns the Model object set using readFile() or setModel().
-    Model *getModel();
+    SimpleModel *getModel();
     // Sets the Model object in order for it to be written to file or returned.
-    void setModel(Model *inputModel);
+    void setModel(SimpleModel *inputModel);
 
 private:
-    Model *model;
+    SimpleModel *model;
 };
 
 #endif

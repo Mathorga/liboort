@@ -6,7 +6,7 @@
 class SimpleBrain : public Brain {
 public:
     SimpleBrain(uint16_t inputNum, uint16_t outputNum);
-    SimpleBrain(Model *inputModel);
+    SimpleBrain(SimpleModel *inputModel);
 
     void run();
     void correct();
@@ -19,9 +19,9 @@ public:
     uint16_t getHiddenNum();
     uint16_t getNeuronsNum();
     uint16_t getSynapsesNum();
-    Model* getModel();
-    Model::_Neuron *getNeurons();
-    Model::_Synapse *getSynapses();
+    SimpleModel* getModel();
+    SimpleModel::_Neuron *getNeurons();
+    SimpleModel::_Synapse *getSynapses();
     // float calculateNeuronValue(uint16_t neuronNum);
     float activate(float input);
     float dActivate(float input);

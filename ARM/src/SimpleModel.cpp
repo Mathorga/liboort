@@ -1,15 +1,15 @@
-#include "Model.h"
+#include "SimpleModel.h"
 
-void Model::describe() {
-    printf("\n---------------------------------Model---------------------------------\n");
+void SimpleModel::describe() {
+    printf("\n---------------------------------SimpleModel---------------------------------\n");
     for (uint16_t i = 0; i < this->neuronsNum; i++) {
-        if (this->neurons[i].type == Model::typeOutput) {
+        if (this->neurons[i].type == SimpleModel::typeOutput) {
             setPrintColor(ANSI_COLOR_YELLOW);
-        } else if (this->neurons[i].type == Model::typeInput) {
+        } else if (this->neurons[i].type == SimpleModel::typeInput) {
             setPrintColor(ANSI_COLOR_CYAN);
         }
         printf("Neuron %d: type %d\t\t\tvalue %.5f\tenabled %d\n", i, this->neurons[i].type, this->neurons[i].value, this->neurons[i].enabled);
-        if (this->neurons[i].type == Model::typeOutput || this->neurons[i].type == Model::typeInput) {
+        if (this->neurons[i].type == SimpleModel::typeOutput || this->neurons[i].type == SimpleModel::typeInput) {
             setPrintColor(ANSI_COLOR_RESET);
         }
     }
@@ -26,7 +26,7 @@ void Model::describe() {
     return;
 }
 
-void Model::randomizeInputValues() {
+void SimpleModel::randomizeInputValues() {
     // Generate random seed.
     srand(time(NULL));
 
@@ -36,7 +36,7 @@ void Model::randomizeInputValues() {
     }
 }
 
-void Model::randomizeSynapsesWeights() {
+void SimpleModel::randomizeSynapsesWeights() {
     // Generate random seed.
     srand(time(NULL));
 
@@ -45,58 +45,58 @@ void Model::randomizeSynapsesWeights() {
     }
 }
 
-uint16_t Model::getInputNum() {
+uint16_t SimpleModel::getInputNum() {
     return this->inputNum;
 }
 
-uint16_t Model::getOutputNum() {
+uint16_t SimpleModel::getOutputNum() {
     return this->outputNum;
 }
 
-uint16_t Model::getHiddenNum() {
+uint16_t SimpleModel::getHiddenNum() {
     return this->hiddenNum;
 }
 
-uint16_t Model::getNeuronsNum() {
+uint16_t SimpleModel::getNeuronsNum() {
     return this->neuronsNum;
 }
 
-uint16_t Model::getSynapsesNum() {
+uint16_t SimpleModel::getSynapsesNum() {
     return this->synapsesNum;
 }
 
-Model::_Neuron *Model::getNeurons() {
+SimpleModel::_Neuron *SimpleModel::getNeurons() {
     return this->neurons;
 }
 
-Model::_Synapse *Model::getSynapses() {
+SimpleModel::_Synapse *SimpleModel::getSynapses() {
     return this->synapses;
 }
 
-void Model::setInputNum(uint16_t num) {
+void SimpleModel::setInputNum(uint16_t num) {
     this->inputNum = num;
 }
 
-void Model::setOutputNum(uint16_t num) {
+void SimpleModel::setOutputNum(uint16_t num) {
     this->outputNum = num;
 }
 
-void Model::setHiddenNum(uint16_t num) {
+void SimpleModel::setHiddenNum(uint16_t num) {
     this->hiddenNum = num;
 }
 
-void Model::setNeuronsNum(uint16_t num) {
+void SimpleModel::setNeuronsNum(uint16_t num) {
     this->neuronsNum = num;
 }
 
-void Model::setSynapsesNum(uint16_t num) {
+void SimpleModel::setSynapsesNum(uint16_t num) {
     this->synapsesNum = num;
 }
 
-void Model::setNeurons(_Neuron *inputNeurons) {
+void SimpleModel::setNeurons(_Neuron *inputNeurons) {
     this->neurons = inputNeurons;
 }
 
-void Model::setSynapses(_Synapse *inputSynapses) {
+void SimpleModel::setSynapses(_Synapse *inputSynapses) {
     this->synapses = inputSynapses;
 }

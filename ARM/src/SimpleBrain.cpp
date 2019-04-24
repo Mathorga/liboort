@@ -2,7 +2,7 @@
 #include "utils.h"
 
 SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
-    this->model = new Model();
+    this->model = new SimpleModel();
 
     this->model->setInputNum(inputNum);
     this->model->setOutputNum(outputNum);
@@ -22,24 +22,24 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
     srand(time(NULL));
 
     // Neurons' allocation and initialization.
-    this->model->setNeurons((Model::_Neuron *) malloc(this->model->getNeuronsNum() * sizeof(Model::_Neuron)));
+    this->model->setNeurons((SimpleModel::_Neuron *) malloc(this->model->getNeuronsNum() * sizeof(SimpleModel::_Neuron)));
 
     for (uint16_t i = 0; i < inputNum; i++) {
-        this->model->getNeurons()[i].type = Model::typeInput;
+        this->model->getNeurons()[i].type = SimpleModel::typeInput;
         this->model->getNeurons()[i].value = dRandBetween(this->baseValue - 1, this->baseValue + 1);
         this->model->getNeurons()[i].error = 0;
         this->model->getNeurons()[i].enabled = true;
     }
 
     for (uint16_t i = inputNum; i < model->getNeuronsNum(); i++) {
-        this->model->getNeurons()[i].type = Model::typeOutput;
+        this->model->getNeurons()[i].type = SimpleModel::typeOutput;
         this->model->getNeurons()[i].value = 0;
         this->model->getNeurons()[i].error = 0;
         this->model->getNeurons()[i].enabled = true;
     }
 
     // Synapses' allocation and initialization.
-    this->model->setSynapses((Model::_Synapse *) malloc(this->model->getSynapsesNum() * sizeof(Model::_Synapse)));
+    this->model->setSynapses((SimpleModel::_Synapse *) malloc(this->model->getSynapsesNum() * sizeof(SimpleModel::_Synapse)));
     for (uint32_t i = 0; i < this->model->getSynapsesNum(); i++) {
         this->model->getSynapses()[i].weight = dRandBetween(this->baseWeight - 1, this->baseWeight + 1);//this->baseWeight;
         this->model->getSynapses()[i].enabled = true;
@@ -58,7 +58,7 @@ SimpleBrain::SimpleBrain(uint16_t inputNum, uint16_t outputNum) {
     }
 }
 
-SimpleBrain::SimpleBrain(Model *inputModel) {
+SimpleBrain::SimpleBrain(SimpleModel *inputModel) {
     this->model = inputModel;
 
     // Calculate the learning rate based on the number of neurons:
@@ -113,7 +113,7 @@ void SimpleBrain::computeError() {
     for (uint16_t i = 0; i < size; i++) {
         start:
         // Check if the neuron is input (no need to calculate the error).
-        if (this->model->getNeurons()[i].type == Model::typeInput) {
+        if (this->model->getNeurons()[i].type == SimpleModel::typeInput) {
             // Remove the neuron.
             pos++;
         } else {
@@ -143,7 +143,7 @@ void SimpleBrain::computeError() {
             } else {
 
                 // If the neuron is of kind output calculate its error.
-                if (this->model->getNeurons()[neuronsBuffer[i]].type == Model::typeOutput) {
+                if (this->model->getNeurons()[neuronsBuffer[i]].type == SimpleModel::typeOutput) {
                     this->model->getNeurons()[neuronsBuffer[i]].error = this->expectedOutput[neuronsBuffer[i] - this->model->getInputNum()] - this->model->getNeurons()[neuronsBuffer[i]].value;
                 }
 
@@ -189,7 +189,7 @@ void SimpleBrain::computeValue() {
     for (uint16_t i = 0; i < size; i++) {
         start:
         // Check if the neuron is input (no need to calculate the value).
-        if (this->model->getNeurons()[neuronsBuffer[i]].type == Model::typeInput) {
+        if (this->model->getNeurons()[neuronsBuffer[i]].type == SimpleModel::typeInput) {
             // Remove the neuron.
             pos++;
         } else {
@@ -258,7 +258,7 @@ void SimpleBrain::adjustWeights() {
 void SimpleBrain::setInput(float* input) {
     uint16_t inputPosition = 0;
     for (uint16_t i = 0; i < this->model->getNeuronsNum(); i ++) {
-        if (this->model->getNeurons()[i].type == Model::typeInput) {
+        if (this->model->getNeurons()[i].type == SimpleModel::typeInput) {
             this->model->getNeurons()[i].value = input[inputPosition];
             inputPosition++;
         }
@@ -270,7 +270,7 @@ float* SimpleBrain::getOutput() {
     float* output = (float*) malloc(this->model->getOutputNum() * sizeof(float));
     uint16_t outputPosition = 0;
     for (uint16_t i = 0; i < this->model->getNeuronsNum(); i ++) {
-        if (this->model->getNeurons()[i].type == Model::typeOutput) {
+        if (this->model->getNeurons()[i].type == SimpleModel::typeOutput) {
             output[outputPosition] = this->model->getNeurons()[i].value;
             outputPosition++;
         }
@@ -298,21 +298,21 @@ uint16_t SimpleBrain::getSynapsesNum() {
     return this->model->getSynapsesNum();
 }
 
-Model* SimpleBrain::getModel() {
+SimpleModel* SimpleBrain::getModel() {
     return this->model;
 }
 
-Model::_Neuron *SimpleBrain::getNeurons() {
+SimpleModel::_Neuron *SimpleBrain::getNeurons() {
     return this->model->getNeurons();
 }
 
-Model::_Synapse *SimpleBrain::getSynapses() {
+SimpleModel::_Synapse *SimpleBrain::getSynapses() {
     return this->model->getSynapses();
 }
 
 // float SimpleBrain::calculateNeuronValue(uint16_t neuronNum) {
 //     // Recursion base case.
-//     if (this->model->getNeurons()[neuronNum].type == Model::typeInput) {
+//     if (this->model->getNeurons()[neuronNum].type == SimpleModel::typeInput) {
 //         return this->model->getNeurons()[neuronNum].value;
 //     }
 //
@@ -363,8 +363,8 @@ bool SimpleBrain::addSynapse(uint16_t inputNeuron, uint16_t outputNeuron) {
 
     // Synapse doesn't alredy exist, so add it.
     this->model->setSynapsesNum(this->model->getSynapsesNum() + 1);
-    uint16_t size = this->model->getSynapsesNum() * sizeof(Model::_Synapse);
-    this->model->setSynapses((Model::_Synapse *) realloc(this->model->getSynapses(), size));
+    uint16_t size = this->model->getSynapsesNum() * sizeof(SimpleModel::_Synapse);
+    this->model->setSynapses((SimpleModel::_Synapse *) realloc(this->model->getSynapses(), size));
     this->model->getSynapses()[this->model->getSynapsesNum() - 1].inputNeuron = inputNeuron;
     this->model->getSynapses()[this->model->getSynapsesNum() - 1].outputNeuron = outputNeuron;
     this->model->getSynapses()[this->model->getSynapsesNum() - 1].weight = dRandBetween(this->baseWeight - 1, this->baseWeight + 1);
@@ -381,17 +381,17 @@ bool SimpleBrain::addNeuron(uint16_t inputNeuron, uint16_t outputNeuron) {
             // Insert the new neuron.
             this->model->setHiddenNum(this->model->getHiddenNum() + 1);
             this->model->setNeuronsNum(this->model->getNeuronsNum() + 1);
-            uint16_t size = this->model->getNeuronsNum() * sizeof(Model::_Neuron);
-            this->model->setNeurons((Model::_Neuron *) realloc(this->model->getNeurons(), size));
-            this->model->getNeurons()[this->model->getNeuronsNum() - 1].type = Model::typeHidden;
+            uint16_t size = this->model->getNeuronsNum() * sizeof(SimpleModel::_Neuron);
+            this->model->setNeurons((SimpleModel::_Neuron *) realloc(this->model->getNeurons(), size));
+            this->model->getNeurons()[this->model->getNeuronsNum() - 1].type = SimpleModel::typeHidden;
             this->model->getNeurons()[this->model->getNeuronsNum() - 1].value = 0;
             this->model->getNeurons()[this->model->getNeuronsNum() - 1].error = 0;
             this->model->getNeurons()[this->model->getNeuronsNum() - 1].enabled = true;
 
             // Create two new synapses around the new neuron.
             this->model->setSynapsesNum(this->model->getSynapsesNum() + 2);
-            size = this->model->getSynapsesNum() * sizeof(Model::_Synapse);
-            this->model->setSynapses((Model::_Synapse *) realloc(this->model->getSynapses(), size));
+            size = this->model->getSynapsesNum() * sizeof(SimpleModel::_Synapse);
+            this->model->setSynapses((SimpleModel::_Synapse *) realloc(this->model->getSynapses(), size));
             this->model->getSynapses()[this->model->getSynapsesNum() - 1].inputNeuron = inputNeuron;
             this->model->getSynapses()[this->model->getSynapsesNum() - 1].outputNeuron = this->model->getNeuronsNum() - 1;
             this->model->getSynapses()[this->model->getSynapsesNum() - 1].weight = dRandBetween(this->baseWeight - 1, this->baseWeight + 1);

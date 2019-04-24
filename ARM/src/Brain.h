@@ -12,7 +12,7 @@ Copyright (C) 2019  Luka Micheletti
 #ifndef __BRAIN__
 #define __BRAIN__
 
-#include "Model.h"
+#include "SimpleModel.h"
 #include "utils.h"
 
 // General neural network interface.
@@ -41,11 +41,11 @@ public:
     virtual uint16_t getSynapsesNum() = 0;
 
     // Returns the whole model of the network.
-    virtual Model* getModel() = 0;
+    virtual SimpleModel* getModel() = 0;
     // Returns all the neurons of the net.
-    virtual Model::_Neuron* getNeurons() = 0;
+    virtual SimpleModel::_Neuron* getNeurons() = 0;
     // Returns all the synapses of the net.
-    virtual Model::_Synapse* getSynapses() = 0;
+    virtual SimpleModel::_Synapse* getSynapses() = 0;
 
     // Compute the value of a neuron of the net.
     // virtual float calculateNeuronValue(uint16_t neuronNum) = 0;
@@ -65,7 +65,7 @@ public:
 protected:
 
     // Structure of the network.
-    Model* model;
+    SimpleModel* model;
 
     // Learning rate of the net.
     float learningRate;

@@ -1,6 +1,6 @@
 #include "Nerve.h"
 #include "SimpleBrain.h"
-#include "ModelParser.h"
+#include "SimpleModelParser.h"
 #include "utils.h"
 
 int main(int argc, char const *argv[]) {
@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
     }
 
     // Get Model from file and create a Brain from it.
-    ModelParser* parser = new ModelParser();
+    SimpleModelParser* parser = new SimpleModelParser();
     parser->readFile(modelFileName);
     SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
