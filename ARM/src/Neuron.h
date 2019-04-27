@@ -15,6 +15,7 @@ public:
     };
 
     NEURON_VALUE_T getValue();
+    void setValue(NEURON_VALUE_T value);
 
 protected:
     NEURON_VALUE_T value;

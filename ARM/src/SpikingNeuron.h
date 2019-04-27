@@ -5,6 +5,8 @@
 
 class SpikingNeuron : public Neuron {
 public:
+    // Constructors.
+    SpikingNeuron();
     SpikingNeuron(NEURON_VALUE_T value);
 
 private:
