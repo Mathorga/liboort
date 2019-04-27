@@ -1,9 +1,15 @@
 CCOMP = gcc
 
-CCOMP_FLAGS = -std=c++17 -g -fopenmp -Ilib/opencv/include/opencv4 `pkg-config --cflags gtk+-2.0`
+STD_CCOMP_FLAGS = -std=c++17 -g -fopenmp
+OPENCV_INCLUDES = -Ilib/opencv/include/opencv4
+GTK_INCLUDES = `pkg-config --cflags gtk+-2.0`
+CCOMP_COMPLETE_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES) $(GTK_INCLUDES)
+CCOMP_HEADLESS_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES)
+CCOMP_FLAGS = $(CCOMP_COMPLETE_FLAGS)
 CLINK_FLAGS =
 
 OPENNN_LIBS = -L ./lib/opennn -lopennn
+GTK_LIBS = `pkg-config --libs gtk+-2.0`
 OPENCV_3P_LIBS = -L ./lib/opencv/lib/opencv4/3rdparty -lade \
                                                       -lIlmImf \
                                                       -lippiw \
@@ -16,8 +22,7 @@ OPENCV_3P_LIBS = -L ./lib/opencv/lib/opencv4/3rdparty -lade \
                                                       -llibtiff \
                                                       -llibwebp \
                                                       -lquirc \
-                                                      -lzlib \
-                                                      `pkg-config --libs gtk+-2.0`
+                                                      -lzlib
 OPENCV_LIBS = -L ./lib/opencv/lib -lopencv_video \
                                   -lopencv_videoio \
                                   -lopencv_imgcodecs \
@@ -29,13 +34,22 @@ OPENCV_LIBS = -L ./lib/opencv/lib -lopencv_video \
                                   -lopencv_objdetect \
                                   $(OPENCV_3P_LIBS)
 #OPENCV_LIBS = `pkg-config --libs opencv`
-LIBS = $(OPENNN_LIBS) $(OPENCV_LIBS) -lstdc++ -lrt -lgomp -lpthread -ldl -lm
+STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm
+HEADLESS_LIBS = $(OPENNN_LIBS) $(OPENCV_LIBS) $(STD_LIBS)
+COMPLETE_LIBS = $(OPENNN_LIBS) $(OPENCV_LIBS) $(GTK_LIBS) $(STD_LIBS)
+LIBS = $(COMPLETE_LIBS)
 
 SRC_DIR = ./src
 BLD_DIR = ./bld
 BIN_DIR = ./bin
 
 RM = rm -rf
+
+# Check if headless build.
+ifeq ($(BUILD), headless)
+	CCOMP_FLAGS = $(CCOMP_HEADLESS_FLAGS)
+	LIBS = $(HEADLESS_LIBS)
+endif
 
 all: clean exe
 
@@ -44,11 +58,23 @@ exe: OortTest #OortCVTest OortNNTest Oort
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
 
-Oort: Oort.o SimpleBrain.o Model.o utils.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+Oort: Oort.o \
+	  SimpleBrain.o \
+	  Model.o \
+	  utils.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
-OortTest: OortTest.o SimpleBrain.o SimpleModelParser.o SimpleModel.o Knowledge.o utils.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+OortTest: OortTest.o \
+		  SimpleBrain.o \
+		  SimpleModelParser.o \
+		  SimpleModel.o \
+		  Knowledge.o \
+		  utils.o \
+		  Model.o \
+		  SpikingModel.o \
+		  Neuron.o \
+		  SpikingNeuron.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortNNTest: OpenNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)

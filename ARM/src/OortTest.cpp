@@ -1,6 +1,7 @@
 #include "Nerve.h"
 #include "SimpleBrain.h"
 #include "SimpleModelParser.h"
+#include "SpikingModel.h"
 #include "utils.h"
 
 int main(int argc, char const *argv[]) {
@@ -31,6 +32,14 @@ int main(int argc, char const *argv[]) {
     // ModelParser* testParser = new ModelParser();
     // testParser->setModel(testBrain->getModel());
     // testParser->writeFile("./res/mdl/8000in1out.xml");
+
+
+
+    Model* spikingMdl = new SpikingModel();
+    spikingMdl->print();
+
+
+
 
     brain->run();
     // brain->describe();

@@ -1,12 +1,23 @@
 #ifndef __NEURON__
 #define __NEURON__
 
-template <class T>
+#include "utils.h"
+
+#define NEURON_VALUE_T uint16_t
+
 class Neuron {
 public:
-    T getValue();
-private:
-    T value;
+    // Definition of the neuron types.
+    enum NeuronType {
+        typeInput = 0,
+        typeOutput = 1,
+        typeHidden = 2
+    };
+
+    NEURON_VALUE_T getValue();
+
+protected:
+    NEURON_VALUE_T value;
 };
 
 #endif
