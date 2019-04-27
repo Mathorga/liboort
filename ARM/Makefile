@@ -43,6 +43,7 @@ SRC_DIR = ./src
 BLD_DIR = ./bld
 BIN_DIR = ./bin
 
+MKDIR = mkdir -p
 RM = rm -rf
 
 # Check if headless build.
@@ -51,7 +52,7 @@ ifeq ($(BUILD), headless)
 	LIBS = $(HEADLESS_LIBS)
 endif
 
-all: clean exe
+all: create clean exe
 
 exe: OortTest #OortCVTest OortNNTest Oort
 
@@ -82,6 +83,10 @@ OortNNTest: OpenNNTest.o utils.o
 OortCVTest: OortCVTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
+create:
+	$(MKDIR) $(BLD_DIR)
+	$(MKDIR) $(BIN_DIR)
+
 clean:
-	$(RM) $(BIN_DIR)/*
 	$(RM) $(BLD_DIR)/*
+	$(RM) $(BIN_DIR)/*
