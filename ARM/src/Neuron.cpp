@@ -1,9 +1,9 @@
 #include "Neuron.h"
 
-NEURON_VALUE_T Neuron::getValue() {
+neuron_value_t Neuron::getValue() {
     return this->value;
 }
 
-void Neuron::setValue(NEURON_VALUE_T value) {
+void Neuron::setValue(neuron_value_t value) {
     this->value = value;
 }

@@ -7,7 +7,7 @@ class SpikingNeuron : public Neuron {
 public:
     // Constructors.
     SpikingNeuron();
-    SpikingNeuron(NEURON_VALUE_T value);
+    SpikingNeuron(neuron_value_t value);
 
 private:
     NeuronType type;

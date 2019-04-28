@@ -4,6 +4,6 @@ SpikingNeuron::SpikingNeuron() {
     this->value = 0;
 }
 
-SpikingNeuron::SpikingNeuron(NEURON_VALUE_T value) {
+SpikingNeuron::SpikingNeuron(neuron_value_t value) {
     this->value = value;
 }

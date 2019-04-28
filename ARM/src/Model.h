@@ -4,24 +4,28 @@
 #include "Neuron.h"
 #include "utils.h"
 
+#define neurons_num_t uint32_t
+
 class Model {
 public:
     virtual void print() = 0;
-    uint32_t getInputsNum();
-    uint32_t getOutputsNum();
-    uint32_t getHiddensNum();
-    uint32_t getNeuronsNum();
+
+    // Getters.
+    neurons_num_t getInputsNum();
+    neurons_num_t getOutputsNum();
+    neurons_num_t getHiddensNum();
+    neurons_num_t getNeuronsNum();
     Neuron* getNeurons();
 
 protected:
     // Number of input neurons.
-    uint32_t inputsNum;
+    neurons_num_t inputsNum;
     // Number of output neurons.
-    uint32_t outputsNum;
+    neurons_num_t outputsNum;
     // Number of hidden neurons.
-    uint32_t hiddensNum;
+    neurons_num_t hiddensNum;
     // Total number of neurons.
-    uint32_t neuronsNum;
+    neurons_num_t neuronsNum;
 
     Neuron* neurons;
 };

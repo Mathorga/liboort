@@ -2,6 +2,7 @@
 #define __PERCEPTRON__
 
 #include "Neuron.h"
+#include "Synapse.h"
 
 class Perceptron : public Neuron {
 public:

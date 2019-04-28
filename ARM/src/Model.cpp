@@ -1,18 +1,18 @@
 #include "Model.h"
 
-uint32_t Model::getInputsNum() {
+neurons_num_t Model::getInputsNum() {
     return this->inputsNum;
 }
 
-uint32_t Model::getOutputsNum() {
+neurons_num_t Model::getOutputsNum() {
     return this->outputsNum;
 }
 
-uint32_t Model::getHiddensNum() {
+neurons_num_t Model::getHiddensNum() {
     return this->hiddensNum;
 }
 
-uint32_t Model::getNeuronsNum() {
+neurons_num_t Model::getNeuronsNum() {
     return this->neuronsNum;
 }
 

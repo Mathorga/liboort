@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-#define NEURON_VALUE_T uint16_t
+#define neuron_value_t uint16_t
 
 class Neuron {
 public:
@@ -14,11 +14,11 @@ public:
         typeHidden = 2
     };
 
-    NEURON_VALUE_T getValue();
-    void setValue(NEURON_VALUE_T value);
+    neuron_value_t getValue();
+    void setValue(neuron_value_t value);
 
 protected:
-    NEURON_VALUE_T value;
+    neuron_value_t value;
 };
 
 #endif
