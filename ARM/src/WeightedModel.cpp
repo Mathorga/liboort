@@ -1,5 +1,5 @@
 #include "WeightedModel.h"
 
-Synapse* getSynapses() {
-    return this->synapses();
+Synapse* WeightedModel::getSynapses() {
+    return this->synapses;
 }

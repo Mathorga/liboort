@@ -4,6 +4,8 @@
 #include "Neuron.h"
 #include "Synapse.h"
 
+#define neuron_error_t uint16_t
+
 class Perceptron : public Neuron {
 public:
     // Constructors.
@@ -13,12 +15,12 @@ public:
 
 private:
     NeuronType type;
-    float value;
-    float dValue;
-    float error;
-    float delta;
-    float partialDelta;
-    bool enabled;
+    neuron_value_t dValue;
+    neuron_error_t error;
+    neuron_error_t delta;
+    neuron_error_t partialDelta;
+
+    //TODO Manage using synapses.
     Perceptron** inputs;
 };
 

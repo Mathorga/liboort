@@ -74,7 +74,10 @@ OortTest: OortTest.o \
 		  Model.o \
 		  SpikingModel.o \
 		  Neuron.o \
-		  SpikingNeuron.o
+		  SpikingNeuron.o \
+		  WeightedModel.o \
+		  SparsePerceptronModel.o \
+		  Perceptron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortNNTest: OpenNNTest.o utils.o
