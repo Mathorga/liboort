@@ -14,7 +14,7 @@ public:
 
     // Getters.
     Neuron* getInputNeuron();
-    Neuron* getOutputNeuron();
+    // Neuron* getOutputNeuron();
     synapse_weight_t getWeight();
 
     // Setters.
@@ -23,7 +23,7 @@ public:
 
 private:
     Neuron* inputNeuron;
-    Neuron* outputNeuron;
+    // Neuron* outputNeuron;
     synapse_weight_t weight;
 };
 

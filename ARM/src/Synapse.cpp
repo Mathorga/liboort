@@ -14,9 +14,9 @@ Neuron* getInputNeuron() {
     return this->inputNeuron;
 }
 
-Neuron* getOutputNeuron() {
-    return this->outputNeuron;
-}
+// Neuron* getOutputNeuron() {
+//     return this->outputNeuron;
+// }
 
 synapse_weight_t getWeight() {
     return this->weight;

@@ -35,8 +35,6 @@ int main(int argc, char const *argv[]) {
 
 
 
-    Model* spikingMdl = new SpikingModel();
-    spikingMdl->print();
 
 
 
