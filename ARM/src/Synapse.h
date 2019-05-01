@@ -9,20 +9,20 @@
 class Synapse {
 public:
     // Constructors.
-    Synapse();
-    Synapse(Neuron* inputNeuron, Neuron* outputNeuron);
+    // Synapse();
+    // Synapse(Neuron* inputNeuron);
 
     // Getters.
-    Neuron* getInputNeuron();
+    // Neuron* getInputNeuron();
     // Neuron* getOutputNeuron();
     synapse_weight_t getWeight();
 
     // Setters.
-    void setInputNeuron(Neuron* inputNeuron);
-    void setOutputNeuron(Neuron* outputNeuron);
+    void setWeight(synapse_weight_t weight);
+    // void setInputNeuron(Neuron* inputNeuron);
 
-private:
-    Neuron* inputNeuron;
+protected:
+    // Neuron* inputNeuron;
     // Neuron* outputNeuron;
     synapse_weight_t weight;
 };

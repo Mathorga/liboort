@@ -16,6 +16,6 @@ neurons_num_t Model::getNeuronsNum() {
     return this->neuronsNum;
 }
 
-Neuron* Model::getNeurons() {
-    return this->neurons;
-}
+// Neuron* Model::getNeurons() {
+//     return this->neurons;
+// }

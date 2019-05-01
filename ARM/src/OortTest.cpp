@@ -1,7 +1,7 @@
 #include "Nerve.h"
 #include "SimpleBrain.h"
 #include "SimpleModelParser.h"
-#include "SpikingModel.h"
+#include "SparsePerceptronNetwork.h"
 #include "utils.h"
 
 int main(int argc, char const *argv[]) {
@@ -9,6 +9,7 @@ int main(int argc, char const *argv[]) {
     uint16_t outputNum = 1;
     char* modelFileName = NULL;
     float* expectedOutput;
+    neuron_value_t* newExpectedOut;
 
     double startTime = 0;
     double endTime = 0;
@@ -33,12 +34,6 @@ int main(int argc, char const *argv[]) {
     // testParser->setModel(testBrain->getModel());
     // testParser->writeFile("./res/mdl/8000in1out.xml");
 
-
-
-
-
-
-
     brain->run();
     // brain->describe();
 
@@ -58,6 +53,26 @@ int main(int argc, char const *argv[]) {
     expectedOutput[0] = 0.6;
     brain->setExpectedOutput(expectedOutput);
     printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
+
+
+
+
+
+
+
+    newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
+    newExpectedOut[0] = 318;
+    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
+    network->setExpectedOutput(newExpectedOut);
+
+
+
+
+
+
+
+
+
 
     // Main loop of the program.
     float op;

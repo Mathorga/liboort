@@ -15,7 +15,6 @@ public:
     neurons_num_t getOutputsNum();
     neurons_num_t getHiddensNum();
     neurons_num_t getNeuronsNum();
-    Neuron* getNeurons();
 
 protected:
     // Number of input neurons.
@@ -26,8 +25,6 @@ protected:
     neurons_num_t hiddensNum;
     // Total number of neurons.
     neurons_num_t neuronsNum;
-
-    Neuron* neurons;
 };
 
 #endif

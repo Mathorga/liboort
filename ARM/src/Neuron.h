@@ -14,10 +14,16 @@ public:
         typeHidden = 2
     };
 
+    // Getters.
     neuron_value_t getValue();
+    NeuronType getType();
+
+    // Setters.
     void setValue(neuron_value_t value);
+    void setType(NeuronType type);
 
 protected:
+    NeuronType type;
     neuron_value_t value;
 };
 

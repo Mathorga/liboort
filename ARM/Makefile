@@ -71,12 +71,14 @@ OortTest: OortTest.o \
 		  SimpleModel.o \
 		  Knowledge.o \
 		  utils.o \
+		  Vector.o \
 		  Model.o \
-		  SpikingModel.o \
 		  Neuron.o \
-		  SpikingNeuron.o \
 		  WeightedModel.o \
 		  SparsePerceptronModel.o \
+		  SparsePerceptronNetwork.o \
+		  PerceptronSynapse.o \
+		  Synapse.o \
 		  Perceptron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
