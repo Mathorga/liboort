@@ -22,7 +22,7 @@ SparsePerceptronNetwork::SparsePerceptronNetwork(SparsePerceptronModel* model) {
 }
 
 void SparsePerceptronNetwork::run() {
-
+    this->computeValue();
 }
 
 void SparsePerceptronNetwork::correct() {

@@ -64,6 +64,8 @@ int main(int argc, char const *argv[]) {
     newExpectedOut[0] = 318;
     SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
     network->setExpectedOutput(newExpectedOut);
+    network->print();
+    network->run();
 
 
 

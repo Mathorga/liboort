@@ -19,6 +19,7 @@ SparsePerceptronModel::SparsePerceptronModel(neurons_num_t inputsNum, neurons_nu
     this->items = new Perceptron[this->neuronsNum];
     for (neurons_num_t i = 0; i < this->neuronsNum; i++) {
         this->items[i].setValue(i);
+        this->items[i].setType(i < inputsNum ? Neuron::typeInput : Neuron::typeOutput);
     }
 }
 
