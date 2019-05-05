@@ -71,7 +71,6 @@ OortTest: OortTest.o \
 		  SimpleModel.o \
 		  Knowledge.o \
 		  utils.o \
-		  Vector.o \
 		  Model.o \
 		  Neuron.o \
 		  WeightedModel.o \

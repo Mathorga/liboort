@@ -15,13 +15,14 @@ public:
 
     void run();
     void correct();
-    neuron_value_t activate(neuron_value_t value);
-    neuron_value_t dActivate(neuron_value_t value);
+    neuron_value_t activate(perceptron_input_t value);
+    neuron_value_t dActivate(perceptron_input_t value);
     void print();
 
     // Getters.
     // Returns the whole model of the network.
     SparsePerceptronModel* getModel();
+    neuron_value_t* getOutput();
 
     // Setters.
     void setExpectedOutput(neuron_value_t* expectedOutput);

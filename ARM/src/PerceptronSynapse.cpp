@@ -15,6 +15,11 @@ PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron) {
     this->inputNeuron = inputNeuron;
 }
 
+PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight) {
+    this->weight = weight;
+    this->inputNeuron = inputNeuron;
+}
+
 Perceptron* PerceptronSynapse::getInputNeuron() {
     return this->inputNeuron;
 }

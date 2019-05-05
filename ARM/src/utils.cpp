@@ -12,6 +12,10 @@ void setPrintColor(const char *color) {
     printf("%s", color);
 }
 
+void debugPrint(const char* string) {
+    printf("\n%s\n", string);
+}
+
 double getTime() {
     struct timespec ts;
     clock_gettime(CLOCK_MONOTONIC, &ts);

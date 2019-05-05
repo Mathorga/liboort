@@ -5,16 +5,19 @@
 #include "Vector.h"
 #include "Perceptron.h"
 
-class SparsePerceptronModel : public WeightedModel, public Vector<Perceptron> {
+class SparsePerceptronModel : public Model , public Vector<Perceptron> {
 public:
     // Constructors.
     SparsePerceptronModel();
-    SparsePerceptronModel(neurons_num_t inputsNum, neurons_num_t outputsNum);
+    SparsePerceptronModel(neurons_num_t inputsNum, neurons_num_t outputsNum, bool createSynapses);
 
     void print();
 
     // Getters.
     Perceptron* getNeurons();
+
+// private:
+//     Vector<Perceptron>* perceptrons;
 };
 
 #endif

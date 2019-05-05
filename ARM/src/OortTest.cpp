@@ -66,6 +66,7 @@ int main(int argc, char const *argv[]) {
     network->setExpectedOutput(newExpectedOut);
     network->print();
     network->run();
+    printf("Output: %d\n\n", network->getOutput()[0]);
 
 
 

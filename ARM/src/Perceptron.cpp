@@ -3,10 +3,16 @@
 Perceptron::Perceptron() {
     // TODO Implement real constructor.
     this->value = 0;
+    this->synapses = new Vector<PerceptronSynapse>();
 }
 
 Perceptron::Perceptron(Neuron& neuron) {
     this->value = neuron.getValue();
+    this->synapses = new Vector<PerceptronSynapse>();
+}
+
+void Perceptron::print() {
+    printf("Value %d\n", this->value);
 }
 
 float Perceptron::getFloatValue() {
@@ -14,7 +20,7 @@ float Perceptron::getFloatValue() {
     return 0.0;
 }
 
-neuron_error_t Perceptron::getError() {
+perceptron_error_t Perceptron::getError() {
     return this->error;
 }
 
@@ -23,10 +29,10 @@ neuron_value_t Perceptron::getExpectedOutput() {
 }
 
 synapses_num_t Perceptron::getSynapsesNum() {
-    return this->synapsesNum;
+    return this->synapses->getSize();
 }
 
-PerceptronSynapse** Perceptron::getSynapses() {
+Vector<PerceptronSynapse>* Perceptron::getSynapses() {
     return this->synapses;
 }
 
@@ -39,11 +45,11 @@ void Perceptron::setDValue(neuron_value_t dValue) {
     this->dValue = dValue;
 }
 
-void Perceptron::setError(neuron_error_t error) {
+void Perceptron::setError(perceptron_error_t error) {
     this->error = error;
 }
 
-void Perceptron::addError(neuron_error_t error) {
+void Perceptron::addError(perceptron_error_t error) {
     this->error += error;
 }
 

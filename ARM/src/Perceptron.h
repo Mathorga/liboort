@@ -3,9 +3,13 @@
 
 #include "Neuron.h"
 #include "PerceptronSynapse.h"
+#include "Vector.h"
 
-#define neuron_error_t uint16_t
+#define perceptron_error_t uint16_t
+#define perceptron_input_t uint32_t
 #define synapses_num_t uint16_t
+
+// class Vector<PerceptronSynapse>;
 
 class PerceptronSynapse;
 
@@ -15,29 +19,32 @@ public:
     Perceptron();
     Perceptron(Neuron& neuron);
 
+    void print();
+
     // Getters.
     float getFloatValue();
-    neuron_error_t getError();
+    perceptron_error_t getError();
     neuron_value_t getExpectedOutput();
     synapses_num_t getSynapsesNum();
-    PerceptronSynapse** getSynapses();
+    Vector<PerceptronSynapse>* getSynapses();
     Perceptron** getInputs();
 
     // Setters.
     void setDValue(neuron_value_t dValue);
-    void setError(neuron_error_t error);
-    void addError(neuron_error_t error);
+    void setError(perceptron_error_t error);
+    void addError(perceptron_error_t error);
     void setExpectedOutput(neuron_value_t expectedOutput);
 
 private:
     neuron_value_t dValue;
-    neuron_error_t error;
+    perceptron_error_t error;
     neuron_value_t expectedOutput;
-    neuron_error_t delta;
-    neuron_error_t partialDelta;
+    perceptron_error_t delta;
+    perceptron_error_t partialDelta;
 
-    synapses_num_t synapsesNum;
-    PerceptronSynapse** synapses;
+    // synapses_num_t synapsesNum;
+    Vector<PerceptronSynapse>* synapses;
+    // PerceptronSynapse** synapses;
 };
 
 #endif

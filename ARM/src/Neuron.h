@@ -14,6 +14,8 @@ public:
         typeHidden = 2
     };
 
+    virtual void print() = 0;
+
     // Getters.
     neuron_value_t getValue();
     NeuronType getType();

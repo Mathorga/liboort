@@ -2,6 +2,7 @@
 
 void SimpleModelParser::readFile(char* fileName) {
     this->model = new SimpleModel();
+    // this->perceptronModel = new SparsePerceptronModel();
 
     rapidxml::file<> modelFile(fileName);
     rapidxml::xml_document<> doc;
@@ -16,10 +17,13 @@ void SimpleModelParser::readFile(char* fileName) {
             for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
                 if (strcmp(attr->name(), "num") == 0) {
                     this->model->setNeuronsNum(atoi(attr->value()));
+                    // this->perceptronModel->setNeuronsNum(atoi(attr->value()));
                 } else if (strcmp(attr->name(), "inputs") == 0) {
                     this->model->setInputNum(atoi(attr->value()));
+                    // this->perceptronModel->setInputssNum(atoi(attr->value()));
                 } else if (strcmp(attr->name(), "outputs") == 0) {
                     this->model->setOutputNum(atoi(attr->value()));
+                    // this->perceptronModel->setInputsNum(atoi(attr->value()));
                 }
             }
 

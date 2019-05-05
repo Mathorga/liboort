@@ -24,6 +24,7 @@
 double dRandBetween(double low, double high);
 int iRandBetween(int low, int high);
 void setPrintColor(const char* color);
+void debugPrint(const char* string);
 double getTime();
 double getNanoTime();
 void dump(const uint8_t* image, unsigned int n, const char* filename);

@@ -12,6 +12,7 @@ public:
     PerceptronSynapse();
     PerceptronSynapse(synapse_weight_t weight);
     PerceptronSynapse(Perceptron* inputNeuron);
+    PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight);
 
     // Getters.
     Perceptron* getInputNeuron();

@@ -33,6 +33,7 @@ public:
 
 private:
     SimpleModel *model;
+    // SparsePerceptronModel* perceptronModel;
 };
 
 #endif
