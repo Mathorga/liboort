@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-#define neuron_value_t uint16_t
+#define neuron_value_t float
 
 class Neuron {
 public:

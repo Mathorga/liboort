@@ -9,12 +9,19 @@
 class Model {
 public:
     virtual void print() = 0;
+    void computeNeuronsNum();
 
     // Getters.
     neurons_num_t getInputsNum();
     neurons_num_t getOutputsNum();
     neurons_num_t getHiddensNum();
     neurons_num_t getNeuronsNum();
+
+    // Setters.
+    void setInputsNum(neurons_num_t inputsNum);
+    void setOutputsNum(neurons_num_t outputsNum);
+    void setHiddensNum(neurons_num_t hiddensNum);
+    void setNeuronsNum(neurons_num_t neuronsNum);
 
 protected:
     // Number of input neurons.

@@ -5,9 +5,9 @@
 #include "PerceptronSynapse.h"
 #include "Vector.h"
 
-#define perceptron_error_t uint16_t
-#define perceptron_input_t uint32_t
-#define synapses_num_t uint16_t
+#define perceptron_error_t float
+#define perceptron_input_t float
+// #define synapses_num_t uint16_t
 
 // class Vector<PerceptronSynapse>;
 
@@ -17,15 +17,16 @@ class Perceptron : public Neuron {
 public:
     // Constructors.
     Perceptron();
+    Perceptron(neuron_value_t value);
+    Perceptron(neuron_value_t value, vector_size_t synapsesNum);
     Perceptron(Neuron& neuron);
 
     void print();
 
     // Getters.
-    float getFloatValue();
     perceptron_error_t getError();
     neuron_value_t getExpectedOutput();
-    synapses_num_t getSynapsesNum();
+    vector_size_t getSynapsesNum();
     Vector<PerceptronSynapse>* getSynapses();
     Perceptron** getInputs();
 

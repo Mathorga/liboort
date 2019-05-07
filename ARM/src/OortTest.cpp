@@ -61,13 +61,17 @@ int main(int argc, char const *argv[]) {
 
 
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
-    newExpectedOut[0] = 318;
+    newExpectedOut[0] = 0.6;
     SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
     network->setExpectedOutput(newExpectedOut);
     network->print();
-    network->run();
-    printf("Output: %d\n\n", network->getOutput()[0]);
 
+    startTime = getTime();
+    network->run();
+    endTime = getTime();
+    execTime = endTime - startTime;
+    printf("Time: %f s\n", execTime);
+    printf("Output: %f\n\n", network->getOutput()[0]);
 
 
 

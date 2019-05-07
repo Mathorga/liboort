@@ -14,6 +14,7 @@ Copyright (C) 2019  Luka Micheletti
 #define __SIMPLE_MODEL_PARSER__
 
 #include "SimpleModel.h"
+#include "SparsePerceptronModel.h"
 #include "utils.h"
 #include "../lib/rapidxml-1.13/rapidxml.hpp"
 #include "../lib/rapidxml-1.13/rapidxml_utils.hpp"
@@ -33,7 +34,7 @@ public:
 
 private:
     SimpleModel *model;
-    // SparsePerceptronModel* perceptronModel;
+    SparsePerceptronModel* perceptronModel;
 };
 
 #endif

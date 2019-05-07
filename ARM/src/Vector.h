@@ -25,8 +25,21 @@ public:
     }
 
     void addFirst(T* item) {}
-    void addLast(T* item) {}
-    void addAt(T* item, vector_size_t posigion) {}
+    void addLast(T* item) {
+        T* tempItems;
+
+        tempItems = (T*) realloc(this->items, (this->size + 1) * sizeof(T));
+
+        if (tempItems != NULL) {
+            this->items = tempItems;
+            this->items[this->size] = (*item);
+            this->size++;
+        } else {
+            printf("\nERROR INSERTING ITEM\n");
+            //TODO.
+        }
+    }
+    void addAt(T* item, vector_size_t position) {}
     T* removeFirst() {}
     T* removeLast() {}
     T* removeAt(vector_size_t position) {}
@@ -41,7 +54,10 @@ public:
     }
 
     // Setters.
-    void setItems(T* items);
+    void setItems(T* items, vector_size_t size) {
+        this->size = size;
+        this->items = items;
+    }
 
 protected:
     vector_size_t size;

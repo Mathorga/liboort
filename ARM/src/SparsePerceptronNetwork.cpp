@@ -52,7 +52,7 @@ void SparsePerceptronNetwork::computeValue() {
         } else {
             // Check if the neuron is complete (i.e. it doesn't depend on any neuron in the rest of the buffer).
             // Loop through synapses going to current neuron.
-            for (synapses_num_t j = 0; j < neuronsBuffer[i]->getSynapses()->getSize(); j++) {
+            for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapses()->getSize(); j++) {
                 // Loop through neurons coming next.
                 for (neurons_num_t k = pos; k < size; k ++) {
                     if (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron() == neuronsBuffer[k]) {
@@ -76,7 +76,7 @@ void SparsePerceptronNetwork::computeValue() {
                 // The neuron is complete, so calculate its value based on its competers':
                 // Combination.
                 value = 0;
-                for (synapses_num_t j = 0; j < neuronsBuffer[i]->getSynapses()->getSize(); j++) {
+                for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapses()->getSize(); j++) {
                     value += neuronsBuffer[i]->getSynapses()->getItems()[j].getWeight() * neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron()->getValue();
                 }
 
@@ -118,7 +118,7 @@ void SparsePerceptronNetwork::computeError() {
         } else {
             // Check if the neuron is complete (i.e. it doesn't compete to any neuron in the rest of the buffer).
             // Loop through synapses coming from current neuron.
-            for (synapses_num_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
+            for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                 // Loop through neurons coming next.
                 for (neurons_num_t k = pos; k < size; k ++) {
                     if (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron() == neuronsBuffer[k]) {
@@ -146,12 +146,12 @@ void SparsePerceptronNetwork::computeError() {
                 // The neuron is complete, so calculate its competers' errors.
                 // Calculate the sum of the weights coming to the current neuron.
                 synapse_weight_t incomingWeight = 0;
-                for (synapses_num_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
+                for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                     incomingWeight += neuronsBuffer[i]->getSynapses()->getItems()[j].getWeight();
                 }
                 // Update the errors of the neurons that compete to the current one and correct their weights.
                 #pragma omp parallel for
-                for (synapses_num_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
+                for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                     // Compute the partial error.
                     ((Perceptron*) (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron()))->addError(neuronsBuffer[i]->getError() * (neuronsBuffer[i]->getSynapses()->getItems()[j].getWeight() / incomingWeight));
                 }
@@ -176,7 +176,7 @@ neuron_value_t SparsePerceptronNetwork::dActivate(perceptron_input_t value) {
 }
 
 void SparsePerceptronNetwork::print() {
-    ((SparsePerceptronModel*) this->model)->print();
+    this->model->print();
 }
 
 SparsePerceptronModel* SparsePerceptronNetwork::getModel() {
@@ -190,6 +190,8 @@ neuron_value_t* SparsePerceptronNetwork::getOutput() {
     for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
         if (this->model->getNeurons()[i].getType() == Neuron::typeOutput) {
             out[index] = this->model->getNeurons()[i].getValue();
+            printf("\nCAPRONE %f\n", this->model->getNeurons()[i].getValue());
+            index++;
         }
     }
 

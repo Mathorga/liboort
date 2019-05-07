@@ -7,7 +7,7 @@ SparsePerceptronModel::SparsePerceptronModel() {
     this->neuronsNum = this->inputsNum + this->hiddensNum + this->outputsNum;
     this->items = new Perceptron[this->neuronsNum];
     for (neurons_num_t i = 0; i < this->neuronsNum; i++) {
-        this->items[i].setValue(i);//*(new SpikingNeuron((NEURON_VALUE_T) 10));
+        this->items[i].setValue(0.5);//*(new SpikingNeuron((NEURON_VALUE_T) 10));
     }
 }
 
@@ -29,14 +29,14 @@ SparsePerceptronModel::SparsePerceptronModel(neurons_num_t inputsNum, neurons_nu
         // Create synapses.
         for (neurons_num_t i = this->inputsNum; i < this->neuronsNum; i++) {
             for (neurons_num_t j = 0; j < this->inputsNum; j++) {
-                this->items[i].getSynapses()->addLast(new PerceptronSynapse(&(this->items[j]), 100));
+                this->items[i].getSynapses()->addLast(new PerceptronSynapse(&(this->items[j]), PerceptronSynapse::defaultWeight));
             }
         }
     }
 }
 
 void SparsePerceptronModel::print() {
-    printf("\nSparsePerceptronModel\n");
+    printf("\n-----------SparsePerceptronModel-----------");
     printf("\nSize %d\n", this->size);
 
     for (vector_size_t i = 0; i < this->size; i++) {

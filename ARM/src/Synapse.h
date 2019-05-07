@@ -4,7 +4,9 @@
 #include "Neuron.h"
 #include "utils.h"
 
-#define synapse_weight_t uint16_t
+#define synapse_weight_t float
+
+#define SYNAPSE_DEFAULT_WEIGHT 0.5f
 
 class Synapse {
 public:
