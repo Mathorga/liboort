@@ -65,12 +65,23 @@ int main(int argc, char const *argv[]) {
     SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
     network->setExpectedOutput(newExpectedOut);
     network->print();
-
-    startTime = getTime();
     network->run();
-    endTime = getTime();
-    execTime = endTime - startTime;
-    printf("Time: %f s\n", execTime);
+    network->correct();
+    printf("Output: %f\n\n", network->getOutput()[0]);
+    network->run();
+    network->correct();
+    printf("Output: %f\n\n", network->getOutput()[0]);
+    network->run();
+    network->correct();
+    printf("Output: %f\n\n", network->getOutput()[0]);
+    network->run();
+    network->correct();
+    printf("Output: %f\n\n", network->getOutput()[0]);
+    network->run();
+    network->correct();
+    printf("Output: %f\n\n", network->getOutput()[0]);
+    network->run();
+    network->correct();
     printf("Output: %f\n\n", network->getOutput()[0]);
 
 

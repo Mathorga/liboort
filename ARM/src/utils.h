@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <limits>
 #include <iostream>
+#include <cstddef>
 #include <cmath>
 
 #define ANSI_COLOR_RED     "\x1b[31m"

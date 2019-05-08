@@ -21,6 +21,10 @@ synapse_weight_t Synapse::getWeight() {
     return this->weight;
 }
 
+void Synapse::setWeight(synapse_weight_t weight) {
+    this->weight = weight;
+}
+
 // void Synapse::setInputNeuron(Neuron* inputNeuron) {
 //     this->inputNeuron = inputNeuron;
 // }

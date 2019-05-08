@@ -10,8 +10,12 @@ SparsePerceptronNetwork::SparsePerceptronNetwork() {
 SparsePerceptronNetwork::SparsePerceptronNetwork(neurons_num_t inputsNum, neurons_num_t outputsNum) {
     this->baseWeight = 0;
     this->baseValue = 0;
-    this->learningRate = 0;
+
     this->model = new SparsePerceptronModel(inputsNum, outputsNum, true);
+
+    // Calculate the learning rate based on the number of neurons:
+    // the greater the number of neurons, the lower the learning rate.
+    this->learningRate = 1 / (float) this->model->getNeuronsNum();
 }
 
 SparsePerceptronNetwork::SparsePerceptronNetwork(SparsePerceptronModel* model) {
@@ -26,7 +30,11 @@ void SparsePerceptronNetwork::run() {
 }
 
 void SparsePerceptronNetwork::correct() {
+    // Compute the errors of the neurons of the net.
+    this->computeError();
 
+    // Adjust the synapses' weights based on the neurons' errors.
+    this->adjustWeights();
 }
 
 void SparsePerceptronNetwork::computeValue() {
@@ -165,14 +173,41 @@ void SparsePerceptronNetwork::computeError() {
     return;
 }
 
+void SparsePerceptronNetwork::adjustWeights() {
+    float dWeight;
+
+    // Loop through synapses to update the weights.
+    for (vector_size_t i = 0; i < this->model->getSize(); i++) {
+        for (vector_size_t j = 0; j < this->model->getItems()[i].getSynapsesNum(); j++) {
+            // Calculate the weight delta.
+            // dWeight = this->learningRate * this->model->getItems()[i].getError() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getValue();
+
+            // Calculate the custom weight delta.
+            dWeight = this->learningRate * this->model->getItems()[i].getError() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getValue();
+
+            // Apply the delta weight.
+            this->model->getItems()[i].getSynapses()->getItems()[j].setWeight(this->model->getItems()[i].getSynapses()->getItems()[j].getWeight() + dWeight);
+        }
+    }
+
+
+    // #pragma omp parallel for
+    // for (uint16_t i = 0; i < this->model->getSynapsesNum(); i++) {
+    //     // Apply the delta rule.
+    //     // this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].dValue * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
+    //     // Apply the customized delta rule.
+    //     this->model->getSynapses()[i].weight += this->learningRate * this->model->getNeurons()[this->model->getSynapses()[i].outputNeuron].error * this->model->getNeurons()[this->model->getSynapses()[i].inputNeuron].value;
+    // }
+}
+
 neuron_value_t SparsePerceptronNetwork::activate(perceptron_input_t value) {
     // Sigmoid function.
     return (1 / (1 + (pow(M_E, -(value)))));
 }
 
 neuron_value_t SparsePerceptronNetwork::dActivate(perceptron_input_t value) {
-    //TODO
-    return value;
+    // Sigmoid derivative function.
+    return this->activate(value) * (1 - this->activate(value));
 }
 
 void SparsePerceptronNetwork::print() {
@@ -190,7 +225,6 @@ neuron_value_t* SparsePerceptronNetwork::getOutput() {
     for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
         if (this->model->getNeurons()[i].getType() == Neuron::typeOutput) {
             out[index] = this->model->getNeurons()[i].getValue();
-            printf("\nCAPRONE %f\n", this->model->getNeurons()[i].getValue());
             index++;
         }
     }

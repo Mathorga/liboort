@@ -4,7 +4,7 @@
 #include "NeuralNetwork.h"
 #include "SparsePerceptronModel.h"
 
-#define learning_rate_t uint16_t
+#define learning_rate_t float
 
 class SparsePerceptronNetwork : public NeuralNetwork {
 public:

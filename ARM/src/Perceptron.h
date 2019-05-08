@@ -24,6 +24,7 @@ public:
     void print();
 
     // Getters.
+    neuron_value_t getDValue();
     perceptron_error_t getError();
     neuron_value_t getExpectedOutput();
     vector_size_t getSynapsesNum();

@@ -32,6 +32,10 @@ void Perceptron::print() {
     }
 }
 
+neuron_value_t Perceptron::getDValue() {
+    return this->dValue;
+}
+
 perceptron_error_t Perceptron::getError() {
     return this->error;
 }
