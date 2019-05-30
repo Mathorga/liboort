@@ -177,16 +177,16 @@ void SparsePerceptronNetwork::adjustWeights() {
     float dWeight;
 
     // Loop through synapses to update the weights.
-    for (vector_size_t i = 0; i < this->model->getSize(); i++) {
-        for (vector_size_t j = 0; j < this->model->getItems()[i].getSynapsesNum(); j++) {
+    for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
+        for (vector_size_t j = 0; j < this->model->getNeuron(i)->getSynapsesNum(); j++) {
             // Calculate the weight delta.
-            // dWeight = this->learningRate * this->model->getItems()[i].getError() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getValue();
+            // dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getValue();
 
             // Calculate the custom weight delta.
-            dWeight = this->learningRate * this->model->getItems()[i].getError() * this->model->getItems()[i].getSynapses()->getItems()[j].getInputNeuron()->getValue();
+            dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getValue();
 
             // Apply the delta weight.
-            this->model->getItems()[i].getSynapses()->getItems()[j].setWeight(this->model->getItems()[i].getSynapses()->getItems()[j].getWeight() + dWeight);
+            this->model->getNeuron(i)->getSynapses()->getItems()[j].setWeight(this->model->getNeuron(i)->getSynapses()->getItems()[j].getWeight() + dWeight);
         }
     }
 
@@ -223,8 +223,8 @@ neuron_value_t* SparsePerceptronNetwork::getOutput() {
     neurons_num_t index = 0;
 
     for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
-        if (this->model->getNeurons()[i].getType() == Neuron::typeOutput) {
-            out[index] = this->model->getNeurons()[i].getValue();
+        if (this->model->getNeuron(i)->getType() == Neuron::typeOutput) {
+            out[index] = this->model->getNeuron(i)->getValue();
             index++;
         }
     }
@@ -234,7 +234,7 @@ neuron_value_t* SparsePerceptronNetwork::getOutput() {
 
 void SparsePerceptronNetwork::setExpectedOutput(neuron_value_t* expectedOutput) {
     for (neurons_num_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
-        if (this->model->getNeurons()[i].getType() == Neuron::typeOutput) {
+        if (this->model->getNeuron(i)->getType() == Neuron::typeOutput) {
             ((Perceptron*) &(this->model->getNeurons()[i]))->setExpectedOutput(expectedOutput[j]);
             j++;
         }

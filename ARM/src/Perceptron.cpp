@@ -1,17 +1,27 @@
 #include "Perceptron.h"
 
-Perceptron::Perceptron() {
+Perceptron::Perceptron(neurons_num_t id) {
     // TODO Implement real constructor.
+    this->id = id;
     this->value = 0;
     this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neuron_value_t value) {
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value) {
+    this->id = id;
     this->value = value;
     this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neuron_value_t value, vector_size_t synapsesNum) {
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type) {
+    this->id = id;
+    this->value = value;
+    this->type = type;
+    this->synapses = new Vector<PerceptronSynapse>();
+}
+
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum) {
+    this->id = id;
     this->value = value;
     this->synapses = new Vector<PerceptronSynapse>(synapsesNum);
     for (vector_size_t i = 0; i < synapsesNum; i++) {
@@ -20,6 +30,7 @@ Perceptron::Perceptron(neuron_value_t value, vector_size_t synapsesNum) {
 }
 
 Perceptron::Perceptron(Neuron& neuron) {
+    this->id = neuron.getId();
     this->value = neuron.getValue();
     this->synapses = new Vector<PerceptronSynapse>();
 }

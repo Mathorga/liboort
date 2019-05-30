@@ -5,7 +5,7 @@
 #include "Vector.h"
 #include "Perceptron.h"
 
-class SparsePerceptronModel : public Model , public Vector<Perceptron> {
+class SparsePerceptronModel : public Model {//, public Vector<Perceptron> {
 public:
     // Constructors.
     SparsePerceptronModel();
@@ -15,9 +15,10 @@ public:
 
     // Getters.
     Perceptron* getNeurons();
+    Perceptron* getNeuron(vector_size_t index);
 
-// private:
-//     Vector<Perceptron>* perceptrons;
+private:
+    Vector<Perceptron>* perceptrons;
 };
 
 #endif

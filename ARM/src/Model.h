@@ -4,7 +4,7 @@
 #include "Neuron.h"
 #include "utils.h"
 
-#define neurons_num_t uint32_t
+// #define neurons_num_t uint32_t
 
 class Model {
 public:

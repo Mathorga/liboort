@@ -28,7 +28,7 @@ void SimpleModelParser::readFile(char* fileName) {
             }
 
             this->model->setNeurons((SimpleModel::_Neuron*) malloc(this->model->getNeuronsNum() * sizeof(SimpleModel::_Neuron)));
-            this->perceptronModel->setItems(new Perceptron[this->perceptronModel->getNeuronsNum()], this->perceptronModel->getNeuronsNum());
+            // this->perceptronModel->setItems(new Perceptron[this->perceptronModel->getNeuronsNum()], this->perceptronModel->getNeuronsNum());
 
 
             // Neurons data.
@@ -40,6 +40,7 @@ void SimpleModelParser::readFile(char* fileName) {
                     for (rapidxml::xml_attribute<>* attr = node->first_attribute(); attr; attr = attr->next_attribute()) {
                         if (strcmp(attr->name(), "type") == 0) {
                             this->model->getNeurons()[position].type = (SimpleModel::NeuronType) atoi(attr->value());
+                            // this->perceptronModel->getNeurons()[position].setType((Neuron::NeuronType) atoi(attr->value()));
                         } else if (strcmp(attr->name(), "enabled") == 0) {
                             this->model->getNeurons()[position].enabled = (bool) atoi(attr->value());
                         }

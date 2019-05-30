@@ -53,6 +53,16 @@ public:
         return this->items;
     }
 
+    T* getItemAt(vector_size_t index) {
+        if (index >= 0 && index < this->size) {
+            return &(this->items[index]);
+        } else {
+            printf("\nINDEX OUT OF BOUNDS\n");
+            //TODO
+            return NULL;
+        }
+    }
+
     // Setters.
     void setItems(T* items, vector_size_t size) {
         this->size = size;

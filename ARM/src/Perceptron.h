@@ -16,9 +16,10 @@ class PerceptronSynapse;
 class Perceptron : public Neuron {
 public:
     // Constructors.
-    Perceptron();
-    Perceptron(neuron_value_t value);
-    Perceptron(neuron_value_t value, vector_size_t synapsesNum);
+    Perceptron(neurons_num_t id);
+    Perceptron(neurons_num_t id, neuron_value_t value);
+    Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type);
+    Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum);
     Perceptron(Neuron& neuron);
 
     void print();

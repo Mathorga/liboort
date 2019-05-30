@@ -1,11 +1,15 @@
 #include "Neuron.h"
 
-neuron_value_t Neuron::getValue() {
-    return this->value;
+neurons_num_t Neuron::getId() {
+    return this->id;
 }
 
 Neuron::NeuronType Neuron::getType() {
     return this->type;
+}
+
+neuron_value_t Neuron::getValue() {
+    return this->value;
 }
 
 void Neuron::setValue(neuron_value_t value) {

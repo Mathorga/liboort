@@ -85,6 +85,19 @@ int main(int argc, char const *argv[]) {
     printf("Output: %f\n\n", network->getOutput()[0]);
 
 
+    // Main loop of the program.
+    for (uint16_t i = 0;; i ++) {
+        startTime = getTime();
+        network->run();
+        network->correct();
+        // brain->describe();
+        // brain->run();
+        endTime = getTime();
+        execTime = endTime - startTime;
+        usleep(10000);
+        // printf("Time: %f s\n", execTime);
+        printf("Output: %.7f\n", network->getOutput()[0]);
+    }
 
 
 
@@ -93,19 +106,18 @@ int main(int argc, char const *argv[]) {
 
 
     // Main loop of the program.
-    float op;
-    for (uint16_t i = 0;; i ++) {
-        startTime = getTime();
-        brain->run();
-        brain->correct();
-        // brain->describe();
-        // brain->run();
-        endTime = getTime();
-        execTime = endTime - startTime;
-        usleep(10000);
-        // printf("Time: %f s\n", execTime);
-        printf("Output: %.7f\n", brain->getOutput()[0]);
-    }
+    // for (uint16_t i = 0;; i ++) {
+    //     startTime = getTime();
+    //     brain->run();
+    //     brain->correct();
+    //     // brain->describe();
+    //     // brain->run();
+    //     endTime = getTime();
+    //     execTime = endTime - startTime;
+    //     usleep(10000);
+    //     // printf("Time: %f s\n", execTime);
+    //     printf("Output: %.7f\n", brain->getOutput()[0]);
+    // }
 
     return 0;
 }

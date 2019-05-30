@@ -4,6 +4,7 @@
 #include "utils.h"
 
 #define neuron_value_t float
+#define neurons_num_t uint32_t
 
 class Neuron {
 public:
@@ -17,14 +18,16 @@ public:
     virtual void print() = 0;
 
     // Getters.
-    neuron_value_t getValue();
+    neurons_num_t getId();
     NeuronType getType();
+    neuron_value_t getValue();
 
     // Setters.
-    void setValue(neuron_value_t value);
     void setType(NeuronType type);
+    void setValue(neuron_value_t value);
 
 protected:
+    neurons_num_t id;
     NeuronType type;
     neuron_value_t value;
 };
