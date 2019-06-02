@@ -10,6 +10,8 @@
 
 class Synapse {
 public:
+    static const synapse_weight_t DEFAULT_WEIGHT;
+
     // Constructors.
     // Synapse();
     // Synapse(Neuron* inputNeuron);

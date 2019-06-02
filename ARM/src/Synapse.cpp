@@ -1,5 +1,7 @@
 #include "Synapse.h"
 
+const synapse_weight_t Synapse::DEFAULT_WEIGHT = 0.5;
+
 // Synapse::Synapse() {
 //     this->weight = 0;
 // }

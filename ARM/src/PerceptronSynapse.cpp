@@ -23,8 +23,8 @@ PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t w
 }
 
 void PerceptronSynapse::print() {
-    printf("\t----------SYNAPSE----------\n");
-    printf("\tWeight %f\n", this->weight);
+    printf("|\t----------SYNAPSE----------\t\t|\n");
+    printf("|\tWeight %f\t\t\t\t|\n", this->weight);
 }
 
 Perceptron* PerceptronSynapse::getInputNeuron() {

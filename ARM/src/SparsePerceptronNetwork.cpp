@@ -21,8 +21,9 @@ SparsePerceptronNetwork::SparsePerceptronNetwork(neurons_num_t inputsNum, neuron
 SparsePerceptronNetwork::SparsePerceptronNetwork(SparsePerceptronModel* model) {
     this->baseWeight = 0;
     this->baseValue = 0;
-    this->learningRate = 0;
+    // this->learningRate = 0;
     this->model = model;
+    this->learningRate = 1 / (float) this->model->getNeuronsNum();
 }
 
 void SparsePerceptronNetwork::run() {
@@ -180,7 +181,7 @@ void SparsePerceptronNetwork::adjustWeights() {
     for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
         for (vector_size_t j = 0; j < this->model->getNeuron(i)->getSynapsesNum(); j++) {
             // Calculate the weight delta.
-            // dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getValue();
+            // dWeight = this->learningRate * this->model->getNeuron(i).getError() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getValue();
 
             // Calculate the custom weight delta.
             dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getValue();

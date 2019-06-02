@@ -13,15 +13,18 @@ public:
         this->size = 0;
         this->items = NULL;
     }
-
     Vector(vector_size_t size) {
         this->size = size;
         this->items = (T*) malloc(size * sizeof(T));
     }
-
     Vector(vector_size_t size, T* items) {
         this->size = size;
         this->items = items;
+    }
+
+    // Destructors.
+    ~Vector() {
+        delete[] this->items;
     }
 
     void addFirst(T* item) {}
@@ -40,27 +43,36 @@ public:
         }
     }
     void addAt(T* item, vector_size_t position) {}
-    T* removeFirst() {}
-    T* removeLast() {}
-    T* removeAt(vector_size_t position) {}
+    void replaceAt(T* item, vector_size_t index) {
+        if (index >= 0 && index < this->size) {
+            this->items[index] = (*item);
+        } else {
+            printf("\nINDEX OUT OF BOUNDS\n");
+            //TODO
+        }
+    }
+    T removeFirst() {}
+    T removeLast() {}
+    T removeAt(vector_size_t position) {}
 
     // Getters.
     vector_size_t getSize() {
         return this->size;
     }
-
     T* getItems() {
         return this->items;
     }
-
-    T* getItemAt(vector_size_t index) {
+    T* getItem(vector_size_t index) {
         if (index >= 0 && index < this->size) {
             return &(this->items[index]);
         } else {
             printf("\nINDEX OUT OF BOUNDS\n");
             //TODO
-            return NULL;
+            // return NULL;
         }
+    }
+    T* getLast() {
+        return &(this->items[this->size - 1]);
     }
 
     // Setters.

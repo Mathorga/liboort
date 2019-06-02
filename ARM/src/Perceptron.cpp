@@ -1,29 +1,23 @@
 #include "Perceptron.h"
 
+const neuron_value_t Perceptron::DEFAULT_VALUE = 0.5;
+
 Perceptron::Perceptron(neurons_num_t id) {
     // TODO Implement real constructor.
     this->id = id;
-    this->value = 0;
+    this->value = DEFAULT_VALUE;
     this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value) {
-    this->id = id;
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value) : Perceptron(id) {
     this->value = value;
-    this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type) {
-    this->id = id;
-    this->value = value;
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type) : Perceptron(id, value) {
     this->type = type;
-    this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum) {
-    this->id = id;
-    this->value = value;
-    this->synapses = new Vector<PerceptronSynapse>(synapsesNum);
+Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum) : Perceptron(id, value) {
     for (vector_size_t i = 0; i < synapsesNum; i++) {
         this->synapses->addLast(new PerceptronSynapse(PerceptronSynapse::defaultWeight));
     }
@@ -36,10 +30,10 @@ Perceptron::Perceptron(Neuron& neuron) {
 }
 
 void Perceptron::print() {
-    printf("----------PERCEPTRON----------\n");
-    printf("Value %f\n", this->value);
+    printf("|----------PERCEPTRON----------\t\t\t|\n");
+    printf("|Value %f\t\t\t\t\t|\n", this->value);
     for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
-        this->synapses->getItems()[i].print();
+        this->synapses->getItem(i)->print();
     }
 }
 
@@ -65,6 +59,11 @@ Vector<PerceptronSynapse>* Perceptron::getSynapses() {
 
 Perceptron** Perceptron::getInputs() {
     //TODO Return neurons connected to this via synapses.
+}
+
+Perceptron Perceptron::getNullPerceptron() {
+    Perceptron nullPerceptron(-1);
+    return nullPerceptron;
 }
 
 // Setters.

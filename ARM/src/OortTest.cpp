@@ -2,6 +2,7 @@
 #include "SimpleBrain.h"
 #include "SimpleModelParser.h"
 #include "SparsePerceptronNetwork.h"
+#include "SparsePerceptronModelParser.h"
 #include "utils.h"
 
 int main(int argc, char const *argv[]) {
@@ -25,66 +26,58 @@ int main(int argc, char const *argv[]) {
     }
 
     // Get Model from file and create a Brain from it.
-    SimpleModelParser* parser = new SimpleModelParser();
-    parser->readFile(modelFileName);
-    SimpleBrain* brain = new SimpleBrain(parser->getModel());
+    // SimpleModelParser* parser = new SimpleModelParser();
+    // parser->readFile(modelFileName);
+    // SimpleBrain* brain = new SimpleBrain(parser->getModel());
 
     // SimpleBrain* testBrain = new SimpleBrain(8000, 1);
     // ModelParser* testParser = new ModelParser();
     // testParser->setModel(testBrain->getModel());
     // testParser->writeFile("./res/mdl/8000in1out.xml");
 
-    brain->run();
-    // brain->describe();
-
-    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
     // brain->run();
-    // brain->describe();
-    //
-    // brain->addNeuron(0, brain->getNeuronsNum() - 1);
-    // brain->run();
-    // brain->describe();
-    //
-    // brain->addSynapse(3, brain->getNeuronsNum() - 1);
-    // brain->run();
-    // brain->describe();
 
-    expectedOutput = (float*) malloc(outputNum * sizeof(float));
-    expectedOutput[0] = 0.6;
-    brain->setExpectedOutput(expectedOutput);
-    printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
+    // expectedOutput = (float*) malloc(outputNum * sizeof(float));
+    // expectedOutput[0] = 0.6;
+    // brain->setExpectedOutput(expectedOutput);
+    // printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
 
 
 
 
 
 
+
+    SparsePerceptronModelParser* spmParser = new SparsePerceptronModelParser();
+    spmParser->readFile(modelFileName);
+    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
+    network->print();
 
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
     newExpectedOut[0] = 0.6;
-    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
+    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
     network->setExpectedOutput(newExpectedOut);
-    network->print();
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-    network->run();
-    network->correct();
-    printf("Output: %f\n\n", network->getOutput()[0]);
-
-
+    // network->print();
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    // network->run();
+    // network->correct();
+    // printf("Output: %f\n\n", network->getOutput()[0]);
+    //
+    //
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
         startTime = getTime();

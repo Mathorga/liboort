@@ -7,14 +7,14 @@
 
 #define perceptron_error_t float
 #define perceptron_input_t float
-// #define synapses_num_t uint16_t
-
-// class Vector<PerceptronSynapse>;
 
 class PerceptronSynapse;
 
 class Perceptron : public Neuron {
 public:
+    static const neuron_value_t DEFAULT_VALUE;
+    static Perceptron getNullPerceptron();
+
     // Constructors.
     Perceptron(neurons_num_t id);
     Perceptron(neurons_num_t id, neuron_value_t value);
@@ -45,9 +45,7 @@ private:
     perceptron_error_t delta;
     perceptron_error_t partialDelta;
 
-    // synapses_num_t synapsesNum;
     Vector<PerceptronSynapse>* synapses;
-    // PerceptronSynapse** synapses;
 };
 
 #endif
