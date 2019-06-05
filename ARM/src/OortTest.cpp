@@ -49,8 +49,11 @@ int main(int argc, char const *argv[]) {
 
 
     SparsePerceptronModelParser* spmParser = new SparsePerceptronModelParser();
-    spmParser->readFile(modelFileName);
-    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
+    // spmParser->readFile(modelFileName);
+    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
+    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(5, 2);
+    spmParser->setModel(network->getModel());
+    spmParser->writeFile(modelFileName);
     network->print();
 
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));

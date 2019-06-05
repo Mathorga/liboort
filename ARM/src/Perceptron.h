@@ -30,6 +30,7 @@ public:
     neuron_value_t getExpectedOutput();
     vector_size_t getSynapsesNum();
     Vector<PerceptronSynapse>* getSynapses();
+    PerceptronSynapse* getSynapse(vector_size_t index);
     Perceptron** getInputs();
 
     // Setters.

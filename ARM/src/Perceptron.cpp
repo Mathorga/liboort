@@ -31,6 +31,8 @@ Perceptron::Perceptron(Neuron& neuron) {
 
 void Perceptron::print() {
     printf("|----------PERCEPTRON----------\t\t\t|\n");
+    printf("|Id %d\t\t\t\t\t\t|\n", this->id);
+    printf("|Type %d\t\t\t\t\t\t|\n", (uint16_t) this->type);
     printf("|Value %f\t\t\t\t\t|\n", this->value);
     for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
         this->synapses->getItem(i)->print();
@@ -55,6 +57,10 @@ vector_size_t Perceptron::getSynapsesNum() {
 
 Vector<PerceptronSynapse>* Perceptron::getSynapses() {
     return this->synapses;
+}
+
+PerceptronSynapse* Perceptron::getSynapse(vector_size_t index) {
+    return this->synapses->getItem(index);
 }
 
 Perceptron** Perceptron::getInputs() {

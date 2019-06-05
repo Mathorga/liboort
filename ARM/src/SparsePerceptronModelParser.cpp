@@ -93,7 +93,67 @@ void SparsePerceptronModelParser::readFile(char *fileName) {
 }
 
 void SparsePerceptronModelParser::writeFile(char *fileName) {
+    char buffer[12];
+    rapidxml::xml_document<> doc;
+    rapidxml::xml_node<>* declaration;
+    rapidxml::xml_node<>* networkNode;
+    rapidxml::xml_node<>* neuronsNode;
+    rapidxml::xml_node<>* neuronNode;
+    rapidxml::xml_node<>* synapsesNode;
+    rapidxml::xml_node<>* synapseNode;
 
+    // Append declaration.
+    declaration = doc.allocate_node(rapidxml::node_declaration);
+    declaration->append_attribute(doc.allocate_attribute("version", "1.0"));
+    declaration->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
+    doc.append_node(declaration);
+
+    // Append network node.
+    networkNode = doc.allocate_node(rapidxml::node_element, "network");
+    doc.append_node(networkNode);
+
+    // Append neurons node.
+    neuronsNode = doc.allocate_node(rapidxml::node_element, "neurons");
+    sprintf(buffer, "%d", this->model->getNeuronsNum());
+    neuronsNode->append_attribute(doc.allocate_attribute("num", doc.allocate_string(buffer)));
+    sprintf(buffer, "%d", this->model->getInputsNum());
+    neuronsNode->append_attribute(doc.allocate_attribute("inputs", doc.allocate_string(buffer)));
+    sprintf(buffer, "%d", this->model->getOutputsNum());
+    neuronsNode->append_attribute(doc.allocate_attribute("outputs", doc.allocate_string(buffer)));
+    networkNode->append_node(neuronsNode);
+
+    // Append a node for each neuron.
+    for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
+        neuronNode = doc.allocate_node(rapidxml::node_element, "neuron");
+        sprintf(buffer, "%d", this->model->getNeuron(i)->getId());
+        neuronNode->append_attribute(doc.allocate_attribute("id", doc.allocate_string(buffer)));
+        sprintf(buffer, "%d", this->model->getNeuron(i)->getType());
+        neuronNode->append_attribute(doc.allocate_attribute("type", doc.allocate_string(buffer)));
+        neuronsNode->append_node(neuronNode);
+
+        // Append synapses node.
+        synapsesNode = doc.allocate_node(rapidxml::node_element, "synapses");
+        sprintf(buffer, "%d", this->model->getNeuron(i)->getSynapses()->getSize());
+        synapsesNode->append_attribute(doc.allocate_attribute("num", doc.allocate_string(buffer)));
+        neuronNode->append_node(synapsesNode);
+
+        // Append a node for each synapse of each neuron.
+        for (vector_size_t j = 0; j <this->model->getNeuron(i)->getSynapses()->getSize(); j++) {
+            synapseNode = doc.allocate_node(rapidxml::node_element, "synapse");
+            sprintf(buffer, "%d", this->model->getNeuron(i)->getSynapse(j)->getInputNeuron()->getId());
+            synapseNode->append_attribute(doc.allocate_attribute("input", doc.allocate_string(buffer)));
+            sprintf(buffer, "%f", this->model->getNeuron(i)->getSynapse(j)->getWeight());
+            synapseNode->append_attribute(doc.allocate_attribute("weight", doc.allocate_string(buffer)));
+            neuronNode->append_node(synapseNode);
+        }
+    }
+
+    // Save to file
+    std::ofstream outputFile(fileName);
+    // print(outputFile, doc, 0);
+    outputFile << doc;
+    outputFile.close();
+    doc.clear();
 }
 
 SparsePerceptronModel* SparsePerceptronModelParser::getModel() {

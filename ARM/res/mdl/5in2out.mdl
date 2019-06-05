@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network>
+	<neurons num="7" inputs="5" outputs="2">
+		<neuron id="0" type="0">
+			<synapses num="0"/>
+		</neuron>
+		<neuron id="1" type="0">
+			<synapses num="0"/>
+		</neuron>
+		<neuron id="2" type="0">
+			<synapses num="0"/>
+		</neuron>
+		<neuron id="3" type="0">
+			<synapses num="0"/>
+		</neuron>
+		<neuron id="4" type="0">
+			<synapses num="0"/>
+		</neuron>
+		<neuron id="5" type="1">
+			<synapses num="5"/>
+			<synapse input="0" weight="0.500000"/>
+			<synapse input="1" weight="0.500000"/>
+			<synapse input="2" weight="0.500000"/>
+			<synapse input="3" weight="0.500000"/>
+			<synapse input="4" weight="0.500000"/>
+		</neuron>
+		<neuron id="6" type="1">
+			<synapses num="5"/>
+			<synapse input="0" weight="0.500000"/>
+			<synapse input="1" weight="0.500000"/>
+			<synapse input="2" weight="0.500000"/>
+			<synapse input="3" weight="0.500000"/>
+			<synapse input="4" weight="0.500000"/>
+		</neuron>
+	</neurons>
+</network>
+
