@@ -49,40 +49,24 @@ int main(int argc, char const *argv[]) {
 
 
     SparsePerceptronModelParser* spmParser = new SparsePerceptronModelParser();
-    // spmParser->readFile(modelFileName);
-    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
-    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(5, 2);
-    spmParser->setModel(network->getModel());
-    spmParser->writeFile(modelFileName);
-    network->print();
+    spmParser->readFile(modelFileName);
+    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
+    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(5, 2);
+    // spmParser->setModel(network->getModel());
+    // spmParser->writeFile(modelFileName);
+    // network->print();
 
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
     newExpectedOut[0] = 0.6;
     // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
     network->setExpectedOutput(newExpectedOut);
-    // network->print();
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    // network->run();
-    // network->correct();
-    // printf("Output: %f\n\n", network->getOutput()[0]);
-    //
-    //
+    network->print();
+
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
+        if (i % 100 == 0) {
+            network->print();
+        }
         startTime = getTime();
         network->run();
         network->correct();
@@ -94,26 +78,6 @@ int main(int argc, char const *argv[]) {
         // printf("Time: %f s\n", execTime);
         printf("Output: %.7f\n", network->getOutput()[0]);
     }
-
-
-
-
-
-
-
-    // Main loop of the program.
-    // for (uint16_t i = 0;; i ++) {
-    //     startTime = getTime();
-    //     brain->run();
-    //     brain->correct();
-    //     // brain->describe();
-    //     // brain->run();
-    //     endTime = getTime();
-    //     execTime = endTime - startTime;
-    //     usleep(10000);
-    //     // printf("Time: %f s\n", execTime);
-    //     printf("Output: %.7f\n", brain->getOutput()[0]);
-    // }
 
     return 0;
 }

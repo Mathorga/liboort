@@ -144,7 +144,7 @@ void SparsePerceptronModelParser::writeFile(char *fileName) {
             synapseNode->append_attribute(doc.allocate_attribute("input", doc.allocate_string(buffer)));
             sprintf(buffer, "%f", this->model->getNeuron(i)->getSynapse(j)->getWeight());
             synapseNode->append_attribute(doc.allocate_attribute("weight", doc.allocate_string(buffer)));
-            neuronNode->append_node(synapseNode);
+            synapsesNode->append_node(synapseNode);
         }
     }
 

@@ -1,20 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <network>
     <neurons num="7" inputs="4" outputs="1">
         <neuron id="0" type="0">
-            <synapses num="0">
-            </synapses>
+            <synapses num="0"/>
         </neuron>
         <neuron id="1" type="0">
-            <synapses num="0">
-            </synapses>
+            <synapses num="0"/>
         </neuron>
         <neuron id="2" type="0">
-            <synapses num="0">
-            </synapses>
+            <synapses num="0"/>
         </neuron>
         <neuron id="3" type="0">
-            <synapses num="0">
-            </synapses>
+            <synapses num="0"/>
         </neuron>
         <neuron id="4" type="1">
             <synapses num="5">

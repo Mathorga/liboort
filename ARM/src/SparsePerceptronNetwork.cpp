@@ -120,6 +120,7 @@ void SparsePerceptronNetwork::computeError() {
     // Compute errors based on the expected output.
     for (neurons_num_t i = 0; i < size; i++) {
         start:
+        // printf("\nId %d\n", neuronsBuffer[i]->getId());
         // Check if the neuron is input (no need to calculate the error).
         if (neuronsBuffer[i]->getType() == Neuron::typeInput) {
             // Remove the neuron.
@@ -130,7 +131,8 @@ void SparsePerceptronNetwork::computeError() {
             for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                 // Loop through neurons coming next.
                 for (neurons_num_t k = pos; k < size; k ++) {
-                    if (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron() == neuronsBuffer[k]) {
+                    if (neuronsBuffer[i]->getSynapse(j)->getInputId() == neuronsBuffer[k]->getId()) {
+                        // The neuron competes to another neuron in the buffer, so go to incomplete.
                         goto incomplete;
                     }
                 }
@@ -159,10 +161,14 @@ void SparsePerceptronNetwork::computeError() {
                     incomingWeight += neuronsBuffer[i]->getSynapses()->getItems()[j].getWeight();
                 }
                 // Update the errors of the neurons that compete to the current one and correct their weights.
-                #pragma omp parallel for
+                // #pragma omp parallel for
                 for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                     // Compute the partial error.
-                    ((Perceptron*) (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron()))->addError(neuronsBuffer[i]->getError() * (neuronsBuffer[i]->getSynapses()->getItems()[j].getWeight() / incomingWeight));
+                    if (neuronsBuffer[i]->getSynapse(j)->getInputNeuron()->getType() != Neuron::typeInput) {
+                        // The error does not need to be added the new one: it has to be replaced by it, so setError is
+                        // used instead of addError.
+                        neuronsBuffer[i]->getSynapse(j)->getInputNeuron()->setError(neuronsBuffer[i]->getError() * (neuronsBuffer[i]->getSynapse(j)->getWeight() / incomingWeight));
+                    }
                 }
                 // Remove the neuron from the buffer.
                 pos++;
@@ -179,15 +185,21 @@ void SparsePerceptronNetwork::adjustWeights() {
 
     // Loop through synapses to update the weights.
     for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
+        // if (i == 6) {
+        //     printf("\nError %f\n", this->model->getNeuron(i)->getError());
+        // }
         for (vector_size_t j = 0; j < this->model->getNeuron(i)->getSynapsesNum(); j++) {
             // Calculate the weight delta.
             // dWeight = this->learningRate * this->model->getNeuron(i).getError() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getValue();
 
             // Calculate the custom weight delta.
-            dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapses()->getItems()[j].getInputNeuron()->getValue();
+            dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapse(j)->getInputNeuron()->getValue();
 
             // Apply the delta weight.
-            this->model->getNeuron(i)->getSynapses()->getItems()[j].setWeight(this->model->getNeuron(i)->getSynapses()->getItems()[j].getWeight() + dWeight);
+            // if (i == 6) {
+            //     printf("\ndWeight %f\nweight %f\n", dWeight, this->model->getNeuron(i)->getSynapse(j)->getWeight());
+            // }
+            this->model->getNeuron(i)->getSynapse(j)->setWeight(this->model->getNeuron(i)->getSynapse(j)->getWeight() + dWeight);
         }
     }
 

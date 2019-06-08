@@ -54,7 +54,7 @@ endif
 
 all: create clean exe
 
-exe: OortTest #OortCVTest OortNNTest Oort
+exe: OortTest #OortCVTest #OortNNTest Oort
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@

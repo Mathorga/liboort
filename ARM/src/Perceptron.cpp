@@ -30,10 +30,11 @@ Perceptron::Perceptron(Neuron& neuron) {
 }
 
 void Perceptron::print() {
-    printf("|----------PERCEPTRON----------\t\t\t|\n");
-    printf("|Id %d\t\t\t\t\t\t|\n", this->id);
-    printf("|Type %d\t\t\t\t\t\t|\n", (uint16_t) this->type);
-    printf("|Value %f\t\t\t\t\t|\n", this->value);
+    printf("|----------PERCEPTRON----------\n");
+    printf("|Id %d\n", this->id);
+    printf("|Type %d\n", (uint16_t) this->type);
+    printf("|Value %f\n", this->value);
+    printf("|Error %f\n", this->error);
     for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
         this->synapses->getItem(i)->print();
     }
