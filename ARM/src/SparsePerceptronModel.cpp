@@ -56,13 +56,15 @@ void SparsePerceptronModel::replaceNeuron(Perceptron* neuron) {
 }
 
 void SparsePerceptronModel::print() {
-    printf("\n|------------SPARSE_PERCEPTRON_MODEL------------|");
-    printf("\n|Size %d\t\t\t\t\t\t|\n", this->neuronsNum);
+    printf("\n|------------SPARSE_PERCEPTRON_MODEL------------");
+    printf("\n|Size %d\n", this->neuronsNum);
+    printf("|-----------------------------------------------\n");
 
     for (vector_size_t i = 0; i < this->neuronsNum; i++) {
         this->perceptrons->getItem(i)->print();
+        printf("|-----------------------------------------------\n");
     }
-    printf("|_______________________________________________|\n\n");
+    printf("\n");
 }
 
 Perceptron* SparsePerceptronModel::getNeurons() {

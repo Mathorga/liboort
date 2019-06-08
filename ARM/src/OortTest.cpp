@@ -25,58 +25,30 @@ int main(int argc, char const *argv[]) {
         modelFileName = (char*) argv[1];
     }
 
-    // Get Model from file and create a Brain from it.
-    // SimpleModelParser* parser = new SimpleModelParser();
-    // parser->readFile(modelFileName);
-    // SimpleBrain* brain = new SimpleBrain(parser->getModel());
-
-    // SimpleBrain* testBrain = new SimpleBrain(8000, 1);
-    // ModelParser* testParser = new ModelParser();
-    // testParser->setModel(testBrain->getModel());
-    // testParser->writeFile("./res/mdl/8000in1out.xml");
-
-    // brain->run();
-
-    // expectedOutput = (float*) malloc(outputNum * sizeof(float));
-    // expectedOutput[0] = 0.6;
-    // brain->setExpectedOutput(expectedOutput);
-    // printf("\n\nExpected output: %f\n\n", expectedOutput[0]);
-
-
-
-
-
-
-
     SparsePerceptronModelParser* spmParser = new SparsePerceptronModelParser();
     spmParser->readFile(modelFileName);
-    SparsePerceptronNetwork* network = new SparsePerceptronNetwork(spmParser->getModel());
-    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(5, 2);
-    // spmParser->setModel(network->getModel());
+    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(spmParser->getModel());
+    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(400, 2);
+    // spmParser->setModel(brain->getModel());
     // spmParser->writeFile(modelFileName);
-    // network->print();
 
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
     newExpectedOut[0] = 0.6;
-    // SparsePerceptronNetwork* network = new SparsePerceptronNetwork(parser->getModel()->getInputNum(), parser->getModel()->getOutputNum());
-    network->setExpectedOutput(newExpectedOut);
-    network->print();
+    brain->setExpectedOutput(newExpectedOut);
+    brain->print();
 
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
-        if (i % 100 == 0) {
-            network->print();
-        }
         startTime = getTime();
-        network->run();
-        network->correct();
+        brain->run();
+        brain->correct();
         // brain->describe();
         // brain->run();
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(10000);
         // printf("Time: %f s\n", execTime);
-        printf("Output: %.7f\n", network->getOutput()[0]);
+        printf("Output: %.7f\n", brain->getOutput()[0]);
     }
 
     return 0;

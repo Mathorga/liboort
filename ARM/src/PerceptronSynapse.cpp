@@ -1,6 +1,6 @@
 #include "PerceptronSynapse.h"
 
-synapse_weight_t PerceptronSynapse::defaultWeight = 0.5f;
+synapse_weight_t PerceptronSynapse::defaultWeight = 0.0;
 
 PerceptronSynapse::PerceptronSynapse() {
     this->weight = 0;
@@ -23,9 +23,11 @@ PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t w
 }
 
 void PerceptronSynapse::print() {
-    printf("|------------------SYNAPSE----------\n");
+    setPrintColor(ANSI_COLOR_YELLOW);
+    printf("|----------SYNAPSE----------\n");
     printf("|\tInput %d\n", this->inputNeuron->getId());
     printf("|\tWeight %f\n", this->weight);
+    setPrintColor(ANSI_COLOR_RESET);
 }
 
 Perceptron* PerceptronSynapse::getInputNeuron() {
