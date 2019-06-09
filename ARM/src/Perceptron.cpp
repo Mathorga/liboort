@@ -23,10 +23,10 @@ Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t syn
     }
 }
 
-Perceptron::Perceptron(Neuron& neuron) {
-    this->id = neuron.getId();
-    this->value = neuron.getValue();
-    this->synapses = new Vector<PerceptronSynapse>();
+Perceptron::Perceptron(Perceptron& other) {
+    this->id = other.getId();
+    this->value = other.getValue();
+    this->synapses = other.getSynapses();
 }
 
 void Perceptron::print() {
@@ -40,6 +40,10 @@ void Perceptron::print() {
     for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
         this->synapses->getItem(i)->print();
     }
+}
+
+neurons_num_t Perceptron::getId() {
+    return this->id;
 }
 
 neuron_value_t Perceptron::getDValue() {

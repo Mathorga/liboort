@@ -66,9 +66,6 @@ Oort: Oort.o \
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTest: OortTest.o \
-		  SimpleBrain.o \
-		  SimpleModelParser.o \
-		  SimpleModel.o \
 		  Knowledge.o \
 		  utils.o \
 		  Model.o \
@@ -82,7 +79,7 @@ OortTest: OortTest.o \
 		  Perceptron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
-OortNNTest: OpenNNTest.o utils.o
+OortNNTest: OortNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortCVTest: OortCVTest.o utils.o

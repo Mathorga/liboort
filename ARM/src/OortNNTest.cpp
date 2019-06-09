@@ -1,22 +1,38 @@
 #include "utils.h"
-#include "./lib/opennn/opennn.h"
+#include "../lib/opennn/opennn.h"
 
-using namespace OpenNN;
+// using namespace OpenNN;
 
 int main(int argc, char const *argv[]) {
 
     try {
-
-        Vector<uint16_t> layersSizes(3);
+        // Define layers' sizes.
+        OpenNN::Vector<size_t> layersSizes(3);
         layersSizes[0] = 5;
-        layersSizes[1] = 5;
-        layersSizes[2] = 5;
-        MultilayerPerceptron* network = new MultilayerPerceptron(layersSizes);
+        layersSizes[1] = 10;
+        layersSizes[2] = 3;
 
-        Vector<MultilayerPerceptron::LayerActivationFunction> hiddenLayersActivations(3, MultilayerPerceptron::Logistic);
-        network->set_layers_activation_function(hiddenLayersActivations);
+        // Define layers' activation funcions.
+        // Activation funcions do not apply to output layers, so they're only set for the first two layers.
+        OpenNN::Vector<OpenNN::PerceptronLayer::ActivationFunction> activations(2);
+        activations[0] = OpenNN::PerceptronLayer::Logistic;
+        activations[1] = OpenNN::PerceptronLayer::Logistic;
 
-        network->print();
+        // Create the network given the sizes of all layers.
+        OpenNN::MultilayerPerceptron* network = new OpenNN::MultilayerPerceptron(layersSizes);
+
+        // Set network's activation functions for each layer.
+        network->set_layers_activation_function(activations);
+
+
+        
+        std::cout << network->object_to_string();
+        // OpenNN::MultilayerPerceptron* network = new OpenNN::MultilayerPerceptron(layersSizes);
+        //
+        // OpenNN::Vector<OpenNN::MultilayerPerceptron::LayerActivationFunction> hiddenLayersActivations(3, OpenNN::MultilayerPerceptron::Logistic);
+        // network->set_layers_activation_function(hiddenLayersActivations);
+
+        // network->print();
 
 
         // DataSet ds;

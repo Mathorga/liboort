@@ -20,11 +20,12 @@ public:
     Perceptron(neurons_num_t id, neuron_value_t value);
     Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type);
     Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum);
-    Perceptron(Neuron& neuron);
+    Perceptron(Perceptron& other);
 
     void print();
 
     // Getters.
+    neurons_num_t getId();
     neuron_value_t getDValue();
     perceptron_error_t getError();
     neuron_value_t getExpectedOutput();
@@ -40,6 +41,7 @@ public:
     void setExpectedOutput(neuron_value_t expectedOutput);
 
 private:
+    neurons_num_t id;
     neuron_value_t dValue;
     perceptron_error_t error;
     neuron_value_t expectedOutput;

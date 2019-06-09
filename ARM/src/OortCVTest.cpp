@@ -34,6 +34,8 @@ int main(int argc, char const *argv[]) {
         // Rect rectCrop(20, 0, 140, 120);
         // frame = frame(rectCrop);
 
+        // Turn frame to grayscale.
+        cvtColor(frame, frame, COLOR_BGR2GRAY);
         // Resize the frame.
         resize(frame, frame, Size(24, 18));
 

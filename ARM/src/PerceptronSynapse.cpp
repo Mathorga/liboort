@@ -1,6 +1,6 @@
 #include "PerceptronSynapse.h"
 
-synapse_weight_t PerceptronSynapse::defaultWeight = 0.0;
+synapse_weight_t PerceptronSynapse::defaultWeight = 0.1;
 
 PerceptronSynapse::PerceptronSynapse() {
     this->weight = 0;

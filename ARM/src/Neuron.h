@@ -16,7 +16,6 @@ public:
     };
 
     // Getters.
-    neurons_num_t getId();
     NeuronType getType();
     neuron_value_t getValue();
 
@@ -25,7 +24,6 @@ public:
     void setValue(neuron_value_t value);
 
 protected:
-    neurons_num_t id;
     NeuronType type;
     neuron_value_t value;
 };

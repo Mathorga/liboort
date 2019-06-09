@@ -1,9 +1,5 @@
 #include "Neuron.h"
 
-neurons_num_t Neuron::getId() {
-    return this->id;
-}
-
 Neuron::NeuronType Neuron::getType() {
     return this->type;
 }

@@ -1,6 +1,4 @@
 #include "Nerve.h"
-#include "SimpleBrain.h"
-#include "SimpleModelParser.h"
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
 #include "utils.h"
@@ -25,13 +23,15 @@ int main(int argc, char const *argv[]) {
         modelFileName = (char*) argv[1];
     }
 
-    SparsePerceptronModelParser* spmParser = new SparsePerceptronModelParser();
-    spmParser->readFile(modelFileName);
-    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(spmParser->getModel());
-    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(400, 2);
-    // spmParser->setModel(brain->getModel());
-    // spmParser->writeFile(modelFileName);
+    SparsePerceptronModelParser* parser = new SparsePerceptronModelParser();
+    // parser->readFile(modelFileName);
+    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
+    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(1200, 3);
+    parser->setModel(brain->getModel());
+    parser->writeFile(modelFileName);
 
+
+    // Set expected output for the current input.
     newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
     newExpectedOut[0] = 0.6;
     brain->setExpectedOutput(newExpectedOut);
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
         endTime = getTime();
         execTime = endTime - startTime;
         usleep(10000);
-        // printf("Time: %f s\n", execTime);
+        printf("Time: %f s\n", execTime);
         printf("Output: %.7f\n", brain->getOutput()[0]);
     }
 
