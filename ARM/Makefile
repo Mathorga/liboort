@@ -54,7 +54,7 @@ endif
 
 all: create clean exe
 
-exe: OortTest #OortCVTest #OortNNTest Oort
+exe: OortTest OortTrainer #OortCVTest #OortNNTest Oort
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
@@ -63,6 +63,10 @@ Oort: Oort.o \
 	  SimpleBrain.o \
 	  Model.o \
 	  utils.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
+
+OortTrainer: OortTrainer.o \
+			 utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTest: OortTest.o \
