@@ -66,7 +66,17 @@ Oort: Oort.o \
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTrainer: OortTrainer.o \
-			 utils.o
+			 Knowledge.o \
+			 utils.o \
+			 Model.o \
+			 Neuron.o \
+			 WeightedModel.o \
+			 SparsePerceptronModelParser.o \
+			 SparsePerceptronModel.o \
+			 SparsePerceptronNetwork.o \
+			 PerceptronSynapse.o \
+			 Synapse.o \
+			 Perceptron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTest: OortTest.o \

@@ -24,11 +24,11 @@ int main(int argc, char const *argv[]) {
     }
 
     SparsePerceptronModelParser* parser = new SparsePerceptronModelParser();
-    // parser->readFile(modelFileName);
-    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
-    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(1200, 3);
-    parser->setModel(brain->getModel());
-    parser->writeFile(modelFileName);
+    parser->readFile(modelFileName);
+    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
+    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(1200, 3);
+    // parser->setModel(brain->getModel());
+    // parser->writeFile(modelFileName);
 
 
     // Set expected output for the current input.
