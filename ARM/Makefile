@@ -54,7 +54,7 @@ endif
 
 all: create clean exe
 
-exe: OortTest OortTrainer #OortCVTest #OortNNTest Oort
+exe: OortTest OortTrainer OortImgGrabber #OortNNTest Oort
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
@@ -96,7 +96,7 @@ OortTest: OortTest.o \
 OortNNTest: OortNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
-OortCVTest: OortCVTest.o utils.o
+OortImgGrabber: OortImgGrabber.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 create:
