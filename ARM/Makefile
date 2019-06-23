@@ -2,14 +2,44 @@ CCOMP = gcc
 
 STD_CCOMP_FLAGS = -std=c++17 -g -fopenmp
 OPENCV_INCLUDES = -Ilib/opencv/include/opencv4
-GTK_INCLUDES = `pkg-config --cflags gtk+-2.0`
+#GTK_INCLUDES = `pkg-config --cflags gtk+-2.0`
+GTK_INCLUDES = -pthread -I/usr/include/gtk-2.0 \
+						-I/usr/lib/x86_64-linux-gnu/gtk-2.0/include \
+						-I/usr/include/gio-unix-2.0/ \
+						-I/usr/include/cairo \
+						-I/usr/include/pango-1.0 \
+						-I/usr/include/atk-1.0 \
+						-I/usr/include/cairo \
+						-I/usr/include/pixman-1 \
+						-I/usr/include/libpng12 \
+						-I/usr/include/gdk-pixbuf-2.0 \
+						-I/usr/include/libpng12 \
+						-I/usr/include/pango-1.0 \
+						-I/usr/include/harfbuzz \
+						-I/usr/include/pango-1.0 \
+						-I/usr/include/glib-2.0 \
+						-I/usr/lib/x86_64-linux-gnu/glib-2.0/include \
+						-I/usr/include/freetype2
 CCOMP_COMPLETE_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES) $(GTK_INCLUDES)
 CCOMP_HEADLESS_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES)
 CCOMP_FLAGS = $(CCOMP_COMPLETE_FLAGS)
 CLINK_FLAGS =
 
 OPENNN_LIBS = -L ./lib/opennn -lopennn
-GTK_LIBS = `pkg-config --libs gtk+-2.0`
+#GTK_LIBS = `pkg-config --libs gtk+-2.0`
+GTK_LIBS = -lgtk-x11-2.0 \
+		   -lgdk-x11-2.0 \
+		   -lpangocairo-1.0 \
+		   -latk-1.0 \
+		   -lcairo \
+		   -lgdk_pixbuf-2.0 \
+		   -lgio-2.0 \
+		   -lpangoft2-1.0 \
+		   -lpango-1.0 \
+		   -lgobject-2.0 \
+		   -lglib-2.0 \
+		   -lfontconfig \
+		   -lfreetype
 OPENCV_3P_LIBS = -L ./lib/opencv/lib/opencv4/3rdparty -lade \
                                                       -lIlmImf \
                                                       -lippiw \
