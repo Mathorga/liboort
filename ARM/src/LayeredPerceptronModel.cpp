@@ -15,6 +15,14 @@ LayeredPerceptronModel::LayeredPerceptronModel() {
     }
 }
 
+LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum) {
+    //TODO
+}
+
+LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t layerSize) {
+    //TODO
+}
+
 void LayeredPerceptronModel::print() {
     printf("\n|------------LAYERED_PERCEPTRON_MODEL------------");
     printf("|-----------------------------------------------\n");
