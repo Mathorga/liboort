@@ -7,8 +7,9 @@
 
 class LayeredPerceptronModel : public Model {
 public:
-    static vector_size_t defaultLayersNum;
-    static vector_size_t defaultLayerSize;
+    static const vector_size_t DEFAULT_LAYERS_NUM;
+    static const vector_size_t DEFAULT_OUT_LAYERS_NUM;
+    static const vector_size_t DEFAULT_LAYER_SIZE;
 
     // Constructors.
     LayeredPerceptronModel();
@@ -22,8 +23,11 @@ public:
     Vector<Perceptron>* getLayer(vector_size_t index);
 
 private:
+    vector_size_t layersNum;
     vector_size_t outputLayersNum;
     Vector<Vector<Perceptron>>* layers;
+
+    void defaultInit(vector_size_t layerSize);
 };
 
 #endif

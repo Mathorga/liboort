@@ -1,6 +1,7 @@
 #include "Nerve.h"
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
+#include "LayeredPerceptronModel.h"
 #include "utils.h"
 
 int main(int argc, char const *argv[]) {
@@ -26,6 +27,9 @@ int main(int argc, char const *argv[]) {
     SparsePerceptronModelParser* parser = new SparsePerceptronModelParser();
     parser->readFile(modelFileName);
     SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
+
+    LayeredPerceptronModel* layeredModel = new LayeredPerceptronModel();
+    layeredModel->print();
     // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(5184, 3);
     // parser->setModel(brain->getModel());
     // parser->writeFile(modelFileName);

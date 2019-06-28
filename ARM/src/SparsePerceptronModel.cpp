@@ -26,8 +26,8 @@ SparsePerceptronModel::SparsePerceptronModel(neurons_num_t inputsNum, neurons_nu
         // Create synapses.
         for (neurons_num_t i = this->inputsNum; i < this->neuronsNum; i++) {
             for (neurons_num_t j = 0; j < this->inputsNum; j++) {
-                this->perceptrons->getItem(i)->getSynapses()->addLast(new PerceptronSynapse(&(this->perceptrons->getItems()[j]), PerceptronSynapse::defaultWeight));
-                // this->items[i].getSynapses()->addLast(new PerceptronSynapse(&(this->items[j]), PerceptronSynapse::defaultWeight));
+                this->perceptrons->getItem(i)->getSynapses()->addLast(new PerceptronSynapse(&(this->perceptrons->getItems()[j]), PerceptronSynapse::DEFAULT_WEIGHT));
+                // this->items[i].getSynapses()->addLast(new PerceptronSynapse(&(this->items[j]), PerceptronSynapse::DEFAULT_WEIGHT));
             }
         }
     }
@@ -56,8 +56,8 @@ void SparsePerceptronModel::replaceNeuron(Perceptron* neuron) {
 }
 
 void SparsePerceptronModel::print() {
-    printf("\n|------------SPARSE_PERCEPTRON_MODEL------------");
-    printf("\n|Size %d\n", this->neuronsNum);
+    printf("\n|------------SPARSE_PERCEPTRON_MODEL------------\n");
+    printf("|Size %d\n", this->neuronsNum);
     printf("|-----------------------------------------------\n");
 
     for (vector_size_t i = 0; i < this->neuronsNum; i++) {

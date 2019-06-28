@@ -13,10 +13,12 @@ class PerceptronSynapse;
 class Perceptron : public Neuron {
 public:
     static const neuron_value_t DEFAULT_VALUE;
+    static const perceptron_error_t DEFAULT_ERROR;
     static Perceptron getNullPerceptron();
 
     // Constructors.
     Perceptron(neurons_num_t id);
+    Perceptron(neurons_num_t id, Neuron::NeuronType type);
     Perceptron(neurons_num_t id, neuron_value_t value);
     Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type);
     Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum);

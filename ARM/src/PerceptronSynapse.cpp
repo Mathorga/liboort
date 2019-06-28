@@ -1,9 +1,9 @@
 #include "PerceptronSynapse.h"
 
-synapse_weight_t PerceptronSynapse::defaultWeight = 0.001;
+const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.001;
 
 PerceptronSynapse::PerceptronSynapse() {
-    this->weight = 0;
+    this->weight = DEFAULT_WEIGHT;
     this->inputNeuron = NULL;
 }
 
@@ -13,7 +13,7 @@ PerceptronSynapse::PerceptronSynapse(synapse_weight_t weight) {
 }
 
 PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron) {
-    this->weight = 0;
+    this->weight = DEFAULT_WEIGHT;
     this->inputNeuron = inputNeuron;
 }
 

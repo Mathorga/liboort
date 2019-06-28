@@ -1,12 +1,18 @@
 #include "Perceptron.h"
 
 const neuron_value_t Perceptron::DEFAULT_VALUE = 0.5;
+const perceptron_error_t Perceptron::DEFAULT_ERROR = 0.0;
 
 Perceptron::Perceptron(neurons_num_t id) {
     // TODO Implement real constructor.
     this->id = id;
     this->value = DEFAULT_VALUE;
+    this->error = DEFAULT_ERROR;
     this->synapses = new Vector<PerceptronSynapse>();
+}
+
+Perceptron::Perceptron(neurons_num_t id, Neuron::NeuronType type) : Perceptron(id) {
+    this->type = type;
 }
 
 Perceptron::Perceptron(neurons_num_t id, neuron_value_t value) : Perceptron(id) {
@@ -19,7 +25,7 @@ Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronTyp
 
 Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum) : Perceptron(id, value) {
     for (vector_size_t i = 0; i < synapsesNum; i++) {
-        this->synapses->addLast(new PerceptronSynapse(PerceptronSynapse::defaultWeight));
+        this->synapses->addLast(new PerceptronSynapse(PerceptronSynapse::DEFAULT_WEIGHT));
     }
 }
 

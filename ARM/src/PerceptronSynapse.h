@@ -8,7 +8,7 @@ class Perceptron;
 
 class PerceptronSynapse : public Synapse {
 public:
-    static synapse_weight_t defaultWeight;
+    static const synapse_weight_t DEFAULT_WEIGHT;
 
     // Constructors.
     PerceptronSynapse();
