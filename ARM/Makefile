@@ -100,7 +100,6 @@ OortTrainer: OortTrainer.o \
 			 utils.o \
 			 Model.o \
 			 Neuron.o \
-			 WeightedModel.o \
 			 SparsePerceptronModelParser.o \
 			 SparsePerceptronModel.o \
 			 SparsePerceptronNetwork.o \
@@ -114,7 +113,6 @@ OortTest: OortTest.o \
 		  utils.o \
 		  Model.o \
 		  Neuron.o \
-		  WeightedModel.o \
 		  SparsePerceptronModelParser.o \
 		  SparsePerceptronModel.o \
 		  SparsePerceptronNetwork.o \

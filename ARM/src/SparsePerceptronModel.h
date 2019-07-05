@@ -1,7 +1,7 @@
 #ifndef __SPARSE_PERCEPTRON_MODEL__
 #define __SPARSE_PERCEPTRON_MODEL__
 
-#include "WeightedModel.h"
+#include "Model.h"
 #include "Vector.h"
 #include "Perceptron.h"
 

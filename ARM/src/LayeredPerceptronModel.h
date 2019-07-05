@@ -1,7 +1,7 @@
 #ifndef __LAYERED_PERCEPTRON_MODEL__
 #define __LAYERED_PERCEPTRON_MODEL__
 
-#include "WeightedModel.h"
+#include "Model.h"
 #include "Vector.h"
 #include "Perceptron.h"
 

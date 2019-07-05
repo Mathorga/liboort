@@ -7,11 +7,19 @@
 #include <math.h>
 #include <time.h>
 #include <string.h>
+// UNIX Standard Definitions.
 #include <unistd.h>
 #include <limits>
 #include <iostream>
 #include <cstddef>
 #include <cmath>
+// File Control Definitions.
+#include <fcntl.h>
+// POSIX Terminal Control Definitions.
+#include <termios.h>
+#include <unistd.h>
+// Error Number Definitions.
+#include <errno.h>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
