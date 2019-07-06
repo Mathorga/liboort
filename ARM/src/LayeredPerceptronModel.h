@@ -27,7 +27,7 @@ private:
     vector_size_t outputLayersNum;
     Vector<Vector<Perceptron>>* layers;
 
-    void defaultInit(vector_size_t layerSize);
+    void createLayers(vector_size_t layerSize);
 };
 
 #endif

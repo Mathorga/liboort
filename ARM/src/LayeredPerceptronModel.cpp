@@ -9,7 +9,7 @@ LayeredPerceptronModel::LayeredPerceptronModel() {
     this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
     this->layers = new Vector<Vector<Perceptron>>();
 
-    this->defaultInit(DEFAULT_LAYER_SIZE);
+    this->createLayers(DEFAULT_LAYER_SIZE);
 }
 
 LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum) {
@@ -17,7 +17,7 @@ LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum) {
     this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
     this->layers = new Vector<Vector<Perceptron>>();
 
-    this->defaultInit(DEFAULT_LAYER_SIZE);
+    this->createLayers(DEFAULT_LAYER_SIZE);
 }
 
 LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t layerSize) {
@@ -25,7 +25,7 @@ LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_s
     this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
     this->layers = new Vector<Vector<Perceptron>>();
 
-    this->defaultInit(layerSize);
+    this->createLayers(layerSize);
 }
 
 void LayeredPerceptronModel::print() {
@@ -47,7 +47,7 @@ Vector<Perceptron>* LayeredPerceptronModel::getLayer(vector_size_t index) {
     return this->layers->getItem(index);
 }
 
-void LayeredPerceptronModel::defaultInit(vector_size_t layerSize) {
+void LayeredPerceptronModel::createLayers(vector_size_t layerSize) {
     // Create layers.
     for (vector_size_t i = 0; i < this->layersNum; i++) {
         this->layers->addLast(new Vector<Perceptron>());
