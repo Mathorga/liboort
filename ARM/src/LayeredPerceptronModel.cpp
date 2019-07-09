@@ -29,9 +29,9 @@ LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_s
 }
 
 void LayeredPerceptronModel::print() {
-    printf("\n|------------LAYERED_PERCEPTRON_MODEL------------\n");
+    printf("\n|LAYERED PERCEPTRON MODEL\n");
     for (vector_size_t i = 0; i < this->layers->getSize(); i++) {
-        printf("Layer %d\n", i);
+        printf("|LAYER %d\n", i);
         for (vector_size_t j = 0; j < this->layers->getItem(i)->getSize(); j++) {
             this->layers->getItem(i)->getItem(j)->print();
         }
@@ -47,25 +47,31 @@ Vector<Perceptron>* LayeredPerceptronModel::getLayer(vector_size_t index) {
     return this->layers->getItem(index);
 }
 
+vector_size_t LayeredPerceptronModel::getLayersNum() {
+    return this->layers->getSize();
+}
+
 void LayeredPerceptronModel::createLayers(vector_size_t layerSize) {
     // Create layers.
     for (vector_size_t i = 0; i < this->layersNum; i++) {
         this->layers->addLast(new Vector<Perceptron>());
-        // Create perceptrons.
-        if (i == 0) {
+        // Create perceptrons in each layer.
+        if (i <= 0) {
             // Input layer.
             for (vector_size_t j = 0; j < layerSize; j++) {
                 this->layers->getLast()->addLast(new Perceptron(IDX(i, j, this->layersNum), Neuron::typeInput));
             }
-        } else if (i >= (this->layersNum - this->outputLayersNum)) {
-            // Output layer.
-            for (vector_size_t j = 0; j < layerSize; j++) {
-                this->layers->getLast()->addLast(new Perceptron(IDX(i, j, this->layersNum), Neuron::typeOutput));
-            }
         } else {
+            // Hidden and output layers.
             for (vector_size_t j = 0; j < layerSize; j++) {
-                // Hidden layer.
-                this->layers->getLast()->addLast(new Perceptron(IDX(i, j, this->layersNum), Neuron::typeHidden));
+                this->layers->getLast()->addLast(new Perceptron(IDX(i, j, this->layersNum), i >= (this->layersNum - this->outputLayersNum) ? Neuron::typeOutput : Neuron::typeHidden));
+
+                // Create synapses:
+                // In order to fully connect the model, synapses are necessary between each layer, so they're
+                // created from the first non-input layer onwards.
+                for (vector_size_t k = 0; k < layerSize; k++) {
+                    this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
+                }
             }
         }
     }

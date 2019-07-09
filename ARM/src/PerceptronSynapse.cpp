@@ -24,9 +24,9 @@ PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t w
 
 void PerceptronSynapse::print() {
     setPrintColor(ANSI_COLOR_YELLOW);
-    printf("|----------SYNAPSE----------\n");
-    printf("|\tInput %d\n", this->inputNeuron->getId());
-    printf("|\tWeight %f\n", this->weight);
+    printf("\t\t|SYNAPSE\n");
+    printf("\t\t|Input %d\n", this->inputNeuron->getId());
+    printf("\t\t|Weight %f\n", this->weight);
     setPrintColor(ANSI_COLOR_RESET);
 }
 

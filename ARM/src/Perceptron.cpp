@@ -37,15 +37,16 @@ Perceptron::Perceptron(Perceptron& other) {
 
 void Perceptron::print() {
     setPrintColor(ANSI_COLOR_CYAN);
-    printf("|----------PERCEPTRON----------\n");
-    printf("|Id %d\n", this->id);
-    printf("|Type %d\n", (uint16_t) this->type);
-    printf("|Value %f\n", this->value);
-    printf("|Error %f\n", this->error);
+    printf("\t|PERCEPTRON\n");
+    printf("\t|Id %d\n", this->id);
+    printf("\t|Type %d\n", this->type);
+    printf("\t|Value %f\n", this->value);
+    printf("\t|Error %f\n", this->error);
     setPrintColor(ANSI_COLOR_RESET);
     for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
         this->synapses->getItem(i)->print();
     }
+    printf("\n");
 }
 
 neurons_num_t Perceptron::getId() {

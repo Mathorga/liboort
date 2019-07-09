@@ -31,7 +31,6 @@ protected:
     synapse_weight_t baseWeight;
     neuron_value_t baseValue;
     learning_rate_t learningRate;
-    // neuron_value_t* expectedOutput;
 
     void computeValue();
     void computeError();
