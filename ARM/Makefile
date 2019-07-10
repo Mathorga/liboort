@@ -117,6 +117,7 @@ OortTest: OortTest.o \
 		  SparsePerceptronModel.o \
 		  SparsePerceptronNetwork.o \
 		  LayeredPerceptronModel.o \
+		  LayeredPerceptronNetwork.o \
 		  PerceptronSynapse.o \
 		  Synapse.o \
 		  Perceptron.o

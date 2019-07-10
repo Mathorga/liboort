@@ -2,6 +2,7 @@
 #define __LAYERED_PERCEPTRON_NETWORK__
 
 #include "NeuralNetwork.h"
+#include "LayeredPerceptronModel.h"
 
 class LayeredPerceptronNetwork : public NeuralNetwork {
 public:
@@ -16,10 +17,11 @@ public:
 
     // Getters.
     // Returns the whole model of the network.
-    SparsePerceptronModel* getModel();
+    LayeredPerceptronModel* getModel();
     neuron_value_t* getOutput();
 
     // Setters.
+    void setInput(neuron_value_t* input);
     void setExpectedOutput(neuron_value_t* expectedOutput);
 
 private:

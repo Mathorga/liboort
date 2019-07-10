@@ -4,6 +4,8 @@
 #include "Model.h"
 #include "utils.h"
 
+#define learning_rate_t float
+
 class NeuralNetwork {
 public:
     // Execute one iteration of the net.

@@ -5,7 +5,43 @@ LayeredPerceptronNetwork::LayeredPerceptronNetwork() {
 }
 
 void LayeredPerceptronNetwork::run() {
+    this->computeValue();
+}
 
+void LayeredPerceptronNetwork::correct() {
+    // Compute the errors of the neurons of the net.
+    this->computeError();
+
+    // Adjust the synapses' weights based on the neurons' errors.
+    this->adjustWeights();
+}
+
+neuron_value_t LayeredPerceptronNetwork::activate(perceptron_input_t value) {
+    // Sigmoid function.
+    return (1 / (1 + (pow(M_E, -(value)))));
+}
+
+neuron_value_t LayeredPerceptronNetwork::dActivate(perceptron_input_t value) {
+    // Sigmoid derivative function.
+    return this->activate(value) * (1 - this->activate(value));
+}
+
+void LayeredPerceptronNetwork::print() {
+    this->model->print();
+}
+
+LayeredPerceptronModel* LayeredPerceptronNetwork::getModel() {
+    return nullptr;
+}
+
+neuron_value_t* LayeredPerceptronNetwork::getOutput() {
+    return nullptr;
+}
+
+void LayeredPerceptronNetwork::setInput(neuron_value_t* input) {
+    for (vector_size_t i = 0; i < this->model->getLayer(0)->getSize(); i++) {
+        this->model->getLayer(0)->getItem(i)->setValue(input[i]);
+    }
 }
 
 void LayeredPerceptronNetwork::computeValue() {
@@ -31,4 +67,12 @@ void LayeredPerceptronNetwork::computeValue() {
             this->model->getLayer(i)->getItem(j)->setDValue(this->dActivate(value));
         }
     }
+}
+
+void LayeredPerceptronNetwork::computeError() {
+
+}
+
+void LayeredPerceptronNetwork::adjustWeights() {
+
 }

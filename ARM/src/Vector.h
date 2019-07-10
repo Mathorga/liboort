@@ -71,8 +71,19 @@ public:
             // return NULL;
         }
     }
+    T* getFirst() {
+        if (this->size > 0) {
+            return &(this->items[0]);
+        } else {
+            return nullptr;
+        }
+    }
     T* getLast() {
-        return &(this->items[this->size - 1]);
+        if (this->size > 0) {
+            return &(this->items[this->size - 1]);
+        } else {
+            return nullptr;
+        }
     }
 
     // Setters.

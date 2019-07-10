@@ -4,8 +4,6 @@
 #include "NeuralNetwork.h"
 #include "SparsePerceptronModel.h"
 
-#define learning_rate_t float
-
 class SparsePerceptronNetwork : public NeuralNetwork {
 public:
     // Constructors.
@@ -25,6 +23,7 @@ public:
     neuron_value_t* getOutput();
 
     // Setters.
+    void setInput(neuron_value_t* input);
     void setExpectedOutput(neuron_value_t* expectedOutput);
 
 protected:
