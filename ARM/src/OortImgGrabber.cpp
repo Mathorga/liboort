@@ -1,4 +1,4 @@
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 #include "utils.h"
 
 #define COUNT_DIGITS 10
@@ -29,8 +29,8 @@ int main(int argc, char const *argv[]) {
     }
 
 
-    cap.set(CAP_PROP_FRAME_WIDTH, 160);
-    cap.set(CAP_PROP_FRAME_HEIGHT, 120);
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, 160);
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 120);
 
     // Check if VideoCapture opened successfully.
     if (!cap.isOpened()) {
