@@ -57,7 +57,7 @@ int main(int argc, char const *argv[]) {
         // Turn frame to grayscale.
         // cvtColor(showFrame, showFrame, COLOR_BGR2GRAY);
         // Resize the frame.
-	resize(showFrame, saveFrame, Size(24, 18));
+        resize(showFrame, saveFrame, Size(24, 18));
         resize(saveFrame, showFrame, Size(), 10, 10, INTER_NEAREST);
 
         // printf("A pixel of the frame: %d - %d - %d\n", frame.at<Vec3b>(10, 10).val[0], frame.at<Vec3b>(10, 10).val[1], frame.at<Vec3b>(10, 10).val[2]);

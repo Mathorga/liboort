@@ -6,11 +6,17 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+// Standars C strings.
 #include <string.h>
+// C++ object strings.
+#include <string>
 // UNIX Standard Definitions.
 #include <unistd.h>
 #include <limits>
 #include <iostream>
+#include <fstream>
+// C++ string stream.
+#include <sstream>
 #include <cstddef>
 #include <cmath>
 // File Control Definitions.
@@ -36,7 +42,8 @@ void setPrintColor(const char* color);
 void debugPrint(const char* string);
 double getTime();
 double getNanoTime();
-void dump(const uint8_t* image, unsigned int n, const char* filename);
-uint8_t* readImage(const char* filename, const uint8_t n);
+
+// void dump(const uint8_t* image, unsigned int n, const char* filename);
+// uint8_t* readImage(const char* filename, const uint8_t n);
 
 #endif

@@ -33,7 +33,9 @@ Oort: Oort.o \
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTrainer: OortTrainer.o \
+			 Experience.o \
 			 Knowledge.o \
+			 KnowledgeParser.o \
 			 utils.o \
 			 Model.o \
 			 Neuron.o \
@@ -46,7 +48,6 @@ OortTrainer: OortTrainer.o \
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortTest: OortTest.o \
-		  Knowledge.o \
 		  utils.o \
 		  Model.o \
 		  Neuron.o \

@@ -79,11 +79,11 @@ public:
         }
     }
     T* getLast() {
+        T* item = nullptr;
         if (this->size > 0) {
-            return &(this->items[this->size - 1]);
-        } else {
-            return nullptr;
+            item = &(this->items[this->size - 1]);
         }
+        return item;
     }
 
     // Setters.
