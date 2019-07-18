@@ -15,8 +15,27 @@ Knowledge::Knowledge(vector_size_t inputsNum, vector_size_t outputsNum) {
     this->experiences = new Vector<Experience>();
 }
 
-void Knowledge::addOne(Experience* newExperience) {
-    this->experiences->addLast(newExperience);
+void Knowledge::addExperience(Experience* newExperience) {
+    if (newExperience->getInputsNum() == this->inputsNum && newExperience->getOutputsNum() == this->outputsNum) {
+        this->experiences->addLast(newExperience);
+    } else {
+        printf("\n<Knowledge.addExperience()> Error adding experience: Inconsistent size\n");
+    }
+}
+
+void Knowledge::addExperiences(Experience* newExperiences, vector_size_t size) {
+    vector_size_t errorsNum = 0;
+
+    for (vector_size_t i = 0; i < size; i++) {
+        if (newExperiences[i].getInputsNum() == this->inputsNum && newExperiences[i].getOutputsNum() == this->outputsNum) {
+            this->experiences->addLast(&(newExperiences[i]));
+        } else {
+            errorsNum++;
+        }
+    }
+    if (errorsNum > 0) {
+        printf("\n<Knowledge.addExperiences()> Error adding %d experiences: Inconsistent sizes\n", errorsNum);
+    }
 }
 
 vector_size_t Knowledge::getInputsNum() {
