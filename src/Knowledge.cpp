@@ -38,6 +38,15 @@ void Knowledge::addExperiences(Experience* newExperiences, vector_size_t size) {
     }
 }
 
+void Knowledge::print() {
+    printf("\nKnowledge - Inputs %d Outputs %d\n", this->inputsNum, this->outputsNum);
+
+    // Print all experiences.
+    for (vector_size_t i = 0; i < this->experiences->getSize(); i++) {
+        this->experiences->getItem(i)->print();
+    }
+}
+
 vector_size_t Knowledge::getInputsNum() {
     return this->inputsNum;
 }

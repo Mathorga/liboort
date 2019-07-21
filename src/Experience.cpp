@@ -21,7 +21,15 @@ Experience::Experience(Vector<neuron_value_t>* inputs, Vector<neuron_value_t>* o
 }
 
 void Experience::print() {
-    //TODO
+    printf("\nExperience\n");
+    for (vector_size_t i = 0; i < this->inputs->getSize(); i++) {
+        printf("%f", *(this->inputs->getItem(i)));
+    }
+    printf("\t");
+    for (vector_size_t i = 0; i < this->outputs->getSize(); i++) {
+        printf("%f", *(this->outputs->getItem(i)));
+    }
+    printf("\n");
 }
 
 neuron_value_t* Experience::getInputs() {

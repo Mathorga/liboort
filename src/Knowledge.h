@@ -15,6 +15,7 @@ public:
     void addExperience(Experience* newExperience);
     void addExperiences(Experience* newExperiences, vector_size_t size);
     void addExperiences(Vector<Experience>* newExperiences);
+    void print();
 
     // Getters.
     vector_size_t getInputsNum();

@@ -15,12 +15,12 @@ void KnowledgeParser::readFile(char* fileName) {
     vector_size_t inputsNum;
     vector_size_t outputsNum;
 
-    // // Open the file in read mode.
-    // inputFile.open(fileName);
-    // // Check if the file was correctly opened.
-    // if (inputFile.is_open()) {
-    //     // The file was successfully opened.
-    //     for (uint32_t i = 0; std::getline(inputFile, line); i++) {
+    // Open the file in read mode.
+    inputFile.open(fileName);
+    // Check if the file was correctly opened.
+    if (inputFile.is_open()) {
+        // The file was successfully opened.
+        for (uint32_t i = 0; std::getline(inputFile, line); i++) {
     //         std::istringstream lineStream(line);
     //         if (i <= 0) {
     //             // The first line of the file is a header.
@@ -37,12 +37,12 @@ void KnowledgeParser::readFile(char* fileName) {
     //             // The other lines of the file are knowledge data.
     //
     //         }
-    //     }
-    //     // Close the file at the end of the read operation.
-    //     inputFile.close();
-    // } else {
-    //     throw "Exception: could not open file";
-    // }
+        }
+        // Close the file at the end of the read operation.
+        inputFile.close();
+    } else {
+        printf("\n<KnowledgeParser::readFile()> Error opening file %s\n", fileName);
+    }
     return;
 }
 
