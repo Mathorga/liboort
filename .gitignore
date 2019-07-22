@@ -31,6 +31,7 @@
 *.out
 *.app
 *.jpg
+bin/*
 */bin/*
 */bld/*
 */sav/*
