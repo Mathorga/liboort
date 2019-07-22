@@ -58,7 +58,10 @@ OortTest: OortTest.o \
 		  LayeredPerceptronNetwork.o \
 		  PerceptronSynapse.o \
 		  Synapse.o \
-		  Perceptron.o
+		  Perceptron.o \
+		  KnowledgeParser.o \
+		  Knowledge.o \
+		  Experience.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
 OortNNTest: OortNNTest.o utils.o

@@ -4,6 +4,7 @@
 #include "Knowledge.h"
 
 class KnowledgeParser {
+public:
     KnowledgeParser();
     KnowledgeParser(Knowledge* knowledge);
 

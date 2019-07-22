@@ -28,6 +28,19 @@ public:
     }
 
     void addFirst(T* item) {}
+    void addLast(T item) {
+        T* tempItems;
+
+        tempItems = (T*) realloc(this->items, (this->size + 1) * sizeof(T));
+
+        if (tempItems != NULL) {
+            this->items = tempItems;
+            this->items[this->size] = item;
+            this->size++;
+        } else {
+            printf("\n<Vector::addLast()> Error inserting item\n");
+        }
+    }
     void addLast(T* item) {
         T* tempItems;
 

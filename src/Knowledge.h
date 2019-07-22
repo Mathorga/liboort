@@ -12,9 +12,9 @@ public:
     Knowledge();
     Knowledge(vector_size_t inputsNum, vector_size_t outputsNum);
 
-    void addExperience(Experience* newExperience);
-    void addExperiences(Experience* newExperiences, vector_size_t size);
-    void addExperiences(Vector<Experience>* newExperiences);
+    void addExperience(Experience* experience);
+    void addExperiences(Experience* experiences, vector_size_t size);
+    void addExperiences(Vector<Experience>* experiences);
     void print();
 
     // Getters.

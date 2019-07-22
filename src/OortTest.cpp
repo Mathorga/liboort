@@ -2,7 +2,7 @@
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
 #include "LayeredPerceptronModel.h"
-#include "utils.h"
+#include "KnowledgeParser.h"
 
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
@@ -40,6 +40,33 @@ int main(int argc, char const *argv[]) {
     newExpectedOut[0] = 0.6;
     brain->setExpectedOutput(newExpectedOut);
     // brain->print();
+
+
+
+
+
+
+
+
+
+
+    KnowledgeParser* kp = new KnowledgeParser();
+    kp->readFile("./res/knl/test.knl");
+    kp->getKnowledge()->print();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Main loop of the program.
