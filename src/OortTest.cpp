@@ -41,6 +41,7 @@ int main(int argc, char const *argv[]) {
     brain->setExpectedOutput(newExpectedOut);
     // brain->print();
 
+
     // Main loop of the program.
     for (uint16_t i = 0;; i ++) {
         startTime = getTime();

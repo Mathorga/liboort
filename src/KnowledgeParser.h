@@ -5,19 +5,19 @@
 
 class KnowledgeParser {
     KnowledgeParser();
-    KnowledgeParser(Knowledge* data);
+    KnowledgeParser(Knowledge* knowledge);
 
     void readFile(char* fileName);
     void writeFile(char* fileName);
 
     // Getters.
-    Knowledge* getData();
+    Knowledge* getKnowledge();
 
     // Setters.
-    void setData(Knowledge* data);
+    void setData(Knowledge* knowledge);
 
 private:
-    Knowledge* data;
+    Knowledge* knowledge;
 };
 
 #endif

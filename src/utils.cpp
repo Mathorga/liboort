@@ -28,6 +28,28 @@ double getNanoTime() {
     return ts.tv_nsec;//tv_sec + (double)ts.tv_nsec / 1e9;
 }
 
+std::vector<std::string> splitString(const std::string& inputString, char separator) {
+    std::vector<std::string> elements;
+    std::istringstream stream(inputString);
+    std::string element;
+
+    while(std::getline(stream, element, separator)) {
+        elements.push_back(element);
+    }
+    return elements;
+}
+
+// Vector<std::String> splitString(std::String inputString, char separator) {
+//     Vector<std:string> elements;
+//     std::stringstream stringStream(inputString);
+//     std::string element;
+//
+//     while(std::getline(stringStream, element, separator)) {
+//         elements.add_last(element);
+//     }
+//     return elements;
+// }
+
 // void dump(const uint8_t* image, unsigned int n, const char* filename) {
 //     printf("\n%s, %d\n", filename, n);
 //     FILE* out = fopen(filename, "w");

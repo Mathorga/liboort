@@ -26,6 +26,8 @@
 #include <unistd.h>
 // Error Number Definitions.
 #include <errno.h>
+// C++ standard vector.
+#include <vector>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -42,6 +44,8 @@ void setPrintColor(const char* color);
 void debugPrint(const char* string);
 double getTime();
 double getNanoTime();
+std::vector<std::string> splitString(const std::string& inputString, char separator);
+// Vector<std::string> splitString(const std::string& inputString, char separator);
 
 // void dump(const uint8_t* image, unsigned int n, const char* filename);
 // uint8_t* readImage(const char* filename, const uint8_t n);
