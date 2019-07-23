@@ -7,7 +7,7 @@
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
     uint16_t outputNum = 1;
-    char* modelFileName = NULL;
+    char* modelFileName = nullptr;
     float* expectedOutput;
     neuron_value_t* newExpectedOut;
 
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]) {
 
 
     KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile("./res/knl/test.knl");
+    kp->readFile((char*) "./res/knl/test.knl");
     kp->getKnowledge()->print();
 
 

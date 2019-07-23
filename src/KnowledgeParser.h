@@ -1,9 +1,10 @@
 #ifndef __KNOWLEDGE_PARSER__
 #define __KNOWLEDGE_PARSER__
 
+#include "Parser.h"
 #include "Knowledge.h"
 
-class KnowledgeParser {
+class KnowledgeParser : public Parser {
 public:
     KnowledgeParser();
     KnowledgeParser(Knowledge* knowledge);
@@ -15,7 +16,7 @@ public:
     Knowledge* getKnowledge();
 
     // Setters.
-    void setData(Knowledge* knowledge);
+    void setKnowledge(Knowledge* knowledge);
 
 private:
     Knowledge* knowledge;

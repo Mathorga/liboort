@@ -75,6 +75,6 @@ Knowledge* KnowledgeParser::getKnowledge() {
     return this->knowledge;
 }
 
-void KnowledgeParser::setData(Knowledge* knowledge) {
+void KnowledgeParser::setKnowledge(Knowledge* knowledge) {
     this->knowledge = knowledge;
 }

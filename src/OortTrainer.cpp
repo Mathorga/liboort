@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
 
     // Input check.
     if (argc > 3 || argc <= 2) {
-        printf("Usage: %s [knowledgePath]\n", argv[0]);
+        printf("Usage: %s [modelFilePath] [knowledgeFilePath]\n", argv[0]);
         return -1;
     }
     if (argc > 1) {

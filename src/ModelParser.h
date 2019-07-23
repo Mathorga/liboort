@@ -13,17 +13,11 @@ Copyright (C) 2019  Luka Micheletti
 #ifndef __MODEL_PARSER__
 #define __MODEL_PARSER__
 
-#include "utils.h"
 #include "../lib/rapidxml-1.13/rapidxml.hpp"
 #include "../lib/rapidxml-1.13/rapidxml_utils.hpp"
 #include "../lib/rapidxml-1.13/rapidxml_print.hpp"
+#include "Parser.h"
 
-class ModelParser {
-public:
-    // Read a Model from a file and store it in this->model.
-    virtual void readFile(char *fileName) = 0;
-    // Write this->model in a file.
-    virtual void writeFile(char *fileName) = 0;
-};
+class ModelParser : public Parser {};
 
 #endif
