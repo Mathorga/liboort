@@ -45,7 +45,7 @@ OortTrainer: OortTrainer.o \
 			 PerceptronSynapse.o \
 			 Synapse.o \
 			 Perceptron.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTest: OortTest.o \
 		  utils.o \
@@ -62,7 +62,7 @@ OortTest: OortTest.o \
 		  KnowledgeParser.o \
 		  Knowledge.o \
 		  Experience.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortNNTest: OortNNTest.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)

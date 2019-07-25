@@ -1,5 +1,6 @@
 #include <dirent.h>
 #include <algorithm>
+#include <opencv2/opencv.hpp>
 #include "utils.h"
 #include "Synapse.h"
 #include "SparsePerceptronModelParser.h"
@@ -7,6 +8,8 @@
 
 #define OUTPUTS_NUM 3
 #define VALUE_PRECISION 4
+
+using namespace cv;
 
 void readValuesFromName(neuron_value_t* values, std::string fileName, std::string delimiter) {
     uint8_t index = 0;
@@ -33,6 +36,7 @@ int main(int argc, char const *argv[]) {
     neuron_value_t* values = (neuron_value_t*) malloc(OUTPUTS_NUM * sizeof(neuron_value_t));
     SparsePerceptronModelParser* parser = nullptr;
     SparsePerceptronNetwork* brain = nullptr;
+    Mat image;
 
     // Input check.
     if (argc > 3 || argc <= 2) {
@@ -73,7 +77,18 @@ int main(int argc, char const *argv[]) {
                 brain->setExpectedOutput(values);
 
                 //TODO Open the file and manage it.
-                printf("\n%s\n", fileName.c_str());
+                std::cout << fileName << std::endl;
+
+                // Read file.
+                image = imread(knowledgePath + fileName);
+
+                // Read single pixels.
+                for (int i = 0; i < image.rows; i++) {
+                    for (int j = 0; j < image.cols; j++) {
+                        // You can now access the pixel value with cv::Vec3b
+                        std::cout << (int) image.at<Vec3b>(i,j)[0] << " " << (int) image.at<Vec3b>(i,j)[1] << " " << (int) image.at<Vec3b>(i,j)[2] << std::endl;
+                    }
+                }
             }
 
             // while ((pos = fileName.find(formatDelimiter)) != std::string::npos) {
