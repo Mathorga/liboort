@@ -1,5 +1,9 @@
 #include "KnowledgeParser.h"
 
+const char KnowledgeParser::HEADER_SEPARATOR = ':';
+const char KnowledgeParser::PRIMARY_SEPARATOR = ':';
+const char KnowledgeParser::SECONDARY_SEPARATOR = ',';
+
 KnowledgeParser::KnowledgeParser() {
     this->knowledge = nullptr;
 }
@@ -29,7 +33,7 @@ void KnowledgeParser::readFile(char* fileName) {
                 // size and outputs size.
 
                 // Split the string based on the values separator.
-                data = splitString(line, ',');
+                data = splitString(line, HEADER_SEPARATOR);
                 // Create a knowledge object passing values read from the first line of the knowledge file.
                 this->knowledge = new Knowledge(std::stoi(data[0]), std::stoi(data[1]));
             } else {
@@ -38,18 +42,18 @@ void KnowledgeParser::readFile(char* fileName) {
 
                 // Split the line by input-output separator and then separate outputs and inputs to create the
                 // experience.
-                data = splitString(line, ';');
+                data = splitString(line, PRIMARY_SEPARATOR);
                 inputValues = new Vector<neuron_value_t>();
                 outputValues = new Vector<neuron_value_t>();
 
                 // Loop through input values (data[0]).
-                lineValues = splitString(data[0], ',');
+                lineValues = splitString(data[0], SECONDARY_SEPARATOR);
                 for (std::string inString : lineValues) {
                     inputValues->addLast(std::stof(inString));
                 }
 
                 // Loop through output values (data[1]).
-                lineValues = splitString(data[1], ',');
+                lineValues = splitString(data[1], SECONDARY_SEPARATOR);
                 for (std::string outString : lineValues) {
                     outputValues->addLast(std::stof(outString));
                 }
@@ -62,12 +66,59 @@ void KnowledgeParser::readFile(char* fileName) {
         // Close the file at the end of the read operation.
         inputFile.close();
     } else {
+        // There was an error opening the file.
         printf("\n<KnowledgeParser::readFile()> Error opening file %s\n", fileName);
     }
     return;
 }
 
 void KnowledgeParser::writeFile(char* fileName) {
+    std::ofstream outputFile;
+    std::string line;
+    std::stringstream lineStream;
+
+    if (this->knowledge) {
+        // Open the file in write mode.
+        // ofstream::open() automatically creates the file if not alredy present, so there's no need to check for its
+        // existence.
+        outputFile.open(fileName);
+        // Check if the file was correctly opened.
+        if (outputFile.is_open()) {
+            // The file was successfully opened.
+            // Write the header.
+            outputFile << this->knowledge->getInputsNum() << HEADER_SEPARATOR << this->knowledge->getOutputsNum() << std::endl;
+
+            // Loop through each experience in knowledge: each experience is a line of the output file.
+            for (vector_size_t i = 0; i < this->knowledge->getExperiencesNum(); i++) {
+                // Empty the line to create a new one.
+                line = "";
+
+                // Loop through inputs of the single experience to write them on the line.
+                for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
+                    line += std::to_string(this->knowledge->getExperience(i)->getInput(j));
+                    j == this->knowledge->getInputsNum() - 1 ? line += PRIMARY_SEPARATOR : line += SECONDARY_SEPARATOR;
+                }
+
+                for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
+                    line += std::to_string(this->knowledge->getExperience(i)->getOutput(j));
+                    if (j != this->knowledge->getOutputsNum() - 1) {
+                        line += SECONDARY_SEPARATOR;
+                    }
+                }
+
+                // Write the line to the output file.
+                outputFile << line << std::endl;
+            }
+
+            // Close the file at the end of the write operation.
+            outputFile.close();
+        } else {
+            // There was an error opening the file.
+            printf("\n<KnowledgeParser::writeFile()> Error opening file %s\n", fileName);
+        }
+    } else {
+        printf("\n<KnowledgeParser::writeFile()> Error: knowledge not set\n");
+    }
     return;
 }
 

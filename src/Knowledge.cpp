@@ -56,10 +56,18 @@ vector_size_t Knowledge::getOutputsNum() {
     return this->outputsNum;
 }
 
+Experience* Knowledge::getExperience(vector_size_t index) {
+    return this->experiences->getItem(index);
+}
+
 Experience* Knowledge::getExperiences() {
     return this->experiences->getItems();
 }
 
 Vector<Experience>* Knowledge::getExperiencesVector() {
     return this->experiences;
+}
+
+vector_size_t Knowledge::getExperiencesNum() {
+    return this->experiences->getSize();
 }

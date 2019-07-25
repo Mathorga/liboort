@@ -1,6 +1,16 @@
 # Prerequisites
 *.d
 
+# Executables
+*.exe
+*.out
+*.app
+*.jpg
+*/bin/*
+*/bld/*
+*/sav/*
+*/img/*
+
 # Compiled Object files
 *.slo
 *.lo
@@ -25,13 +35,3 @@
 *.la
 *.a
 *.lib
-
-# Executables
-*.exe
-*.out
-*.app
-*.jpg
-*/bin/*
-*/bld/*
-*/sav/*
-*/img/*

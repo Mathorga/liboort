@@ -30,7 +30,7 @@ double getNanoTime() {
 
 std::vector<std::string> splitString(const std::string& inputString, char separator) {
     std::vector<std::string> elements;
-    std::istringstream stream(inputString);
+    std::stringstream stream(inputString);
     std::string element;
 
     while(std::getline(stream, element, separator)) {

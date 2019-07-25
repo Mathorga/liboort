@@ -20,8 +20,10 @@ public:
     // Getters.
     vector_size_t getInputsNum();
     vector_size_t getOutputsNum();
+    Experience* getExperience(vector_size_t index);
     Experience* getExperiences();
     Vector<Experience>* getExperiencesVector();
+    vector_size_t getExperiencesNum();
 
 private:
     vector_size_t inputsNum;

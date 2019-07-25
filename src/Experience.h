@@ -15,6 +15,8 @@ public:
     void print();
 
     // Getters.
+    neuron_value_t getInput(vector_size_t index);
+    neuron_value_t getOutput(vector_size_t index);
     neuron_value_t* getInputs();
     neuron_value_t* getOutputs();
     Vector<neuron_value_t>* getInputsVector();

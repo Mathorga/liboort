@@ -6,6 +6,10 @@
 
 class KnowledgeParser : public Parser {
 public:
+    static const char HEADER_SEPARATOR;
+    static const char PRIMARY_SEPARATOR;
+    static const char SECONDARY_SEPARATOR;
+
     KnowledgeParser();
     KnowledgeParser(Knowledge* knowledge);
 

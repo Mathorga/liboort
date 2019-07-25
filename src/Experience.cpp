@@ -32,6 +32,14 @@ void Experience::print() {
     printf("\n\n");
 }
 
+neuron_value_t Experience::getInput(vector_size_t index) {
+    return *(this->inputs->getItem(index));
+}
+
+neuron_value_t Experience::getOutput(vector_size_t index) {
+    return *(this->outputs->getItem(index));
+}
+
 neuron_value_t* Experience::getInputs() {
     return this->inputs->getItems();
 }
