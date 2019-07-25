@@ -24,6 +24,7 @@ void KnowledgeParser::readFile(char* fileName) {
 
     // Open the file in read mode.
     inputFile.open(fileName);
+
     // Check if the file was correctly opened.
     if (inputFile.is_open()) {
         // The file was successfully opened.
@@ -63,6 +64,7 @@ void KnowledgeParser::readFile(char* fileName) {
 
             }
         }
+
         // Close the file at the end of the read operation.
         inputFile.close();
     } else {
@@ -79,9 +81,10 @@ void KnowledgeParser::writeFile(char* fileName) {
 
     if (this->knowledge) {
         // Open the file in write mode.
-        // ofstream::open() automatically creates the file if not alredy present, so there's no need to check for its
+        // std::ofstream::open() automatically creates the file if not alredy present, so there's no need to check for its
         // existence.
         outputFile.open(fileName);
+
         // Check if the file was correctly opened.
         if (outputFile.is_open()) {
             // The file was successfully opened.
@@ -93,14 +96,24 @@ void KnowledgeParser::writeFile(char* fileName) {
                 // Empty the line to create a new one.
                 line = "";
 
-                // Loop through inputs of the single experience to write them on the line.
+                // Loop through the inputs of the single experience to write them on the line.
                 for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
                     line += std::to_string(this->knowledge->getExperience(i)->getInput(j));
-                    j == this->knowledge->getInputsNum() - 1 ? line += PRIMARY_SEPARATOR : line += SECONDARY_SEPARATOR;
+
+                    // Add SECONDARY_SEPARATOR between each input.
+                    if (j == this->knowledge->getInputsNum() - 1) {
+                        line += SECONDARY_SEPARATOR;
+                    }
                 }
 
+                // Add PRIMARY_SEPARATOR between inputs and outputs.
+                line += PRIMARY_SEPARATOR;
+
+                // Loop through the outputs of the single experience to write them on the line.
                 for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
                     line += std::to_string(this->knowledge->getExperience(i)->getOutput(j));
+
+                    // Add SECONDARY_SEPARATOR between each output.
                     if (j != this->knowledge->getOutputsNum() - 1) {
                         line += SECONDARY_SEPARATOR;
                     }
