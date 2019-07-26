@@ -1,3 +1,17 @@
+/*
+********************************************************************************
+Vector.h
+
+This file implements a wrapper for a standard array (not a linked list),
+allowing easy management of insertion, deletion and retrieval of items in the
+array.
+It's important for the array to be contiguous, in order to optimize parallel of
+it. To do so the contained object is a standard C pointer. 
+Copyright (C) 2019  Luka Micheletti
+
+********************************************************************************
+*/
+
 #ifndef __VECTOR__
 #define __VECTOR__
 
