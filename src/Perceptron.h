@@ -2,8 +2,8 @@
 #define __PERCEPTRON__
 
 #include "Neuron.h"
-#include "PerceptronSynapse.h"
 #include "Vector.h"
+#include "PerceptronSynapse.h"
 
 #define perceptron_error_t float
 #define perceptron_input_t float
@@ -17,17 +17,17 @@ public:
     static Perceptron getNullPerceptron();
 
     // Constructors.
-    Perceptron(neurons_num_t id);
-    Perceptron(neurons_num_t id, Neuron::NeuronType type);
-    Perceptron(neurons_num_t id, neuron_value_t value);
-    Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type);
-    Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum);
+    Perceptron(vector_size_t id);
+    Perceptron(vector_size_t id, Neuron::NeuronType type);
+    Perceptron(vector_size_t id, neuron_value_t value);
+    Perceptron(vector_size_t id, neuron_value_t value, Neuron::NeuronType type);
+    Perceptron(vector_size_t id, neuron_value_t value, vector_size_t synapsesNum);
     Perceptron(Perceptron& other);
 
     void print();
 
     // Getters.
-    neurons_num_t getId();
+    vector_size_t getId();
     neuron_value_t getDValue();
     perceptron_error_t getError();
     neuron_value_t getExpectedOutput();
@@ -43,7 +43,7 @@ public:
     void setExpectedOutput(neuron_value_t expectedOutput);
 
 private:
-    neurons_num_t id;
+    vector_size_t id;
     neuron_value_t dValue;
     perceptron_error_t error;
     neuron_value_t expectedOutput;

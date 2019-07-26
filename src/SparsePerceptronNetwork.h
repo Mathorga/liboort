@@ -8,7 +8,7 @@ class SparsePerceptronNetwork : public NeuralNetwork {
 public:
     // Constructors.
     SparsePerceptronNetwork();
-    SparsePerceptronNetwork(neurons_num_t inputsNum, neurons_num_t outputsNum);
+    SparsePerceptronNetwork(vector_size_t inputsNum, vector_size_t outputsNum);
     SparsePerceptronNetwork(SparsePerceptronModel* model);
 
     void run();

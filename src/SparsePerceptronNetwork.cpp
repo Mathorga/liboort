@@ -7,7 +7,7 @@ SparsePerceptronNetwork::SparsePerceptronNetwork() {
     // this->expectedOutput = (neuron_value_t*) malloc(this->model->getOutputsNum() * sizeof(neuron_value_t));
 }
 
-SparsePerceptronNetwork::SparsePerceptronNetwork(neurons_num_t inputsNum, neurons_num_t outputsNum) {
+SparsePerceptronNetwork::SparsePerceptronNetwork(vector_size_t inputsNum, vector_size_t outputsNum) {
     this->baseWeight = 0;
     this->baseValue = 0;
 
@@ -39,8 +39,8 @@ void SparsePerceptronNetwork::correct() {
 }
 
 void SparsePerceptronNetwork::computeValue() {
-    neurons_num_t size = this->model->getNeuronsNum();
-    neurons_num_t pos = 0;
+    vector_size_t size = this->model->getNeuronsNum();
+    vector_size_t pos = 0;
     bool complete = true;
 
     // Create a buffer containing all neurons' addresses, so that it can be rearranged however needed.
@@ -49,12 +49,12 @@ void SparsePerceptronNetwork::computeValue() {
     perceptron_input_t value = 0;
 
     // Initialize the buffer.
-    for (neurons_num_t i = 0; i < size; i++) {
+    for (vector_size_t i = 0; i < size; i++) {
         neuronsBuffer[i] = &(this->model->getNeurons()[i]);
     }
 
     // Compute values.
-    for (neurons_num_t i = 0; i < size; i++) {
+    for (vector_size_t i = 0; i < size; i++) {
         // Reset completion flag.
         complete = true;
 
@@ -67,11 +67,11 @@ void SparsePerceptronNetwork::computeValue() {
             // Loop through synapses going to current neuron.
             for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapses()->getSize(); j++) {
                 // Loop through neurons coming next.
-                for (neurons_num_t k = pos; k < size; k++) {
+                for (vector_size_t k = pos; k < size; k++) {
                     if (neuronsBuffer[i]->getSynapses()->getItems()[j].getInputNeuron() == neuronsBuffer[k]) {
                         // The neuron is incomplete, so put it at the end of the buffer.
                         Perceptron* neuron = neuronsBuffer[i];
-                        for (neurons_num_t j = pos + 1; j < size; j++) {
+                        for (vector_size_t j = pos + 1; j < size; j++) {
                             neuronsBuffer[j - 1] = neuronsBuffer[j];
                         }
                         neuronsBuffer[size - 1] = neuron;
@@ -113,19 +113,19 @@ void SparsePerceptronNetwork::computeValue() {
 }
 
 void SparsePerceptronNetwork::computeError() {
-    neurons_num_t size = this->model->getNeuronsNum();
-    neurons_num_t pos = 0;
+    vector_size_t size = this->model->getNeuronsNum();
+    vector_size_t pos = 0;
     // Create a buffer containing all neurons' addresses, so that it can be rearranged however needed.
     Perceptron** bufferHead = (Perceptron**) malloc(size * sizeof(Perceptron*));
     Perceptron** neuronsBuffer = bufferHead;
 
     // Initialize the buffer.
-    for (neurons_num_t i = 0; i < size; i++) {
+    for (vector_size_t i = 0; i < size; i++) {
         neuronsBuffer[i] = &(this->model->getNeurons()[i]);
     }
 
     // Compute errors based on the expected output.
-    for (neurons_num_t i = 0; i < size; i++) {
+    for (vector_size_t i = 0; i < size; i++) {
         start:
         // printf("\nId %d\n", neuronsBuffer[i]->getId());
         // Check if the neuron is input (no need to calculate the error).
@@ -137,7 +137,7 @@ void SparsePerceptronNetwork::computeError() {
             // Loop through synapses coming from current neuron.
             for (vector_size_t j = 0; j < neuronsBuffer[i]->getSynapsesNum(); j++) {
                 // Loop through neurons coming next.
-                for (neurons_num_t k = pos; k < size; k ++) {
+                for (vector_size_t k = pos; k < size; k ++) {
                     if (neuronsBuffer[i]->getSynapse(j)->getInputId() == neuronsBuffer[k]->getId()) {
                         // The neuron competes to another neuron in the buffer, so go to incomplete.
                         goto incomplete;
@@ -148,7 +148,7 @@ void SparsePerceptronNetwork::computeError() {
                 incomplete:
                 // The neuron is incomplete, so put it at the end of the buffer.
                 Perceptron* neuron = neuronsBuffer[i];
-                for (neurons_num_t j = pos + 1; j < size; j++) {
+                for (vector_size_t j = pos + 1; j < size; j++) {
                     neuronsBuffer[j - 1] = neuronsBuffer[j];
                 }
                 neuronsBuffer[size - 1] = neuron;
@@ -240,9 +240,9 @@ SparsePerceptronModel* SparsePerceptronNetwork::getModel() {
 
 neuron_value_t* SparsePerceptronNetwork::getOutput() {
     neuron_value_t* out = (neuron_value_t*) malloc(this->model->getOutputsNum() * sizeof(neuron_value_t));
-    neurons_num_t index = 0;
+    vector_size_t index = 0;
 
-    for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
+    for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
         if (this->model->getNeuron(i)->getType() == Neuron::typeOutput) {
             out[index] = this->model->getNeuron(i)->getValue();
             index++;
@@ -253,7 +253,7 @@ neuron_value_t* SparsePerceptronNetwork::getOutput() {
 }
 
 void SparsePerceptronNetwork::setInput(neuron_value_t* input) {
-    for (neurons_num_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
+    for (vector_size_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
         if (this->model->getNeuron(i)->getType() == Neuron::typeInput) {
             this->model->getNeuron(i)->setValue(input[j]);
             j++;
@@ -262,7 +262,7 @@ void SparsePerceptronNetwork::setInput(neuron_value_t* input) {
 }
 
 void SparsePerceptronNetwork::setExpectedOutput(neuron_value_t* expectedOutput) {
-    for (neurons_num_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
+    for (vector_size_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
         if (this->model->getNeuron(i)->getType() == Neuron::typeOutput) {
             ((Perceptron*) this->model->getNeuron(i))->setExpectedOutput(expectedOutput[j]);
             j++;

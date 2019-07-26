@@ -3,7 +3,7 @@
 const neuron_value_t Perceptron::DEFAULT_VALUE = 0.5;
 const perceptron_error_t Perceptron::DEFAULT_ERROR = 0.0;
 
-Perceptron::Perceptron(neurons_num_t id) {
+Perceptron::Perceptron(vector_size_t id) {
     // TODO Implement real constructor.
     this->id = id;
     this->value = DEFAULT_VALUE;
@@ -11,19 +11,19 @@ Perceptron::Perceptron(neurons_num_t id) {
     this->synapses = new Vector<PerceptronSynapse>();
 }
 
-Perceptron::Perceptron(neurons_num_t id, Neuron::NeuronType type) : Perceptron(id) {
+Perceptron::Perceptron(vector_size_t id, Neuron::NeuronType type) : Perceptron(id) {
     this->type = type;
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value) : Perceptron(id) {
+Perceptron::Perceptron(vector_size_t id, neuron_value_t value) : Perceptron(id) {
     this->value = value;
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, Neuron::NeuronType type) : Perceptron(id, value) {
+Perceptron::Perceptron(vector_size_t id, neuron_value_t value, Neuron::NeuronType type) : Perceptron(id, value) {
     this->type = type;
 }
 
-Perceptron::Perceptron(neurons_num_t id, neuron_value_t value, vector_size_t synapsesNum) : Perceptron(id, value) {
+Perceptron::Perceptron(vector_size_t id, neuron_value_t value, vector_size_t synapsesNum) : Perceptron(id, value) {
     for (vector_size_t i = 0; i < synapsesNum; i++) {
         this->synapses->addLast(new PerceptronSynapse(PerceptronSynapse::DEFAULT_WEIGHT));
     }
@@ -49,7 +49,7 @@ void Perceptron::print() {
     printf("\n");
 }
 
-neurons_num_t Perceptron::getId() {
+vector_size_t Perceptron::getId() {
     return this->id;
 }
 

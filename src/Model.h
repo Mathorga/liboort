@@ -3,8 +3,9 @@
 
 #include "Neuron.h"
 #include "utils.h"
+#include "Vector.h"
 
-// #define neurons_num_t uint32_t
+// #define vector_size_t uint32_t
 
 class Model {
 public:
@@ -12,26 +13,26 @@ public:
     void computeNeuronsNum();
 
     // Getters.
-    neurons_num_t getInputsNum();
-    neurons_num_t getOutputsNum();
-    neurons_num_t getHiddensNum();
-    neurons_num_t getNeuronsNum();
+    vector_size_t getInputsNum();
+    vector_size_t getOutputsNum();
+    vector_size_t getHiddensNum();
+    vector_size_t getNeuronsNum();
 
     // Setters.
-    void setInputsNum(neurons_num_t inputsNum);
-    void setOutputsNum(neurons_num_t outputsNum);
-    void setHiddensNum(neurons_num_t hiddensNum);
-    void setNeuronsNum(neurons_num_t neuronsNum);
+    void setInputsNum(vector_size_t inputsNum);
+    void setOutputsNum(vector_size_t outputsNum);
+    void setHiddensNum(vector_size_t hiddensNum);
+    void setNeuronsNum(vector_size_t neuronsNum);
 
 protected:
     // Number of input neurons.
-    neurons_num_t inputsNum;
+    vector_size_t inputsNum;
     // Number of output neurons.
-    neurons_num_t outputsNum;
+    vector_size_t outputsNum;
     // Number of hidden neurons.
-    neurons_num_t hiddensNum;
+    vector_size_t hiddensNum;
     // Total number of neurons.
-    neurons_num_t neuronsNum;
+    vector_size_t neuronsNum;
 };
 
 #endif

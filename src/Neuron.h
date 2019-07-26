@@ -1,10 +1,21 @@
+/*
+********************************************************************************
+Neuron.h
+
+This file defines the interface for a generic neuron, including default types
+and methods to manage it.
+Copyright (C) 2019  Luka Micheletti
+
+********************************************************************************
+*/
+
 #ifndef __NEURON__
 #define __NEURON__
 
 #include "utils.h"
 
+// Definition of the neuron value type.
 #define neuron_value_t float
-#define neurons_num_t uint32_t
 
 class Neuron {
 public:
@@ -25,6 +36,7 @@ public:
 
 protected:
     NeuronType type;
+    // Value of the neuron.
     neuron_value_t value;
 };
 

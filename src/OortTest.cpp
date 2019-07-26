@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
 
 
     // Set expected output for the current input.
-    newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(neurons_num_t));
+    newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(vector_size_t));
     newExpectedOut[0] = 0.6;
     brain->setExpectedOutput(newExpectedOut);
     // brain->print();

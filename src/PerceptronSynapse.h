@@ -20,7 +20,7 @@ public:
 
     // Getters.
     Perceptron* getInputNeuron();
-    neurons_num_t getInputId();
+    vector_size_t getInputId();
 
 private:
     Perceptron* inputNeuron;

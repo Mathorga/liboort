@@ -3,13 +3,13 @@
 // Read a Model from a file and store it in this->model.
 void SparsePerceptronModelParser::readFile(char *fileName) {
     this->model = new SparsePerceptronModel();
-    neurons_num_t neuronId = 0;
+    vector_size_t neuronId = 0;
     Neuron::NeuronType neuronType = Neuron::typeInput;
     vector_size_t neuronPosition = 0;
     vector_size_t synapsePosition = 0;
     Perceptron* neuron = NULL;
     Perceptron* tmpNeuron(0);
-    neurons_num_t synapseInput = 0;
+    vector_size_t synapseInput = 0;
     synapse_weight_t synapseWeight = 0.0;
 
     rapidxml::file<> modelFile(fileName);
@@ -123,7 +123,7 @@ void SparsePerceptronModelParser::writeFile(char *fileName) {
     networkNode->append_node(neuronsNode);
 
     // Append a node for each neuron.
-    for (neurons_num_t i = 0; i < this->model->getNeuronsNum(); i++) {
+    for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
         neuronNode = doc.allocate_node(rapidxml::node_element, "neuron");
         sprintf(buffer, "%d", this->model->getNeuron(i)->getId());
         neuronNode->append_attribute(doc.allocate_attribute("id", doc.allocate_string(buffer)));

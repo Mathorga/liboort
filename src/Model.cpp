@@ -4,19 +4,19 @@ void Model::computeNeuronsNum() {
     this->neuronsNum = this->inputsNum + this->outputsNum + this->hiddensNum;
 }
 
-neurons_num_t Model::getInputsNum() {
+vector_size_t Model::getInputsNum() {
     return this->inputsNum;
 }
 
-neurons_num_t Model::getOutputsNum() {
+vector_size_t Model::getOutputsNum() {
     return this->outputsNum;
 }
 
-neurons_num_t Model::getHiddensNum() {
+vector_size_t Model::getHiddensNum() {
     return this->hiddensNum;
 }
 
-neurons_num_t Model::getNeuronsNum() {
+vector_size_t Model::getNeuronsNum() {
     return this->neuronsNum;
 }
 
@@ -24,18 +24,18 @@ neurons_num_t Model::getNeuronsNum() {
 //     return this->neurons;
 // }
 
-void Model::setInputsNum(neurons_num_t inputsNum) {
+void Model::setInputsNum(vector_size_t inputsNum) {
     this->inputsNum = inputsNum;
 }
 
-void Model::setOutputsNum(neurons_num_t outputsNum) {
+void Model::setOutputsNum(vector_size_t outputsNum) {
     this->outputsNum = outputsNum;
 }
 
-void Model::setHiddensNum(neurons_num_t hiddensNum) {
+void Model::setHiddensNum(vector_size_t hiddensNum) {
     this->hiddensNum = hiddensNum;
 }
 
-void Model::setNeuronsNum(neurons_num_t neuronsNum) {
+void Model::setNeuronsNum(vector_size_t neuronsNum) {
     this->neuronsNum = neuronsNum;
 }

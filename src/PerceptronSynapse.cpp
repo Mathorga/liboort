@@ -34,6 +34,6 @@ Perceptron* PerceptronSynapse::getInputNeuron() {
     return this->inputNeuron;
 }
 
-neurons_num_t PerceptronSynapse::getInputId() {
+vector_size_t PerceptronSynapse::getInputId() {
     return this->inputNeuron->getId();
 }
