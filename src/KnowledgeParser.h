@@ -4,26 +4,28 @@
 #include "Parser.h"
 #include "Knowledge.h"
 
-class KnowledgeParser : public Parser {
-public:
-    static const char HEADER_SEPARATOR;
-    static const char PRIMARY_SEPARATOR;
-    static const char SECONDARY_SEPARATOR;
+namespace Oort {
+    class KnowledgeParser : public Parser {
+    public:
+        static const char HEADER_SEPARATOR;
+        static const char PRIMARY_SEPARATOR;
+        static const char SECONDARY_SEPARATOR;
 
-    KnowledgeParser();
-    KnowledgeParser(Knowledge* knowledge);
+        KnowledgeParser();
+        KnowledgeParser(Knowledge* knowledge);
 
-    void readFile(char* fileName);
-    void writeFile(char* fileName);
+        void readFile(char* fileName);
+        void writeFile(char* fileName);
 
-    // Getters.
-    Knowledge* getKnowledge();
+        // Getters.
+        Knowledge* getKnowledge();
 
-    // Setters.
-    void setKnowledge(Knowledge* knowledge);
+        // Setters.
+        void setKnowledge(Knowledge* knowledge);
 
-private:
-    Knowledge* knowledge;
-};
+    private:
+        Knowledge* knowledge;
+    };
+}
 
 #endif

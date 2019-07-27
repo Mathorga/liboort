@@ -5,14 +5,16 @@
 #include "SpikingNeuron.h"
 #include "utils.h"
 
-class SpikingModel : public Model {
-public:
-    SpikingModel();
-    // SpikingModel(SpikingNeuron* neurons);
+namespace Oort {
+    class SpikingModel : public Model {
+    public:
+        SpikingModel();
+        // SpikingModel(SpikingNeuron* neurons);
 
-    void print();
+        void print();
 
-    SpikingNeuron* getNeurons();
-};
+        SpikingNeuron* getNeurons();
+    };
+}
 
 #endif

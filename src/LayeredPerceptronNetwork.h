@@ -4,37 +4,39 @@
 #include "NeuralNetwork.h"
 #include "LayeredPerceptronModel.h"
 
-class LayeredPerceptronNetwork : public NeuralNetwork {
-public:
-    // Constructors.
-    LayeredPerceptronNetwork();
+namespace Oort {
+    class LayeredPerceptronNetwork : public NeuralNetwork {
+    public:
+        // Constructors.
+        LayeredPerceptronNetwork();
 
-    void run();
-    void correct();
-    neuron_value_t activate(perceptron_input_t value);
-    neuron_value_t dActivate(perceptron_input_t value);
-    void print();
+        void run();
+        void correct();
+        neuron_value_t activate(perceptron_input_t value);
+        neuron_value_t dActivate(perceptron_input_t value);
+        void print();
 
-    // Getters.
-    // Returns the whole model of the network.
-    LayeredPerceptronModel* getModel();
-    neuron_value_t* getOutput();
+        // Getters.
+        // Returns the whole model of the network.
+        LayeredPerceptronModel* getModel();
+        neuron_value_t* getOutput();
 
-    // Setters.
-    void setInput(neuron_value_t* input);
-    void setExpectedOutput(neuron_value_t* expectedOutput);
+        // Setters.
+        void setInput(neuron_value_t* input);
+        void setExpectedOutput(neuron_value_t* expectedOutput);
 
-private:
-    synapse_weight_t baseWeight;
-    neuron_value_t baseValue;
-    learning_rate_t learningRate;
+    private:
+        synapse_weight_t baseWeight;
+        neuron_value_t baseValue;
+        learning_rate_t learningRate;
 
-    void computeValue();
-    void computeError();
-    void adjustWeights();
+        void computeValue();
+        void computeError();
+        void adjustWeights();
 
-    LayeredPerceptronModel* model;
-};
+        LayeredPerceptronModel* model;
+    };
+}
 
 
 #endif

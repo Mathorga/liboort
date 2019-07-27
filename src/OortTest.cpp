@@ -4,6 +4,8 @@
 #include "LayeredPerceptronModel.h"
 #include "KnowledgeParser.h"
 
+using namespace Oort;
+
 int main(int argc, char const *argv[]) {
     uint16_t inputNum = 1;
     uint16_t outputNum = 1;

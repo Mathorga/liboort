@@ -34,9 +34,10 @@ int main(int argc, char const *argv[]) {
     DIR* knowledgeDir = nullptr;
     struct dirent *entry = nullptr;
     neuron_value_t* values = (neuron_value_t*) malloc(OUTPUTS_NUM * sizeof(neuron_value_t));
-    SparsePerceptronModelParser* parser = nullptr;
-    SparsePerceptronNetwork* brain = nullptr;
+    Oort::SparsePerceptronModelParser* parser = nullptr;
+    Oort::SparsePerceptronNetwork* brain = nullptr;
     Mat image;
+    Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
 
     // Input check.
     if (argc > 3 || argc <= 2) {
@@ -54,9 +55,9 @@ int main(int argc, char const *argv[]) {
     printf("\nKnowledge directory: %s\n", knowledgePath);
 
 
-    parser = new SparsePerceptronModelParser();
+    parser = new Oort::SparsePerceptronModelParser();
     parser->readFile(modelPath);
-    brain = new SparsePerceptronNetwork(parser->getModel());
+    brain = new Oort::SparsePerceptronNetwork(parser->getModel());
 
 
     // Open directory to read all files.

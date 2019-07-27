@@ -8,27 +8,29 @@
 
 #define SYNAPSE_DEFAULT_WEIGHT 0.5f
 
-class Synapse {
-public:
-    static const synapse_weight_t DEFAULT_WEIGHT;
+namespace Oort {
+    class Synapse {
+    public:
+        static const synapse_weight_t DEFAULT_WEIGHT;
 
-    // Constructors.
-    // Synapse();
-    // Synapse(Neuron* inputNeuron);
+        // Constructors.
+        // Synapse();
+        // Synapse(Neuron* inputNeuron);
 
-    // Getters.
-    // Neuron* getInputNeuron();
-    // Neuron* getOutputNeuron();
-    synapse_weight_t getWeight();
+        // Getters.
+        // Neuron* getInputNeuron();
+        // Neuron* getOutputNeuron();
+        synapse_weight_t getWeight();
 
-    // Setters.
-    void setWeight(synapse_weight_t weight);
-    // void setInputNeuron(Neuron* inputNeuron);
+        // Setters.
+        void setWeight(synapse_weight_t weight);
+        // void setInputNeuron(Neuron* inputNeuron);
 
-protected:
-    // Neuron* inputNeuron;
-    // Neuron* outputNeuron;
-    synapse_weight_t weight;
-};
+    protected:
+        // Neuron* inputNeuron;
+        // Neuron* outputNeuron;
+        synapse_weight_t weight;
+    };
+}
 
 #endif

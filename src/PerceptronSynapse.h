@@ -4,26 +4,27 @@
 #include "Synapse.h"
 #include "Perceptron.h"
 
-class Perceptron;
+namespace Oort {
+    class Perceptron;
+    class PerceptronSynapse : public Synapse {
+    public:
+        static const synapse_weight_t DEFAULT_WEIGHT;
 
-class PerceptronSynapse : public Synapse {
-public:
-    static const synapse_weight_t DEFAULT_WEIGHT;
+        // Constructors.
+        PerceptronSynapse();
+        PerceptronSynapse(synapse_weight_t weight);
+        PerceptronSynapse(Perceptron* inputNeuron);
+        PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight);
 
-    // Constructors.
-    PerceptronSynapse();
-    PerceptronSynapse(synapse_weight_t weight);
-    PerceptronSynapse(Perceptron* inputNeuron);
-    PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight);
+        void print();
 
-    void print();
+        // Getters.
+        Perceptron* getInputNeuron();
+        vector_size_t getInputId();
 
-    // Getters.
-    Perceptron* getInputNeuron();
-    vector_size_t getInputId();
-
-private:
-    Perceptron* inputNeuron;
-};
+    private:
+        Perceptron* inputNeuron;
+    };
+}
 
 #endif

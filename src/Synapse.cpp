@@ -1,32 +1,34 @@
 #include "Synapse.h"
 
-const synapse_weight_t Synapse::DEFAULT_WEIGHT = 0.5;
+namespace Oort {
+    const synapse_weight_t Synapse::DEFAULT_WEIGHT = 0.5;
 
-// Synapse::Synapse() {
-//     this->weight = 0;
-// }
-//
-// Synapse::Synapse(Neuron* inputNeuron) {
-//     this->inputNeuron = inputNeuron;
-//     this->weight = 0;
-// }
-//
-// Neuron* Synapse::getInputNeuron() {
-//     return this->inputNeuron;
-// }
-//
-// Neuron* getOutputNeuron() {
-//     return this->outputNeuron;
-// }
+    // Synapse::Synapse() {
+    //     this->weight = 0;
+    // }
+    //
+    // Synapse::Synapse(Neuron* inputNeuron) {
+    //     this->inputNeuron = inputNeuron;
+    //     this->weight = 0;
+    // }
+    //
+    // Neuron* Synapse::getInputNeuron() {
+    //     return this->inputNeuron;
+    // }
+    //
+    // Neuron* getOutputNeuron() {
+    //     return this->outputNeuron;
+    // }
 
-synapse_weight_t Synapse::getWeight() {
-    return this->weight;
+    synapse_weight_t Synapse::getWeight() {
+        return this->weight;
+    }
+
+    void Synapse::setWeight(synapse_weight_t weight) {
+        this->weight = weight;
+    }
+
+    // void Synapse::setInputNeuron(Neuron* inputNeuron) {
+    //     this->inputNeuron = inputNeuron;
+    // }
 }
-
-void Synapse::setWeight(synapse_weight_t weight) {
-    this->weight = weight;
-}
-
-// void Synapse::setInputNeuron(Neuron* inputNeuron) {
-//     this->inputNeuron = inputNeuron;
-// }

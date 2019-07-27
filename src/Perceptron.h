@@ -8,49 +8,50 @@
 #define perceptron_error_t float
 #define perceptron_input_t float
 
-class PerceptronSynapse;
+namespace Oort {
+    class PerceptronSynapse;
+    class Perceptron : public Neuron {
+    public:
+        static const neuron_value_t DEFAULT_VALUE;
+        static const perceptron_error_t DEFAULT_ERROR;
+        static Perceptron getNullPerceptron();
 
-class Perceptron : public Neuron {
-public:
-    static const neuron_value_t DEFAULT_VALUE;
-    static const perceptron_error_t DEFAULT_ERROR;
-    static Perceptron getNullPerceptron();
+        // Constructors.
+        Perceptron(vector_size_t id);
+        Perceptron(vector_size_t id, Neuron::NeuronType type);
+        Perceptron(vector_size_t id, neuron_value_t value);
+        Perceptron(vector_size_t id, neuron_value_t value, Neuron::NeuronType type);
+        Perceptron(vector_size_t id, neuron_value_t value, vector_size_t synapsesNum);
+        Perceptron(Perceptron& other);
 
-    // Constructors.
-    Perceptron(vector_size_t id);
-    Perceptron(vector_size_t id, Neuron::NeuronType type);
-    Perceptron(vector_size_t id, neuron_value_t value);
-    Perceptron(vector_size_t id, neuron_value_t value, Neuron::NeuronType type);
-    Perceptron(vector_size_t id, neuron_value_t value, vector_size_t synapsesNum);
-    Perceptron(Perceptron& other);
+        void print();
 
-    void print();
+        // Getters.
+        vector_size_t getId();
+        neuron_value_t getDValue();
+        perceptron_error_t getError();
+        neuron_value_t getExpectedOutput();
+        vector_size_t getSynapsesNum();
+        Vector<PerceptronSynapse>* getSynapses();
+        PerceptronSynapse* getSynapse(vector_size_t index);
+        Perceptron** getInputs();
 
-    // Getters.
-    vector_size_t getId();
-    neuron_value_t getDValue();
-    perceptron_error_t getError();
-    neuron_value_t getExpectedOutput();
-    vector_size_t getSynapsesNum();
-    Vector<PerceptronSynapse>* getSynapses();
-    PerceptronSynapse* getSynapse(vector_size_t index);
-    Perceptron** getInputs();
+        // Setters.
+        void setDValue(neuron_value_t dValue);
+        void setError(perceptron_error_t error);
+        void addError(perceptron_error_t error);
+        void setExpectedOutput(neuron_value_t expectedOutput);
 
-    // Setters.
-    void setDValue(neuron_value_t dValue);
-    void setError(perceptron_error_t error);
-    void addError(perceptron_error_t error);
-    void setExpectedOutput(neuron_value_t expectedOutput);
+    private:
+        vector_size_t id;
+        neuron_value_t dValue;
+        perceptron_error_t error;
+        neuron_value_t expectedOutput;
+        perceptron_error_t delta;
+        perceptron_error_t partialDelta;
 
-private:
-    vector_size_t id;
-    neuron_value_t dValue;
-    perceptron_error_t error;
-    neuron_value_t expectedOutput;
-    perceptron_error_t delta;
-    perceptron_error_t partialDelta;
-
-    Vector<PerceptronSynapse>* synapses;
-};
+        Vector<PerceptronSynapse>* synapses;
+    };
+}
 
 #endif

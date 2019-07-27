@@ -3,17 +3,19 @@
 
 #include "Neuron.h"
 
-class SpikingNeuron : public Neuron {
-public:
-    // Constructors.
-    SpikingNeuron();
-    SpikingNeuron(neuron_value_t value);
+namespace Oort {
+    class SpikingNeuron : public Neuron {
+    public:
+        // Constructors.
+        SpikingNeuron();
+        SpikingNeuron(neuron_value_t value);
 
-private:
-    NeuronType type;
-    bool state;
-    bool outState;
-    SpikingNeuron** inputs;
-};
+    private:
+        NeuronType type;
+        bool state;
+        bool outState;
+        SpikingNeuron** inputs;
+    };
+}
 
 #endif

@@ -18,6 +18,8 @@ Copyright (C) 2019  Luka Micheletti
 #include "../lib/rapidxml-1.13/rapidxml_print.hpp"
 #include "Parser.h"
 
-class ModelParser : public Parser {};
+namespace Oort {
+    class ModelParser : public Parser {};
+}
 
 #endif
