@@ -5,22 +5,21 @@
 #include "Synapse.h"
 #include "SparsePerceptronModelParser.h"
 #include "SparsePerceptronNetwork.h"
+#include "Experience.h"
 
 #define OUTPUTS_NUM 3
 #define VALUE_PRECISION 4
 
 using namespace cv;
 
-void readValuesFromName(neuron_value_t* values, std::string fileName, std::string delimiter) {
-    uint8_t index = 0;
+void readValuesFromName(Oort::Vector<neuron_value_t>* values, std::string fileName, std::string delimiter) {
     size_t pos = 0;
 
     while ((pos = fileName.find(delimiter)) != std::string::npos) {
-        values[index] = atof(("0." + fileName.substr(0, VALUE_PRECISION)).c_str());
+        values->addLast(atof(("0." + fileName.substr(0, VALUE_PRECISION)).c_str()));
         fileName.erase(0, pos + delimiter.length());
-        index++;
     }
-    values[index] = atof(("0." + fileName.substr(0, 4)).c_str());
+    values->addLast(atof(("0." + fileName.substr(0, 4)).c_str()));
 }
 
 int main(int argc, char const *argv[]) {
@@ -38,6 +37,8 @@ int main(int argc, char const *argv[]) {
     Oort::SparsePerceptronNetwork* brain = nullptr;
     Mat image;
     Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
+    Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
+    Oort::Experience* expr = new Oort::Experience();
 
     // Input check.
     if (argc > 3 || argc <= 2) {
@@ -72,7 +73,7 @@ int main(int argc, char const *argv[]) {
                 tmpFileName = fileName;
 
                 // Get all values from the name.
-                readValuesFromName(values, fileName, valuesDelimiter);
+                readValuesFromName(outputs, fileName, valuesDelimiter);
 
                 // Set expected output obtained from the file name.
                 brain->setExpectedOutput(values);
@@ -88,8 +89,17 @@ int main(int argc, char const *argv[]) {
                     for (int j = 0; j < image.cols; j++) {
                         // You can now access the pixel value with cv::Vec3b
                         std::cout << (int) image.at<Vec3b>(i,j)[0] << " " << (int) image.at<Vec3b>(i,j)[1] << " " << (int) image.at<Vec3b>(i,j)[2] << std::endl;
+                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[0])).c_str()));
+                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[1])).c_str()));
+                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[2])).c_str()));
                     }
                 }
+                expr->setInputs(inputs);
+                expr->setOutputs(outputs);
+
+                expr->print();
+
+
             }
 
             // while ((pos = fileName.find(formatDelimiter)) != std::string::npos) {
