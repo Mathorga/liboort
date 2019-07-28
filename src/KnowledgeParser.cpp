@@ -102,7 +102,7 @@ namespace Oort {
                         line += std::to_string(this->knowledge->getExperience(i)->getInput(j));
 
                         // Add SECONDARY_SEPARATOR between each input.
-                        if (j == this->knowledge->getInputsNum() - 1) {
+                        if (j != this->knowledge->getInputsNum() - 1) {
                             line += SECONDARY_SEPARATOR;
                         }
                     }

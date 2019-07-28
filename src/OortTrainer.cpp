@@ -6,6 +6,8 @@
 #include "SparsePerceptronModelParser.h"
 #include "SparsePerceptronNetwork.h"
 #include "Experience.h"
+#include "Knowledge.h"
+#include "KnowledgeParser.h"
 
 #define OUTPUTS_NUM 3
 #define VALUE_PRECISION 4
@@ -38,7 +40,9 @@ int main(int argc, char const *argv[]) {
     Mat image;
     Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
     Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
-    Oort::Experience* expr = new Oort::Experience();
+    Oort::Experience* expr;
+    Oort::Knowledge* knowledge = new Oort::Knowledge(1296, 3);
+    Oort::KnowledgeParser* knlParser = new Oort::KnowledgeParser();
 
     // Input check.
     if (argc > 3 || argc <= 2) {
@@ -76,9 +80,9 @@ int main(int argc, char const *argv[]) {
                 readValuesFromName(outputs, fileName, valuesDelimiter);
 
                 // Set expected output obtained from the file name.
-                brain->setExpectedOutput(values);
+                // brain->setExpectedOutput(values);
 
-                //TODO Open the file and manage it.
+                // Open the file and manage it.
                 std::cout << fileName << std::endl;
 
                 // Read file.
@@ -88,20 +92,22 @@ int main(int argc, char const *argv[]) {
                 for (int i = 0; i < image.rows; i++) {
                     for (int j = 0; j < image.cols; j++) {
                         // You can now access the pixel value with cv::Vec3b
-                        std::cout << (int) image.at<Vec3b>(i,j)[0] << " " << (int) image.at<Vec3b>(i,j)[1] << " " << (int) image.at<Vec3b>(i,j)[2] << std::endl;
-                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[0])).c_str()));
-                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[1])).c_str()));
-                        inputs->addLast(atof(("0." + std::to_string(image.at<Vec3b>(i,j)[2])).c_str()));
+                        // std::cout << (int) image.at<Vec3b>(i,j)[0] << " " << (int) image.at<Vec3b>(i,j)[1] << " " << (int) image.at<Vec3b>(i,j)[2] << std::endl;
+                        inputs->addLast(image.at<Vec3b>(i,j)[0] / 256.0);
+                        inputs->addLast(image.at<Vec3b>(i,j)[1] / 256.0);
+                        inputs->addLast(image.at<Vec3b>(i,j)[2] / 256.0);
                     }
                 }
+                expr = new Oort::Experience();
                 expr->setInputs(inputs);
                 expr->setOutputs(outputs);
-
-                expr->print();
-
-
+                knowledge->addExperience(expr);
             }
-
+            if (knowledge->getExperiencesNum() > 0) {
+                knowledge->print();
+                knlParser->setKnowledge(knowledge);
+                knlParser->writeFile((char*) "./res/knl/Oort1.knl");
+            }
             // while ((pos = fileName.find(formatDelimiter)) != std::string::npos) {
             //     value = fileName.substr(0, pos);
             //     std::cout << value << std::endl;
