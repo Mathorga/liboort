@@ -26,7 +26,7 @@ namespace Oort {
         // Constructors.
         Vector() {
             this->size = 0;
-            this->items = NULL;
+            this->items = nullptr;
         }
         Vector(vector_size_t size) {
             this->size = size;
@@ -84,7 +84,8 @@ namespace Oort {
         T removeAt(vector_size_t position) {}
         void empty() {
             this->size = 0;
-            free(this->items);
+            // free(this->items);
+            this->items = nullptr;
         }
 
         // Getters.

@@ -77,6 +77,8 @@ int main(int argc, char const *argv[]) {
                 tmpFileName = fileName;
 
                 // Get all values from the name.
+                inputs->empty();
+                outputs->empty();
                 readValuesFromName(outputs, fileName, valuesDelimiter);
 
                 // Set expected output obtained from the file name.
@@ -101,12 +103,8 @@ int main(int argc, char const *argv[]) {
                 expr = new Oort::Experience();
                 expr->setInputs(inputs);
                 expr->setOutputs(outputs);
+                expr->print();
                 knowledge->addExperience(expr);
-            }
-            if (knowledge->getExperiencesNum() > 0) {
-                knowledge->print();
-                knlParser->setKnowledge(knowledge);
-                knlParser->writeFile((char*) "./res/knl/Oort1.knl");
             }
             // while ((pos = fileName.find(formatDelimiter)) != std::string::npos) {
             //     value = fileName.substr(0, pos);
@@ -114,9 +112,29 @@ int main(int argc, char const *argv[]) {
             //     fileName.erase(0, pos + formatDelimiter.length());
             // }
         }
+        if (knowledge->getExperiencesNum() > 0) {
+            knowledge->print();
+            knlParser->setKnowledge(knowledge);
+            knlParser->writeFile((char*) "./res/knl/Oort1.knl");
+        }
     }
 
     closedir(knowledgeDir);
+
+
+
+    Oort::Vector<int>* prova = new Oort::Vector<int>();
+    prova->addLast(4);
+    prova->addLast(12);
+    prova->addLast(21);
+
+    for (vector_size_t i = 0; i < prova->getSize(); i++) {
+        printf("\n%d\n", *(prova->getItem(i)));
+    }
+
+
+
+
 
     return 0;
 }

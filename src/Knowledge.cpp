@@ -17,8 +17,10 @@ namespace Oort {
     }
 
     void Knowledge::addExperience(Experience* experience) {
+        // Check if inputs and outputs numbers of the experience match those of the knowledge.
+        // Print an error in case of inconsistency.
         if (experience->getInputsNum() == this->inputsNum && experience->getOutputsNum() == this->outputsNum) {
-            this->experiences->addLast(experience);
+            this->experiences->addLast(*experience);
         } else {
             printf("\nmyIns %d, myOuts %d, expIns %d, expOuts %d\n", this->inputsNum, this->outputsNum, experience->getInputsNum(), experience->getOutputsNum());
             printf("\n<Knowledge.addExperience()> Error adding experience: Inconsistent size\n");

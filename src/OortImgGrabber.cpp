@@ -40,7 +40,7 @@ int main(int argc, char const *argv[]) {
 
     while (running) {
 
-        startTime = getTime();
+        startTime = Oort::getTime();
 
         // Capture frame-by-frame
         cap >> showFrame;
@@ -66,7 +66,7 @@ int main(int argc, char const *argv[]) {
         imshow("Show", showFrame);
         // imshow("Save", saveFrame);
 
-        endTime = getTime();
+        endTime = Oort::getTime();
         execTime = endTime - startTime;
 
         // Press ESC on keyboard to exit.
