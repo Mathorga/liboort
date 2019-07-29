@@ -4,7 +4,7 @@ namespace Oort {
     const char KnowledgeParser::HEADER_SEPARATOR = ':';
     const char KnowledgeParser::PRIMARY_SEPARATOR = ':';
     const char KnowledgeParser::SECONDARY_SEPARATOR = ',';
-    const uint8_t KnowledgeParser::HEADER_LENGTH = 3;
+    const uint8_t KnowledgeParser::HEADER_LENGTH = 4;
 
     KnowledgeParser::KnowledgeParser() {
         this->knowledge = nullptr;
@@ -18,10 +18,13 @@ namespace Oort {
         FILE* inputFile = nullptr;
         uint8_t inputsNum = 0;
         uint8_t outputsNum = 0;
-        uint8_t precision = 0;
+        uint8_t depth = 0;
         byte* header = (byte*) malloc(HEADER_LENGTH);
         byte* inputs = nullptr;
         byte* outputs = nullptr;
+        Vector<neuron_value_t>* inputVector = new Vector<neuron_value_t>();
+        Vector<neuron_value_t>* outputVector = new Vector<neuron_value_t>();
+        uint32_t currentValue = 0;
 
         // Open input file in binary mode.
         inputFile = fopen(fileName, "rb");
@@ -34,24 +37,55 @@ namespace Oort {
             // Use values read from the header.
             inputsNum = header[0];
             outputsNum = header[1];
-            precision = header[2];
-            inputs = (byte*) malloc(precision * inputsNum);
-            outputs = (byte*) malloc(precision * inputsNum);
-            //TODO Check if arrays were successfully allocated.
+            depth = header[2];
 
-            printf("\n%d, %d, %d\n", inputsNum, outputsNum, precision);
+            // Create knowledge.
+            this->knowledge = new Knowledge(inputsNum, outputsNum);
 
-            // Read input values.
-            fread(inputs, inputsNum, precision, inputFile);
-            printf("\n%d, %d, %d, %d, %d, %d, %d, %d\n", inputs[0], inputs[1], inputs[2], inputs[3], inputs[4], inputs[5], inputs[6], inputs[7]);
+            while(!feof(inputFile)) {
+                inputs = (byte*) malloc(depth * inputsNum);
+                outputs = (byte*) malloc(depth * inputsNum);
+                inputVector->empty();
+                outputVector->empty();
+                //TODO Check if arrays were successfully allocated.
 
-            // Read output values.
-            fread(outputs, outputsNum, precision, inputFile);
-            printf("\n%d, %d\n", outputs[0], outputs[1]);
+                // Read input values.
+                // The "inputs" variable contains all input values of the experience in binary format. Every value is
+                // depth bytes long, so, in order to read the correct value some conversion is needed.
+                // E.G.
+                // Being depth = 2 and inputsNum = 4, the file may appear like so:
+                // 04    01    02    FA    0C    64    40    5D    BB    D1    9E    1F    80
+                // The first three bytes define the header, in order: inputs number, outputs number, depth.
+                // The following bytes define inputs and outputs (in this case only one experience is shown).
+                // Input values in this file are: fA0C, which becomes 64012 in decimal, 6440, 25664 in decimal, 5DBB
+                // (23995) and D19E (53662). The double loop manages the binary to decimal conversion.
+                // In order to use these values as neuron values, they need to be converted to real numbers. This is
+                // what the last instruction of the outer loop does.
+                fread(inputs, inputsNum, depth, inputFile);
+                for (uint8_t i = 0; i < inputsNum; i++) {
+                    currentValue = 0;
+                    for (int16_t j = depth - 1; j >= 0; j--) {
+                        printf("\n%d, %d, %d\n", i, j, depth);
+                        currentValue += inputs[IDX(i, j, depth)] * pow(256, j);
+                    }
+                    inputVector->addLast(currentValue / pow(2, depth * 8));
+                }
 
-
-
-
+                // Read output values.
+                // For output values, the exact same process used for inputs is applied.
+                fread(outputs, outputsNum, depth, inputFile);
+                for (uint8_t i = 0; i < outputsNum; i++) {
+                    currentValue = 0;
+                    for (int16_t j = depth - 1; j >= 0; j--) {
+                        printf("\n%d, %d, %d\n", i, j, depth);
+                        currentValue += outputs[IDX(i, j, depth)] * pow(256, j);
+                    }
+                    outputVector->addLast(currentValue / pow(2, depth * 8));
+                }
+                this->knowledge->addExperience(new Experience(inputVector, outputVector));
+                free(inputs);
+                free(outputs);
+            }
 
             // Close the file at the end of the read operation.
             fclose(inputFile);

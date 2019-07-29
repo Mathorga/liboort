@@ -1,3 +1,13 @@
+/*
+********************************************************************************
+KnowledgeParser.h
+
+Knowledge files use big-endian encoding for bytes read.
+Copyright (C) 2019  Luka Micheletti
+
+********************************************************************************
+*/
+
 #ifndef __KNOWLEDGE_PARSER__
 #define __KNOWLEDGE_PARSER__
 
