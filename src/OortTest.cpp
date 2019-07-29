@@ -53,11 +53,11 @@ int main(int argc, char const *argv[]) {
 
 
     KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile((char*) "./res/knl/test.knl");
-    kp->getKnowledge()->print();
-    KnowledgeParser* kp2 = new KnowledgeParser();
-    kp2->setKnowledge(kp->getKnowledge());
-    kp2->writeFile((char*) "./res/knl/test2.knl");
+    kp->readFile((char*) "./res/knl/testBin.knl");
+    // kp->getKnowledge()->print();
+    // KnowledgeParser* kp2 = new KnowledgeParser();
+    // kp2->setKnowledge(kp->getKnowledge());
+    // kp2->writeFile((char*) "./res/knl/test2.knl");
 
 
 

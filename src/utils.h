@@ -1,6 +1,5 @@
 #ifndef __UTILS__
 #define __UTILS__
-#define IDX(i, j, n) ((i) * (n) + (j))
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,6 +29,8 @@
 #include <vector>
 
 namespace Oort {
+    #define IDX(i, j, n) ((i) * (n) + (j))
+    #define byte unsigned char
     #define ANSI_COLOR_RED     "\x1b[31m"
     #define ANSI_COLOR_GREEN   "\x1b[32m"
     #define ANSI_COLOR_YELLOW  "\x1b[33m"

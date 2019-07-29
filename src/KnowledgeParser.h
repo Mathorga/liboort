@@ -10,6 +10,7 @@ namespace Oort {
         static const char HEADER_SEPARATOR;
         static const char PRIMARY_SEPARATOR;
         static const char SECONDARY_SEPARATOR;
+        static const uint8_t HEADER_LENGTH;
 
         KnowledgeParser();
         KnowledgeParser(Knowledge* knowledge);
