@@ -1,13 +1,12 @@
 #include "KnowledgeParser.h"
 
 namespace Oort {
-    const char KnowledgeParser::HEADER_SEPARATOR = ':';
-    const char KnowledgeParser::PRIMARY_SEPARATOR = ':';
-    const char KnowledgeParser::SECONDARY_SEPARATOR = ',';
-    const uint8_t KnowledgeParser::HEADER_LENGTH = 4;
+    const uint8_t KnowledgeParser::HEADER_LENGTH = 3;
+    const uint8_t KnowledgeParser::DEFAULT_DEPTH = 1;
 
     KnowledgeParser::KnowledgeParser() {
         this->knowledge = nullptr;
+        this->depth = 0;
     }
 
     KnowledgeParser::KnowledgeParser(Knowledge* knowledge) {
@@ -26,13 +25,13 @@ namespace Oort {
         Vector<neuron_value_t>* outputVector = new Vector<neuron_value_t>();
         uint32_t currentValue = 0;
 
-        // Open input file in binary mode.
+        // Open input file in binary read mode.
         inputFile = fopen(fileName, "rb");
 
         // Check if the file was correctly opened.
         if (inputFile != nullptr) {
             // Read the header the size of each element is 1 byte.
-            fread(header, HEADER_LENGTH, 1, inputFile);
+            fread(header, 1, HEADER_LENGTH, inputFile);
 
             // Use values read from the header.
             inputsNum = header[0];
@@ -44,7 +43,7 @@ namespace Oort {
 
             while(!feof(inputFile)) {
                 inputs = (byte*) malloc(depth * inputsNum);
-                outputs = (byte*) malloc(depth * inputsNum);
+                outputs = (byte*) malloc(depth * outputsNum);
                 inputVector->empty();
                 outputVector->empty();
                 //TODO Check if arrays were successfully allocated.
@@ -61,30 +60,42 @@ namespace Oort {
                 // (23995) and D19E (53662). The double loop manages the binary to decimal conversion.
                 // In order to use these values as neuron values, they need to be converted to real numbers. This is
                 // what the last instruction of the outer loop does.
-                fread(inputs, inputsNum, depth, inputFile);
+                fread(inputs, depth, inputsNum, inputFile);
                 for (uint8_t i = 0; i < inputsNum; i++) {
                     currentValue = 0;
                     for (int16_t j = depth - 1; j >= 0; j--) {
-                        printf("\n%d, %d, %d\n", i, j, depth);
+                        // printf("\n%d, %d, %d\n", i, j, depth);
                         currentValue += inputs[IDX(i, j, depth)] * pow(256, j);
                     }
+                    printf("\nInput %d %d\n", currentValue, i);
                     inputVector->addLast(currentValue / pow(2, depth * 8));
                 }
 
                 // Read output values.
                 // For output values, the exact same process used for inputs is applied.
-                fread(outputs, outputsNum, depth, inputFile);
+                fread(outputs, depth, outputsNum, inputFile);
                 for (uint8_t i = 0; i < outputsNum; i++) {
                     currentValue = 0;
                     for (int16_t j = depth - 1; j >= 0; j--) {
-                        printf("\n%d, %d, %d\n", i, j, depth);
+                        // printf("\n%d, %d, %d\n", i, j, depth);
                         currentValue += outputs[IDX(i, j, depth)] * pow(256, j);
                     }
+                    printf("\nOutput %d %d\n", currentValue, i);
                     outputVector->addLast(currentValue / pow(2, depth * 8));
                 }
                 this->knowledge->addExperience(new Experience(inputVector, outputVector));
                 free(inputs);
                 free(outputs);
+
+                // Manage EOF.
+                // Read a byte from the file.
+                fgetc(inputFile);
+
+                // Check if EOF is reached.
+                if (!feof(inputFile)) {
+                    // If not EOF put back the stream pointer of the file.
+                    fseek(inputFile, -1, SEEK_CUR);
+                }
             }
 
             // Close the file at the end of the read operation.
@@ -158,59 +169,63 @@ namespace Oort {
     // }
 
     void KnowledgeParser::writeFile(char* fileName) {
-        std::ofstream outputFile;
-        std::string line;
-        std::stringstream lineStream;
+        FILE* outputFile = nullptr;
+        uint8_t depth = 0;
+        byte* header = (byte*) malloc(HEADER_LENGTH);
+        byte* value = (byte*) malloc(depth);
 
+        int decimalValue = 0;
+        neuron_value_t currentValue = 0.0;
+
+        // Check if depth was previously set. If not use the default one.
+        if (this->depth == 0) {
+            depth = DEFAULT_DEPTH;
+        } else {
+            depth = this->depth;
+        }
+
+        // Check if knowledge was previously set. return if not.
         if (this->knowledge) {
-            // Open the file in write mode.
-            // std::ofstream::open() automatically creates the file if not alredy present, so there's no need to check for its
+            // Open the file in binary write mode.
+            // fopen() automatically creates the file if not alredy present, so there's no need to check for its
             // existence.
-            outputFile.open(fileName);
+            outputFile = fopen(fileName, "wb");
 
             // Check if the file was correctly opened.
-            if (outputFile.is_open()) {
-                // The file was successfully opened.
-                // Write the header.
-                outputFile << this->knowledge->getInputsNum() << HEADER_SEPARATOR << this->knowledge->getOutputsNum() << std::endl;
+            if (outputFile != nullptr) {
+                // Write header.
+                fputc(this->knowledge->getInputsNum(), outputFile);
+                fputc(this->knowledge->getOutputsNum(), outputFile);
+                fputc(depth, outputFile);
 
-                // Loop through each experience in knowledge: each experience is a line of the output file.
+                // Write knowledge data.
+                // Loop through experiences.
                 for (vector_size_t i = 0; i < this->knowledge->getExperiencesNum(); i++) {
-                    // Empty the line to create a new one.
-                    line = "";
-
-                    // Loop through the inputs of the single experience to write them on the line.
+                    // Write experience inputs.
                     for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
-                        line += std::to_string(this->knowledge->getExperience(i)->getInput(j));
 
-                        // Add SECONDARY_SEPARATOR between each input.
-                        if (j != this->knowledge->getInputsNum() - 1) {
-                            line += SECONDARY_SEPARATOR;
+                        currentValue = this->knowledge->getExperience(i)->getInput(j);
+
+                        decimalValue = currentValue * pow(2, depth * 8);
+                        printf("\n%d\n", decimalValue);
+
+                        // Convert the value to depth bytes.
+                        for (int16_t k = depth - 1; k >= 0; k--) {
+                            value[k] = decimalValue;
                         }
                     }
 
-                    // Add PRIMARY_SEPARATOR between inputs and outputs.
-                    line += PRIMARY_SEPARATOR;
-
-                    // Loop through the outputs of the single experience to write them on the line.
+                    // Write experience outputs.
                     for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
-                        line += std::to_string(this->knowledge->getExperience(i)->getOutput(j));
 
-                        // Add SECONDARY_SEPARATOR between each output.
-                        if (j != this->knowledge->getOutputsNum() - 1) {
-                            line += SECONDARY_SEPARATOR;
-                        }
                     }
-
-                    // Write the line to the output file.
-                    outputFile << line << std::endl;
                 }
 
-                // Close the file at the end of the write operation.
-                outputFile.close();
+                // Close the file at the end of the read operation.
+                fclose(outputFile);
             } else {
                 // There was an error opening the file.
-                printf("\n<KnowledgeParser::writeFile()> Error opening file %s\n", fileName);
+                printf("\n<KnowledgeParser::writeFile()> Error: file not opened %s\n", fileName);
             }
         } else {
             printf("\n<KnowledgeParser::writeFile()> Error: knowledge not set\n");
@@ -218,11 +233,76 @@ namespace Oort {
         return;
     }
 
+    // void KnowledgeParser::writeFile(char* fileName) {
+    //     std::ofstream outputFile;
+    //     std::string line;
+    //     std::stringstream lineStream;
+    //
+    //     if (this->knowledge) {
+    //         // Open the file in write mode.
+    //         // std::ofstream::open() automatically creates the file if not alredy present, so there's no need to check for its
+    //         // existence.
+    //         outputFile.open(fileName);
+    //
+    //         // Check if the file was correctly opened.
+    //         if (outputFile.is_open()) {
+    //             // The file was successfully opened.
+    //             // Write the header.
+    //             outputFile << this->knowledge->getInputsNum() << HEADER_SEPARATOR << this->knowledge->getOutputsNum() << std::endl;
+    //
+    //             // Loop through each experience in knowledge: each experience is a line of the output file.
+    //             for (vector_size_t i = 0; i < this->knowledge->getExperiencesNum(); i++) {
+    //                 // Empty the line to create a new one.
+    //                 line = "";
+    //
+    //                 // Loop through the inputs of the single experience to write them on the line.
+    //                 for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
+    //                     line += std::to_string(this->knowledge->getExperience(i)->getInput(j));
+    //
+    //                     // Add SECONDARY_SEPARATOR between each input.
+    //                     if (j != this->knowledge->getInputsNum() - 1) {
+    //                         line += SECONDARY_SEPARATOR;
+    //                     }
+    //                 }
+    //
+    //                 // Add PRIMARY_SEPARATOR between inputs and outputs.
+    //                 line += PRIMARY_SEPARATOR;
+    //
+    //                 // Loop through the outputs of the single experience to write them on the line.
+    //                 for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
+    //                     line += std::to_string(this->knowledge->getExperience(i)->getOutput(j));
+    //
+    //                     // Add SECONDARY_SEPARATOR between each output.
+    //                     if (j != this->knowledge->getOutputsNum() - 1) {
+    //                         line += SECONDARY_SEPARATOR;
+    //                     }
+    //                 }
+    //
+    //                 // Write the line to the output file.
+    //                 outputFile << line << std::endl;
+    //             }
+    //
+    //             // Close the file at the end of the write operation.
+    //             outputFile.close();
+    //         } else {
+    //             // There was an error opening the file.
+    //             printf("\n<KnowledgeParser::writeFile()> Error opening file %s\n", fileName);
+    //         }
+    //     } else {
+    //         printf("\n<KnowledgeParser::writeFile()> Error: knowledge not set\n");
+    //     }
+    //     return;
+    // }
+
     Knowledge* KnowledgeParser::getKnowledge() {
         return this->knowledge;
     }
 
     void KnowledgeParser::setKnowledge(Knowledge* knowledge) {
         this->knowledge = knowledge;
+    }
+
+    void KnowledgeParser::setDepth(uint8_t depth) {
+        this->depth = depth;
     }
 }

@@ -30,10 +30,8 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class KnowledgeParser : public Parser {
     public:
-        static const char HEADER_SEPARATOR;
-        static const char PRIMARY_SEPARATOR;
-        static const char SECONDARY_SEPARATOR;
         static const uint8_t HEADER_LENGTH;
+        static const uint8_t DEFAULT_DEPTH;
 
         KnowledgeParser();
         KnowledgeParser(Knowledge* knowledge);
@@ -46,9 +44,11 @@ namespace Oort {
 
         // Setters.
         void setKnowledge(Knowledge* knowledge);
+        void setDepth(uint8_t depth);
 
     private:
         Knowledge* knowledge;
+        uint8_t depth;
     };
 }
 
