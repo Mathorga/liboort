@@ -32,6 +32,7 @@ namespace Oort {
     public:
         static const uint8_t HEADER_LENGTH;
         static const uint8_t DEFAULT_DEPTH;
+        static const uint8_t MAX_DEPTH;
 
         KnowledgeParser();
         KnowledgeParser(Knowledge* knowledge);

@@ -3,6 +3,7 @@
 namespace Oort {
     const uint8_t KnowledgeParser::HEADER_LENGTH = 3;
     const uint8_t KnowledgeParser::DEFAULT_DEPTH = 1;
+    const uint8_t KnowledgeParser::MAX_DEPTH = 4;
 
     KnowledgeParser::KnowledgeParser() {
         this->knowledge = nullptr;
@@ -63,11 +64,14 @@ namespace Oort {
                 fread(inputs, depth, inputsNum, inputFile);
                 for (uint8_t i = 0; i < inputsNum; i++) {
                     currentValue = 0;
+
+                    // Convert byte array to integer.
                     for (int16_t j = depth - 1; j >= 0; j--) {
-                        // printf("\n%d, %d, %d\n", i, j, depth);
-                        currentValue += inputs[IDX(i, j, depth)] * pow(256, j);
+                        currentValue = (currentValue << 8) + inputs[IDX(i, j, depth)];
+                        // currentValue += inputs[IDX(i, j, depth)] * pow(256, j);
                     }
-                    printf("\nInput %d %d\n", currentValue, i);
+
+                    // Convert integer to neuron value.
                     inputVector->addLast(currentValue / pow(2, depth * 8));
                 }
 
@@ -76,11 +80,13 @@ namespace Oort {
                 fread(outputs, depth, outputsNum, inputFile);
                 for (uint8_t i = 0; i < outputsNum; i++) {
                     currentValue = 0;
+                    // Convert byte array to integer.
                     for (int16_t j = depth - 1; j >= 0; j--) {
-                        // printf("\n%d, %d, %d\n", i, j, depth);
-                        currentValue += outputs[IDX(i, j, depth)] * pow(256, j);
+                        currentValue = (currentValue << 8) + outputs[IDX(i, j, depth)];
+                        // currentValue += outputs[IDX(i, j, depth)] * pow(256, j);
                     }
-                    printf("\nOutput %d %d\n", currentValue, i);
+
+                    // Convert integer to neuron value.
                     outputVector->addLast(currentValue / pow(2, depth * 8));
                 }
                 this->knowledge->addExperience(new Experience(inputVector, outputVector));
@@ -173,9 +179,7 @@ namespace Oort {
         uint8_t depth = 0;
         byte* header = (byte*) malloc(HEADER_LENGTH);
         byte* value = (byte*) malloc(depth);
-
-        int decimalValue = 0;
-        neuron_value_t currentValue = 0.0;
+        uint32_t intValue = 0;
 
         // Check if depth was previously set. If not use the default one.
         if (this->depth == 0) {
@@ -204,20 +208,29 @@ namespace Oort {
                     // Write experience inputs.
                     for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
 
-                        currentValue = this->knowledge->getExperience(i)->getInput(j);
+                        // Convert neuron value to integer value.
+                        intValue = this->knowledge->getExperience(i)->getInput(j) * pow(2, depth * 8);
 
-                        decimalValue = currentValue * pow(2, depth * 8);
-                        printf("\n%d\n", decimalValue);
-
-                        // Convert the value to depth bytes.
+                        // Convert the value to a depth-long byte array.
                         for (int16_t k = depth - 1; k >= 0; k--) {
-                            value[k] = decimalValue;
+                            value[k] = (intValue >> 8 * k) & 0xFF;
                         }
+
+                        fwrite(value, depth, 1, outputFile);
                     }
 
                     // Write experience outputs.
                     for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
 
+                        // Convert neuron value to integer value.
+                        intValue = this->knowledge->getExperience(i)->getOutput(j) * pow(2, depth * 8);
+
+                        // Convert the value to a depth-long byte array.
+                        for (int16_t k = depth - 1; k >= 0; k--) {
+                            value[k] = (intValue >> 8 * k) & 0xFF;
+                        }
+
+                        fwrite(value, depth, 1, outputFile);
                     }
                 }
 
