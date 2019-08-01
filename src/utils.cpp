@@ -17,21 +17,32 @@ namespace Oort {
         printf("\n%s\n", string);
     }
 
-    byte* uintToByteArray(uint32_t value) {
+    byte* uintToByteArray(uint32_t value, uint8_t depth) {
+        // Check if depth is between 1 and 4.
+        if (depth < 1) {
+            depth = 1;
+        } else if (depth > 4) {
+            depth = 4;
+        }
 
+        byte* result = (byte*) malloc(depth);
+
+        // Convert the value to a depth-long byte array.
+        for (uint8_t i = 0; i < depth; i++) {
+            result[(depth - 1) - i] = (value >> (8 * i));
+        }
+
+        return result;
     }
 
     uint32_t byteArrayToUint(byte* values, uint8_t depth) {
         uint32_t result = 0;
-        uint8_t d = 0;
 
         // Check if depth is between 1 and 4.
         if (depth < 1) {
-            d = 1;
+            depth = 1;
         } else if (depth > 4) {
-            d = 4;
-        } else {
-            d = depth;
+            depth = 4;
         }
 
         // Convert byte array to unsigned integer.

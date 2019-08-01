@@ -113,7 +113,8 @@ namespace Oort {
         FILE* outputFile = nullptr;
         uint8_t depth = 0;
         byte* header = (byte*) malloc(HEADER_LENGTH);
-        byte* value = (byte*) malloc(depth);
+        byte* value = nullptr;
+        // byte* value = (byte*) malloc(depth);
         uint32_t intValue = 0;
 
         // Check if depth was previously set. If not use the default one.
@@ -133,8 +134,10 @@ namespace Oort {
             // Check if the file was correctly opened.
             if (outputFile != nullptr) {
                 // Write header.
-                fputc(this->knowledge->getInputsNum(), outputFile);
-                fputc(this->knowledge->getOutputsNum(), outputFile);
+                fwrite(uintToByteArray(this->knowledge->getInputsNum(), INPUTS_NUM_DEPTH), INPUTS_NUM_DEPTH, 1, outputFile);
+                fwrite(uintToByteArray(this->knowledge->getOutputsNum(), OUTPUTS_NUM_DEPTH), OUTPUTS_NUM_DEPTH, 1, outputFile);
+                // fputc(this->knowledge->getInputsNum(), outputFile);
+                // fputc(this->knowledge->getOutputsNum(), outputFile);
                 fputc(depth, outputFile);
 
                 // Write knowledge data.
@@ -147,9 +150,10 @@ namespace Oort {
                         intValue = this->knowledge->getExperience(i)->getInput(j) * pow(2, depth * 8);
 
                         // Convert the value to a depth-long byte array.
-                        for (int16_t k = depth - 1; k >= 0; k--) {
-                            value[k] = (intValue >> 8 * k) & 0xFF;
-                        }
+                        value = uintToByteArray(intValue, depth);
+                        // for (int16_t k = depth - 1; k >= 0; k--) {
+                        //     value[k] = (intValue >> 8 * k) & 0xFF;
+                        // }
 
                         fwrite(value, depth, 1, outputFile);
                     }
@@ -161,9 +165,10 @@ namespace Oort {
                         intValue = this->knowledge->getExperience(i)->getOutput(j) * pow(2, depth * 8);
 
                         // Convert the value to a depth-long byte array.
-                        for (int16_t k = depth - 1; k >= 0; k--) {
-                            value[k] = (intValue >> 8 * k) & 0xFF;
-                        }
+                        value = uintToByteArray(intValue, depth);
+                        // for (int16_t k = depth - 1; k >= 0; k--) {
+                        //     value[k] = (intValue >> 8 * k) & 0xFF;
+                        // }
 
                         fwrite(value, depth, 1, outputFile);
                     }

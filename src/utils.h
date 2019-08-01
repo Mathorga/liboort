@@ -45,7 +45,7 @@ namespace Oort {
     void setPrintColor(const char* color);
     void debugPrint(const char* string);
     // Big endian conversion.
-    byte* uintToByteArray(uint32_t value);
+    byte* uintToByteArray(uint32_t value, uint8_t depth);
     // Big endian conversion.
     uint32_t byteArrayToUint(byte* values, uint8_t depth);
     double getTime();
