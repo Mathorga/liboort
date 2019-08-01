@@ -17,6 +17,31 @@ namespace Oort {
         printf("\n%s\n", string);
     }
 
+    byte* uintToByteArray(uint32_t value) {
+
+    }
+
+    uint32_t byteArrayToUint(byte* values, uint8_t depth) {
+        uint32_t result = 0;
+        uint8_t d = 0;
+
+        // Check if depth is between 1 and 4.
+        if (depth < 1) {
+            d = 1;
+        } else if (depth > 4) {
+            d = 4;
+        } else {
+            d = depth;
+        }
+
+        // Convert byte array to unsigned integer.
+        for (uint8_t i = 0; i < depth; i++) {
+            result = (result << 8) + values[i];
+        }
+
+        return result;
+    }
+
     double getTime() {
         struct timespec ts;
         clock_gettime(CLOCK_MONOTONIC, &ts);

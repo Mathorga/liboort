@@ -53,7 +53,7 @@ int main(int argc, char const *argv[]) {
 
 
     KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile((char*) "./res/knl/testBin.knl");
+    kp->readFile((char*) "./res/knl/testBinTrue.knl");
     kp->getKnowledge()->print();
     KnowledgeParser* kp2 = new KnowledgeParser();
     kp2->setKnowledge(kp->getKnowledge());

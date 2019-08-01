@@ -44,6 +44,10 @@ namespace Oort {
     int iRandBetween(int low, int high);
     void setPrintColor(const char* color);
     void debugPrint(const char* string);
+    // Big endian conversion.
+    byte* uintToByteArray(uint32_t value);
+    // Big endian conversion.
+    uint32_t byteArrayToUint(byte* values, uint8_t depth);
     double getTime();
     double getNanoTime();
     std::vector<std::string> splitString(const std::string& inputString, char separator);

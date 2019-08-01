@@ -3,9 +3,10 @@
 KnowledgeParser.h
 
 Implementation of parser of Knowledge files (.knl).
-Knowledge files specification defines a header made of three bytes, in order:
-inputs number, outputs number and depth. The depth parameter is used to define
-the number of bytes used to encode a single input or output value.
+Knowledge files specification defines a header made of nine bytes, in order:
+four byte for the inputs number, four for the outputs number and one for the
+depth. The depth parameter is used to define the number of bytes used to encode
+a single input or output value.
 Knowledge files use big-endian encoding for values.
 For example, let's take a file containing the following bytes:
 04    01    02    FA    0C    64    40    5D    BB    D1    9E    1F    80
@@ -31,8 +32,10 @@ namespace Oort {
     class KnowledgeParser : public Parser {
     public:
         static const uint8_t HEADER_LENGTH;
-        static const uint8_t DEFAULT_DEPTH;
-        static const uint8_t MAX_DEPTH;
+        static const uint8_t INPUTS_NUM_DEPTH;
+        static const uint8_t OUTPUTS_NUM_DEPTH;
+        static const uint8_t DEFAULT_VALUE_DEPTH;
+        static const uint8_t MAX_VALUE_DEPTH;
 
         KnowledgeParser();
         KnowledgeParser(Knowledge* knowledge);
