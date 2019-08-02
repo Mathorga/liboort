@@ -17,6 +17,10 @@ namespace Oort {
         this->adjustWeights();
     }
 
+    void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+        //TODO
+    }
+
     neuron_value_t LayeredPerceptronNetwork::activate(perceptron_input_t value) {
         // Sigmoid function.
         return (1 / (1 + (pow(M_E, -(value)))));

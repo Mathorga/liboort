@@ -6,11 +6,11 @@ OPENCV_INCLUDES = `pkg-config --cflags opencv`
 CCOMP_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES)
 CLINK_FLAGS =
 
-OPENNN_LIBS = -L ./lib/opennn -lopennn
+# OPENNN_LIBS = -L ./lib/opennn -lopennn
 GTK_LIBS = `pkg-config --libs gtk+-2.0`
 OPENCV_LIBS = `pkg-config --libs opencv`
 STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm
-LIBS = $(OPENCV_LIBS) $(STD_LIBS) #$(OPENNN_LIBS) 
+LIBS = $(OPENCV_LIBS) $(STD_LIBS) #$(OPENNN_LIBS)
 
 SRC_DIR = ./src
 BLD_DIR = ./bld

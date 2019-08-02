@@ -39,6 +39,10 @@ namespace Oort {
         this->adjustWeights();
     }
 
+    void SparsePerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+        //TODO
+    }
+
     void SparsePerceptronNetwork::computeValue() {
         vector_size_t size = this->model->getNeuronsNum();
         vector_size_t pos = 0;
