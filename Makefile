@@ -10,7 +10,7 @@ OPENNN_LIBS = -L ./lib/opennn -lopennn
 GTK_LIBS = `pkg-config --libs gtk+-2.0`
 OPENCV_LIBS = `pkg-config --libs opencv`
 STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm
-LIBS = $(OPENNN_LIBS) $(OPENCV_LIBS) $(STD_LIBS)
+LIBS = $(OPENCV_LIBS) $(STD_LIBS) #$(OPENNN_LIBS) 
 
 SRC_DIR = ./src
 BLD_DIR = ./bld
@@ -64,8 +64,8 @@ OortTest: OortTest.o \
 		  Experience.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
-OortNNTest: OortNNTest.o utils.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+# OortNNTest: OortNNTest.o utils.o
+# 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortImgGrabber: OortImgGrabber.o utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
