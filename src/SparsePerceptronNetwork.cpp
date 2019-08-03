@@ -47,11 +47,7 @@ namespace Oort {
                 // Loop through knowledge experiences.
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
                     // Set model inputs based on experience inputs.
-                    for (uint32_t k = 0, index = 0; k < this->model->getNeuronsNum(), index < this->model->getInputsNum(); k++) {
-                        if (this->model->getNeuron(k)->getType() == Neuron::typeInput) {
-                            this->model->getNeuron(k)->setValue(knowledge->getExperience(j)->getInput(index));
-                        }
-                    }
+                    this->setInput(knowledge->getExperience(j)->getInputs());
                 }
             }
         } else {
