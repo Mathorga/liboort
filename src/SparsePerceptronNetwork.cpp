@@ -40,7 +40,24 @@ namespace Oort {
     }
 
     void SparsePerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
-        //TODO
+        // Check if knowledge is consistent with model.
+        if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
+            // Run the whole training iterationsNum times.
+            for (uint32_t i = 0; i < iterationsNum; i++) {
+                // Loop through knowledge experiences.
+                for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
+                    // Set model inputs based on experience inputs.
+                    for (uint32_t k = 0, index = 0; k < this->model->getNeuronsNum(), index < this->model->getInputsNum(); k++) {
+                        if (this->model->getNeuron(k)->getType() == Neuron::typeInput) {
+                            this->model->getNeuron(k)->setValue(knowledge->getExperience(j)->getInput(index));
+                        }
+                    }
+                }
+            }
+        } else {
+            // Knowledge size is not consistent with model size.
+            printf("\n<SparsePerceptronNetwork::train()> Error: knowledge size not consistent\n");
+        }
     }
 
     void SparsePerceptronNetwork::computeValue() {
