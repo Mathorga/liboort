@@ -35,8 +35,6 @@ int main(int argc, char const *argv[]) {
     DIR* knowledgeDir = nullptr;
     struct dirent *entry = nullptr;
     neuron_value_t* values = (neuron_value_t*) malloc(OUTPUTS_NUM * sizeof(neuron_value_t));
-    Oort::SparsePerceptronModelParser* parser = nullptr;
-    Oort::SparsePerceptronNetwork* brain = nullptr;
     Mat image;
     Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
     Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
@@ -45,24 +43,16 @@ int main(int argc, char const *argv[]) {
     Oort::KnowledgeParser* knlParser = new Oort::KnowledgeParser();
 
     // Input check.
-    if (argc > 3 || argc <= 2) {
-        printf("Usage: %s [modelFilePath] [knowledgeFilePath]\n", argv[0]);
+    if (argc > 2 || argc <= 1) {
+        printf("Usage: %s [imagesDir]\n", argv[0]);
         return -1;
     }
     if (argc > 1) {
-        modelPath = (char*) argv[1];
-    }
-    if (argc > 2) {
-        knowledgePath = (char*) argv[2];
+        knowledgePath = (char*) argv[1];
     }
 
 
     printf("\nKnowledge directory: %s\n", knowledgePath);
-
-
-    parser = new Oort::SparsePerceptronModelParser();
-    parser->readFile(modelPath);
-    brain = new Oort::SparsePerceptronNetwork(parser->getModel());
 
 
     // Open directory to read all files.
@@ -80,9 +70,6 @@ int main(int argc, char const *argv[]) {
                 inputs->empty();
                 outputs->empty();
                 readValuesFromName(outputs, fileName, valuesDelimiter);
-
-                // Set expected output obtained from the file name.
-                // brain->setExpectedOutput(values);
 
                 // Open the file and manage it.
                 std::cout << fileName << std::endl;
@@ -106,35 +93,15 @@ int main(int argc, char const *argv[]) {
                 expr->print();
                 knowledge->addExperience(expr);
             }
-            // while ((pos = fileName.find(formatDelimiter)) != std::string::npos) {
-            //     value = fileName.substr(0, pos);
-            //     std::cout << value << std::endl;
-            //     fileName.erase(0, pos + formatDelimiter.length());
-            // }
         }
         if (knowledge->getExperiencesNum() > 0) {
             knowledge->print();
             knlParser->setKnowledge(knowledge);
-            knlParser->writeFile((char*) "./res/knl/Oort1.knl");
+            knlParser->writeFile((char*) "./res/knl/Oort2.knl");
         }
     }
 
     closedir(knowledgeDir);
-
-
-
-    Oort::Vector<int>* prova = new Oort::Vector<int>();
-    prova->addLast(4);
-    prova->addLast(12);
-    prova->addLast(21);
-
-    for (vector_size_t i = 0; i < prova->getSize(); i++) {
-        printf("\n%d\n", *(prova->getItem(i)));
-    }
-
-
-
-
 
     return 0;
 }

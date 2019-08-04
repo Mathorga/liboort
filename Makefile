@@ -21,7 +21,7 @@ RM = rm -rf
 
 all: create clean exe
 
-exe: OortTest OortTrainer OortImgGrabber #OortNNTest Oort
+exe: OortTest OortKnlMaker OortImgGrabber #OortNNTest Oort
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
@@ -32,19 +32,19 @@ Oort: Oort.o \
 	  utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
 
-OortTrainer: OortTrainer.o \
-			 Experience.o \
-			 Knowledge.o \
-			 KnowledgeParser.o \
-			 utils.o \
-			 Model.o \
-			 Neuron.o \
-			 SparsePerceptronModelParser.o \
-			 SparsePerceptronModel.o \
-			 SparsePerceptronNetwork.o \
-			 PerceptronSynapse.o \
-			 Synapse.o \
-			 Perceptron.o
+OortKnlMaker: OortKnlMaker.o \
+			  Experience.o \
+			  Knowledge.o \
+			  KnowledgeParser.o \
+			  utils.o \
+			  Model.o \
+			  Neuron.o \
+			  SparsePerceptronModelParser.o \
+			  SparsePerceptronModel.o \
+			  SparsePerceptronNetwork.o \
+			  PerceptronSynapse.o \
+			  Synapse.o \
+			  Perceptron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTest: OortTest.o \
