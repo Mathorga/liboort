@@ -48,6 +48,12 @@ namespace Oort {
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
                     // Set model inputs based on experience inputs.
                     this->setInput(knowledge->getExperience(j)->getInputs());
+
+                    // Run the network in order to get outputs.
+                    this->run();
+
+                    // Correct weights based on the output.
+                    this->correct();
                 }
             }
         } else {
