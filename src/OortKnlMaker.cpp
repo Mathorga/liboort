@@ -36,17 +36,20 @@ int main(int argc, char const *argv[]) {
     Mat image;
     Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
     Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
-    Oort::Experience* expr;
     Oort::Knowledge* knowledge = new Oort::Knowledge(1296, 3);
     Oort::KnowledgeParser* knlParser = new Oort::KnowledgeParser();
+    char* outputFilePath = nullptr;
 
     // Input check.
-    if (argc > 2 || argc <= 1) {
-        printf("Usage: %s [imagesDir]\n", argv[0]);
+    if (argc > 3 || argc <= 2) {
+        printf("Usage: %s [imagesDir] [outputFilePath]\n", argv[0]);
         return -1;
     }
     if (argc > 1) {
         knowledgePath = (char*) argv[1];
+    }
+    if (argc > 2) {
+        outputFilePath = (char*) argv[2];
     }
 
     printf("\nKnowledge directory: %s\n", knowledgePath);
@@ -77,7 +80,6 @@ int main(int argc, char const *argv[]) {
                 for (int i = 0; i < image.rows; i++) {
                     for (int j = 0; j < image.cols; j++) {
                         // You can now access the pixel value with cv::Vec3b
-                        // std::cout << (int) image.at<Vec3b>(i,j)[0] << " " << (int) image.at<Vec3b>(i,j)[1] << " " << (int) image.at<Vec3b>(i,j)[2] << std::endl;
                         inputs->addLast(image.at<Vec3b>(i,j)[0] / 256.0);
                         inputs->addLast(image.at<Vec3b>(i,j)[1] / 256.0);
                         inputs->addLast(image.at<Vec3b>(i,j)[2] / 256.0);
@@ -91,8 +93,10 @@ int main(int argc, char const *argv[]) {
         if (knowledge->getExperiencesNum() > 0) {
             knowledge->print();
             knlParser->setKnowledge(knowledge);
-            knlParser->writeFile((char*) "./res/knl/Oort2.knl");
+            knlParser->writeFile(outputFilePath);
         }
+
+        printf("\nWrote %d experiences to file %s\n", knowledge->getExperiencesNum(), outputFilePath);
     }
 
     closedir(knowledgeDir);
