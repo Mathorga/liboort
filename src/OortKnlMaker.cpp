@@ -31,10 +31,8 @@ int main(int argc, char const *argv[]) {
     std::string tmpFileName = "";
     std::string formatDelimiter = ".";
     std::string valuesDelimiter = "_";
-    float value = 0;
     DIR* knowledgeDir = nullptr;
     struct dirent *entry = nullptr;
-    neuron_value_t* values = (neuron_value_t*) malloc(OUTPUTS_NUM * sizeof(neuron_value_t));
     Mat image;
     Oort::Vector<neuron_value_t>* inputs = new Oort::Vector<neuron_value_t>();
     Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
@@ -51,9 +49,7 @@ int main(int argc, char const *argv[]) {
         knowledgePath = (char*) argv[1];
     }
 
-
     printf("\nKnowledge directory: %s\n", knowledgePath);
-
 
     // Open directory to read all files.
     knowledgeDir = opendir(knowledgePath);
@@ -67,8 +63,8 @@ int main(int argc, char const *argv[]) {
                 tmpFileName = fileName;
 
                 // Get all values from the name.
-                inputs->empty();
-                outputs->empty();
+                inputs = new Oort::Vector<neuron_value_t>();
+                outputs = new Oort::Vector<neuron_value_t>();
                 readValuesFromName(outputs, fileName, valuesDelimiter);
 
                 // Open the file and manage it.
@@ -87,11 +83,9 @@ int main(int argc, char const *argv[]) {
                         inputs->addLast(image.at<Vec3b>(i,j)[2] / 256.0);
                     }
                 }
-                expr = new Oort::Experience();
-                expr->setInputs(inputs);
-                expr->setOutputs(outputs);
-                expr->print();
-                knowledge->addExperience(expr);
+
+                // Add new experience to the knowledge.
+                knowledge->addExperience(new Oort::Experience(inputs, outputs));
             }
         }
         if (knowledge->getExperiencesNum() > 0) {
