@@ -24,7 +24,7 @@ void readValuesFromName(Oort::Vector<neuron_value_t>* values, std::string fileNa
     values->addLast(atof(("0." + fileName.substr(0, 4)).c_str()));
 }
 
-int main(int argc, char const *argv[]) {
+int main(int argc, const char* argv[]) {
     char* knowledgePath = nullptr;
     char* modelPath = nullptr;
     std::string fileName = "";
@@ -41,7 +41,7 @@ int main(int argc, char const *argv[]) {
     char* outputFilePath = nullptr;
 
     // Input check.
-    if (argc > 3 || argc <= 2) {
+    if (argc != 3) {
         printf("Usage: %s [imagesDir] [outputFilePath]\n", argv[0]);
         return -1;
     }

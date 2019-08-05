@@ -21,7 +21,7 @@ RM = rm -rf
 
 all: create clean exe
 
-exe: OortTest OortKnlMaker OortImgGrabber #OortNNTest Oort
+exe: OortTest OortImgGrabber OortKnlMaker OortTrainer #OortNNTest Oort
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
@@ -31,21 +31,6 @@ Oort: Oort.o \
 	  Model.o \
 	  utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(STD_LIBS)
-
-OortKnlMaker: OortKnlMaker.o \
-			  Experience.o \
-			  Knowledge.o \
-			  KnowledgeParser.o \
-			  utils.o \
-			  Model.o \
-			  Neuron.o \
-			  SparsePerceptronModelParser.o \
-			  SparsePerceptronModel.o \
-			  SparsePerceptronNetwork.o \
-			  PerceptronSynapse.o \
-			  Synapse.o \
-			  Perceptron.o
-	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTest: OortTest.o \
 		  utils.o \
@@ -67,7 +52,20 @@ OortTest: OortTest.o \
 # OortNNTest: OortNNTest.o utils.o
 # 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
-OortImgGrabber: OortImgGrabber.o utils.o
+OortImgGrabber: OortImgGrabber.o \
+				utils.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+
+OortKnlMaker: OortKnlMaker.o \
+			  Experience.o \
+			  Knowledge.o \
+			  KnowledgeParser.o \
+			  utils.o \
+			  Neuron.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+
+OortTrainer: OortTrainer.o \
+			 utils.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 create:
