@@ -79,7 +79,7 @@ namespace Oort {
                 // Read output values.
                 // For output values, the exact same process used for inputs is applied.
                 fread(outputs, depth, outputsNum, inputFile);
-                for (uint8_t i = 0; i < outputsNum; i++) {
+                for (uint32_t i = 0; i < outputsNum; i++) {
                     // Convert byte array to integer.
                     currentValue = byteArrayToUint(&outputs[IDX(i, 0, depth)], depth);
 
