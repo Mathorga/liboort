@@ -68,7 +68,7 @@ namespace Oort {
                 // In order to use these values as neuron values, they need to be converted to real numbers. This is
                 // what the last instruction of the outer loop does.
                 fread(inputs, depth, inputsNum, inputFile);
-                for (uint8_t i = 0; i < inputsNum; i++) {
+                for (uint32_t i = 0; i < inputsNum; i++) {
                     // Convert byte array to integer.
                     currentValue = byteArrayToUint(&inputs[IDX(i, 0, depth)], depth);
 
