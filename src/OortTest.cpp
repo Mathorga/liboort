@@ -60,6 +60,10 @@ int main(int argc, char const *argv[]) {
     kp2->setDepth(2);
     kp2->writeFile((char*) "./res/knl/test2.knl");
 
+    SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
+    par->setModel(new SparsePerceptronModel(1296, 3, true));
+    par->writeFile("./res/mdl/1296in3out.mdl");
+
 
 
 

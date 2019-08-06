@@ -8,9 +8,9 @@ namespace Oort {
     class SparsePerceptronModelParser : public ModelParser {
     public:
         // Read a Model from a file and store it in this->model.
-        void readFile(char *fileName);
+        void readFile(char* fileName);
         // Write this->model in a file.
-        void writeFile(char *fileName);
+        void writeFile(char* fileName);
 
         // Getters.
         // Returns the Model object set using readFile() or setModel().

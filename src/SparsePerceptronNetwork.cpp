@@ -40,6 +40,7 @@ namespace Oort {
     }
 
     void SparsePerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+        printf("\nTRAINING\n");
         // Check if knowledge is consistent with model.
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.

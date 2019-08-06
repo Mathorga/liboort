@@ -57,15 +57,26 @@ OortImgGrabber: OortImgGrabber.o \
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortKnlMaker: OortKnlMaker.o \
+			  utils.o \
 			  Experience.o \
 			  Knowledge.o \
 			  KnowledgeParser.o \
-			  utils.o \
 			  Neuron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTrainer: OortTrainer.o \
-			 utils.o
+			 utils.o \
+			 Perceptron.o \
+			 Synapse.o \
+			 PerceptronSynapse.o \
+			 Model.o \
+			 SparsePerceptronModel.o \
+			 SparsePerceptronNetwork.o \
+			 SparsePerceptronModelParser.o \
+			 Knowledge.o \
+			 Experience.o \
+			 KnowledgeParser.o \
+			 Neuron.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 create:
