@@ -52,18 +52,29 @@ int main(int argc, char const *argv[]) {
 
 
 
+    // KnowledgeParser* kp = new KnowledgeParser();
+    // kp->readFile((char*) "./res/knl/testBinTrue.knl");
+    // kp->getKnowledge()->print();
+    // KnowledgeParser* kp2 = new KnowledgeParser();
+    // kp2->setKnowledge(kp->getKnowledge());
+    // kp2->setDepth(2);
+    // kp2->writeFile((char*) "./res/knl/test2.knl");
+    //
+    // SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
+    // par->setModel(new SparsePerceptronModel(1296, 3, true));
+    // par->writeFile((char*) "./res/mdl/1296in3out.mdl");
+
+
     KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile((char*) "./res/knl/testBinTrue.knl");
-    kp->getKnowledge()->print();
-    KnowledgeParser* kp2 = new KnowledgeParser();
-    kp2->setKnowledge(kp->getKnowledge());
-    kp2->setDepth(2);
-    kp2->writeFile((char*) "./res/knl/test2.knl");
-
+    kp->readFile((char*) "./res/knl/Oort2.knl");
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
-    par->setModel(new SparsePerceptronModel(1296, 3, true));
-    par->writeFile((char*) "./res/mdl/1296in3out.mdl");
+    par->readFile((char*) "./res/mdl/trained.mdl");
 
+    SparsePerceptronNetwork* testNet = new SparsePerceptronNetwork(par->getModel());
+    testNet->setInput(kp->getKnowledge()->getExperience(kp->getKnowledge()->getExperiencesNum() - 1)->getInputs());
+    testNet->print();
+    testNet->run();
+    printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
 
 
 

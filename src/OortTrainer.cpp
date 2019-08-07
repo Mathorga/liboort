@@ -3,6 +3,8 @@
 #include "SparsePerceptronModelParser.h"
 #include "KnowledgeParser.h"
 
+#define DEFAULT_ITERATIONS_NUM 100
+
 using namespace Oort;
 
 int main(int argc, const char* argv[]) {
@@ -17,7 +19,7 @@ int main(int argc, const char* argv[]) {
 
 
     // Input check.
-    if (argc != 4) {
+    if (argc > 4 || argc <= 2) {
         printf("Usage: %s [modelFileName] [knowledgeFileName] [iterationsNum]\n", argv[0]);
         return -1;
     }
@@ -29,6 +31,10 @@ int main(int argc, const char* argv[]) {
     }
     if (argc > 3) {
         iterationsNum = atoi(argv[3]);
+    }
+
+    if (iterationsNum == 0) {
+        iterationsNum = DEFAULT_ITERATIONS_NUM;
     }
 
     // Read model file and create network out of it.
@@ -49,5 +55,4 @@ int main(int argc, const char* argv[]) {
 
     modelParser->setModel(network->getModel());
     modelParser->writeFile((char*) "./res/mdl/trained.mdl");
-
 }
