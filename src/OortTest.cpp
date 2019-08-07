@@ -70,6 +70,7 @@ int main(int argc, char const *argv[]) {
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
     par->readFile((char*) "./res/mdl/trained.mdl");
 
+    // Testing training on example knowledge.
     SparsePerceptronNetwork* testNet = new SparsePerceptronNetwork(par->getModel());
     testNet->setInput(kp->getKnowledge()->getExperience(kp->getKnowledge()->getExperiencesNum() - 1)->getInputs());
     testNet->print();
