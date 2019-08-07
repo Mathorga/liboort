@@ -12,6 +12,8 @@ int main(int argc, const char* argv[]) {
     SparsePerceptronModelParser* modelParser = new SparsePerceptronModelParser();
     KnowledgeParser* knowledgeParser = new KnowledgeParser();
     SparsePerceptronNetwork* network = nullptr;
+    double startTime = 0.0;
+    double endTime = 0.0;
 
 
     // Input check.
@@ -30,20 +32,22 @@ int main(int argc, const char* argv[]) {
     }
 
     // Read model file and create network out of it.
+    printf("\nReading mdl file %s\n", modelFileName);
     modelParser->readFile(modelFileName);
-    printf("\nRead mdl file\n");
     // modelParser->getModel()->print();
-    network = new SparsePerceptronNetwork(modelParser->getModel());
     printf("\nCreated network\n");
+    network = new SparsePerceptronNetwork(modelParser->getModel());
 
     // Read knowledge file.
+    printf("\nReading knl file %s\n", knowledgeFileName);
     knowledgeParser->readFile(knowledgeFileName);
-    printf("\nRead knl file\n");
+    printf("\nRunning network training for %d iterations\n", iterationsNum);
+    startTime = getTime();
     network->train(knowledgeParser->getKnowledge(), iterationsNum);
-    network->print();
+    endTime = getTime();
+    printf("\nTraining completed\nTotal training time %fs\n", endTime - startTime);
 
-    printf("\nModel Path: %s\n", modelFileName);
-    printf("\nKnowledge Path: %s\n", knowledgeFileName);
-    printf("\nIterations: %d\n", iterationsNum);
+    modelParser->setModel(network->getModel());
+    modelParser->writeFile((char*) "./res/mdl/trained.mdl");
 
 }

@@ -62,7 +62,7 @@ int main(int argc, char const *argv[]) {
 
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
     par->setModel(new SparsePerceptronModel(1296, 3, true));
-    par->writeFile("./res/mdl/1296in3out.mdl");
+    par->writeFile((char*) "./res/mdl/1296in3out.mdl");
 
 
 
