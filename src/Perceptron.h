@@ -1,3 +1,14 @@
+/*
+********************************************************************************
+Perceptron.h
+
+This file defines the interface for the perceptron neuron. by default the neuron
+is sigmoid activated.
+
+Copyright (C) 2019  Luka Micheletti
+********************************************************************************
+*/
+
 #ifndef __PERCEPTRON__
 #define __PERCEPTRON__
 

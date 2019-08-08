@@ -6,7 +6,6 @@ This file defines the interface for a generic neuron, including default types
 and methods to manage it.
 
 Copyright (C) 2019  Luka Micheletti
-
 ********************************************************************************
 */
 
