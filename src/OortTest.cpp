@@ -30,8 +30,8 @@ int main(int argc, char const *argv[]) {
     parser->readFile(modelFileName);
     SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
 
-    LayeredPerceptronModel* layeredModel = new LayeredPerceptronModel();
-    layeredModel->print();
+    // LayeredPerceptronModel* layeredModel = new LayeredPerceptronModel();
+    // layeredModel->print();
     // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(5184, 3);
     // parser->setModel(brain->getModel());
     // parser->writeFile(modelFileName);
@@ -67,13 +67,14 @@ int main(int argc, char const *argv[]) {
 
     KnowledgeParser* kp = new KnowledgeParser();
     kp->readFile((char*) "./res/knl/Oort2.knl");
+    kp->getKnowledge()->print();
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
     par->readFile((char*) "./res/mdl/trained.mdl");
 
     // Testing training on example knowledge.
     SparsePerceptronNetwork* testNet = new SparsePerceptronNetwork(par->getModel());
     testNet->setInput(kp->getKnowledge()->getExperience(kp->getKnowledge()->getExperiencesNum() - 1)->getInputs());
-    testNet->print();
+    // testNet->print();
     testNet->run();
     printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
 

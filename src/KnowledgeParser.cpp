@@ -51,8 +51,10 @@ namespace Oort {
             while(!feof(inputFile)) {
                 inputs = (byte*) malloc(depth * inputsNum);
                 outputs = (byte*) malloc(depth * outputsNum);
-                inputVector->empty();
-                outputVector->empty();
+                inputVector = new Vector<neuron_value_t>();
+                outputVector = new Vector<neuron_value_t>();
+                // inputVector->empty();
+                // outputVector->empty();
                 //TODO Check if arrays were successfully allocated.
 
                 // Read input values.
@@ -160,7 +162,6 @@ namespace Oort {
 
                     // Write experience outputs.
                     for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
-
                         // Convert neuron value to integer value.
                         intValue = this->knowledge->getExperience(i)->getOutput(j) * pow(2, depth * 8);
 

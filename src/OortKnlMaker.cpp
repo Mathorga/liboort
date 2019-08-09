@@ -94,9 +94,11 @@ int main(int argc, const char* argv[]) {
             knowledge->print();
             knlParser->setKnowledge(knowledge);
             knlParser->writeFile(outputFilePath);
-        }
 
-        printf("\nWrote %d experiences to file %s\n", knowledge->getExperiencesNum(), outputFilePath);
+            printf("\nWrote %d experiences to file %s\n", knowledge->getExperiencesNum(), outputFilePath);
+        } else {
+            printf("\nNo experiences were written to file %s\n", outputFilePath);
+        }
     }
 
     closedir(knowledgeDir);

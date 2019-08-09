@@ -49,6 +49,9 @@ namespace Oort {
                     // Set model inputs based on experience inputs.
                     this->setInput(knowledge->getExperience(j)->getInputs());
 
+                    // Set expected outputs based on experience outputs.
+                    this->setExpectedOutput(knowledge->getExperience(j)->getOutputs());
+
                     // Run the network in order to get outputs.
                     this->run();
 
