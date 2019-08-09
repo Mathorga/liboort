@@ -74,6 +74,7 @@ int main(int argc, char const *argv[]) {
     // Testing training on example knowledge.
     SparsePerceptronNetwork* testNet = new SparsePerceptronNetwork(par->getModel());
     testNet->setInput(kp->getKnowledge()->getExperience(kp->getKnowledge()->getExperiencesNum() - 1)->getInputs());
+    testNet->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
     // testNet->print();
     testNet->run();
     printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
