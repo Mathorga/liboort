@@ -91,6 +91,7 @@ int main(int argc, char const *argv[]) {
         endTime = Oort::getTime();
 
         printf("\nOutput %f %f %f\n", brain->getOutput()[0], brain->getOutput()[1], brain->getOutput()[2]);
+        // printf("Elapsed time %f\n", endTime - startTime);
         printf("Framerate %d\n", (int) (1 / (endTime - startTime)));
 
         //TODO Send output to the nerve.

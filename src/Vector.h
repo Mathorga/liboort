@@ -72,6 +72,14 @@ namespace Oort {
             }
         }
         void addAt(T* item, vector_size_t position) {}
+        void replaceAt(T item, vector_size_t index) {
+            if (index >= 0 && index < this->size) {
+                this->items[index] = item;
+            } else {
+                printf("\nINDEX OUT OF BOUNDS\n");
+                //TODO
+            }
+        }
         void replaceAt(T* item, vector_size_t index) {
             if (index >= 0 && index < this->size) {
                 this->items[index] = (*item);
