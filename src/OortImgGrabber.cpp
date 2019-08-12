@@ -73,7 +73,7 @@ int main(int argc, char const *argv[]) {
         char c = (char) waitKey(25);
         switch (c) {
             case 114:
-                // Write down the picture.
+                // Write down the picture when the "R" key is pressed.
                 strcpy(saveFilePath, destDirPath);
                 snprintf(imageNumberStr, COUNT_DIGITS, "%d", imageNumber);
                 strcat(saveFilePath, imageNumberStr);
@@ -83,6 +83,7 @@ int main(int argc, char const *argv[]) {
                 imageNumber++;
                 break;
             case 27:
+                // Close the window and end the loop if the "Esc" key is pressed.
                 running = false;
                 break;
             default:
