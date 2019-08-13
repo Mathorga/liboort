@@ -112,6 +112,8 @@ namespace Oort {
                 //TODO
                 // return NULL;
             }
+
+            return nullptr;
         }
         T* getFirst() {
             if (this->size > 0) {

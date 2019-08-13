@@ -75,9 +75,9 @@ int main(int argc, char const *argv[]) {
         }
 
         // Convert image data to brain input data.
-        for (uint32_t i = 0; i < image.rows; i++) {
-            for (uint32_t j = 0; j < image.cols; j++) {
-                for (uint32_t k = 0; k < IMAGE_DEPTH; k++) {
+        for (int32_t i = 0; i < image.rows; i++) {
+            for (int32_t j = 0; j < image.cols; j++) {
+                for (int32_t k = 0; k < IMAGE_DEPTH; k++) {
                     // You can now access the pixel value with cv::Vec3b
                     data->replaceAt(image.at<Vec3b>(i,j)[k] / 256.0, IDX(i, (j * IMAGE_DEPTH) + k, image.cols * IMAGE_DEPTH));
                 }

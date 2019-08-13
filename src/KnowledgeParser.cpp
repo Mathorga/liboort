@@ -114,7 +114,6 @@ namespace Oort {
     void KnowledgeParser::writeFile(char* fileName) {
         FILE* outputFile = nullptr;
         uint8_t depth = 0;
-        byte* header = (byte*) malloc(HEADER_LENGTH);
         byte* value = nullptr;
         // byte* value = (byte*) malloc(depth);
         uint32_t intValue = 0;

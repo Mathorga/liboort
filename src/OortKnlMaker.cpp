@@ -26,7 +26,7 @@ void readValuesFromName(Oort::Vector<neuron_value_t>* values, std::string fileNa
 
 int main(int argc, const char* argv[]) {
     char* knowledgePath = nullptr;
-    char* modelPath = nullptr;
+    char* outputFilePath = nullptr;
     std::string fileName = "";
     std::string tmpFileName = "";
     std::string formatDelimiter = ".";
@@ -38,7 +38,6 @@ int main(int argc, const char* argv[]) {
     Oort::Vector<neuron_value_t>* outputs = new Oort::Vector<neuron_value_t>();
     Oort::Knowledge* knowledge = new Oort::Knowledge(1296, 3);
     Oort::KnowledgeParser* knlParser = new Oort::KnowledgeParser();
-    char* outputFilePath = nullptr;
 
     // Input check.
     if (argc != 3) {

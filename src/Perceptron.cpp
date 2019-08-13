@@ -80,6 +80,7 @@ namespace Oort {
 
     Perceptron** Perceptron::getInputs() {
         //TODO Return neurons connected to this via synapses.
+        return nullptr;
     }
 
     Perceptron Perceptron::getNullPerceptron() {

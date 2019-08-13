@@ -7,15 +7,15 @@
 using namespace Oort;
 
 int main(int argc, char const *argv[]) {
-    uint16_t inputNum = 1;
+    // uint16_t inputNum = 1;
     uint16_t outputNum = 1;
     char* modelFileName = nullptr;
-    float* expectedOutput;
+    // float* expectedOutput;
     neuron_value_t* newExpectedOut;
 
-    double startTime = 0;
-    double endTime = 0;
-    double execTime = 0;
+    // double startTime = 0;
+    // double endTime = 0;
+    // double execTime = 0;
 
     // Input check.
     if (argc > 2 || argc <= 1) {
@@ -78,28 +78,6 @@ int main(int argc, char const *argv[]) {
     // testNet->print();
     testNet->run();
     printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
-
-
-
-
-
-
-
-
-
-    Vector<neuron_value_t>* vectorTest = new Vector<neuron_value_t>();
-    for (vector_size_t i = 0; i < 10; i++) {
-        vectorTest->addLast(i * 14);
-    }
-    for (vector_size_t i = 0; i < vectorTest->getSize(); i++) {
-        vectorTest->replaceAt(i * 31, i);
-    }
-
-    printf("\n");
-    for (vector_size_t i = 0; i < vectorTest->getSize(); i++) {
-        printf("%f ", *(vectorTest->getItem(i)));
-    }
-    printf("\n");
 
 
 
