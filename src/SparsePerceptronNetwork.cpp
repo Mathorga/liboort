@@ -265,6 +265,20 @@ namespace Oort {
         return this->model;
     }
 
+    neuron_value_t* SparsePerceptronNetwork::getInput() {
+        neuron_value_t* in = (neuron_value_t*) malloc(this->model->getInputsNum() * sizeof(neuron_value_t));
+        vector_size_t index = 0;
+
+        for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
+            if (this->model->getNeuron(i)->getType() == Neuron::typeInput) {
+                in[index] = this->model->getNeuron(i)->getValue();
+                index++;
+            }
+        }
+
+        return in;
+    }
+
     neuron_value_t* SparsePerceptronNetwork::getOutput() {
         neuron_value_t* out = (neuron_value_t*) malloc(this->model->getOutputsNum() * sizeof(neuron_value_t));
         vector_size_t index = 0;
@@ -283,6 +297,15 @@ namespace Oort {
         for (vector_size_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
             if (this->model->getNeuron(i)->getType() == Neuron::typeInput) {
                 this->model->getNeuron(i)->setValue(input[j]);
+                j++;
+            }
+        }
+    }
+
+    void SparsePerceptronNetwork::setInput(Vector<neuron_value_t>* input) {
+        for (vector_size_t i = 0, j = 0; i < this->model->getNeuronsNum(); i++) {
+            if (this->model->getNeuron(i)->getType() == Neuron::typeInput) {
+                this->model->getNeuron(i)->setValue(*(input->getItem(j)));
                 j++;
             }
         }

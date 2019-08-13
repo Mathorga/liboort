@@ -7,6 +7,7 @@
 #define CAPTURE_HEIGHT 120
 #define FINAL_WIDTH 24
 #define FINAL_HEIGHT 18
+#define IMAGE_DEPTH 3
 
 using namespace cv;
 
@@ -19,7 +20,7 @@ int main(int argc, char const *argv[]) {
     VideoCapture eye(0);
     Mat tmpImage;
     Mat image;
-    Oort::Vector<neuron_value_t>* data = nullptr;
+    Oort::Vector<neuron_value_t>* data = new Oort::Vector<neuron_value_t>(FINAL_WIDTH * FINAL_HEIGHT * IMAGE_DEPTH);
 
     // Input check.
     if (argc > 2 || argc <= 1) {
@@ -74,19 +75,21 @@ int main(int argc, char const *argv[]) {
         }
 
         // Convert image data to brain input data.
-        data = new Oort::Vector<neuron_value_t>();
-        for (int i = 0; i < image.rows; i++) {
-            for (int j = 0; j < image.cols; j++) {
-                // You can now access the pixel value with cv::Vec3b
-                data->addLast(image.at<Vec3b>(i,j)[0] / 256.0);
-                data->addLast(image.at<Vec3b>(i,j)[1] / 256.0);
-                data->addLast(image.at<Vec3b>(i,j)[2] / 256.0);
+        for (uint32_t i = 0; i < image.rows; i++) {
+            for (uint32_t j = 0; j < image.cols; j++) {
+                for (uint32_t k = 0; k < IMAGE_DEPTH; k++) {
+                    // You can now access the pixel value with cv::Vec3b
+                    data->replaceAt(image.at<Vec3b>(i,j)[k] / 256.0, IDX(i, (j * IMAGE_DEPTH) + k, image.cols * IMAGE_DEPTH));
+                }
             }
         }
 
         // Feed the captured image to the brain.
-        brain->setInput(data->getItems());
+        brain->setInput(data);
         brain->run();
+
+        // Sleep for a while.
+        usleep(5000);
 
         endTime = Oort::getTime();
 

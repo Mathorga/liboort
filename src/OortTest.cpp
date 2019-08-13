@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
 
     KnowledgeParser* kp = new KnowledgeParser();
     kp->readFile((char*) "./res/knl/test.knl");
-    kp->getKnowledge()->print();
+    // kp->getKnowledge()->print();
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
     par->readFile((char*) "./res/mdl/trained.mdl");
 
@@ -87,25 +87,29 @@ int main(int argc, char const *argv[]) {
 
 
 
-
-
-
-
-
-
-    // Main loop of the program.
-    for (uint16_t i = 0;; i ++) {
-        startTime = getTime();
-        brain->run();
-        brain->correct();
-        // brain->describe();
-        // brain->run();
-        endTime = getTime();
-        execTime = endTime - startTime;
-        usleep(10000);
-        // printf("Time: %f s\n", execTime);
-        printf("Output: %.7f\n", brain->getOutput()[0]);
+    Vector<neuron_value_t>* vectorTest = new Vector<neuron_value_t>();
+    for (vector_size_t i = 0; i < 10; i++) {
+        vectorTest->addLast(i * 14);
     }
+    for (vector_size_t i = 0; i < vectorTest->getSize(); i++) {
+        vectorTest->replaceAt(i * 31, i);
+    }
+
+    printf("\n");
+    for (vector_size_t i = 0; i < vectorTest->getSize(); i++) {
+        printf("%f ", *(vectorTest->getItem(i)));
+    }
+    printf("\n");
+
+
+
+
+
+
+
+
+
+
 
     return 0;
 }

@@ -22,10 +22,12 @@ namespace Oort {
         // Getters.
         // Returns the whole model of the network.
         SparsePerceptronModel* getModel();
+        neuron_value_t* getInput();
         neuron_value_t* getOutput();
 
         // Setters.
         void setInput(neuron_value_t* input);
+        void setInput(Vector<neuron_value_t>* input);
         void setExpectedOutput(neuron_value_t* expectedOutput);
 
     protected:
