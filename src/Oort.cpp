@@ -21,13 +21,22 @@ int main(int argc, char const *argv[]) {
     Mat tmpImage;
     Mat image;
     Oort::Vector<neuron_value_t>* data = new Oort::Vector<neuron_value_t>(FINAL_WIDTH * FINAL_HEIGHT * IMAGE_DEPTH);
+    bool preview = false;
 
     // Input check.
-    if (argc > 2 || argc <= 1) {
-        printf("Usage: %s [modelFileName]\n", argv[0]);
+    if (argc > 3 || argc <= 1) {
+        printf("Usage: %s [-p] [modelFileName]\n", argv[0]);
         return -1;
     }
-    if (argc > 1) {
+    if (argc > 2) {
+        if (!strcmp((char*) argv[1], "-p")) {
+            preview = true;
+            modelFileName = (char*) argv[2];
+        } else {
+            printf("Usage: %s [-p] [modelFileName]\n", argv[0]);
+            return -1;
+        }
+    } else if (argc > 1) {
         modelFileName = (char*) argv[1];
     }
 
@@ -43,12 +52,12 @@ int main(int argc, char const *argv[]) {
 
     // Check if VideoCapture opened successfully.
     if (!eye.isOpened()) {
-        printf("\nError opening video stream or file\n");
+        printf("\nError opening eye\n");
         return -1;
     }
 
     // Main loop of the program.
-    for (uint16_t i = 0;; i ++) {
+    for (uint8_t i = 0;; i ++) {
         //TODO Get input from the nerve.
 
         startTime = Oort::getTime();
@@ -61,13 +70,16 @@ int main(int argc, char const *argv[]) {
             break;
         }
 
-        // Resize the frame.
+        // Downscale the image to feed it to the brain.
         resize(tmpImage, image, Size(FINAL_WIDTH, FINAL_HEIGHT));
-        resize(image, tmpImage, Size(), 10, 10, INTER_NEAREST);
 
-        // Display the resulting frame
-        imshow("Show", tmpImage);
+        if (preview) {
+            // Upscale the image to show it on screen.
+            resize(image, tmpImage, Size(), 10, 10, INTER_NEAREST);
 
+            // Display the resulting frame
+            imshow("Preview", tmpImage);
+        }
         // Press ESC on keyboard to exit.
         char c = (char) waitKey(25);
         if (c == 27) {
