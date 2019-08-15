@@ -1,6 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
+#include "SerialNerve.h"
 #include "utils.h"
 
 #define CAPTURE_WIDTH 160

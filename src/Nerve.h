@@ -1,11 +1,26 @@
+/*
+********************************************************************************
+Nerve.h
+
+This file defines the interface for simple generic communication.
+
+Copyright (C) 2019  Luka Micheletti
+********************************************************************************
+*/
+
 #ifndef __NERVE__
 #define __NERVE__
+
+#include "utils.h"
 
 namespace Oort {
     class Nerve {
     public:
-        virtual int sendMessage() = 0;
-        virtual char* getMessage() = 0;
+        // Transmit data.
+        virtual uint8_t send(byte* data) = 0;
+
+        // Receive data.
+        virtual byte* receive() = 0;
     };
 }
 
