@@ -5,6 +5,10 @@ namespace Oort {
         return this->send(data, length);
     }
 
+    uint8_t SerialNerve::tX(Vector<byte>* data, uint32_t length) {
+        return this->send(data->getItems(), length);
+    }
+
     byte* SerialNerve::rX() {
         return this->receive();
     }

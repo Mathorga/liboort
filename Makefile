@@ -1,6 +1,6 @@
 CCOMP = gcc
 
-STD_CCOMP_FLAGS = -std=c++17 -Wall -g -fopenmp
+STD_CCOMP_FLAGS = -std=c++17 -Wall -pedantic -g -fopenmp
 OPENCV_INCLUDES = -Ilib/opencv/include/opencv4
 OPENCV_INCLUDES = `pkg-config --cflags opencv`
 CCOMP_FLAGS = $(STD_CCOMP_FLAGS) $(OPENCV_INCLUDES)

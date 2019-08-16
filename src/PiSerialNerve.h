@@ -10,6 +10,8 @@ namespace Oort {
         // The wrapper is made in order to match the names used in serial communication.
         uint8_t tX(byte* data, uint32_t length);
 
+        uint8_t tX(Vector<byte>* data, uint32_t length);
+
         // Wrapper for receiveData.
         // The wrapper is made in order to match the names used in serial communication.
         byte* rX();

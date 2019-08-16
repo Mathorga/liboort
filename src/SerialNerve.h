@@ -12,6 +12,7 @@ Copyright (C) 2019  Luka Micheletti
 #define __SERIAL_NERVE__
 
 #include "Nerve.h"
+#include "Vector.h"
 
 namespace Oort {
     class SerialNerve : public Nerve {
@@ -19,6 +20,8 @@ namespace Oort {
         // Wrapper for sendData.
         // The wrapper is made in order to match the names used in serial communication.
         uint8_t tX(byte* data, uint32_t length);
+
+        uint8_t tX(Vector<byte>* data, uint32_t length);
 
         // Wrapper for receiveData.
         // The wrapper is made in order to match the names used in serial communication.
