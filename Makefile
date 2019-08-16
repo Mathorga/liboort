@@ -19,9 +19,16 @@ BIN_DIR = ./bin
 MKDIR = mkdir -p
 RM = rm -rf
 
-all: create clean exe
+all: default
 
-exe: OortTest OortImgGrabber OortKnlMaker OortTrainer Oort #OortNNTest
+default: create clean defaultExe
+
+pi: create clean piExe
+
+defaultExe: OortTest OortImgGrabber OortKnlMaker OortTrainer Oort #OortNNTest
+
+piExe: OortTest OortImgGrabber OortKnlMaker OortTrainer OortPi
+
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
 

@@ -17,7 +17,7 @@ namespace Oort {
     class Nerve {
     public:
         // Transmit data.
-        virtual uint8_t send(byte* data) = 0;
+        virtual uint8_t send(byte* data, uint32_t length) = 0;
 
         // Receive data.
         virtual byte* receive() = 0;
