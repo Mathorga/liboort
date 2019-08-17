@@ -9,7 +9,7 @@ CLINK_FLAGS =
 # OPENNN_LIBS = -L ./lib/opennn -lopennn
 GTK_LIBS = `pkg-config --libs gtk+-2.0`
 OPENCV_LIBS = `pkg-config --libs opencv`
-STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm -lwiringPi
+STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm #-lwiringPi
 LIBS = $(OPENCV_LIBS) $(STD_LIBS) #$(OPENNN_LIBS)
 
 SRC_DIR = ./src
@@ -23,11 +23,11 @@ all: default
 
 default: create clean defaultExe
 
-pi: create clean piExe
+#pi: create clean piExe
 
 defaultExe: OortTest OortImgGrabber OortKnlMaker OortTrainer Oort #OortNNTest
 
-piExe: OortTest OortImgGrabber OortKnlMaker OortTrainer OortPi
+#piExe: OortTest OortImgGrabber OortKnlMaker OortTrainer OortPi
 
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
