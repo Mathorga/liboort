@@ -13,6 +13,7 @@ Copyright (C) 2019  Luka Micheletti
 
 #include "Nerve.h"
 #include "Vector.h"
+#include "utils.h"
 
 namespace Oort {
     class SerialNerve : public Nerve {

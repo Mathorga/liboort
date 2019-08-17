@@ -9,7 +9,7 @@ CLINK_FLAGS =
 # OPENNN_LIBS = -L ./lib/opennn -lopennn
 GTK_LIBS = `pkg-config --libs gtk+-2.0`
 OPENCV_LIBS = `pkg-config --libs opencv`
-STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm
+STD_LIBS = -lstdc++ -lrt -lgomp -lpthread -ldl -lm -lwiringPi
 LIBS = $(OPENCV_LIBS) $(STD_LIBS) #$(OPENNN_LIBS)
 
 SRC_DIR = ./src
@@ -47,7 +47,8 @@ Oort: Oort.o \
 	  KnowledgeParser.o \
 	  Knowledge.o \
 	  Experience.o \
-	  SerialNerve.o
+	  SerialNerve.o \
+	  PiSerialNerve.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTest: OortTest.o \

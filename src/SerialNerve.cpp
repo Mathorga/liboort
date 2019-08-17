@@ -22,4 +22,8 @@ namespace Oort {
         //TODO
         return nullptr;
     }
+
+    // int32_t SerialNerve::init(char* fileName) {
+    //     int32_t device = open(fileName, O_RDWR | O_NOCTTY);
+    // }
 }

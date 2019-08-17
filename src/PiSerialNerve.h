@@ -2,6 +2,7 @@
 #define __PI_SERIAL_NERVE__
 
 #include "SerialNerve.h"
+#include <wiringSerial.h>
 
 namespace Oort {
     class PiSerialNerve : public SerialNerve {

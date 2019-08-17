@@ -15,6 +15,7 @@ namespace Oort {
 
     uint8_t PiSerialNerve::send(byte* data, uint32_t length) {
         //TODO
+        int opened = serialOpen("/dev/tty0", 9600);
         return 0;
     }
 
