@@ -54,7 +54,7 @@ namespace Oort {
                 this->items[this->size] = item;
                 this->size++;
             } else {
-                printf("\n<Vector::addLast()> Error inserting item\n");
+                printf("\n<Vector::addLast()> Error: could not resize vector\n");
             }
         }
         void addLast(T* item) {
@@ -67,7 +67,7 @@ namespace Oort {
                 this->items[this->size] = (*item);
                 this->size++;
             } else {
-                printf("\nERROR INSERTING ITEM\n");
+                printf("\n<Vector::addLast()> Error: could not resize vector\n");
                 //TODO.
             }
         }
@@ -76,7 +76,7 @@ namespace Oort {
             if (index >= 0 && index < this->size) {
                 this->items[index] = item;
             } else {
-                printf("\nINDEX OUT OF BOUNDS\n");
+                printf("\n<Vector::replaceAt()> Error: index out of bounds\n");
                 //TODO
             }
         }
@@ -84,7 +84,7 @@ namespace Oort {
             if (index >= 0 && index < this->size) {
                 this->items[index] = (*item);
             } else {
-                printf("\nINDEX OUT OF BOUNDS\n");
+                printf("\n<Vector::replaceAt()> Error: index out of bounds\n");
                 //TODO
             }
         }
@@ -108,7 +108,7 @@ namespace Oort {
             if (index >= 0 && index < this->size) {
                 return &(this->items[index]);
             } else {
-                printf("\nINDEX OUT OF BOUNDS\n");
+                printf("\n<Vector::replaceAt()> Error: index out of bounds\n");
                 //TODO
                 // return NULL;
             }
