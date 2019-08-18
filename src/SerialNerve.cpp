@@ -23,6 +23,9 @@ namespace Oort {
             // Get default attributes from serial.
             tcgetattr(this->stream, &options);
 
+            // Turn off blocking for reads.
+            fcntl(this->stream, F_SETFL, 0);
+
             // Set baud rate.
             options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
             options.c_iflag = IGNPAR;
@@ -72,6 +75,7 @@ namespace Oort {
 
             if (length < 0) {
                 printf("\n<SerialNerve::receive()> Error: could not receive data\n");
+                printf("\nError %s\n", strerror(errno));
             } else if (length == 0) {
                 printf("\n<SerialNerve::receive()> Error: there is no data\n");
             } else {

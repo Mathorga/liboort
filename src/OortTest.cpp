@@ -89,17 +89,19 @@ int main(int argc, char const *argv[]) {
 
 
 
-    byte* data = (byte*) malloc(1);
+    byte* data = (byte*) malloc(3);
     data[0] = 100;
+    data[1] = 101;
+    data[2] = 102;
     SerialNerve* nerve = new SerialNerve();
     nerve->init((char*) "/dev/ttyUSB0");
-    nerve->tX(data, 1);
+    nerve->tX(data, 3);
     byte* newData = nerve->rX();
-    printf("\n%c\n", newData[0]);
+    // printf("\n%c\n", newData[0]);
 
-    // for (uint8_t i = 0; i < 3; i++) {
-    //     printf("\n%c\n", newData[i]);
-    // }
+    for (uint8_t i = 0; i < 3; i++) {
+        printf("\n%c\n", newData[i]);
+    }
 
     nerve->closeStream();
 
