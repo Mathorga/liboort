@@ -64,11 +64,12 @@ namespace Oort {
 
     byte* SerialNerve::receive() {
         byte* data = (byte*) malloc(256);
-        uint32_t length = 0;
+        int32_t length = 0;
 
         if (this->stream != -1) {
             // Read up to 255 characters from the port if they are there.
             length = read(this->stream, (void*) data, 255);
+
             if (length < 0) {
                 printf("\n<SerialNerve::receive()> Error: could not receive data\n");
             } else if (length == 0) {

@@ -3,6 +3,7 @@
 #include "SparsePerceptronModelParser.h"
 #include "LayeredPerceptronModel.h"
 #include "KnowledgeParser.h"
+#include "SerialNerve.h"
 
 using namespace Oort;
 
@@ -78,6 +79,29 @@ int main(int argc, char const *argv[]) {
     // testNet->print();
     testNet->run();
     printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
+
+
+
+
+
+
+
+
+
+
+    byte* data = (byte*) malloc(1);
+    data[0] = 100;
+    SerialNerve* nerve = new SerialNerve();
+    nerve->init((char*) "/dev/ttyUSB0");
+    nerve->tX(data, 1);
+    byte* newData = nerve->rX();
+    printf("\n%c\n", newData[0]);
+
+    // for (uint8_t i = 0; i < 3; i++) {
+    //     printf("\n%c\n", newData[i]);
+    // }
+
+    nerve->closeStream();
 
 
 
