@@ -47,8 +47,7 @@ Oort: Oort.o \
 	  KnowledgeParser.o \
 	  Knowledge.o \
 	  Experience.o \
-	  SerialNerve.o \
-	  PiSerialNerve.o
+	  SerialNerve.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 OortTest: OortTest.o \
