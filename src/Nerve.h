@@ -17,10 +17,10 @@ namespace Oort {
     class Nerve {
     public:
         // Transmit data.
-        virtual uint32_t send(byte* data, uint32_t length) = 0;
+        virtual int32_t send(byte* data, uint32_t length) = 0;
 
         // Receive data.
-        virtual byte* receive() = 0;
+        virtual int32_t receive(byte* buffer) = 0;
     };
 }
 

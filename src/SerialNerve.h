@@ -18,6 +18,8 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class SerialNerve : public Nerve {
     public:
+        static const uint32_t DEFAULT_RX_LENGTH;
+
         // Constructor.
         SerialNerve();
         ~SerialNerve();
@@ -33,13 +35,15 @@ namespace Oort {
 
         // Wrapper for receiveData.
         // The wrapper is made in order to match the names used in serial communication.
-        byte* rX();
+        int32_t rX(byte* buffer);
+        int32_t rX(byte* buffer, uint32_t length);
 
         // Transmit data over serial.
-        uint32_t send(byte* data, uint32_t length);
+        int32_t send(byte* data, uint32_t length);
 
         // Receive daata over serial.
-        byte* receive();
+        int32_t receive(byte* buffer);
+        int32_t receive(byte* buffer, uint32_t length);
 
         int32_t closeStream();
 

@@ -1,6 +1,8 @@
 #include "SerialNerve.h"
 
 namespace Oort {
+    const uint32_t SerialNerve::DEFAULT_RX_LENGTH = 256;
+
     SerialNerve::SerialNerve() {
         // Set stream value to -1 in order to get ready for the initialization.
         this->stream = -1;
@@ -47,11 +49,15 @@ namespace Oort {
         return this->send(data->getItems(), length);
     }
 
-    byte* SerialNerve::rX() {
-        return this->receive();
+    int32_t SerialNerve::rX(byte* buffer) {
+        return this->receive(buffer);
     }
 
-    uint32_t SerialNerve::send(byte* data, uint32_t length) {
+    int32_t SerialNerve::rX(byte* buffer, uint32_t length) {
+        return this->receive(buffer, length);
+    }
+
+    int32_t SerialNerve::send(byte* data, uint32_t length) {
         int32_t count;
 
         if (this->stream != -1) {
@@ -65,28 +71,27 @@ namespace Oort {
         return count;
     }
 
-    byte* SerialNerve::receive() {
-        byte* data = (byte*) malloc(256);
-        int32_t length = 0;
+    int32_t SerialNerve::receive(byte* buffer) {
+        return this->receive(buffer, DEFAULT_RX_LENGTH);
+    }
+
+    int32_t SerialNerve::receive(byte* buffer, uint32_t length) {
+        int32_t count = 0;
 
         if (this->stream != -1) {
             // Read up to 255 characters from the port if they are there.
-            length = read(this->stream, (void*) data, 255);
+            count = read(this->stream, (void*) buffer, length);
 
-            if (length < 0) {
+            if (count < 0) {
                 printf("\n<SerialNerve::receive()> Error: could not receive data\n");
-                printf("\nError %s\n", strerror(errno));
-            } else if (length == 0) {
+            } else if (count == 0) {
                 printf("\n<SerialNerve::receive()> Error: there is no data\n");
-            } else {
-                // Bytes received.
-                printf("\n%d bytes read\n", length);
             }
         } else {
             printf("\n<SerialNerve::receive()> Error: stream is not open\n");
         }
 
-        return data;
+        return count;
     }
 
     int32_t SerialNerve::closeStream() {
