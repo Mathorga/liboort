@@ -23,7 +23,7 @@ namespace Oort {
             // Get default attributes from serial.
             tcgetattr(this->stream, &options);
 
-            // Turn off blocking for reads.
+            // Turn off blocking for reads (why doesn't it work just by using open flags??).
             fcntl(this->stream, F_SETFL, 0);
 
             // Set baud rate.
