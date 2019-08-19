@@ -27,8 +27,8 @@ namespace Oort {
             // Get default attributes from serial.
             tcgetattr(this->stream, &options);
 
-            // Turn off blocking for reads (why doesn't it work just by using open flags??).
-            fcntl(this->stream, F_SETFL, 0);
+            // Turn on blocking for reads.
+            // fcntl(this->stream, F_SETFL, 0);
 
             // Set baud rate.
             options.c_cflag = B9600 | CS8 | CLOCAL | CREAD;
@@ -98,7 +98,8 @@ namespace Oort {
 
     int32_t SerialNerve::openStream(char* fileName) {
         // Open stream in non blocking read/write mode.
-        this->stream = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+        // this->stream = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+        this->stream = open(fileName, O_RDWR | O_NOCTTY);
 
         if (this->stream == -1) {
             printf("\n<SerialNerve::openStream()> Error: couldn't open serial communication to device %s\n", fileName);

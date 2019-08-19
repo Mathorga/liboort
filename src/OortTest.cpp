@@ -85,6 +85,22 @@ int main(int argc, char const *argv[]) {
 
 
 
+    // FILE* file = fopen("/dev/ttyUSB0", "w");
+    // int32_t x = 0;
+    // for (uint32_t i = 0; i < 100; i++) {
+    //     fprintf(file, "%d", i + 10); //Writing to the file
+    //     usleep(1000);
+    //     fscanf(file, "%d", &x);
+    //     printf("\n%d\n", x);
+    // }
+    // fclose(file);
+
+
+
+
+
+
+
 
 
 
@@ -94,6 +110,7 @@ int main(int argc, char const *argv[]) {
     data[1] = 101;
     data[2] = 102;
     SerialNerve* nerve = new SerialNerve((char*) "/dev/ttyUSB0");
+    usleep(3000 * 1000 );
     byte newData[256];
 
     for (uint16_t i = 0; i < 100; i++) {
@@ -108,7 +125,6 @@ int main(int argc, char const *argv[]) {
         nerve->rX(newData, 3);
 
         // Show received data.
-        printf("\n");
         for (uint8_t j = 0; j < 3; j++) {
             printf("%d ", newData[j]);
         }
