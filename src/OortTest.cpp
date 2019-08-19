@@ -93,26 +93,27 @@ int main(int argc, char const *argv[]) {
     data[0] = 100;
     data[1] = 101;
     data[2] = 102;
-    SerialNerve* nerve = new SerialNerve();
-    nerve->init((char*) "/dev/ttyUSB0");
-    nerve->tX(data, 3);
+    SerialNerve* nerve = new SerialNerve((char*) "/dev/ttyUSB0");
     byte newData[256];
-    nerve->rX(newData, 3);
 
     for (uint16_t i = 0; i < 100; i++) {
+        // Set data to send.
         for (uint8_t j = 0; j < 3; j++) {
             data[j] = i + j;
         }
+
+        // Send data.
         nerve->tX(data, 3);
+        // Receive data.
         nerve->rX(newData, 3);
 
+        // Show received data.
         printf("\n");
         for (uint8_t j = 0; j < 3; j++) {
             printf("%d ", newData[j]);
         }
         printf("\n");
     }
-
 
     nerve->closeStream();
 

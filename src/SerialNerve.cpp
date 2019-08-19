@@ -8,19 +8,21 @@ namespace Oort {
         this->stream = -1;
     }
 
+    SerialNerve::SerialNerve(char* fileName) : SerialNerve() {
+        this->openStream(fileName);
+        this->init();
+    }
+
     SerialNerve::~SerialNerve() {
         this->closeStream();
     }
 
     // Code to simple serial communication is kindly provided by:
     // https://raspberry-projects.com/pi/programming-in-c/uart-serial-port/using-the-uart
-    int8_t SerialNerve::init(char* fileName) {
+    int32_t SerialNerve::init() {
         struct termios options;
 
-        // Open stream in non blocking read/write mode.
-        this->stream = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
-
-        // Check if opened correctly.
+        // Check if stream is open.
         if (this->stream != -1) {
             // Get default attributes from serial.
             tcgetattr(this->stream, &options);
@@ -36,7 +38,7 @@ namespace Oort {
             tcflush(this->stream, TCIFLUSH);
             tcsetattr(this->stream, TCSANOW, &options);
         } else {
-            printf("\n<SerialNerve::init()> Error: couldn't open serial communication to device %s\n", fileName);
+            printf("\n<SerialNerve::init()> Error: stream is not open\n");
         }
         return this->stream;
     }
@@ -94,7 +96,26 @@ namespace Oort {
         return count;
     }
 
+    int32_t SerialNerve::openStream(char* fileName) {
+        // Open stream in non blocking read/write mode.
+        this->stream = open(fileName, O_RDWR | O_NOCTTY | O_NDELAY);
+
+        if (this->stream == -1) {
+            printf("\n<SerialNerve::openStream()> Error: couldn't open serial communication to device %s\n", fileName);
+        }
+
+        return this->stream;
+    }
+
     int32_t SerialNerve::closeStream() {
-        return close(this->stream);
+        int32_t result = close(this->stream);
+
+        this->stream = -1;
+
+        return result;
+    }
+
+    int32_t SerialNerve::getStream() {
+        return this->stream;
     }
 }

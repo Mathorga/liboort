@@ -20,20 +20,22 @@ namespace Oort {
     public:
         static const uint32_t DEFAULT_RX_LENGTH;
 
-        // Constructor.
+        // Constructors.
         SerialNerve();
+        SerialNerve(char* fileName);
+
+        // Destructor.
         ~SerialNerve();
 
         // Initialize the serial stream.
-        int8_t init(char* fileName);
+        int32_t init();
 
-        // Wrapper for sendData.
+        // Wrapper for send().
         // The wrapper is made in order to match the names used in serial communication.
         int32_t tX(byte* data, uint32_t length);
-
         int32_t tX(Vector<byte>* data, uint32_t length);
 
-        // Wrapper for receiveData.
+        // Wrapper for receive().
         // The wrapper is made in order to match the names used in serial communication.
         int32_t rX(byte* buffer);
         int32_t rX(byte* buffer, uint32_t length);
@@ -45,7 +47,11 @@ namespace Oort {
         int32_t receive(byte* buffer);
         int32_t receive(byte* buffer, uint32_t length);
 
+        int32_t openStream(char* fileName);
         int32_t closeStream();
+
+        // Getter.
+        int32_t getStream();
 
     private:
         int32_t stream;
