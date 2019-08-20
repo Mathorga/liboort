@@ -110,7 +110,8 @@ int main(int argc, char const *argv[]) {
     data[1] = 101;
     data[2] = 102;
     SerialNerve* nerve = new SerialNerve((char*) "/dev/ttyUSB0");
-    usleep(3000 * 1000 );
+    // Need to wait in order to be able to send data.
+    usleep(3000000);
     byte newData[256];
 
     for (uint16_t i = 0; i < 100; i++) {
