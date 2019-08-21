@@ -20,9 +20,14 @@ namespace Oort {
     public:
         static const uint32_t DEFAULT_RX_LENGTH;
 
+        // Default wait time after initialization (in us).
+        static const uint32_t DEFAULT_WAIT_TIME;
+
         // Constructors.
         SerialNerve();
         SerialNerve(char* fileName);
+        SerialNerve(char* fileName, bool wait);
+        SerialNerve(char* fileName, bool wait, uint32_t waitTime);
 
         // Destructor.
         ~SerialNerve();

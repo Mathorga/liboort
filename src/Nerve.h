@@ -16,11 +16,14 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class Nerve {
     public:
+        // Destructor.
+        virtual ~Nerve() = default;
+
         // Transmit data.
         virtual int32_t send(byte* data, uint32_t length) = 0;
 
         // Receive data.
-        virtual int32_t receive(byte* buffer) = 0;
+        virtual int32_t receive(byte* buffer, uint32_t length) = 0;
     };
 }
 

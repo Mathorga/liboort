@@ -2,23 +2,33 @@
 
 namespace Oort {
     const uint32_t SerialNerve::DEFAULT_RX_LENGTH = 256;
+    const uint32_t SerialNerve::DEFAULT_WAIT_TIME = 3000000;
 
     SerialNerve::SerialNerve() {
         // Set stream value to -1 in order to get ready for the initialization.
         this->stream = -1;
     }
 
-    SerialNerve::SerialNerve(char* fileName) : SerialNerve() {
+    SerialNerve::SerialNerve(char* fileName) : SerialNerve(fileName, true, DEFAULT_WAIT_TIME) {}
+
+    SerialNerve::SerialNerve(char* fileName, bool wait) : SerialNerve(fileName, wait, DEFAULT_WAIT_TIME) {}
+
+    SerialNerve::SerialNerve(char* fileName, bool wait, uint32_t waitTime) : SerialNerve() {
         this->openStream(fileName);
         this->init();
+        if (wait) {
+            // Wait default wait time.
+            usleep(waitTime);
+        }
     }
 
     SerialNerve::~SerialNerve() {
         this->closeStream();
     }
 
-    // Code to simple serial communication is kindly provided by:
+    // Code for simple serial communication is kindly provided by:
     // https://raspberry-projects.com/pi/programming-in-c/uart-serial-port/using-the-uart
+    // After the initialization a little wait time is needed in order to successfully send and receive data.
     int32_t SerialNerve::init() {
         struct termios options;
 

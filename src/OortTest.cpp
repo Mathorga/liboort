@@ -109,9 +109,7 @@ int main(int argc, char const *argv[]) {
     data[0] = 100;
     data[1] = 101;
     data[2] = 102;
-    SerialNerve* nerve = new SerialNerve((char*) "/dev/ttyUSB0");
-    // Need to wait in order to be able to send data.
-    usleep(3000000);
+    Nerve* nerve = new SerialNerve((char*) "/dev/ttyUSB0");
     byte newData[256];
 
     for (uint16_t i = 0; i < 100; i++) {
@@ -121,9 +119,9 @@ int main(int argc, char const *argv[]) {
         }
 
         // Send data.
-        nerve->tX(data, 3);
+        nerve->send(data, 3);
         // Receive data.
-        nerve->rX(newData, 3);
+        nerve->receive(newData, 3);
 
         // Show received data.
         for (uint8_t j = 0; j < 3; j++) {
@@ -132,7 +130,8 @@ int main(int argc, char const *argv[]) {
         printf("\n");
     }
 
-    nerve->closeStream();
+    delete nerve;
+    // nerve->closeStream();
 
 
 
