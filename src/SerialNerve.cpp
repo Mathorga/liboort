@@ -18,6 +18,7 @@ namespace Oort {
         this->init();
         if (wait) {
             // Wait default wait time.
+            //TODO Non blocking wait.
             usleep(waitTime);
         }
     }

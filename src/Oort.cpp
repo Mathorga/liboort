@@ -21,7 +21,9 @@ int main(int argc, char const *argv[]) {
     VideoCapture eye(0);
     Mat tmpImage;
     Mat image;
-    Oort::Vector<neuron_value_t>* data = new Oort::Vector<neuron_value_t>(FINAL_WIDTH * FINAL_HEIGHT * IMAGE_DEPTH);
+    Oort::Vector<neuron_value_t>* eyeData = new Oort::Vector<neuron_value_t>(FINAL_WIDTH * FINAL_HEIGHT * IMAGE_DEPTH);
+    Oort::Nerve* nerve = new Oort::SerialNerve((char*) "/dev/ttyUSB0");
+    byte* reaction = nullptr;
     bool preview = false;
 
     // Input check.
@@ -47,6 +49,8 @@ int main(int argc, char const *argv[]) {
     // Set the brain model based on that read before.
     brain = new Oort::SparsePerceptronNetwork(modelParser->getModel());
 
+    reaction = (byte*) malloc(brain->getModel()->getOutputsNum());
+
     // Set default capture size.
     eye.set(CV_CAP_PROP_FRAME_WIDTH, CAPTURE_WIDTH);
     eye.set(CV_CAP_PROP_FRAME_HEIGHT, CAPTURE_HEIGHT);
@@ -57,9 +61,16 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
+    nerve->send(reaction, brain->getModel()->getOutputsNum());
+
     // Main loop of the program.
     for (uint8_t i = 0;; i ++) {
-        //TODO Get input from the nerve.
+        // Get input from the nerve.
+        nerve->receive(reaction, brain->getModel()->getOutputsNum());
+
+        for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {
+            printf("\nReceived %d\n", reaction[j]);
+        }
 
         startTime = Oort::getTime();
 
@@ -91,14 +102,14 @@ int main(int argc, char const *argv[]) {
         for (int32_t i = 0; i < image.rows; i++) {
             for (int32_t j = 0; j < image.cols; j++) {
                 for (int32_t k = 0; k < IMAGE_DEPTH; k++) {
-                    // You can now access the pixel value with cv::Vec3b
-                    data->replaceAt(image.at<Vec3b>(i,j)[k] / 256.0, IDX(i, (j * IMAGE_DEPTH) + k, image.cols * IMAGE_DEPTH));
+                    // Pixel values can be accessed using cv::Vec3b.
+                    eyeData->replaceAt(image.at<Vec3b>(i,j)[k] / 256.0, IDX(i, (j * IMAGE_DEPTH) + k, image.cols * IMAGE_DEPTH));
                 }
             }
         }
 
         // Feed the captured image to the brain.
-        brain->setInput(data);
+        brain->setInput(eyeData);
         brain->run();
 
         // Sleep for a while.
@@ -110,7 +121,13 @@ int main(int argc, char const *argv[]) {
         // printf("Elapsed time %f\n", endTime - startTime);
         printf("Framerate %d\n", (int) (1 / (endTime - startTime)));
 
-        //TODO Send output to the nerve.
+        // Convert brain output to reaction (byte array).
+        for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {
+            reaction[j] = (byte) brain->getOutput()[j] * 256;
+        }
+
+        // Send output to the nerve.
+        nerve->send(reaction, brain->getModel()->getOutputsNum());
     }
 
     // When everything done, release the video capture object.
