@@ -1,7 +1,7 @@
 #include "Nerve.h"
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
-#include "LayeredPerceptronModel.h"
+#include "LayeredPerceptronNetwork.h"
 #include "KnowledgeParser.h"
 #include "SerialNerve.h"
 
@@ -135,6 +135,13 @@ int main(int argc, char const *argv[]) {
 
 
 
+
+
+
+
+
+    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
+    nnn->print();
 
 
 

@@ -21,6 +21,8 @@ namespace Oort {
     class LayeredPerceptronModel : public Model {
     public:
         static const vector_size_t DEFAULT_LAYERS_NUM;
+
+        // Output layers can be more than one, so a default output layers number is defined.
         static const vector_size_t DEFAULT_OUT_LAYERS_NUM;
         static const vector_size_t DEFAULT_LAYER_SIZE;
 
@@ -42,6 +44,7 @@ namespace Oort {
         Vector<Vector<Perceptron>>* layers;
 
         void createLayers(vector_size_t layerSize);
+        void createLayers(vector_size_t inputLayerSize, vector_size_t outputLayerSize, vector_size_t hiddenLayerSize);
     };
 }
 

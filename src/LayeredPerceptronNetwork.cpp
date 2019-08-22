@@ -2,7 +2,11 @@
 
 namespace Oort {
     LayeredPerceptronNetwork::LayeredPerceptronNetwork() {
+        this->model = nullptr;
+    }
 
+    LayeredPerceptronNetwork::LayeredPerceptronNetwork(LayeredPerceptronModel* model) {
+        this->model = model;
     }
 
     void LayeredPerceptronNetwork::run() {
@@ -32,7 +36,9 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::print() {
-        this->model->print();
+        if (this->model != nullptr) {
+            this->model->print();
+        }
     }
 
     LayeredPerceptronModel* LayeredPerceptronNetwork::getModel() {
@@ -43,10 +49,24 @@ namespace Oort {
         return nullptr;
     }
 
+    void LayeredPerceptronNetwork::setModel(LayeredPerceptronModel* model) {
+        this->model = model;
+    }
+
     void LayeredPerceptronNetwork::setInput(neuron_value_t* input) {
         for (vector_size_t i = 0; i < this->model->getLayer(0)->getSize(); i++) {
             this->model->getLayer(0)->getItem(i)->setValue(input[i]);
         }
+    }
+
+    void LayeredPerceptronNetwork::setInput(Vector<neuron_value_t>* input) {
+        for (vector_size_t i = 0; i < this->model->getLayer(0)->getSize(); i++) {
+            this->model->getLayer(0)->getItem(i)->setValue(*(input->getItem(i)));
+        }
+    }
+
+    void LayeredPerceptronNetwork::setExpectedOutput(neuron_value_t* expectedOutput) {
+
     }
 
     void LayeredPerceptronNetwork::computeValue() {
@@ -55,6 +75,7 @@ namespace Oort {
         // Loop through layers skipping the first one, which is input.
         for (vector_size_t i = 1; i < this->model->getLayersNum(); i++) {
             // Loop through neurons in each layer.
+            #pragma omp parallel for
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
                 value = 0;
 

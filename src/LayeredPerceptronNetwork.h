@@ -9,6 +9,7 @@ namespace Oort {
     public:
         // Constructors.
         LayeredPerceptronNetwork();
+        LayeredPerceptronNetwork(LayeredPerceptronModel* model);
 
         void run();
         void correct();
@@ -23,7 +24,9 @@ namespace Oort {
         neuron_value_t* getOutput();
 
         // Setters.
+        void setModel(LayeredPerceptronModel* model);
         void setInput(neuron_value_t* input);
+        void setInput(Vector<neuron_value_t>* input);
         void setExpectedOutput(neuron_value_t* expectedOutput);
 
     private:
