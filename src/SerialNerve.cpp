@@ -92,7 +92,7 @@ namespace Oort {
         int32_t count = 0;
 
         if (this->stream != -1) {
-            // Read up to 255 characters from the port if they are there.
+            // Read up to "length" characters from the port if they are there.
             count = read(this->stream, (void*) buffer, length);
 
             if (count < 0) {

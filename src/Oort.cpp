@@ -61,18 +61,12 @@ int main(int argc, char const *argv[]) {
         return -1;
     }
 
-    nerve->send(reaction, brain->getModel()->getOutputsNum());
-
     // Main loop of the program.
     for (uint8_t i = 0;; i ++) {
-        // Get input from the nerve.
-        nerve->receive(reaction, brain->getModel()->getOutputsNum());
-
-        for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {
-            printf("\nReceived %d\n", reaction[j]);
-        }
-
         startTime = Oort::getTime();
+
+        // Get input from the nerve.
+        // int read = nerve->receive(reaction, brain->getModel()->getOutputsNum());
 
         // Capture frame-by-frame
         eye >> tmpImage;
@@ -115,19 +109,19 @@ int main(int argc, char const *argv[]) {
         // Sleep for a while.
         usleep(5000);
 
+        // Convert brain output to reaction (byte array).
+        for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {
+            reaction[j] = (byte) (brain->getOutput()[j] * 256);
+        }
+
+        // Send output to the nerve.
+        nerve->send(reaction, brain->getModel()->getOutputsNum());
+
         endTime = Oort::getTime();
 
         printf("\nOutput %f %f %f\n", brain->getOutput()[0], brain->getOutput()[1], brain->getOutput()[2]);
         // printf("Elapsed time %f\n", endTime - startTime);
         printf("Framerate %d\n", (int) (1 / (endTime - startTime)));
-
-        // Convert brain output to reaction (byte array).
-        for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {
-            reaction[j] = (byte) brain->getOutput()[j] * 256;
-        }
-
-        // Send output to the nerve.
-        nerve->send(reaction, brain->getModel()->getOutputsNum());
     }
 
     // When everything done, release the video capture object.
