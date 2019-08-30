@@ -9,7 +9,8 @@ depth. The depth parameter is used to define the number of bytes used to encode
 a single input or output value.
 Knowledge files use big-endian encoding for values.
 For example, let's take a file containing the following bytes:
-04    01    02    FA    0C    64    40    5D    BB    D1    9E    1F    80
+00    00    00    04    00    00    00    01    02    FA    0C    64    40    5D
+BB    D1    9E    1F    80
 The file contains a knowledge with experiences made of 4 input values and 1
 output value.
 Each value is two bytes long, so only one experience is stored in it.
