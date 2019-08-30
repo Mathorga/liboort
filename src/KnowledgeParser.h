@@ -14,12 +14,11 @@ BB    D1    9E    1F    80
 The file contains a knowledge with experiences made of 4 input values and 1
 output value.
 Each value is two bytes long, so only one experience is stored in it.
-Its input values are fA0C (0,9767605), 6440 (0,3916075), 5DBB (0,3661402) and
+Its input values are FA0C (0,9767605), 6440 (0,3916075), 5DBB (0,3661402) and
 D19E (0,8188296).
 Its output value is 1F80 (0,1230487).
 
 Copyright (C) 2019  Luka Micheletti
-
 ********************************************************************************
 */
 
