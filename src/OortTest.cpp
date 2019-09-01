@@ -140,8 +140,12 @@ int main(int argc, char const *argv[]) {
 
 
 
-    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
-    nnn->print();
+    // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
+    // nnn->print();
+    //
+    // for (;;) {
+    //     nnn->run();
+    // }
 
 
 

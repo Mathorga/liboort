@@ -22,7 +22,29 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
-        //TODO
+        // Check if knowledge is consistent with model.
+        if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
+            // Run the whole training iterationsNum times.
+            for (uint32_t i = 0; i < iterationsNum; i++) {
+                // Loop through knowledge experiences.
+                for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
+                    // Set model inputs based on experience inputs.
+                    this->setInput(knowledge->getExperience(j)->getInputs());
+
+                    // Set expected outputs based on experience outputs.
+                    this->setExpectedOutput(knowledge->getExperience(j)->getOutputs());
+
+                    // Run the network in order to get outputs.
+                    this->run();
+
+                    // Correct weights based on the output.
+                    this->correct();
+                }
+            }
+        } else {
+            // Knowledge size is not consistent with model size.
+            printf("\n<LayeredPerceptronNetwork::train()> Error: knowledge size not consistent\n");
+        }
     }
 
     neuron_value_t LayeredPerceptronNetwork::activate(perceptron_input_t value) {
