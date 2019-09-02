@@ -102,9 +102,6 @@ int main(int argc, char const *argv[]) {
 
 
 
-
-
-
     byte* data = (byte*) malloc(3);
     data[0] = 100;
     data[1] = 101;

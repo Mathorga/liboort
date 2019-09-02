@@ -52,6 +52,10 @@ namespace Oort {
         return this->layers->getSize();
     }
 
+    vector_size_t LayeredPerceptronModel::getOutputLayersNum() {
+        return this->outputLayersNum;
+    }
+
     void LayeredPerceptronModel::createLayers(vector_size_t layerSize) {
         // Create layers.
         for (vector_size_t i = 0; i < this->layersNum; i++) {

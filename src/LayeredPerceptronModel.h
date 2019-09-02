@@ -37,6 +37,7 @@ namespace Oort {
         Vector<Vector<Perceptron>>* getLayersVector();
         Vector<Perceptron>* getLayer(vector_size_t index);
         vector_size_t getLayersNum();
+        vector_size_t getOutputLayersNum();
 
     private:
         vector_size_t layersNum;

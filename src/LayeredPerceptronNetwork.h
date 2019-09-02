@@ -27,7 +27,15 @@ namespace Oort {
         void setModel(LayeredPerceptronModel* model);
         void setInput(neuron_value_t* input);
         void setInput(Vector<neuron_value_t>* input);
-        void setExpectedOutput(neuron_value_t* expectedOutput);
+
+        // Sets the expected output for all output neurons.
+        // Be careful using this method, because no array length information is used:
+        // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)> is to be preferred if the array
+        // length can be inaccurate.
+        void setExpectedOutput(neuron_value_t** expectedOutput);
+
+        // Set the expected output for all output neurons.
+        bool setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput);
 
     private:
         synapse_weight_t baseWeight;
