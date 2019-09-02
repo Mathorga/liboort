@@ -33,9 +33,14 @@ namespace Oort {
         // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)> is to be preferred if the array
         // length can be inaccurate.
         void setExpectedOutput(neuron_value_t** expectedOutput);
-
+        // Sets the expected output for all output neurons.
+        // Expected output array size must be at least as big as model's total output neurons number.
+        void setExpectedOutput(neuron_value_t* expectedOutput);
         // Set the expected output for all output neurons.
         bool setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput);
+        // Set the expected output for all output neurons.
+        // Expected output vector size must be at least as big as model's total output neurons number.
+        bool setExpectedOutput(Vector<neuron_value_t>* expectedOutput);
 
     private:
         synapse_weight_t baseWeight;
