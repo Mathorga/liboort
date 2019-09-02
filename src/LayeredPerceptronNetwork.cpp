@@ -88,7 +88,11 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::setExpectedOutput(neuron_value_t* expectedOutput) {
-
+        // Set expected outputs for last layer only.
+        //TODO Extend to all output layers.
+        for (vector_size_t i = 0; i < this->model->getLayer(this->model->getLayersNum() - 1)->getSize(); i++) {
+            this->model->getLayer(this->model->getLayersNum() - 1)->getItem(i)->setExpectedOutput(expectedOutput[i]);
+        }
     }
 
     void LayeredPerceptronNetwork::computeValue() {
