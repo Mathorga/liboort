@@ -114,7 +114,7 @@ namespace Oort {
             // Loop through neurons in each layer.
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
                 // Set expected output.
-                // Be careful, because the array of arrays passed as an input could be shorter than the indexes reached
+                // Be careful: the array of arrays passed as an input could be shorter than the indexes reached
                 // here.
                 // If array size is not exactly right or not known, then use:
                 // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)>
