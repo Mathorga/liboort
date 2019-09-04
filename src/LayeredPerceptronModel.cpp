@@ -131,7 +131,7 @@ namespace Oort {
 
             // Create perceptron in each layer.
             if (i <= 0) {
-                // Input layer.
+                // Input layer: only the first layer is input.
                 // Loop for single layer size.
                 for (vector_size_t j = 0; j < *(layerSizes->getItem(i)); j++) {
                     // Add Perceptron to layer.
@@ -140,7 +140,18 @@ namespace Oort {
                     // Update index.
                     index++;
                 }
-                //TODO Hidden and output layers.
+            } else {
+                // Hidden and output layers.
+                for (vector_size_t j = 0; j < *(layerSizes->getItem(i)); j++) {
+                    this->layers->getLast()->addLast(new Perceptron(index, i >= (this->layersNum - this->outputLayersNum) ? Neuron::typeOutput : Neuron::typeInput));
+
+                    // Create synapes:
+                    // In order to fully connect the model, synapses are necessary between each layer, so they're
+                    // created from the first non-input layer onwards.
+                    for (vector_size_t k = 0; k < this->layers->getItem(i - 1)->getSize(); k++) {
+                        this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
+                    }
+                }
             }
 	}
     }

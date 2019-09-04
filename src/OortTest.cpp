@@ -137,7 +137,7 @@ int main(int argc, char const *argv[]) {
 
 
 
-    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
+    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5, 1, 5));
     nnn->print();
     for (;;) {
         nnn->run();
