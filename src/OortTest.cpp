@@ -101,8 +101,8 @@ int main(int argc, char const *argv[]) {
 
 
 
-
-    byte* data = (byte*) malloc(3);
+    // ############################################### NERVE TESTING ##################################################
+    /*byte* data = (byte*) malloc(3);
     data[0] = 100;
     data[1] = 101;
     data[2] = 102;
@@ -128,7 +128,7 @@ int main(int argc, char const *argv[]) {
     }
 
     delete nerve;
-    // nerve->closeStream();
+    // nerve->closeStream();*/
 
 
 
@@ -137,12 +137,11 @@ int main(int argc, char const *argv[]) {
 
 
 
-    // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
-    // nnn->print();
-    //
-    // for (;;) {
-    //     nnn->run();
-    // }
+    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5));
+    nnn->print();
+    for (;;) {
+        nnn->run();
+    }
 
 
 

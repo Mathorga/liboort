@@ -5,28 +5,28 @@ namespace Oort {
     const vector_size_t LayeredPerceptronModel::DEFAULT_OUT_LAYERS_NUM = 1;
     const vector_size_t LayeredPerceptronModel::DEFAULT_LAYER_SIZE = 3;
 
-    LayeredPerceptronModel::LayeredPerceptronModel() {
-        this->layersNum = DEFAULT_LAYERS_NUM;
-        this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
-        this->layers = new Vector<Vector<Perceptron>>();
+    LayeredPerceptronModel::LayeredPerceptronModel() : LayeredPerceptronModel(DEFAULT_LAYERS_NUM) {}
 
-        this->createLayers(DEFAULT_LAYER_SIZE);
-    }
+    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum) : LayeredPerceptronModel(layersNum, DEFAULT_LAYER_SIZE) {}
 
-    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum) {
+    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t layerSize) : LayeredPerceptronModel(layersNum, DEFAULT_OUT_LAYERS_NUM, layerSize) {}
+
+    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t outputLayersNum, vector_size_t layerSize) {
         this->layersNum = layersNum;
-        this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
-        this->layers = new Vector<Vector<Perceptron>>();
-
-        this->createLayers(DEFAULT_LAYER_SIZE);
-    }
-
-    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t layerSize) {
-        this->layersNum = layersNum;
-        this->outputLayersNum = DEFAULT_OUT_LAYERS_NUM;
+        this->outputLayersNum = outputLayersNum;
         this->layers = new Vector<Vector<Perceptron>>();
 
         this->createLayers(layerSize);
+    }
+
+    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, Vector<vector_size_t>* layerSizes) : LayeredPerceptronModel(layersNum, DEFAULT_OUT_LAYERS_NUM, layerSizes) {}
+
+    LayeredPerceptronModel::LayeredPerceptronModel(vector_size_t layersNum, vector_size_t outputLayersNum, Vector<vector_size_t>* layerSizes) {
+        this->layersNum = layersNum;
+        this->outputLayersNum = outputLayersNum;
+        this->layers = new Vector<Vector<Perceptron>>();
+
+        this->createLayers(layerSizes);
     }
 
     void LayeredPerceptronModel::print() {
@@ -83,8 +83,9 @@ namespace Oort {
     }
 
     void LayeredPerceptronModel::createLayers(vector_size_t inputLayerSize, vector_size_t outputLayerSize, vector_size_t hiddenLayerSize) {
-        // Create layers.
+        // Loop for layers number to create all layers.
         for (vector_size_t i = 0; i < this->layersNum; i++) {
+            // Create a single layer and add it.
             this->layers->addLast(new Vector<Perceptron>());
             // Create perceptrons in each layer.
             if (i <= 0) {
@@ -118,5 +119,29 @@ namespace Oort {
                 }
             }
         }
+    }
+
+    void LayeredPerceptronModel::createLayers(Vector<vector_size_t>* layerSizes) {
+        // Keep index up to date in order to set correct ids to neurons.
+        vector_size_t index = 0;
+        // Create layers.
+	for (vector_size_t i = 0; i < this->layersNum; i++) {
+            // Create a single layer and add it.
+            this->layers->addLast(new Vector<Perceptron>());
+
+            // Create perceptron in each layer.
+            if (i <= 0) {
+                // Input layer.
+                // Loop for single layer size.
+                for (vector_size_t j = 0; j < *(layerSizes->getItem(i)); j++) {
+                    // Add Perceptron to layer.
+                    this->layers->getLast()->addLast(new Perceptron(index, Neuron::typeInput));
+
+                    // Update index.
+                    index++;
+                }
+                //TODO Hidden and output layers.
+            }
+	}
     }
 }
