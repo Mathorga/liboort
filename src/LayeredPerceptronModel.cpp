@@ -125,7 +125,7 @@ namespace Oort {
         // Keep index up to date in order to set correct ids to neurons.
         vector_size_t index = 0;
         // Create layers.
-	for (vector_size_t i = 0; i < this->layersNum; i++) {
+        for (vector_size_t i = 0; i < this->layersNum; i++) {
             // Create a single layer and add it.
             this->layers->addLast(new Vector<Perceptron>());
 
@@ -153,6 +153,6 @@ namespace Oort {
                     }
                 }
             }
-	}
+        }
     }
 }
