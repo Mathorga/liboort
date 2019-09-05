@@ -20,10 +20,13 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class LayeredPerceptronModel : public Model {
     public:
+        // Default layers number, used for empty constructor.
         static const vector_size_t DEFAULT_LAYERS_NUM;
 
         // Output layers can be more than one, so a default output layers number is defined.
         static const vector_size_t DEFAULT_OUT_LAYERS_NUM;
+
+        // Default layer size, used for fixed size constructors, when layer size is not specified.
         static const vector_size_t DEFAULT_LAYER_SIZE;
 
         // Constructors.
@@ -34,9 +37,12 @@ namespace Oort {
         LayeredPerceptronModel(vector_size_t layersNum, vector_size_t layerSize);
         LayeredPerceptronModel(vector_size_t layersNum, vector_size_t outputLayersNum, vector_size_t layerSize);
 
+        // Variable size constructors: layer sizes are specified by an array <layersNum> elements.
+        LayeredPerceptronModel(vector_size_t layersNum, vector_size_t* layerSizes);
+        LayeredPerceptronModel(vector_size_t layersNum, vector_size_t outputLayersNum, vector_size_t* layerSizes);
         // Variable size constructors: layer sizes are specified by a Vector of size equal to layers number.
-        LayeredPerceptronModel(vector_size_t layersNum, Vector<vector_size_t>* layerSizes);
-        LayeredPerceptronModel(vector_size_t layersNum, vector_size_t outputLayersNum, Vector<vector_size_t>* layerSizes);
+        LayeredPerceptronModel(Vector<vector_size_t>* layerSizes);
+        LayeredPerceptronModel(Vector<vector_size_t>* layerSizes, vector_size_t outputLayersNum);
 
         void print();
 
