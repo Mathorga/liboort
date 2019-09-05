@@ -154,7 +154,6 @@ namespace Oort {
         // Compute errors based on the expected output.
         for (vector_size_t i = 0; i < size; i++) {
             start:
-            // printf("\nId %d\n", neuronsBuffer[i]->getId());
             // Check if the neuron is input (no need to calculate the error).
             if (neuronsBuffer[i]->getType() == Neuron::typeInput) {
                 // Remove the neuron.
@@ -219,9 +218,6 @@ namespace Oort {
 
         // Loop through synapses to update the weights.
         for (vector_size_t i = 0; i < this->model->getNeuronsNum(); i++) {
-            // if (i == 6) {
-            //     printf("\nError %f\n", this->model->getNeuron(i)->getError());
-            // }
             for (vector_size_t j = 0; j < this->model->getNeuron(i)->getSynapsesNum(); j++) {
                 // Calculate the weight delta.
                 // dWeight = this->learningRate * this->model->getNeuron(i).getError() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getValue();
@@ -230,9 +226,6 @@ namespace Oort {
                 dWeight = this->learningRate * this->model->getNeuron(i)->getError() * this->model->getNeuron(i)->getSynapse(j)->getInputNeuron()->getValue();
 
                 // Apply the delta weight.
-                // if (i == 6) {
-                //     printf("\ndWeight %f\nweight %f\n", dWeight, this->model->getNeuron(i)->getSynapse(j)->getWeight());
-                // }
                 this->model->getNeuron(i)->getSynapse(j)->setWeight(this->model->getNeuron(i)->getSynapse(j)->getWeight() + dWeight);
             }
         }

@@ -161,6 +161,9 @@ namespace Oort {
                     for (vector_size_t k = 0; k < this->layers->getItem(i - 1)->getSize(); k++) {
                         this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
                     }
+
+                    // Update index.
+                    index++;
                 }
             }
         }

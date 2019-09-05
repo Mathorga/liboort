@@ -135,9 +135,13 @@ int main(int argc, char const *argv[]) {
 
 
 
+    Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
 
+    for (vector_size_t i = 5; i > 0; i--) {
+        layerSizes->addLast(i);
+    }
 
-    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(5, 1, 5));
+    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
     nnn->print();
     for (;;) {
         nnn->run();
