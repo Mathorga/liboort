@@ -140,6 +140,7 @@ namespace Oort {
     }
 
     void SparsePerceptronNetwork::computeError() {
+        //TODO Rewrite avoiding tags!
         vector_size_t size = this->model->getNeuronsNum();
         vector_size_t pos = 0;
         // Create a buffer containing all neurons' addresses, so that it can be rearranged however needed.

@@ -213,6 +213,15 @@ namespace Oort {
 
     void LayeredPerceptronNetwork::computeError() {
 
+        // Compute errors for output layers.
+        for () {
+            
+        }
+
+        // Compute errors starting from the last not-output layer.
+        for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
+
+        }
     }
 
     void LayeredPerceptronNetwork::adjustWeights() {
