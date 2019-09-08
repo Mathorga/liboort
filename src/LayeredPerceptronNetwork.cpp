@@ -87,95 +87,28 @@ namespace Oort {
         }
     }
 
-    void LayeredPerceptronNetwork::setExpectedOutput(neuron_value_t** expectedOutput) {
-        // Loop through model's output layers.
-        for (vector_size_t i = this->model->getLayersNum() - this->model->getOutputLayersNum(); i < this->model->getLayersNum(); i++) {
-            // Loop through neurons in each layer.
-            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
-                // Set expected output.
-                // Be careful, because the array of arrays passed as an input could be shorter than the indexes reached
-                // here.
-                // If array size is not exactly right or not known, then use:
-                // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)>
-                this->model->getLayer(i)->getItem(j)->setExpectedOutput(expectedOutput[i][j]);
-            }
-        }
-    }
-
     void LayeredPerceptronNetwork::setExpectedOutput(neuron_value_t* expectedOutput) {
-        // Current index inside the expected output:
-        // Expected output is an array of neuron values, so, keeping the index updated throughout the loops allows to
-        // reduce the amount of computation needed to calculate the correct position of every single value it holds.
-        // IDX cannot be used, because output layers can have different sizes.
-        vector_size_t index = 0;
+        // Be careful: the array passed as an input could be shorter than the size of the output layer.
+        // If array size is not exactly right or not known, then use:
+        // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)>
 
-        // Loop through model's output layers.
-        for (vector_size_t i = this->model->getLayersNum() - this->model->getOutputLayersNum(); i < this->model->getLayersNum(); i++) {
-            // Loop through neurons in each layer.
-            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
-                // Set expected output.
-                // Be careful: the array of arrays passed as an input could be shorter than the indexes reached
-                // here.
-                // If array size is not exactly right or not known, then use:
-                // <void setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput)>
-                this->model->getLayer(i)->getItem(j)->setExpectedOutput(expectedOutput[index]);
-
-                // Increment index to keep it updated.
-                index++;
-            }
+        // Loop through neurons in the output layer.
+        for (vector_size_t i = 0; i < this->model->getOutputLayer()->getSize(); i++) {
+            // Set expected output.
+            this->model->getOutputLayer()->getItem(i)->setExpectedOutput(expectedOutput[i]);
         }
-    }
-
-    bool LayeredPerceptronNetwork::setExpectedOutput(Vector<Vector<neuron_value_t>>* expectedOutput) {
-        bool success = false;
-
-        // Check if passed vector size is consistent.
-        if (this->model->getOutputLayersNum() == expectedOutput->getSize()) {
-            // Loop through model's output layers.
-            for (vector_size_t i = this->model->getLayersNum() - this->model->getOutputLayersNum(); i < this->model->getLayersNum(); i++) {
-                // Check if layer size is consistent.
-                if (this->model->getLayer(i)->getSize() == expectedOutput->getItem(i)->getSize()) {
-                    // Everything is consistent, so set expected output.
-                    for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
-                        this->model->getLayer(i)->getItem(j)->setExpectedOutput(*(expectedOutput->getItem(i)->getItem(j)));
-                    }
-                    success = true;
-                } else {
-                    // Expected output size is not consistent with output layers size.
-                    printf("\n<LayeredPerceptronNetwork::setExpectedOutput()> Error: expected output size is not consistent with output layers size\n");
-                    success = false;
-                }
-            }
-        } else {
-            // Expected outputs number size is not consistent with output layers number.
-            printf("\n<LayeredPerceptronNetwork::setExpectedOutput()> Error: expected outputs number is not consistent with output layers number\n");
-            success = false;
-        }
-
-        return success;
     }
 
     bool LayeredPerceptronNetwork::setExpectedOutput(Vector<neuron_value_t>* expectedOutput) {
-        // Current index inside the expected output:
-        // Expected output is an array of neuron values, so, keeping the index updated throughout the loops allows to
-        // reduce the amount of computation needed to calculate the correct position of every single value it holds.
-        // IDX cannot be used, because output layers can have different sizes.
-        vector_size_t index = 0;
         bool success = false;
 
         // Check if passed vector size is consistent with total output neurons number.
         if (this->model->getOutputsNum() == expectedOutput->getSize()) {
-            // Loop through model's output layers.
-            for (vector_size_t i = this->model->getLayersNum() - this->model->getOutputLayersNum(); i < this->model->getLayersNum(); i++) {
-                // Everything is consistent, so set expected output.
-                for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
-                    this->model->getLayer(i)->getItem(j)->setExpectedOutput(*(expectedOutput->getItem(index)));
-
-                    // Increment index to keep it updated.
-                    index++;
-                }
-                success = true;
+            // Everything is consistent, so set expected output.
+            for (vector_size_t i = 0; i < this->model->getOutputLayer()->getSize(); i++) {
+                this->model->getOutputLayer()->getItem(i)->setExpectedOutput(*(expectedOutput->getItem(i)));
             }
+            success = true;
         } else {
             // Expected outputs number size is not consistent with output neurons number.
             printf("\n<LayeredPerceptronNetwork::setExpectedOutput()> Error: expected outputs number is not consistent with output neurons number\n");
@@ -214,14 +147,14 @@ namespace Oort {
     void LayeredPerceptronNetwork::computeError() {
 
         // Compute errors for output layers.
-        for () {
-            
-        }
-
-        // Compute errors starting from the last not-output layer.
-        for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
-
-        }
+    //     for () {
+    //
+    //     }
+    //
+    //     // Compute errors starting from the last not-output layer.
+    //     for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
+    //
+    //     }
     }
 
     void LayeredPerceptronNetwork::adjustWeights() {
