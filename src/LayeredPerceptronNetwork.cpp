@@ -145,16 +145,39 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::computeError() {
+        //TODO
+        // Store the current neuron in a variable, so that it doesn't have to be retrieved multiple times.
+        Perceptron* currentNeuron = nullptr;
 
-        // Compute errors for output layers.
-    //     for () {
-    //
-    //     }
-    //
-    //     // Compute errors starting from the last not-output layer.
-    //     for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
-    //
-    //     }
+        // Store incoming weignt to use it on hidden neuron error computation.
+        synapse_weight_t incomingWeight = 0;
+
+        // Compute errors for output layer.
+        for (vector_size_t i = 0; i < this->model->getOutputLayer()->getSize(); i++) {
+            // Get the current neuron.
+            currentNeuron = this->model->getOutputLayer()->getItem(i);
+
+            // Compute error.
+            currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
+        }
+
+        // Compute errors starting from the last not-output layer.
+        for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
+            // Loop through neurons of each layer.
+            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+                // Get the current neuron.
+                currentNeuron = this->model->getLayer(i)->getItem(j);
+
+                // Reset incoming weight.
+                incomingWeight = 0;
+
+                // Loop through all synapes coming to the current neuron to calculate the incoming weight.
+                for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
+                    // Add up to current weight.
+                    incomingWeight += currentNeuron->getSynapse(k)->getWeight();
+                }
+            }
+        }
     }
 
     void LayeredPerceptronNetwork::adjustWeights() {
