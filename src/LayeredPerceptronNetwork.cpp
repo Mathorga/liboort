@@ -119,6 +119,8 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::computeValue() {
+        // Store the current neuron so that it doesn't have to be retrieved multiple times.
+        Perceptron* currentNeuron;
         neuron_value_t value = 0;
 
         // Loop through layers skipping the first one, which is input.
@@ -126,45 +128,60 @@ namespace Oort {
             // Loop through neurons in each layer.
             #pragma omp parallel for
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+                // Get the current neuron.
+                currentNeuron = this->model->getLayer(i)->getItem(j);
+
+                // Reset value in order not to have it summed up.
                 value = 0;
 
                 // Compute the value of the single neuron based on all its inputs.
                 // For each neuron in the layer, loop through all of the synapses coming to it:
                 // Combination.
-                for (vector_size_t k = 0; k < this->model->getLayer(i)->getItem(j)->getSynapses()->getSize(); k++) {
-                    value += this->model->getLayer(i)->getItem(j)->getSynapse(k)->getWeight() * this->model->getLayer(i)->getItem(j)->getSynapse(k)->getInputNeuron()->getValue();
+                for (vector_size_t k = 0; k < currentNeuron->getSynapses()->getSize(); k++) {
+                    value += currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
                 }
 
                 // Activation.
-                this->model->getLayer(i)->getItem(j)->setValue(this->activate(value));
+                currentNeuron->setValue(this->activate(value));
 
                 // Derivative activation.
-                this->model->getLayer(i)->getItem(j)->setDValue(this->dActivate(value));
+                currentNeuron->setDValue(this->dActivate(value));
+
+                // Reset error in order not to add it up indefinitely when training.
+                currentNeuron->setError(0.0);
             }
         }
     }
 
     void LayeredPerceptronNetwork::computeError() {
-        //TODO
+        // The error is calculated backwards, because for each neuron, error needs to take into account every error of
+        // every neuron the current one is connected to; all af this in relation to every other neuron connected to
+        // every one of those.
+
         // Store the current neuron in a variable, so that it doesn't have to be retrieved multiple times.
         Perceptron* currentNeuron = nullptr;
 
         // Store incoming weignt to use it on hidden neuron error computation.
         synapse_weight_t incomingWeight = 0;
 
-        // Compute errors for output layer.
-        for (vector_size_t i = 0; i < this->model->getOutputLayer()->getSize(); i++) {
-            // Get the current neuron.
-            currentNeuron = this->model->getOutputLayer()->getItem(i);
+        // Compute errors starting from the last layer, excluding the input, because input does not have an error.
+        for (vector_size_t i = this->model->getLayersNum() - 1; i < 2; i--) {
+            // Calculate the current neuron's error if output layer.
+            if (i >= this->model->getLayersNum() - 1) {
+                // Output layer, so calculate error.
 
-            // Compute error.
-            currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
-        }
+                // Loop through output neurons.
+                for (vector_size_t j = 0; j < this->model->getOutputLayer()->getSize(); j++) {
+                    // Get the current neuron.
+                    currentNeuron = this->model->getOutputLayer()->getItem(j);
 
-        // Compute errors starting from the last not-output layer.
-        for (vector_size_t i = this->model->getLayersNum() - 2; i < ) {
+                    // Compute error.
+                    currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
+                }
+            }
+
             // Loop through neurons of each layer.
-            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+            for (vector_size_t j = 0; j < this->model->getLayer(i - 1)->getSize(); j++) {
                 // Get the current neuron.
                 currentNeuron = this->model->getLayer(i)->getItem(j);
 
@@ -175,6 +192,12 @@ namespace Oort {
                 for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
                     // Add up to current weight.
                     incomingWeight += currentNeuron->getSynapse(k)->getWeight();
+                }
+
+                // For each neuron connected to the current one, add to its error the weighted sum between all the
+                // weights coming to the current.
+                for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
+                    currentNeuron->getSynapse(k)->getInputNeuron()->addError((currentNeuron->getError() * currentNeuron->getSynapse(k)->getWeight()) / incomingWeight);
                 }
             }
         }
