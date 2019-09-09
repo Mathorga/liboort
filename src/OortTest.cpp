@@ -143,7 +143,12 @@ int main(int argc, char const *argv[]) {
 
     LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
     nnn->print();
-    for (;;) {
+    nnn->run();
+    nnn->print();
+    for (int i = 0;; i++) {
+        if (i % 100 == 0) {
+            nnn->print();
+        }
         nnn->run();
     }
 
