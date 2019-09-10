@@ -67,7 +67,7 @@ int main(int argc, char const *argv[]) {
 
 
     KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile((char*) "./res/knl/test.knl");
+    kp->readFile((char*) "./res/knl/Oort2.knl");
     // kp->getKnowledge()->print();
     SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
     par->readFile((char*) "./res/mdl/trained.mdl");
@@ -136,19 +136,39 @@ int main(int argc, char const *argv[]) {
 
 
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
+    // Add input layer.
+    layerSizes->addLast(1296);
 
-    for (vector_size_t i = 5; i > 0; i--) {
-        layerSizes->addLast(i);
-    }
+    // Add hidden layer.
+    layerSizes->addLast(5);
 
+    // Add hidden layer.
+    layerSizes->addLast(5);
+
+    // Add hidden layer.
+    layerSizes->addLast(5);
+
+    // Add output layer.
+    layerSizes->addLast(3);
+
+    // Create the network.
     LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
-    nnn->print();
+
+    printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
+
+    double startTime = getTime();
+    nnn->train(kp->getKnowledge(), 10);
+    double endTime = getTime();
+
+    printf("\nTraining completed\nTotal training time %fs\n", endTime - startTime);
+
+    // nnn->print();
     nnn->run();
-    nnn->print();
+    // nnn->print();
     for (int i = 0;; i++) {
-        if (i % 100 == 0) {
-            nnn->print();
-        }
+        // if (i % 100 == 0) {
+        //     nnn->print();
+        // }
         nnn->run();
     }
 
