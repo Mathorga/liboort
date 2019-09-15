@@ -2,7 +2,7 @@
 ********************************************************************************
 KnowledgeParser.h
 
-Implementation of parser of Knowledge files (.knl).
+Implementation for parser of Knowledge files (.knl).
 Knowledge files specification defines a header made of nine bytes, in order:
 four byte for the inputs number, four for the outputs number and one for the
 depth. The depth parameter is used to define the number of bytes used to encode

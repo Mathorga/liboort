@@ -6,6 +6,8 @@ This file defines a parser (reader and writer) of a Model object.
 Assign a Model object using setModel() before writing it to a file.
 Use getModel() after reading a file to get the parsed Model object.
 
+Model files use big-endian encoding for values.
+
 Copyright (C) 2019  Luka Micheletti
 ********************************************************************************
 */
