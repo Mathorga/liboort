@@ -3,6 +3,9 @@
 LayeredPerceptronModelParser.h
 
 Implementation for parser of Layered Model files (.mdl + .mdl.lyr).
+The Model Layer file is necessary for LayeredPerceptronModels, in order to
+separate the weights of the synapses (inside the .mdl file) and the layer
+structure of the model (inside the .mdl.lyr file).
 In order to be parsed from file, a LayeredPerceptronModel needs to be
 saved in two files with the same name: one with .mdl extension and the
 other with .mdl.lyr extension.
