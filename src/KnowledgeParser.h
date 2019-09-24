@@ -31,10 +31,19 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class KnowledgeParser : public Parser {
     public:
+        // Length of the header section of the file (in B).
         static const uint8_t HEADER_LENGTH;
+
+        // Depth of the inputs number value (in B).
         static const uint8_t INPUTS_NUM_DEPTH;
+
+        // Depth of the outputs number value (in B).
         static const uint8_t OUTPUTS_NUM_DEPTH;
+
+        // Default depth of a single value, input or output (in B).
         static const uint8_t DEFAULT_VALUE_DEPTH;
+
+        // Maximum depth of a single value, input or output (in B).
         static const uint8_t MAX_VALUE_DEPTH;
 
         KnowledgeParser();

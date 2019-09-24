@@ -29,7 +29,7 @@ Copyright (C) 2019  Luka Micheletti
 #include "LayeredPerceptronModel.h"
 
 namespace Oort {
-    class SparsePerceptronModelParser : public ModelParser {
+    class LayeredPerceptronModelParser : public ModelParser {
     public:
         // Read a Model from a file and store it in this->model.
         void readFile(char* fileName);
