@@ -57,6 +57,7 @@ OortTest: OortTest.o \
 		  SparsePerceptronModelParser.o \
 		  SparsePerceptronModel.o \
 		  SparsePerceptronNetwork.o \
+		  LayeredPerceptronModelParser.o \
 		  LayeredPerceptronModel.o \
 		  LayeredPerceptronNetwork.o \
 		  PerceptronSynapse.o \

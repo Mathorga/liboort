@@ -28,6 +28,14 @@ namespace Oort {
         Vector<neuron_value_t>* outputVector = new Vector<neuron_value_t>();
         uint32_t currentValue = 0;
 
+        // Check if file extension is right.
+        // The file extension doesn't have to be right, but it's used as a warning that the file could be the wrong
+        // format.
+        if (strstr(fileName, ".knl") == nullptr) {
+            // Warning: the file might not be the right format.
+            printf("\n<KnowledgeParser::readFile()> Warning: file doesn't have a .knl extension\n");
+        }
+
         // Open input file in binary read mode.
         inputFile = fopen(fileName, "rb");
 
@@ -107,7 +115,7 @@ namespace Oort {
             fclose(inputFile);
         } else {
             // There was an error opening the file.
-            printf("\n<KnowledgeParser::readFile()> Error opening file %s\n", fileName);
+            printf("\n<KnowledgeParser::readFile()> Error: could not open file %s\n", fileName);
         }
     }
 

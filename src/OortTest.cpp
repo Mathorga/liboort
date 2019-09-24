@@ -2,6 +2,7 @@
 #include "SparsePerceptronNetwork.h"
 #include "SparsePerceptronModelParser.h"
 #include "LayeredPerceptronNetwork.h"
+#include "LayeredPerceptronModelParser.h"
 #include "KnowledgeParser.h"
 #include "SerialNerve.h"
 
@@ -132,7 +133,8 @@ int main(int argc, char const *argv[]) {
 
 
 
-
+    LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser();
+    lpmp->readFile((char*) "./res/mdl/trained.mdl");
 
 
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();

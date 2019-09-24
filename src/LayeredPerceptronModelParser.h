@@ -34,6 +34,9 @@ Copyright (C) 2019  Luka Micheletti
 namespace Oort {
     class LayeredPerceptronModelParser : public ModelParser {
     public:
+        // Depth of each value presented in the .mdl.lyr file (in B).
+        static const uint8_t LYR_VALUE_DEPTH;
+
         // Read a Model from a file and store it in this->model.
         void readFile(char* fileName);
         // Write this->model in a file.
