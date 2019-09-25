@@ -29,7 +29,7 @@ namespace Oort {
 
         if (layerFile != nullptr) {
             // Layer file is open, so read informations from it.
-            //TODO Read and store layer configuration.
+            //TODO Read and store layer configuration for the model.
 
             // Open Model file in binary read mode.
             modelFile = fopen(fileName, "rb");
