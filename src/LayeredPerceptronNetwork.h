@@ -1,3 +1,13 @@
+/*
+*********************************************************************************
+LayeredPerceptronNetwork.h
+
+This file defines the interface for a standard perceptron deep neural network.
+
+Copyright (C) 2019 Luka Micheletti
+*********************************************************************************
+*/
+
 #ifndef __LAYERED_PERCEPTRON_NETWORK__
 #define __LAYERED_PERCEPTRON_NETWORK__
 
