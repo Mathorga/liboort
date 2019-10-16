@@ -32,7 +32,6 @@ namespace Oort {
 
         if (layerFile != nullptr) {
             // Layer file is open, so read informations from it.
-<<<<<<< HEAD
 
             // Read layers number.
             fread(layersVal, LYR_VALUE_DEPTH, 1, layerFile);
@@ -46,9 +45,6 @@ namespace Oort {
                 fread(layersVal, LYR_VALUE_DEPTH, 1, layerFile);
                 layerSizes->addLast(byteArrayToUint(layersVal, LYR_VALUE_DEPTH));
             }
-=======
-            //TODO Read and store layer configuration for the model.
->>>>>>> 94984dba106aea55332860f3e67ab37bee949a54
 
             // Open Model file in binary read mode.
             modelFile = fopen(fileName, "rb");
