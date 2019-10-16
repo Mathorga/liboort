@@ -7,6 +7,9 @@ namespace Oort {
         FILE* modelFile = nullptr;
         FILE* layerFile = nullptr;
         char* layerFileName = (char*) malloc(256);
+        byte* layersVal = (byte*) malloc(LYR_VALUE_DEPTH);
+        Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
+        uint8_t layersNum = 0;
 
         // Check if file extension is right.
         // The file extension doesn't have to be right, but it's used as a warning that the file could be the wrong
@@ -29,7 +32,19 @@ namespace Oort {
 
         if (layerFile != nullptr) {
             // Layer file is open, so read informations from it.
-            //TODO Read and store layer configuration.
+
+            // Read layers number.
+            fread(layersVal, LYR_VALUE_DEPTH, 1, layerFile);
+            layersNum = byteArrayToUint(layersVal, LYR_VALUE_DEPTH);
+
+            // Read each layer's size.
+            for (uint32_t i = 0; i < layersNum; i++) {
+                //TODO Check if the file is consistent in length with the specified layers number.
+
+                // Read layer size and add it to the configuration.
+                fread(layersVal, LYR_VALUE_DEPTH, 1, layerFile);
+                layerSizes->addLast(byteArrayToUint(layersVal, LYR_VALUE_DEPTH));
+            }
 
             // Open Model file in binary read mode.
             modelFile = fopen(fileName, "rb");
@@ -37,14 +52,23 @@ namespace Oort {
             if (modelFile != nullptr) {
                 // Model file is open, so read model from it.
                 //TODO Read and store model.
+
+                // Create the model.
+                this->model = new LayeredPerceptronModel(layerSizes);
             } else {
                 // There was an error opening the Model file.
                 printf("\n<LayeredPerceptronModelParser::readFile()> Error: could not open Model file %s\n", fileName);
             }
+
+            // Close the model file stream in order not to keep it locked.
+            fclose(modelFile);
         } else {
             // There was an error opening the Layer file.
             printf("\n<LayeredPerceptronModelParser::readFile()> Error: could not open Layer file %s\n", layerFileName);
         }
+
+        // Close the model file stream in order not to keep it locked.
+        fclose(layerFile);
     }
 
     void LayeredPerceptronModelParser::writeFile(char* fileName) {
@@ -52,7 +76,7 @@ namespace Oort {
     }
 
     LayeredPerceptronModel* LayeredPerceptronModelParser::getModel() {
-
+        return this->model;
     }
 
     void LayeredPerceptronModelParser::setModel(LayeredPerceptronModel* inputModel) {

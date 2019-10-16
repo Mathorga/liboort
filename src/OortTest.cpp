@@ -135,6 +135,7 @@ int main(int argc, char const *argv[]) {
 
     LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser();
     lpmp->readFile((char*) "./res/mdl/trained.mdl");
+    lpmp->getModel()->print();
 
 
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();

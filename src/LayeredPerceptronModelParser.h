@@ -9,7 +9,7 @@ structure of the model (inside the .mdl.lyr file).
 In order to be parsed from file, a LayeredPerceptronModel needs to be
 saved in two files with the same name: one with .mdl extension and the
 other with .mdl.lyr extension.
-Model Layer files (.mdl.lyr) specification defines a header made of four
+Model Layer files' (.mdl.lyr) specification defines a header made of four
 bytes, which define the number of layers for the model.
 The header is followed by a number of layer sizes equal to its value.
 Each size is four bytes long and directly represents a layer size.
