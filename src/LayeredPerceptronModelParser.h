@@ -20,6 +20,9 @@ For example, let's take a file containing the following bytes:
 The file contains a layer specification that defines a model with three
 layers, respectively of size 00000510 (1296), 0000000A (10) and 00000003
 (3).
+Model files' (.mdl) specification defines a header made of N bytes,
+
+The header is followed by 
 
 Copyright (C) 2019  Luka Micheletti
 **************************************************************************
