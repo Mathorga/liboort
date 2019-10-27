@@ -20,8 +20,12 @@ For example, let's take a file containing the following bytes:
 The file contains a layer specification that defines a model with three
 layers, respectively of size 00000510 (1296), 0000000A (10) and 00000003
 (3).
-Model files' (.mdl) specification defines a header made of N bytes,
-
+Model files' (.mdl) specification defines a header made of 16 bytes,
+representing respectively: the total number of neurons of the model (4B),
+the number of input neurons (4B), the number of output neurons (4B), the
+depth used to report each neuron id (1B), the depth used to store the
+neuron type (1B), the depth for each neuron's synapses number (1B) and the
+depth for each synapse's weight (1B).
 The header is followed by 
 
 Copyright (C) 2019  Luka Micheletti
