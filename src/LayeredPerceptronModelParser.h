@@ -26,7 +26,9 @@ the number of input neurons (4B), the number of output neurons (4B), the
 depth used to report each neuron id (1B), the depth used to store the
 neuron type (1B), the depth for each neuron's synapses number (1B) and the
 depth for each synapse's weight (1B).
-The header is followed by 
+The header is followed by the informations on neurons and synapses
+themselves. Each neuron is defined by three values: neuron id, neuron type
+and synapses number
 
 Copyright (C) 2019  Luka Micheletti
 **************************************************************************
