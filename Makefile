@@ -54,6 +54,7 @@ OortTest: OortTest.o \
 		  utils.o \
 		  Model.o \
 		  Neuron.o \
+		  ModelParser.o \
 		  SparsePerceptronModelParser.o \
 		  SparsePerceptronModel.o \
 		  SparsePerceptronNetwork.o \

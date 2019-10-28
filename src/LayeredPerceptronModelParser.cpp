@@ -10,6 +10,20 @@ namespace Oort {
         byte* layersVal = (byte*) malloc(LYR_VALUE_DEPTH);
         Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
         uint8_t layersNum = 0;
+        byte* modelHeader = (byte*) malloc(TOTAL_NEURONS_NUM_DEPTH +
+                                           INPUT_NEURONS_NUM_DEPTH +
+                                           OUTPUT_NEURONS_NUM_DEPTH +
+                                           NEURON_ID_DEPTH_DEPTH +
+                                           NEURON_TYPE_DEPTH_DEPTH +
+                                           NEURON_SYNAPSES_NUM_DEPTH +
+                                           SYNAPSE_WEIGHT_DEPTH);
+        vector_size_t neuronsNum = 0;
+        vector_size_t inputNeuronsNum = 0;
+        vector_size_t outputNeuronsNum = 0;
+        uint8_t neuronIdDepth = 0;
+        uint8_t neuronTypeDepth = 0;
+        uint8_t neuronSynapsesNumDepth = 0;
+        uint8_t synapseWeightDepth = 0;
 
         // Check if file extension is right.
         // The file extension doesn't have to be right, but it's used as a warning that the file could be the wrong
@@ -51,7 +65,37 @@ namespace Oort {
 
             if (modelFile != nullptr) {
                 // Model file is open, so read model from it.
-                //TODO Read and store model.
+                // Read header.
+                fread(modelHeader, TOTAL_NEURONS_NUM_DEPTH +
+                                   INPUT_NEURONS_NUM_DEPTH +
+                                   OUTPUT_NEURONS_NUM_DEPTH +
+                                   NEURON_ID_DEPTH_DEPTH +
+                                   NEURON_TYPE_DEPTH_DEPTH +
+                                   NEURON_SYNAPSES_NUM_DEPTH +
+                                   SYNAPSE_WEIGHT_DEPTH, 1, modelFile);
+
+                neuronsNum = byteArrayToUint(modelHeader, TOTAL_NEURONS_NUM_DEPTH);
+                inputNeuronsNum = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH], INPUT_NEURONS_NUM_DEPTH);
+                outputNeuronsNum = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                                                                INPUT_NEURONS_NUM_DEPTH], OUTPUT_NEURONS_NUM_DEPTH);
+                neuronIdDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                                                             INPUT_NEURONS_NUM_DEPTH +
+                                                             OUTPUT_NEURONS_NUM_DEPTH], NEURON_ID_DEPTH_DEPTH);
+                neuronTypeDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                                                               INPUT_NEURONS_NUM_DEPTH +
+                                                               OUTPUT_NEURONS_NUM_DEPTH +
+                                                               NEURON_ID_DEPTH_DEPTH], NEURON_TYPE_DEPTH_DEPTH);
+                neuronSynapsesNumDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                                                                      INPUT_NEURONS_NUM_DEPTH +
+                                                                      OUTPUT_NEURONS_NUM_DEPTH +
+                                                                      NEURON_ID_DEPTH_DEPTH +
+                                                                      NEURON_TYPE_DEPTH_DEPTH], NEURON_SYNAPSES_NUM_DEPTH);
+                synapseWeightDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                                                                  INPUT_NEURONS_NUM_DEPTH +
+                                                                  OUTPUT_NEURONS_NUM_DEPTH +
+                                                                  NEURON_ID_DEPTH_DEPTH +
+                                                                  NEURON_TYPE_DEPTH_DEPTH +
+                                                                  NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
 
                 // Create the model.
                 this->model = new LayeredPerceptronModel(layerSizes);
