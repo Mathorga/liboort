@@ -60,11 +60,15 @@ namespace Oort {
                 layerSizes->addLast(byteArrayToUint(layersVal, LYR_VALUE_DEPTH));
             }
 
+            // Create the model according to the layers definition read from the file.
+            this->model = new LayeredPerceptronModel(layerSizes);
+
             // Open Model file in binary read mode.
             modelFile = fopen(fileName, "rb");
 
             if (modelFile != nullptr) {
                 // Model file is open, so read model from it.
+
                 // Read header.
                 fread(modelHeader, TOTAL_NEURONS_NUM_DEPTH +
                                    INPUT_NEURONS_NUM_DEPTH +
@@ -97,8 +101,7 @@ namespace Oort {
                                                                   NEURON_TYPE_DEPTH_DEPTH +
                                                                   NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
 
-                // Create the model.
-                this->model = new LayeredPerceptronModel(layerSizes);
+                printf("\n%d %d %d %d %d %d %d\n", neuronsNum, inputNeuronsNum, outputNeuronsNum, neuronIdDepth, neuronTypeDepth, neuronSynapsesNumDepth, synapseWeightDepth);
             } else {
                 // There was an error opening the Model file.
                 printf("\n<LayeredPerceptronModelParser::readFile()> Error: could not open Model file %s\n", fileName);
