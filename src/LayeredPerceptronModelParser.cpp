@@ -151,22 +151,6 @@ namespace Oort {
                         printf("\n\t%d %d\n", currentSynapseInputNeuronId, currentSynapseWeight);
                     }
                 }
-
-
-                // while(!feof(modelFile)) {
-                //     reading = (byte*) malloc();
-                //     fread(inputs, depth, inputsNum, inputFile);
-                //
-                //     // Manage EOF.
-                //     // Read a byte from the file.
-                //     fgetc(inputFile);
-                //
-                //     // Check if EOF is reached.
-                //     if (!feof(inputFile)) {
-                //         // If not EOF put back the stream pointer of the file.
-                //         fseek(inputFile, -1, SEEK_CUR);
-                //     }
-                // }
             } else {
                 // There was an error opening the Model file.
                 printf("\n<LayeredPerceptronModelParser::readFile()> Error: could not open Model file %s\n", fileName);
