@@ -22,8 +22,16 @@ namespace Oort {
         vector_size_t outputNeuronsNum = 0;
         uint8_t neuronIdDepth = 0;
         uint8_t neuronTypeDepth = 0;
-        uint8_t neuronSynapsesNumDepth = 0;
+        uint8_t synapsesNumDepth = 0;
         uint8_t synapseWeightDepth = 0;
+
+        byte* reading = nullptr;
+        uint32_t currentValue = 0;
+        uint32_t currentNeuronId = 0;
+        uint32_t currentNeuronType = 0;
+        uint32_t currentSynapsesNum = 0;
+        uint32_t currentSynapseInputNeuronId = 0;
+        uint32_t currentSynapseWeight = 0;
 
         // Check if file extension is right.
         // The file extension doesn't have to be right, but it's used as a warning that the file could be the wrong
@@ -89,7 +97,7 @@ namespace Oort {
                                                                INPUT_NEURONS_NUM_DEPTH +
                                                                OUTPUT_NEURONS_NUM_DEPTH +
                                                                NEURON_ID_DEPTH_DEPTH], NEURON_TYPE_DEPTH_DEPTH);
-                neuronSynapsesNumDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
+                synapsesNumDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
                                                                       INPUT_NEURONS_NUM_DEPTH +
                                                                       OUTPUT_NEURONS_NUM_DEPTH +
                                                                       NEURON_ID_DEPTH_DEPTH +
@@ -101,7 +109,64 @@ namespace Oort {
                                                                   NEURON_TYPE_DEPTH_DEPTH +
                                                                   NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
 
-                printf("\n%d %d %d %d %d %d %d\n", neuronsNum, inputNeuronsNum, outputNeuronsNum, neuronIdDepth, neuronTypeDepth, neuronSynapsesNumDepth, synapseWeightDepth);
+                printf("\n%d %d %d %d %d %d %d\n", neuronsNum, inputNeuronsNum, outputNeuronsNum, neuronIdDepth, neuronTypeDepth, synapsesNumDepth, synapseWeightDepth);
+
+                // Read content.
+                // Loop through neurons.
+                for (vector_size_t i = 0; i < neuronsNum; i++) {
+                    // Read neuron id.
+                    reading = (byte*) malloc(neuronIdDepth);
+                    fread(reading, neuronIdDepth, 1, modelFile);
+                    currentNeuronId = byteArrayToUint(reading, neuronIdDepth);
+                    free(reading);
+
+                    // Read neuron type.
+                    reading = (byte*) malloc(neuronTypeDepth);
+                    fread(reading, neuronTypeDepth, 1, modelFile);
+                    currentNeuronType = byteArrayToUint(reading, neuronTypeDepth);
+                    free(reading);
+
+                    // Read synapses number.
+                    reading = (byte*) malloc(synapsesNumDepth);
+                    fread(reading, synapsesNumDepth, 1, modelFile);
+                    currentSynapsesNum = byteArrayToUint(reading, synapsesNumDepth);
+                    free(reading);
+
+                    printf("\n%d %d %d\n", currentNeuronId, currentNeuronType, currentSynapsesNum);
+
+                    // Loop through synapses.
+                    for (vector_size_t j = 0; j < currentSynapsesNum; j++) {
+                        // Read synapse's input neuron id.
+                        reading = (byte*) malloc(neuronIdDepth);
+                        fread(reading, neuronIdDepth, 1, modelFile);
+                        currentSynapseInputNeuronId = byteArrayToUint(reading, neuronIdDepth);
+                        free(reading);
+
+                        // Read synapse's weight.
+                        reading = (byte*) malloc(synapseWeightDepth);
+                        fread(reading, synapseWeightDepth, 1, modelFile);
+                        currentSynapseWeight = byteArrayToUint(reading, synapseWeightDepth);
+                        free(reading);
+
+                        printf("\n\t%d %d\n", currentSynapseInputNeuronId, currentSynapseWeight);
+                    }
+                }
+
+
+                // while(!feof(modelFile)) {
+                //     reading = (byte*) malloc();
+                //     fread(inputs, depth, inputsNum, inputFile);
+                //
+                //     // Manage EOF.
+                //     // Read a byte from the file.
+                //     fgetc(inputFile);
+                //
+                //     // Check if EOF is reached.
+                //     if (!feof(inputFile)) {
+                //         // If not EOF put back the stream pointer of the file.
+                //         fseek(inputFile, -1, SEEK_CUR);
+                //     }
+                // }
             } else {
                 // There was an error opening the Model file.
                 printf("\n<LayeredPerceptronModelParser::readFile()> Error: could not open Model file %s\n", fileName);
