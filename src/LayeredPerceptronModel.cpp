@@ -78,6 +78,10 @@ namespace Oort {
 
     Perceptron* LayeredPerceptronModel::getNeurons() {
         Perceptron* result = (Perceptron*) malloc(this->neuronsNum * sizeof(Perceptron));
+
+        //TODO
+
+        return result;
     }
 
     void LayeredPerceptronModel::createLayers(vector_size_t layerSize) {

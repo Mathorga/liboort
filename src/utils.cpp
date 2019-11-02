@@ -39,6 +39,7 @@ namespace Oort {
         uint32_t result = 0;
 
         // Check if depth is between 1 and 4.
+        // (Is this necessary?)
         if (depth < 1) {
             depth = 1;
         } else if (depth > 4) {
@@ -51,6 +52,11 @@ namespace Oort {
         }
 
         return result;
+    }
+
+    double byteArrayToDouble(byte* values, uint8_t depth) {
+        printf("\nBATD %d %f\n", byteArrayToUint(values, depth), pow(2, 8 * depth));
+        return byteArrayToUint(values, depth) / pow(2, 8 * depth);
     }
 
     double getTime() {
