@@ -75,7 +75,7 @@ namespace Oort {
                                     }
                                 }
                             }
-                            tmpNeuron = this->model->getNeuronById(synapseInput);
+                            tmpNeuron = this->model->getPerceptron(synapseInput);
                             neuron->getSynapses()->addLast(new PerceptronSynapse(tmpNeuron, synapseWeight));
                             synapsePosition++;
                             synapseNode = synapseNode->next_sibling();

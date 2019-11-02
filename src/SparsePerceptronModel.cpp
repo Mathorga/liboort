@@ -80,12 +80,15 @@ namespace Oort {
         return this->perceptrons->getItem(index);
     }
 
-    Perceptron* SparsePerceptronModel::getNeuronById(vector_size_t id) {
+    Perceptron* SparsePerceptronModel::getPerceptron(vector_size_t id) {
+        Perceptron* result = nullptr;
+
         for (vector_size_t i = 0; i < this->neuronsNum; i++) {
             if (this->perceptrons->getItem(i)->getId() == id) {
-                return this->perceptrons->getItem(i);
+                result = this->perceptrons->getItem(i);
+                break;
             }
         }
-        return NULL;
+        return result;
     }
 }

@@ -1,12 +1,11 @@
 #ifndef __SPARSE_PERCEPTRON_MODEL__
 #define __SPARSE_PERCEPTRON_MODEL__
 
-#include "Model.h"
+#include "PerceptronModel.h"
 #include "Vector.h"
-#include "Perceptron.h"
 
 namespace Oort {
-    class SparsePerceptronModel : public Model {//, public Vector<Perceptron> {
+    class SparsePerceptronModel : public PerceptronModel {//, public Vector<Perceptron> {
     public:
         // Constructors.
         SparsePerceptronModel();
@@ -21,7 +20,7 @@ namespace Oort {
         Vector<Perceptron>* getNeuronsVector();
         Perceptron* getNeurons();
         Perceptron* getNeuron(vector_size_t index);
-        Perceptron* getNeuronById(vector_size_t id);
+        Perceptron* getPerceptron(vector_size_t id);
 
     private:
         Vector<Perceptron>* perceptrons;

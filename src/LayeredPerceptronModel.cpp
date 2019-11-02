@@ -64,6 +64,22 @@ namespace Oort {
         return this->layers->getSize();
     }
 
+    Perceptron* LayeredPerceptronModel::getPerceptron(vector_size_t id) {
+        // Perceptron* result = nullptr;
+        //
+        // for (vector_size_t i = 0; i < this->neuronsNum; i++) {
+        //     if (this->perceptrons->getItem(i)->getId() == id) {
+        //         result = this->perceptrons->getItem(i);
+        //         break;
+        //     }
+        // }
+        // return result;
+    }
+
+    Perceptron* LayeredPerceptronModel::getNeurons() {
+        Perceptron* result = (Perceptron*) malloc(this->neuronsNum * sizeof(Perceptron));
+    }
+
     void LayeredPerceptronModel::createLayers(vector_size_t layerSize) {
         // Create layers.
         for (vector_size_t i = 0; i < this->layersNum; i++) {

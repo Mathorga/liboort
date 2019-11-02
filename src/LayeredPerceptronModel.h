@@ -15,12 +15,11 @@ Copyright (C) 2019  Luka Micheletti
 #ifndef __LAYERED_PERCEPTRON_MODEL__
 #define __LAYERED_PERCEPTRON_MODEL__
 
-#include "Model.h"
+#include "PerceptronModel.h"
 #include "Vector.h"
-#include "Perceptron.h"
 
 namespace Oort {
-    class LayeredPerceptronModel : public Model {
+    class LayeredPerceptronModel : public PerceptronModel {
     public:
         // Default layers number, used for empty constructor.
         static const vector_size_t DEFAULT_LAYERS_NUM;
@@ -59,6 +58,8 @@ namespace Oort {
         // Returns the index-th hidden layer in the model, therefore index does not consider input layer.
         Vector<Perceptron>* getHiddenLayer(vector_size_t index);
         vector_size_t getLayersNum();
+        Perceptron* getPerceptron(vector_size_t id);
+        Perceptron* getNeurons();
 
     private:
         vector_size_t layersNum;
