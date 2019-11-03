@@ -142,14 +142,19 @@ namespace Oort {
                                 synapseInputNeuronId = byteArrayToUint(reading, neuronIdDepth);
                                 free(reading);
 
-                                // Read synapse's weight.
-                                reading = (byte*) malloc(synapseWeightDepth);
-                                fread(reading, synapseWeightDepth, 1, modelFile);
-                                synapseWeight = byteArrayToDouble(reading, synapseWeightDepth);
-                                free(reading);
+                                // Check if synapse input neuron is correct.
+                                if (this->model->getPerceptron(neuronId)->getSynapse(j)->getInputNeuron()->getId() == synapseInputNeuronId) {
+                                    // Read synapse's weight.
+                                    reading = (byte*) malloc(synapseWeightDepth);
+                                    fread(reading, synapseWeightDepth, 1, modelFile);
+                                    synapseWeight = byteArrayToDouble(reading, synapseWeightDepth);
+                                    free(reading);
 
-                                // Set the weight to the correct synapse.
-                                this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
+                                    // Set the weight to the correct synapse.
+                                    this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
+                                } else {
+                                    printf("\n<LayeredPerceptronModelParser::readFile()> Error: incorrect input neuron for synapse %d of neuron %d\n", j, neuronId);
+                                }
                             }
                         } else {
                             // Neuron type is not consistent.
@@ -177,7 +182,7 @@ namespace Oort {
     }
 
     void LayeredPerceptronModelParser::writeFile(char* fileName) {
-
+        
     }
 
     LayeredPerceptronModel* LayeredPerceptronModelParser::getModel() {
