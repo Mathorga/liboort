@@ -149,7 +149,7 @@ namespace Oort {
 
                         printf("\n\t%d %f\n", synapseInputNeuronId, synapseWeight);
 
-                        // this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
+                        this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
                     }
                 }
             } else {
