@@ -108,8 +108,6 @@ namespace Oort {
                                                                   NEURON_TYPE_DEPTH_DEPTH +
                                                                   NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
 
-                printf("\n%d %d %d %d %d %d %d\n", neuronsNum, inputNeuronsNum, outputNeuronsNum, neuronIdDepth, neuronTypeDepth, synapsesNumDepth, synapseWeightDepth);
-
                 // Read content.
                 // Loop through neurons.
                 for (vector_size_t i = 0; i < neuronsNum; i++) {
@@ -131,8 +129,6 @@ namespace Oort {
                     synapsesNum = byteArrayToUint(reading, synapsesNumDepth);
                     free(reading);
 
-                    printf("\n%d %d %d\n", neuronId, neuronType, synapsesNum);
-
                     // Loop through synapses.
                     for (vector_size_t j = 0; j < synapsesNum; j++) {
                         // Read synapse's input neuron id.
@@ -147,8 +143,7 @@ namespace Oort {
                         synapseWeight = byteArrayToDouble(reading, synapseWeightDepth);
                         free(reading);
 
-                        printf("\n\t%d %f\n", synapseInputNeuronId, synapseWeight);
-
+                        // Set the weight to the correct synapse.
                         this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
                     }
                 }
@@ -177,6 +172,6 @@ namespace Oort {
     }
 
     void LayeredPerceptronModelParser::setModel(LayeredPerceptronModel* inputModel) {
-
+        this->model = inputModel;
     }
 }

@@ -55,8 +55,11 @@ namespace Oort {
     }
 
     double byteArrayToDouble(byte* values, uint8_t depth) {
-        printf("\nBATD %d %f\n", byteArrayToUint(values, depth), pow(2, 8 * depth));
-        return byteArrayToUint(values, depth) / pow(2, 8 * depth);
+        // The value is calculated obtaining the same number interpreted as an unsigned integer of specified depth and
+        // then dividing it by the maximum possible unsigned integer value of the same depth.
+        // The "- 1" is used to take into account the correct maximum value, since otherwise 1.0 would never be
+        // returned.
+        return byteArrayToUint(values, depth) / ((pow(2, 8 * depth)) - 1);
     }
 
     double getTime() {
