@@ -93,6 +93,9 @@ namespace Oort {
                 for (vector_size_t j = 0; j < layerSize; j++) {
                     this->layers->getLast()->addLast(new Perceptron(IDX(i, j, this->layersNum), Neuron::typeInput));
                 }
+
+                // Set model inputs number.
+                this->inputsNum = layerSize;
             } else {
                 // Hidden and output layers.
                 for (vector_size_t j = 0; j < layerSize; j++) {
@@ -104,6 +107,11 @@ namespace Oort {
                     for (vector_size_t k = 0; k < layerSize; k++) {
                         this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
                     }
+                }
+
+                if (i >= this->layersNum - 1) {
+                    // If output layer, then set outputs number as well.
+                    this->outputsNum = layerSize;
                 }
             }
         }
@@ -128,6 +136,9 @@ namespace Oort {
                     // Update index.
                     index++;
                 }
+
+                // Set model inputs number.
+                this->inputsNum = *(layerSizes->getItem(i));
             } else {
                 // Hidden and output layers.
                 for (vector_size_t j = 0; j < *(layerSizes->getItem(i)); j++) {
@@ -142,6 +153,11 @@ namespace Oort {
 
                     // Update index.
                     index++;
+                }
+
+                if (i >= this->layersNum - 1) {
+                    // If output layer, then set outputs number as well.
+                    this->outputsNum = *(layerSizes->getItem(i));
                 }
             }
         }

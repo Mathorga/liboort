@@ -27,7 +27,7 @@ namespace Oort {
         setPrintColor(ANSI_COLOR_YELLOW);
         printf("\t\t|SYNAPSE\n");
         printf("\t\t|Input %d\n", this->inputNeuron->getId());
-        printf("\t\t|Weight %f\n", this->weight);
+        printf("\t\t|Weight %.9f\n", this->weight);
         setPrintColor(ANSI_COLOR_RESET);
     }
 

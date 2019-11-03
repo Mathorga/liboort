@@ -108,44 +108,57 @@ namespace Oort {
                                                                   NEURON_TYPE_DEPTH_DEPTH +
                                                                   NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
 
-                // Read content.
-                // Loop through neurons.
-                for (vector_size_t i = 0; i < neuronsNum; i++) {
-                    // Read neuron id.
-                    reading = (byte*) malloc(neuronIdDepth);
-                    fread(reading, neuronIdDepth, 1, modelFile);
-                    neuronId = byteArrayToUint(reading, neuronIdDepth);
-                    free(reading);
-
-                    // Read neuron type.
-                    reading = (byte*) malloc(neuronTypeDepth);
-                    fread(reading, neuronTypeDepth, 1, modelFile);
-                    neuronType = byteArrayToUint(reading, neuronTypeDepth);
-                    free(reading);
-
-                    // Read synapses number.
-                    reading = (byte*) malloc(synapsesNumDepth);
-                    fread(reading, synapsesNumDepth, 1, modelFile);
-                    synapsesNum = byteArrayToUint(reading, synapsesNumDepth);
-                    free(reading);
-
-                    // Loop through synapses.
-                    for (vector_size_t j = 0; j < synapsesNum; j++) {
-                        // Read synapse's input neuron id.
+                // Check if model file is consistent with layer file.
+                if (inputNeuronsNum == this->model->getInputsNum() &&
+                    outputNeuronsNum == this->model->getOutputsNum()) {
+                    // Read content.
+                    // Loop through neurons.
+                    for (vector_size_t i = 0; i < neuronsNum; i++) {
+                        // Read neuron id.
                         reading = (byte*) malloc(neuronIdDepth);
                         fread(reading, neuronIdDepth, 1, modelFile);
-                        synapseInputNeuronId = byteArrayToUint(reading, neuronIdDepth);
+                        neuronId = byteArrayToUint(reading, neuronIdDepth);
                         free(reading);
 
-                        // Read synapse's weight.
-                        reading = (byte*) malloc(synapseWeightDepth);
-                        fread(reading, synapseWeightDepth, 1, modelFile);
-                        synapseWeight = byteArrayToDouble(reading, synapseWeightDepth);
+                        // Read neuron type.
+                        reading = (byte*) malloc(neuronTypeDepth);
+                        fread(reading, neuronTypeDepth, 1, modelFile);
+                        neuronType = byteArrayToUint(reading, neuronTypeDepth);
                         free(reading);
 
-                        // Set the weight to the correct synapse.
-                        this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
+                        // Check if neuron type is consistent with the created one.
+                        if (this->model->getPerceptron(neuronId)->getType() == neuronType) {
+                            // Read synapses number.
+                            reading = (byte*) malloc(synapsesNumDepth);
+                            fread(reading, synapsesNumDepth, 1, modelFile);
+                            synapsesNum = byteArrayToUint(reading, synapsesNumDepth);
+                            free(reading);
+
+                            // Loop through synapses.
+                            for (vector_size_t j = 0; j < synapsesNum; j++) {
+                                // Read synapse's input neuron id.
+                                reading = (byte*) malloc(neuronIdDepth);
+                                fread(reading, neuronIdDepth, 1, modelFile);
+                                synapseInputNeuronId = byteArrayToUint(reading, neuronIdDepth);
+                                free(reading);
+
+                                // Read synapse's weight.
+                                reading = (byte*) malloc(synapseWeightDepth);
+                                fread(reading, synapseWeightDepth, 1, modelFile);
+                                synapseWeight = byteArrayToDouble(reading, synapseWeightDepth);
+                                free(reading);
+
+                                // Set the weight to the correct synapse.
+                                this->model->getPerceptron(neuronId)->getSynapse(j)->setWeight(synapseWeight);
+                            }
+                        } else {
+                            // Neuron type is not consistent.
+                            printf("\n<LayeredPerceptronModelParser::readFile()> Error: incorrect neuron type for perceptron id %d\n", neuronId);
+                        }
                     }
+                } else {
+                    // Model file is not consistent with layer file.
+                    printf("\n<LayeredPerceptronModelParser::readFile()> Error: inputs or outputs number not consistent between Model file %s and Layer file %s\n", fileName, layerFileName);
                 }
             } else {
                 // There was an error opening the Model file.
