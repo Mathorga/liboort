@@ -182,7 +182,35 @@ namespace Oort {
     }
 
     void LayeredPerceptronModelParser::writeFile(char* fileName) {
-        
+        FILE* modelFile = nullptr;
+        FILE* layerFile = nullptr;
+        char* layerFileName = (char*) malloc(256);
+
+        // Check if file extension is right.
+        // The file extension doesn't have to be right, but it's used as a warning that the file could be the wrong
+        // format.
+        if (strstr(fileName, ".mdl") == nullptr) {
+            // Warning: the file might not be the right format.
+            printf("\n<LayeredPerceptronModelParser::writeFile()> Warning: file name doesn't have a .mdl extension\n");
+        }
+
+        // Copy model file name to layer file name, because the layer file needs to have the same name as the model
+        // file.
+        strcpy(layerFileName, fileName);
+
+        // Add the .lyr extension to find the correct file.
+        // Model Layer files necessarily need to have the right extension in order to be recognized.
+        strncat(layerFileName, ".lyr", 4);
+
+        printf("\n%s\n", layerFileName);
+
+        // Check if model was previously set. return if not.
+        if (this->model) {
+            // Open the file in binary write mode.
+            // fopen() automatically creates the file if not alredy present, so there's no need to check for its
+            // existence.
+            modelFile = fopen(fileName, "wb");
+        }
     }
 
     LayeredPerceptronModel* LayeredPerceptronModelParser::getModel() {
