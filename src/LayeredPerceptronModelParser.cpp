@@ -250,7 +250,26 @@ namespace Oort {
                 fwrite(uintToByteArray(this->synapseWeightDepth, SYNAPSE_WEIGHT_DEPTH_DEPTH), SYNAPSE_WEIGHT_DEPTH_DEPTH, 1, modelFile);
 
                 // Write model content:
-                //TODO
+                // Loop through layers of the model in order to plot neurons.
+                for (vector_size_t i = 0; i < this->model->getLayersNum(); i++) {
+                    // Loop through neurons in layer.
+                    for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+                        // Write neuron id.
+                        fwrite(uintToByteArray(this->model->getLayer(i)->getItem(j)->getId(), this->neuronIdDepth), this->neuronIdDepth, 1, modelFile);
+                        // Write neuron type.
+                        fwrite(uintToByteArray(this->model->getLayer(i)->getItem(j)->getType(), this->neuronTypeDepth), this->neuronTypeDepth, 1, modelFile);
+                        // Write synapses number.
+                        fwrite(uintToByteArray(this->model->getLayer(i)->getItem(j)->getSynapsesNum(), this->neuronSynapsesNumDepth), this->neuronSynapsesNumDepth, 1, modelFile);
+
+                        // Loop through neuron synapses.
+                        for (vector_size_t k = 0; k < this->model->getLayer(i)->getItem(j)->getSynapsesNum(); k++) {
+                            // Write synapse input neuron id.
+                            fwrite(uintToByteArray(this->model->getLayer(i)->getItem(j)->getSynapse(k)->getInputNeuron()->getId(), this->neuronIdDepth), this->neuronIdDepth, 1, modelFile);
+                            // Write synapse weight.
+                            fwrite(doubleToByteArray(this->model->getLayer(i)->getItem(j)->getSynapse(k)->getWeight(), this->synapseWeightDepth), this->synapseWeightDepth, 1, modelFile);
+                        }
+                    }
+                }
                 // Close the file at the end of the write operation.
                 fclose(modelFile);
             }

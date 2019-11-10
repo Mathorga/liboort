@@ -54,6 +54,10 @@ namespace Oort {
         return result;
     }
 
+    byte* doubleToByteArray(double value, uint8_t depth) {
+        return uintToByteArray(value * (((pow(2, 8 * depth)) - 1)), depth);
+    }
+
     double byteArrayToDouble(byte* values, uint8_t depth) {
         // The value is calculated obtaining the same number interpreted as an unsigned integer of specified depth and
         // then dividing it by the maximum possible unsigned integer value of the same depth.

@@ -139,6 +139,9 @@ namespace Oort {
 
                 // Set model inputs number.
                 this->inputsNum = *(layerSizes->getItem(i));
+
+                // Update neurons number.
+                this->neuronsNum = this->inputsNum;
             } else {
                 // Hidden and output layers.
                 for (vector_size_t j = 0; j < *(layerSizes->getItem(i)); j++) {
@@ -159,6 +162,9 @@ namespace Oort {
                     // If output layer, then set outputs number as well.
                     this->outputsNum = *(layerSizes->getItem(i));
                 }
+
+                // Update neurons number.
+                this->neuronsNum += *(layerSizes->getItem(i));
             }
         }
     }

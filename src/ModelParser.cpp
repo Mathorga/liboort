@@ -14,7 +14,7 @@ namespace Oort {
         this->neuronIdDepth = 1;
         this->neuronTypeDepth = 1;
         this->neuronSynapsesNumDepth = 1;
-        this->synapseWeightDepth = 1;
+        this->synapseWeightDepth = 2;
     }
 
     void ModelParser::setNeuronIdDepth(uint8_t neuronIdDepth) {

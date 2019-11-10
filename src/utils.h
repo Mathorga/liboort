@@ -48,6 +48,7 @@ namespace Oort {
     byte* uintToByteArray(uint32_t value, uint8_t depth);
     // Big endian conversion.
     uint32_t byteArrayToUint(byte* values, uint8_t depth);
+    byte* doubleToByteArray(double value, uint8_t depth);
     double byteArrayToDouble(byte* values, uint8_t depth);
     double getTime();
     double getNanoTime();
