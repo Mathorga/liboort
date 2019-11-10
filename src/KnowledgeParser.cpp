@@ -182,7 +182,7 @@ namespace Oort {
                     }
                 }
 
-                // Close the file at the end of the read operation.
+                // Close the file at the end of the write operation.
                 fclose(outputFile);
             } else {
                 // There was an error opening the file.

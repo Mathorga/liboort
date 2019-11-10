@@ -215,12 +215,27 @@ namespace Oort {
             if (layerFile != nullptr) {
                 // Write number of layers.
                 fwrite(uintToByteArray(this->model->getLayersNum(), LYR_VALUE_DEPTH), LYR_VALUE_DEPTH, 1, layerFile);
+
+                // Loop through layers of the model.
+                for (vector_size_t i = 0; i < this->model->getLayersNum(); i++) {
+                    // Write layer size.
+                    fwrite(uintToByteArray(this->model->getLayer(i)->getSize(), LYR_VALUE_DEPTH), LYR_VALUE_DEPTH, 1, layerFile);
+                }
+
+                // Close the file at the end of the write operation.
+                fclose(layerFile);
             }
 
             // Open the file in binary write mode.
             // fopen() automatically creates the file if not alredy present, so there's no need to check for its
             // existence.
             modelFile = fopen(fileName, "wb");
+
+            // Check if the file was correctly opened.
+            if (modelFile != nullptr) {
+                // Close the file at the end of the write operation.
+                fclose(modelFile);
+            }
         } else {
             printf("\n<LayeredPerceptronModelParser::writeFile()> Error: model not set\n");
         }
