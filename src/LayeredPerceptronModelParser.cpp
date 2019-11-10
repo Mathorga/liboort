@@ -15,8 +15,8 @@ namespace Oort {
                                            OUTPUT_NEURONS_NUM_DEPTH +
                                            NEURON_ID_DEPTH_DEPTH +
                                            NEURON_TYPE_DEPTH_DEPTH +
-                                           NEURON_SYNAPSES_NUM_DEPTH +
-                                           SYNAPSE_WEIGHT_DEPTH);
+                                           NEURON_SYNAPSES_NUM_DEPTH_DEPTH +
+                                           SYNAPSE_WEIGHT_DEPTH_DEPTH);
         vector_size_t neuronsNum = 0;
         vector_size_t inputNeuronsNum = 0;
         vector_size_t outputNeuronsNum = 0;
@@ -82,8 +82,8 @@ namespace Oort {
                                    OUTPUT_NEURONS_NUM_DEPTH +
                                    NEURON_ID_DEPTH_DEPTH +
                                    NEURON_TYPE_DEPTH_DEPTH +
-                                   NEURON_SYNAPSES_NUM_DEPTH +
-                                   SYNAPSE_WEIGHT_DEPTH, 1, modelFile);
+                                   NEURON_SYNAPSES_NUM_DEPTH_DEPTH +
+                                   SYNAPSE_WEIGHT_DEPTH_DEPTH, 1, modelFile);
 
                 neuronsNum = byteArrayToUint(modelHeader, TOTAL_NEURONS_NUM_DEPTH);
                 inputNeuronsNum = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH], INPUT_NEURONS_NUM_DEPTH);
@@ -100,13 +100,13 @@ namespace Oort {
                                                                       INPUT_NEURONS_NUM_DEPTH +
                                                                       OUTPUT_NEURONS_NUM_DEPTH +
                                                                       NEURON_ID_DEPTH_DEPTH +
-                                                                      NEURON_TYPE_DEPTH_DEPTH], NEURON_SYNAPSES_NUM_DEPTH);
+                                                                      NEURON_TYPE_DEPTH_DEPTH], NEURON_SYNAPSES_NUM_DEPTH_DEPTH);
                 synapseWeightDepth = byteArrayToUint(&modelHeader[TOTAL_NEURONS_NUM_DEPTH +
                                                                   INPUT_NEURONS_NUM_DEPTH +
                                                                   OUTPUT_NEURONS_NUM_DEPTH +
                                                                   NEURON_ID_DEPTH_DEPTH +
                                                                   NEURON_TYPE_DEPTH_DEPTH +
-                                                                  NEURON_SYNAPSES_NUM_DEPTH], SYNAPSE_WEIGHT_DEPTH);
+                                                                  NEURON_SYNAPSES_NUM_DEPTH_DEPTH], SYNAPSE_WEIGHT_DEPTH_DEPTH);
 
                 // Check if model file is consistent with layer file.
                 if (inputNeuronsNum == this->model->getInputsNum() &&
@@ -233,6 +233,24 @@ namespace Oort {
 
             // Check if the file was correctly opened.
             if (modelFile != nullptr) {
+                // Write header:
+                // Total number of neurons of the model.
+                fwrite(uintToByteArray(this->model->getNeuronsNum(), TOTAL_NEURONS_NUM_DEPTH), TOTAL_NEURONS_NUM_DEPTH, 1, modelFile);
+                // Number of input neurons of the model.
+                fwrite(uintToByteArray(this->model->getInputsNum(), INPUT_NEURONS_NUM_DEPTH), INPUT_NEURONS_NUM_DEPTH, 1, modelFile);
+                // Number of output neurons of the model.
+                fwrite(uintToByteArray(this->model->getOutputsNum(), OUTPUT_NEURONS_NUM_DEPTH), OUTPUT_NEURONS_NUM_DEPTH, 1, modelFile);
+                // Depth for neuron ids.
+                fwrite(uintToByteArray(this->neuronIdDepth, NEURON_ID_DEPTH_DEPTH), NEURON_ID_DEPTH_DEPTH, 1, modelFile);
+                // Depth for neuron types.
+                fwrite(uintToByteArray(this->neuronTypeDepth, NEURON_TYPE_DEPTH_DEPTH), NEURON_TYPE_DEPTH_DEPTH, 1, modelFile);
+                // Depth for neuron synapses number.
+                fwrite(uintToByteArray(this->neuronSynapsesNumDepth, NEURON_SYNAPSES_NUM_DEPTH_DEPTH), NEURON_SYNAPSES_NUM_DEPTH_DEPTH, 1, modelFile);
+                // Depth for synapse weight.
+                fwrite(uintToByteArray(this->synapseWeightDepth, SYNAPSE_WEIGHT_DEPTH_DEPTH), SYNAPSE_WEIGHT_DEPTH_DEPTH, 1, modelFile);
+
+                // Write model content:
+                //TODO
                 // Close the file at the end of the write operation.
                 fclose(modelFile);
             }

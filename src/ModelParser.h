@@ -33,14 +33,25 @@ Copyright (C) 2019  Luka Micheletti
 
 namespace Oort {
     class ModelParser : public Parser {
+    public:
+        // Constructor.
+        ModelParser();
+
+        // Setters.
+        void setNeuronIdDepth(uint8_t neuronIdDepth);
+        void setNeuronTypeDepth(uint8_t neuronTypeDepth);
     protected:
         static const uint8_t TOTAL_NEURONS_NUM_DEPTH;
         static const uint8_t INPUT_NEURONS_NUM_DEPTH;
         static const uint8_t OUTPUT_NEURONS_NUM_DEPTH;
         static const uint8_t NEURON_ID_DEPTH_DEPTH;
         static const uint8_t NEURON_TYPE_DEPTH_DEPTH;
-        static const uint8_t NEURON_SYNAPSES_NUM_DEPTH;
-        static const uint8_t SYNAPSE_WEIGHT_DEPTH;
+        static const uint8_t NEURON_SYNAPSES_NUM_DEPTH_DEPTH;
+        static const uint8_t SYNAPSE_WEIGHT_DEPTH_DEPTH;
+        uint32_t neuronIdDepth;
+        uint32_t neuronTypeDepth;
+        uint32_t neuronSynapsesNumDepth;
+        uint32_t synapseWeightDepth;
     };
 }
 
