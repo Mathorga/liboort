@@ -62,5 +62,4 @@ namespace Oort {
     };
 }
 
-
 #endif
