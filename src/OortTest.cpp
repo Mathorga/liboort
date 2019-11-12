@@ -157,6 +157,8 @@ int main(int argc, char const *argv[]) {
 
     // Create the network.
     LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
+    lpmp->setModel(nnn->getModel());
+    lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
     printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
 
@@ -174,6 +176,7 @@ int main(int argc, char const *argv[]) {
         //     nnn->print();
         // }
         nnn->run();
+        printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
     }
 
 
