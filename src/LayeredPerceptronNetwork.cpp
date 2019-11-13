@@ -7,6 +7,10 @@ namespace Oort {
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork(LayeredPerceptronModel* model) {
         this->model = model;
+
+        // Calculate the learning rate based on the number of neurons:
+        // the greater the number of neurons, the lower the learning rate.
+        this->learningRate = 1 / (float) this->model->getNeuronsNum();
     }
 
     void LayeredPerceptronNetwork::run() {
@@ -80,6 +84,9 @@ namespace Oort {
 
     void LayeredPerceptronNetwork::setModel(LayeredPerceptronModel* model) {
         this->model = model;
+
+        // Update the learning rate according to the new model's neurons number.
+        this->learningRate = 1 / (float) this->model->getNeuronsNum();
     }
 
     void LayeredPerceptronNetwork::setInput(neuron_value_t* input) {
@@ -171,8 +178,8 @@ namespace Oort {
         // Store incoming weignt to use it on hidden neuron error computation.
         synapse_weight_t incomingWeight = 0;
 
-        // Compute errors starting from the last layer, excluding the input, because input does not have an error.
-        for (vector_size_t i = this->model->getLayersNum() - 1; i < 2; i--) {
+        // Compute errors starting from the last layer, excluding the input, because inputs do not have an error.
+        for (vector_size_t i = this->model->getLayersNum() - 1; i > 2; i--) {
             // Calculate the current neuron's error if output layer.
             if (i >= this->model->getLayersNum() - 1) {
                 // Output layer, so calculate error.
@@ -188,7 +195,7 @@ namespace Oort {
             }
 
             // Loop through neurons of each layer.
-            for (vector_size_t j = 0; j < this->model->getLayer(i - 1)->getSize(); j++) {
+            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
                 // Get the current neuron.
                 currentNeuron = this->model->getLayer(i)->getItem(j);
 
@@ -200,6 +207,8 @@ namespace Oort {
                     // Add up to current weight.
                     incomingWeight += currentNeuron->getSynapse(k)->getWeight();
                 }
+
+                printf("\nINCOMING WEIGHT %f\n", incomingWeight);
 
                 // For each neuron connected to the current one, add to its error the weighted sum between all the
                 // weights coming to the current.

@@ -160,14 +160,11 @@ int main(int argc, char const *argv[]) {
     lpmp->setModel(nnn->getModel());
     lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
-    nnn->run();
-    nnn->correct();
-    nnn->print();
-
     printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
 
     double startTime = getTime();
     nnn->train(kp->getKnowledge(), 10);
+    nnn->print();
     double endTime = getTime();
 
     printf("\nTraining completed\nTotal training time %fs\n", endTime - startTime);
@@ -180,7 +177,7 @@ int main(int argc, char const *argv[]) {
         //     nnn->print();
         // }
         nnn->run();
-        printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
+        // printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
     }
 
 
