@@ -160,6 +160,10 @@ int main(int argc, char const *argv[]) {
     lpmp->setModel(nnn->getModel());
     lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
+    nnn->run();
+    nnn->correct();
+    nnn->print();
+
     printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
 
     double startTime = getTime();
