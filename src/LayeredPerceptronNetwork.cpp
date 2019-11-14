@@ -179,7 +179,7 @@ namespace Oort {
         synapse_weight_t incomingWeight = 0;
 
         // Compute errors starting from the last layer, excluding the input, because inputs do not have an error.
-        for (vector_size_t i = this->model->getLayersNum() - 1; i > 2; i--) {
+        for (vector_size_t i = this->model->getLayersNum() - 1; i > 1; i--) {
             // Calculate the current neuron's error if output layer.
             if (i >= this->model->getLayersNum() - 1) {
                 // Output layer, so calculate error.
@@ -190,7 +190,7 @@ namespace Oort {
                     currentNeuron = this->model->getOutputLayer()->getItem(j);
 
                     // Compute error.
-                    currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
+                    currentNeuron->setError(pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2);
                 }
             }
 
@@ -207,8 +207,6 @@ namespace Oort {
                     // Add up to current weight.
                     incomingWeight += currentNeuron->getSynapse(k)->getWeight();
                 }
-
-                printf("\nINCOMING WEIGHT %f\n", incomingWeight);
 
                 // For each neuron connected to the current one, add to its error the weighted sum between all the
                 // weights coming to the current.
@@ -238,7 +236,7 @@ namespace Oort {
                     // Update the weight of every synapse.
 
                     // Calculate the weight delta.
-                    // dWeight = this->learningRate * this->model->getNeuron(i).getError() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getDValue() * this->model->getNeuron(i).getSynapses()->getItems()[j].getInputNeuron()->getValue();
+                    // dWeight = this->learningRate * currentNeuron->getError() * currentNeuron->getSynapse(k)->getInputNeuron()->getDValue() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
 
                     // Calculate the custom weight delta.
                     dWeight = this->learningRate * currentNeuron->getError() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
