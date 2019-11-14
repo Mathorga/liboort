@@ -36,9 +36,11 @@ Oort: Oort.o \
 	  utils.o \
 	  Model.o \
 	  Neuron.o \
+	  ModelParser.o \
 	  SparsePerceptronModelParser.o \
 	  SparsePerceptronModel.o \
 	  SparsePerceptronNetwork.o \
+	  LayeredPerceptronModelParser.o \
 	  LayeredPerceptronModel.o \
 	  LayeredPerceptronNetwork.o \
 	  PerceptronSynapse.o \

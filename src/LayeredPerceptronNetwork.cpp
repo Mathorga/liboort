@@ -3,10 +3,12 @@
 namespace Oort {
     LayeredPerceptronNetwork::LayeredPerceptronNetwork() {
         this->model = nullptr;
+        this->error = 0.0;
     }
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork(LayeredPerceptronModel* model) {
         this->model = model;
+        this->error = 0.0;
 
         // Calculate the learning rate based on the number of neurons:
         // the greater the number of neurons, the lower the learning rate.
@@ -137,6 +139,9 @@ namespace Oort {
         Perceptron* currentNeuron;
         neuron_value_t value = 0;
 
+        // Reset network error.
+        this->error = 0.0;
+
         // Loop through layers skipping the first one, which is input.
         for (vector_size_t i = 1; i < this->model->getLayersNum(); i++) {
             // Loop through neurons in each layer.
@@ -191,6 +196,9 @@ namespace Oort {
 
                     // Compute error.
                     currentNeuron->setError(pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2);
+
+                    // Update the total network error.
+                    this->error += currentNeuron->getError();
                 }
             }
 
@@ -239,7 +247,7 @@ namespace Oort {
                     // dWeight = this->learningRate * currentNeuron->getError() * currentNeuron->getSynapse(k)->getInputNeuron()->getDValue() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
 
                     // Calculate the custom weight delta.
-                    dWeight = this->learningRate * currentNeuron->getError() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
+                    dWeight = this->learningRate * this->error * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
 
                     // Apply the delta weight.
                     currentNeuron->getSynapse(k)->setWeight(currentNeuron->getSynapse(k)->getWeight() + dWeight);
