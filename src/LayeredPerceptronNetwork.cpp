@@ -8,7 +8,6 @@ namespace Oort {
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork(LayeredPerceptronModel* model) {
         this->model = model;
-        // this->error = 0.0;
 
         // Calculate the learning rate based on the number of neurons:
         // the greater the number of neurons, the lower the learning rate.
@@ -190,7 +189,6 @@ namespace Oort {
                 if (i >= this->model->getLayersNum() - 1) {
                     // Compute error.
                     currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
-                    // printf("\ndOutput %f\n", currentNeuron->getDOutput());
                 }
 
                 currentNeuron->setDInput(currentNeuron->getDValue() * currentNeuron->getDOutput());
@@ -198,32 +196,13 @@ namespace Oort {
                 // For each neuron connected to the current one, add to its error the weighted sum between all the
                 // weights coming to the current.
                 for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
-                    // currentNeuron->getSynapse(k)->getInputNeuron()->addError((currentNeuron->getError() * currentNeuron->getSynapse(k)->getWeight()) / incomingWeight);
 
                     // Calculate the dWeight of the current synapse.
                     currentNeuron->getSynapse(k)->setDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
 
                     // Update the synapse's input neuron's dOutput.
                     currentNeuron->getSynapse(k)->getInputNeuron()->setDOutput(currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput() + (currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput()));
-                    // printf("\ndOutput ++ %f\n", currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput());
-
-                    // Update the synapses' input neuron's dInput.
-                    // currentNeuron->setDInput(currentNeuron->getDValue() + currentNeuron->getDOutput());
-
-                    // // Check if last neuron of the layer:
-                    // // the last neuron of each layer completes the error for all neurons of the layer that comes before
-                    // // its own, so the global error of the layer before can be updated as well.
-                    // if (j >= this->model->getLayer(i)->getSize() - 1) {
-                    //     // Update layer error.
-                    //     layerError += currentNeuron->getSynapse(k)->getInputNeuron()->getError();
-                    // }
                 }
-
-                // // Only update the layer error if last neuron of the current layer.
-                // if (j >= this->model->getLayer(i)->getSize() - 1) {
-                //     // Set layer error.
-                //     this->errors->replaceAt(layerError, i - 1);
-                // }
             }
         }
     }
@@ -246,35 +225,4 @@ namespace Oort {
             }
         }
     }
-
-    // void LayeredPerceptronNetwork::adjustWeights() {
-    //     // Store the current neuron, so that it doesn't have to be retrieved multiple times.
-    //     Perceptron* currentNeuron = nullptr;
-    //
-    //     // Store the delta weight in order to keep things clean.
-    //     synapse_weight_t dWeight = 0.0;
-    //
-    //     // Loop through layers of the model starting from the first non-input.
-    //     for (vector_size_t i = 1; i < this->model->getLayersNum(); i++) {
-    //         // Loop through neurons in each layer.
-    //         for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
-    //             // Get current neuron.
-    //             currentNeuron = this->model->getLayer(i)->getItem(j);
-    //
-    //             // Loop through all synapses of every neuron.
-    //             for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
-    //                 // Update the weight of every synapse.
-    //
-    //                 // Calculate the weight delta.
-    //                 // dWeight = this->learningRate * currentNeuron->getError() * currentNeuron->getSynapse(k)->getInputNeuron()->getDValue() * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
-    //
-    //                 // Calculate the custom weight delta.
-    //                 dWeight = this->learningRate * this->errors->getItem(i) * currentNeuron->getSynapse(k)->getInputNeuron()->getValue();
-    //
-    //                 // Apply the delta weight.
-    //                 currentNeuron->getSynapse(k)->setWeight(currentNeuron->getSynapse(k)->getWeight() + dWeight);
-    //             }
-    //         }
-    //     }
-    // }
 }
