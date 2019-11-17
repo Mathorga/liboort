@@ -1,7 +1,7 @@
 #include "PerceptronSynapse.h"
 
 namespace Oort {
-    const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.001;
+    const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.5;
 
     PerceptronSynapse::PerceptronSynapse() {
         this->weight = DEFAULT_WEIGHT;

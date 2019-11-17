@@ -89,6 +89,14 @@ namespace Oort {
         return elements;
     }
 
+    double sigmoid(double input) {
+        return (1 / (1 + (pow(M_E, -(input)))));
+    }
+
+    double dSigmoid(double input) {
+        return sigmoid(input) * (1 - sigmoid(input));
+    }
+
     // Vector<std::String> splitString(std::String inputString, char separator) {
     //     Vector<std:string> elements;
     //     std::stringstream stringStream(inputString);

@@ -10,95 +10,10 @@ using namespace Oort;
 
 int main(int argc, char const *argv[]) {
     // uint16_t inputNum = 1;
-    uint16_t outputNum = 1;
-    char* modelFileName = nullptr;
-    // float* expectedOutput;
-    neuron_value_t* newExpectedOut;
-
-    // double startTime = 0;
-    // double endTime = 0;
-    // double execTime = 0;
-
-    // Input check.
-    if (argc > 2 || argc <= 1) {
-        printf("Usage: %s [modelFile]\n", argv[0]);
-        return -1;
-    }
-    if (argc > 1) {
-        modelFileName = (char*) argv[1];
-    }
-
-    SparsePerceptronModelParser* parser = new SparsePerceptronModelParser();
-    parser->readFile(modelFileName);
-    SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(parser->getModel());
-
-    // LayeredPerceptronModel* layeredModel = new LayeredPerceptronModel();
-    // layeredModel->print();
-    // SparsePerceptronNetwork* brain = new SparsePerceptronNetwork(5184, 3);
-    // parser->setModel(brain->getModel());
-    // parser->writeFile(modelFileName);
-
-
-    // Set expected output for the current input.
-    newExpectedOut = (neuron_value_t*) malloc(outputNum * sizeof(vector_size_t));
-    newExpectedOut[0] = 0.6;
-    brain->setExpectedOutput(newExpectedOut);
-    // brain->print();
-
-
-
-
-
-
-
-
-
-
-    // KnowledgeParser* kp = new KnowledgeParser();
-    // kp->readFile((char*) "./res/knl/testBinTrue.knl");
-    // kp->getKnowledge()->print();
-    // KnowledgeParser* kp2 = new KnowledgeParser();
-    // kp2->setKnowledge(kp->getKnowledge());
-    // kp2->setDepth(2);
-    // kp2->writeFile((char*) "./res/knl/test2.knl");
-    //
-    // SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
-    // par->setModel(new SparsePerceptronModel(1296, 3, true));
-    // par->writeFile((char*) "./res/mdl/1296in3out.mdl");
-
-
-    KnowledgeParser* kp = new KnowledgeParser();
-    kp->readFile((char*) "./res/knl/Oort2.knl");
-    // kp->getKnowledge()->print();
-    SparsePerceptronModelParser* par = new SparsePerceptronModelParser();
-    par->readFile((char*) "./res/mdl/trained.mdl");
-
-    // Testing training on example knowledge.
-    SparsePerceptronNetwork* testNet = new SparsePerceptronNetwork(par->getModel());
-    testNet->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
-    // testNet->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
-    // testNet->print();
-    testNet->run();
-    printf("\nOutput %f %f %f\n", testNet->getOutput()[0], testNet->getOutput()[1], testNet->getOutput()[2]);
-
-
-
-
-
-
-    // FILE* file = fopen("/dev/ttyUSB0", "w");
-    // int32_t x = 0;
-    // for (uint32_t i = 0; i < 100; i++) {
-    //     fprintf(file, "%d", i + 10); //Writing to the file
-    //     usleep(1000);
-    //     fscanf(file, "%d", &x);
-    //     printf("\n%d\n", x);
-    // }
-    // fclose(file);
-
-
-
-
+    // uint16_t outputNum = 1;
+    // char* modelFileName = nullptr;
+    // // float* expectedOutput;
+    // neuron_value_t* newExpectedOut;
 
 
 
@@ -130,18 +45,20 @@ int main(int argc, char const *argv[]) {
 
     delete nerve;
     // nerve->closeStream();*/
+    // ############################################### NERVE TESTING ##################################################
 
-
+    KnowledgeParser* kp = new KnowledgeParser();
+    kp->readFile((char*) "./res/knl/Oort2.knl");
 
     LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser();
-    lpmp->readFile((char*) "./res/mdl/testLPM.mdl");
+    // lpmp->readFile((char*) "./res/mdl/testLPM.mdl");
     // lpmp->getModel()->print();
-    lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
 
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
     // Add input layer.
-    layerSizes->addLast(1296);
+    layerSizes->addLast(200);
 
     // Add hidden layer.
     layerSizes->addLast(5);
@@ -156,24 +73,28 @@ int main(int argc, char const *argv[]) {
     layerSizes->addLast(3);
 
     // Create the network.
+    // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
+    // lpmp->setModel(nnn->getModel());
+    // lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
     LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
-    lpmp->setModel(nnn->getModel());
-    // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
-
-    printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
 
     double startTime = getTime();
-    // nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
-    // nnn->setExpectedOutput(kp->getKnowledge()->getExperience(0)->getOutputs());
-    // printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
-    // nnn->run();
-    // nnn->correct();
-    // printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
-    // printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperience(0)->getOutputs()[0], kp->getKnowledge()->getExperience(0)->getOutputs()[1], kp->getKnowledge()->getExperience(0)->getOutputs()[2]);
-    // printf("\ninputsNum %d outputsNum %d\n", kp->getKnowledge()->getInputsNum(), kp->getKnowledge()->getOutputsNum());
-    nnn->train(kp->getKnowledge(), 10);
-    // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
+    for (uint i = 0; i < 1; i++) {
+        nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
+        nnn->setExpectedOutput(kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs());
+        nnn->run();
+        nnn->print();
+        nnn->correct();
+    }
+    nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
+    nnn->run();
     nnn->print();
+    printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
+    printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[0], kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[1], kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[2]);
+    printf("\ninputsNum %d outputsNum %d\n", kp->getKnowledge()->getInputsNum(), kp->getKnowledge()->getOutputsNum());
+    // nnn->train(kp->getKnowledge(), 10);
+    // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
     double endTime = getTime();
 
     printf("\nTraining completed\nTotal training time %fs\n", endTime - startTime);
@@ -190,6 +111,32 @@ int main(int argc, char const *argv[]) {
     }
 
 
+
+    // Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
+    // // Add input layer.
+    // layerSizes->addLast(1);
+    // layerSizes->addLast(200);
+    //
+    // // Add output layer.
+    // layerSizes->addLast(1);
+    //
+    // LayeredPerceptronNetwork* lpn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
+    //
+    // lpn->print();
+    //
+    // neuron_value_t input = 0.4;
+    // neuron_value_t expectedOutput = 0.8;
+    //
+    // for (uint i = 0; i < 1000000; i++) {
+    //     lpn->setInput(&input);
+    //     lpn->setExpectedOutput(&expectedOutput);
+    //     lpn->run();
+    //     // lpn->print();
+    //     // usleep(1000);
+    //     lpn->correct();
+    // }
+    // lpn->run();
+    // lpn->print();
 
 
 

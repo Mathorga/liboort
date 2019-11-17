@@ -53,6 +53,8 @@ namespace Oort {
     double getTime();
     double getNanoTime();
     std::vector<std::string> splitString(const std::string& inputString, char separator);
+    double sigmoid(double input);
+    double dSigmoid(double input);
     // Vector<std::string> splitString(const std::string& inputString, char separator);
 
     // void dump(const uint8_t* image, unsigned int n, const char* filename);

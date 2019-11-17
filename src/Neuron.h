@@ -15,7 +15,7 @@ Copyright (C) 2019  Luka Micheletti
 #include "utils.h"
 
 // Definition of the neuron value type.
-#define neuron_value_t float
+#define neuron_value_t double
 
 namespace Oort {
     class Neuron {

@@ -42,12 +42,11 @@ namespace Oort {
         printf("\t|Id %d\n", this->id);
         printf("\t|Type %d\n", this->type);
         printf("\t|Value %f\n", this->value);
-        printf("\t|Error %f\n", this->error);
+        // printf("\t|Error %f\n", this->error);
         setPrintColor(ANSI_COLOR_RESET);
         for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {
             this->synapses->getItem(i)->print();
         }
-        printf("\n");
     }
 
     vector_size_t Perceptron::getId() {

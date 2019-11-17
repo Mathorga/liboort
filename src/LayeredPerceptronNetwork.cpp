@@ -24,7 +24,7 @@ namespace Oort {
         this->computeError();
 
         // Adjust the synapses' weights based on the neurons' errors.
-        // this->adjustWeights();
+        this->adjustWeights();
     }
 
     void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
@@ -145,7 +145,7 @@ namespace Oort {
         // Loop through layers skipping the first one, which is input.
         for (vector_size_t i = 1; i < this->model->getLayersNum(); i++) {
             // Loop through neurons in each layer.
-            #pragma omp parallel for
+            // #pragma omp parallel for
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
                 // Get the current neuron.
                 currentNeuron = this->model->getLayer(i)->getItem(j);
@@ -202,37 +202,44 @@ namespace Oort {
             // // Reset the current layer error.
             // layerError = 0;
 
-            // Calculate the current neuron's error if output layer.
-            if (i >= this->model->getLayersNum() - 1) {
-                // Output layer, so calculate error.
-
-                // Loop through output neurons.
-                for (vector_size_t j = 0; j < this->model->getOutputLayer()->getSize(); j++) {
-                    // Get the current neuron.
-                    currentNeuron = this->model->getOutputLayer()->getItem(j);
-
-                    // // Compute error.
-                    // currentNeuronError = pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2
-                    // currentNeuron->setError(pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2);
-
-                    // Compute derivatives.
-                    currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
-                    // printf("\ndOutput %f\n", currentNeuron->getDOutput());
-
-                    // // Update the total layer error.
-                    // layerError += currentNeuron->getError();
-                }
-
-                // // Set the output layer error.
-                // this->errors->replaceAt(layerError, i);
-            }
+            // // Calculate the current neuron's error if output layer.
+            // if (i >= this->model->getLayersNum() - 1) {
+            //     // Output layer, so calculate error.
+            //
+            //     // Loop through output neurons.
+            //     for (vector_size_t j = 0; j < this->model->getOutputLayer()->getSize(); j++) {
+            //         // Get the current neuron.
+            //         currentNeuron = this->model->getOutputLayer()->getItem(j);
+            //
+            //         // // Compute error.
+            //         // currentNeuronError = pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2
+            //         // currentNeuron->setError(pow(currentNeuron->getExpectedOutput() - currentNeuron->getValue(), 2) / 2);
+            //
+            //         // Compute derivatives.
+            //         currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
+            //         // printf("\ndOutput %f\n", currentNeuron->getDOutput());
+            //
+            //         // // Update the total layer error.
+            //         // layerError += currentNeuron->getError();
+            //     }
+            //
+            //     // // Set the output layer error.
+            //     // this->errors->replaceAt(layerError, i);
+            // }
 
             // Loop through neurons of each layer.
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
                 // Get the current neuron.
                 currentNeuron = this->model->getLayer(i)->getItem(j);
 
-                currentNeuron->setDInput(currentNeuron->getDValue() + currentNeuron->getDOutput());
+                // If output layer, then directly calculate the error.
+                if (i >= this->model->getLayersNum() - 1) {
+                    // Compute error.
+                    currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
+                    // printf("\ndOutput %f\n", currentNeuron->getDOutput());
+                }
+
+                currentNeuron->setDInput(currentNeuron->getDValue() * currentNeuron->getDOutput());
                 // printf("\ndInput %f\n", currentNeuron->getDInput());
 
                 // Reset incoming weight.
@@ -251,13 +258,14 @@ namespace Oort {
 
                     // Calculate the dWeight of the current synapse.
                     currentNeuron->getSynapse(k)->setDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
-                    printf("\ndWeight %f\n", currentNeuron->getSynapse(k)->getDWeight());
+                    // printf("\ndWeight %f\n", currentNeuron->getSynapse(k)->getDWeight());
 
                     // Update the actual synapse weight.
-                    currentNeuron->getSynapse(k)->setWeight(currentNeuron->getSynapse(k)->getWeight() - this->learningRate * currentNeuron->getSynapse(k)->getDWeight());
+                    // currentNeuron->getSynapse(k)->setWeight(currentNeuron->getSynapse(k)->getWeight() - this->learningRate * currentNeuron->getSynapse(k)->getDWeight());
 
                     // Update the synapse's input neuron's dOutput.
-                    currentNeuron->getSynapse(k)->getInputNeuron()->setDOutput(currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput() + currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput());
+                    currentNeuron->getSynapse(k)->getInputNeuron()->setDOutput(currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput() + (currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput()));
+                    // printf("\ndOutput ++ %f\n", currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput());
 
                     // Update the synapses' input neuron's dInput.
                     // currentNeuron->setDInput(currentNeuron->getDValue() + currentNeuron->getDOutput());
@@ -276,6 +284,25 @@ namespace Oort {
                 //     // Set layer error.
                 //     this->errors->replaceAt(layerError, i - 1);
                 // }
+            }
+        }
+    }
+
+    void LayeredPerceptronNetwork::adjustWeights() {
+        // Store the current synapse for simplicity.
+        PerceptronSynapse* currentSynapse = nullptr;
+
+        // Loop through layers of the model.
+        for (vector_size_t i = 0; i < this->model->getLayersNum(); i++) {
+            // Loop through neurons in each layer.
+            for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+                // Loop through synapses in each neuron.
+                for (vector_size_t k = 0; k < this->model->getLayer(i)->getItem(j)->getSynapsesNum(); k++) {
+                    currentSynapse = this->model->getLayer(i)->getItem(j)->getSynapse(k);
+
+                    // Update the actual synapse weight.
+                    currentSynapse->setWeight(currentSynapse->getWeight() - this->learningRate * currentSynapse->getDWeight());
+                }
             }
         }
     }
