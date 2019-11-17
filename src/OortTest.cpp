@@ -81,17 +81,17 @@ int main(int argc, char const *argv[]) {
     double startTime = getTime();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
     for (uint i = 0; i < 100000; i++) {
-        nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
-        nnn->setExpectedOutput(kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs());
+        nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
+        nnn->setExpectedOutput(kp->getKnowledge()->getExperience(0)->getOutputs());
         nnn->run();
         // nnn->print();
         nnn->correct();
     }
-    nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
+    nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
     nnn->run();
     nnn->print();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
-    printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[0], kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[1], kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs()[2]);
+    printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperience(0)->getOutputs()[0], kp->getKnowledge()->getExperience(0)->getOutputs()[1], kp->getKnowledge()->getExperience(0)->getOutputs()[2]);
     printf("\ninputsNum %d outputsNum %d\n", kp->getKnowledge()->getInputsNum(), kp->getKnowledge()->getOutputsNum());
     // nnn->train(kp->getKnowledge(), 10);
     // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
