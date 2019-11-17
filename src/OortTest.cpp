@@ -135,7 +135,7 @@ int main(int argc, char const *argv[]) {
 
     LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser();
     lpmp->readFile((char*) "./res/mdl/testLPM.mdl");
-    lpmp->getModel()->print();
+    // lpmp->getModel()->print();
     lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
 
@@ -163,8 +163,16 @@ int main(int argc, char const *argv[]) {
     printf("\nKnowledge size %d\n", kp->getKnowledge()->getExperience(0)->getInputsNum());
 
     double startTime = getTime();
+    // nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
+    // nnn->setExpectedOutput(kp->getKnowledge()->getExperience(0)->getOutputs());
+    // printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
+    // nnn->run();
+    // nnn->correct();
+    // printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
+    // printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperience(0)->getOutputs()[0], kp->getKnowledge()->getExperience(0)->getOutputs()[1], kp->getKnowledge()->getExperience(0)->getOutputs()[2]);
+    // printf("\ninputsNum %d outputsNum %d\n", kp->getKnowledge()->getInputsNum(), kp->getKnowledge()->getOutputsNum());
     nnn->train(kp->getKnowledge(), 10);
-    lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
     nnn->print();
     double endTime = getTime();
 

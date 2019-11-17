@@ -38,4 +38,12 @@ namespace Oort {
     vector_size_t PerceptronSynapse::getInputId() {
         return this->inputNeuron->getId();
     }
+
+    synapse_weight_t PerceptronSynapse::getDWeight() {
+        return this->dWeight;
+    }
+
+    void PerceptronSynapse::setDWeight(synapse_weight_t dWeight) {
+        this->dWeight = dWeight;
+    }
 }

@@ -53,7 +53,7 @@ namespace Oort {
         synapse_weight_t baseWeight;
         neuron_value_t baseValue;
         learning_rate_t learningRate;
-        perceptron_error_t error;
+        Vector<perceptron_error_t>* errors;
 
         void computeValue();
         void computeError();

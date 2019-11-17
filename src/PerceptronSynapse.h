@@ -21,8 +21,13 @@ namespace Oort {
         // Getters.
         Perceptron* getInputNeuron();
         vector_size_t getInputId();
+        synapse_weight_t getDWeight();
+
+        // Setters.
+        void setDWeight(synapse_weight_t dWeight);
 
     private:
+        synapse_weight_t dWeight;
         Perceptron* inputNeuron;
     };
 }

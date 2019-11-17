@@ -58,6 +58,14 @@ namespace Oort {
         return this->dValue;
     }
 
+    neuron_value_t Perceptron::getDInput() {
+        return this->dInput;
+    }
+
+    neuron_value_t Perceptron::getDOutput() {
+        return this->dOutput;
+    }
+
     perceptron_error_t Perceptron::getError() {
         return this->error;
     }
@@ -91,6 +99,14 @@ namespace Oort {
     // Setters.
     void Perceptron::setDValue(neuron_value_t dValue) {
         this->dValue = dValue;
+    }
+
+    void Perceptron::setDInput(neuron_value_t dInput) {
+        this->dInput = dInput;
+    }
+
+    void Perceptron::setDOutput(neuron_value_t dOutput) {
+        this->dOutput = dOutput;
     }
 
     void Perceptron::setError(perceptron_error_t error) {
