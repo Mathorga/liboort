@@ -162,6 +162,9 @@ namespace Oort {
 
                 // Activation.
                 currentNeuron->setValue(this->activate(value));
+                // if (i == 1) {
+                //     printf("\nvalue %f activated %f dactivated %f\n", value, this->activate(value), this->dActivate(value));
+                // }
 
                 // Derivative activation.
                 currentNeuron->setDValue(this->dActivate(value));

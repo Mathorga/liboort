@@ -58,7 +58,7 @@ int main(int argc, char const *argv[]) {
 
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
     // Add input layer.
-    layerSizes->addLast(200);
+    layerSizes->addLast(1296);
 
     // Add hidden layer.
     layerSizes->addLast(5);
@@ -80,11 +80,11 @@ int main(int argc, char const *argv[]) {
 
     double startTime = getTime();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
-    for (uint i = 0; i < 1; i++) {
+    for (uint i = 0; i < 100000; i++) {
         nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
         nnn->setExpectedOutput(kp->getKnowledge()->getExperiencesVector()->getLast()->getOutputs());
         nnn->run();
-        nnn->print();
+        // nnn->print();
         nnn->correct();
     }
     nnn->setInput(kp->getKnowledge()->getExperiencesVector()->getLast()->getInputs());
