@@ -52,12 +52,12 @@ namespace Oort {
         }
     }
 
-    neuron_value_t LayeredPerceptronNetwork::activate(perceptron_input_t value) {
+    neuron_value_t LayeredPerceptronNetwork::activate(neuron_value_t value) {
         // Sigmoid function.
         return (1 / (1 + (pow(M_E, -(value)))));
     }
 
-    neuron_value_t LayeredPerceptronNetwork::dActivate(perceptron_input_t value) {
+    neuron_value_t LayeredPerceptronNetwork::dActivate(neuron_value_t value) {
         // Sigmoid derivative function.
         return this->activate(value) * (1 - this->activate(value));
     }
