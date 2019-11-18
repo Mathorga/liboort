@@ -16,8 +16,8 @@ Copyright (C) 2019  Luka Micheletti
 #include "Vector.h"
 #include "PerceptronSynapse.h"
 
-#define perceptron_error_t float
-#define perceptron_input_t float
+#define perceptron_error_t double
+#define perceptron_input_t double
 
 namespace Oort {
     class PerceptronSynapse;
