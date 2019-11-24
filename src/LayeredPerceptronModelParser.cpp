@@ -202,8 +202,6 @@ namespace Oort {
         // Model Layer files necessarily need to have the right extension in order to be recognized.
         strncat(layerFileName, ".lyr", 4);
 
-        printf("\n%s\n", layerFileName);
-
         // Check if model was previously set. return if not.
         if (this->model) {
             // Open the file in binary write mode.
@@ -224,6 +222,9 @@ namespace Oort {
 
                 // Close the file at the end of the write operation.
                 fclose(layerFile);
+            } else {
+                // There was an error opening the Layer file.
+                printf("\n<LayeredPerceptronModelParser::writeFile()> Error: could not open Layer file %s\n", layerFileName);
             }
 
             // Open the file in binary write mode.
@@ -272,6 +273,9 @@ namespace Oort {
                 }
                 // Close the file at the end of the write operation.
                 fclose(modelFile);
+            } else {
+                // There was an error opening the Layer file.
+                printf("\n<LayeredPerceptronModelParser::writeFile()> Error: could not open Model file %s\n", fileName);
             }
         } else {
             printf("\n<LayeredPerceptronModelParser::writeFile()> Error: model not set\n");
