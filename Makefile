@@ -93,6 +93,7 @@ OortTrainer: OortTrainer.o \
 			 Synapse.o \
 			 PerceptronSynapse.o \
 			 Model.o \
+			 ModelParser.o \
 			 SparsePerceptronModel.o \
 			 SparsePerceptronNetwork.o \
 			 SparsePerceptronModelParser.o \
