@@ -36,6 +36,10 @@ namespace Oort {
         // Depth of each value presented in the .mdl.lyr file (in B).
         static const uint8_t LYR_VALUE_DEPTH;
 
+        // Constructors.
+        LayeredPerceptronModelParser();
+        LayeredPerceptronModelParser(uint32_t neuronIdDepth, uint32_t neuronTypeDepth, uint32_t neuronSynapsesNumDepth, uint32_t synapseWeightDepth);
+
         // Read a Model from a file and store it in this->model.
         void readFile(char* fileName);
         // Write this->model in a file.

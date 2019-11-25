@@ -3,6 +3,20 @@
 namespace Oort {
     const uint8_t LayeredPerceptronModelParser::LYR_VALUE_DEPTH = 4;
 
+    LayeredPerceptronModelParser::LayeredPerceptronModelParser() {
+        this->neuronIdDepth = 1;
+        this->neuronTypeDepth = 1;
+        this->neuronSynapsesNumDepth = 1;
+        this->synapseWeightDepth = 2;
+    }
+
+    LayeredPerceptronModelParser::LayeredPerceptronModelParser(uint32_t neuronIdDepth, uint32_t neuronTypeDepth, uint32_t neuronSynapsesNumDepth, uint32_t synapseWeightDepth) {
+        this->neuronIdDepth = neuronIdDepth;
+        this->neuronTypeDepth = neuronTypeDepth;
+        this->neuronSynapsesNumDepth = neuronSynapsesNumDepth;
+        this->synapseWeightDepth = synapseWeightDepth;
+    }
+
     void LayeredPerceptronModelParser::readFile(char* fileName) {
         FILE* modelFile = nullptr;
         FILE* layerFile = nullptr;

@@ -50,9 +50,9 @@ int main(int argc, char const *argv[]) {
     KnowledgeParser* kp = new KnowledgeParser();
     kp->readFile((char*) "./res/knl/Oort2.knl");
 
-    LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser();
-    lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
-    lpmp->getModel()->print();
+    LayeredPerceptronModelParser* lpmp = new LayeredPerceptronModelParser(2, 1, 2, 2);
+    // lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    // lpmp->getModel()->print();
     // lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
 
 
@@ -73,14 +73,13 @@ int main(int argc, char const *argv[]) {
     layerSizes->addLast(3);
 
     // Create the network.
-    // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
     // lpmp->setModel(nnn->getModel());
-    // lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
     LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
 
     double startTime = getTime();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
-    for (uint i = 0; i < 10000; i++) {
+    for (uint i = 0; i < 1000; i++) {
         nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
         nnn->setExpectedOutput(kp->getKnowledge()->getExperience(0)->getOutputs());
         nnn->run();
@@ -89,7 +88,7 @@ int main(int argc, char const *argv[]) {
     }
     nnn->setInput(kp->getKnowledge()->getExperience(0)->getInputs());
     nnn->run();
-    nnn->print();
+    // nnn->print();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
     printf("\nexpected: %f %f %f\n", kp->getKnowledge()->getExperience(0)->getOutputs()[0], kp->getKnowledge()->getExperience(0)->getOutputs()[1], kp->getKnowledge()->getExperience(0)->getOutputs()[2]);
     printf("\ninputsNum %d outputsNum %d\n", kp->getKnowledge()->getInputsNum(), kp->getKnowledge()->getOutputsNum());
