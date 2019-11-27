@@ -97,6 +97,9 @@ OortTrainer: OortTrainer.o \
 			 SparsePerceptronModel.o \
 			 SparsePerceptronNetwork.o \
 			 SparsePerceptronModelParser.o \
+   			 LayeredPerceptronModelParser.o \
+   			 LayeredPerceptronModel.o \
+   			 LayeredPerceptronNetwork.o \
 			 Knowledge.o \
 			 Experience.o \
 			 KnowledgeParser.o \

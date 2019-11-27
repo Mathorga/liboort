@@ -52,6 +52,7 @@ namespace Oort {
         } else {
             // Knowledge size is not consistent with model size.
             printf("\n<LayeredPerceptronNetwork::train()> Error: knowledge size not consistent\n");
+            printf("\n%d %d %d %d\n", this->model->getInputsNum(), knowledge->getInputsNum(), this->model->getOutputsNum(), knowledge->getOutputsNum());
         }
     }
 

@@ -1,6 +1,6 @@
 #include "utils.h"
-#include "SparsePerceptronNetwork.h"
-#include "SparsePerceptronModelParser.h"
+#include "LayeredPerceptronNetwork.h"
+#include "LayeredPerceptronModelParser.h"
 #include "KnowledgeParser.h"
 
 #define DEFAULT_ITERATIONS_NUM 100
@@ -11,9 +11,9 @@ int main(int argc, const char* argv[]) {
     char* modelFileName = nullptr;
     char* knowledgeFileName = nullptr;
     uint32_t iterationsNum = 0;
-    SparsePerceptronModelParser* modelParser = new SparsePerceptronModelParser();
+    LayeredPerceptronModelParser* modelParser = new LayeredPerceptronModelParser();
     KnowledgeParser* knowledgeParser = new KnowledgeParser();
-    SparsePerceptronNetwork* network = nullptr;
+    LayeredPerceptronNetwork* network = nullptr;
     double startTime = 0.0;
     double endTime = 0.0;
 
@@ -43,7 +43,7 @@ int main(int argc, const char* argv[]) {
 
     // Create network over read model.
     printf("\nCreated network\n");
-    network = new SparsePerceptronNetwork(modelParser->getModel());
+    network = new LayeredPerceptronNetwork(modelParser->getModel());
 
     // Read knowledge file.
     printf("\nReading knl file %s\n", knowledgeFileName);

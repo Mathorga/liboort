@@ -71,12 +71,16 @@ int main(int argc, char const *argv[]) {
 
     // Add output layer.
     layerSizes->addLast(3);
+    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
+    lpmp->setModel(nnn->getModel());
+    lpmp->writeFile((char*) "./res/mdl/NEWtestLPM.mdl");
+    return 1;
 
     // Create the network.
     // lpmp->setModel(nnn->getModel());
     lpmp->readFile((char*) "./res/mdl/NEWtestLPM.mdl");
     // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
-    LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(lpmp->getModel());
+    // LayeredPerceptronNetwork* nnn = new LayeredPerceptronNetwork(lpmp->getModel());
 
     double startTime = getTime();
     printf("\noutput: %f %f %f\n", nnn->getOutput()[0], nnn->getOutput()[1], nnn->getOutput()[2]);
