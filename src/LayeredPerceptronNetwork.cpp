@@ -31,6 +31,9 @@ namespace Oort {
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.
             for (uint32_t i = 0; i < iterationsNum; i++) {
+                if ((i * 100) / iterationsNum > ((i - 1) * 100) / iterationsNum) {
+                    printf("\n%d%%\n", (i * 100) / iterationsNum);
+                }
                 // Loop through knowledge experiences.
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
                     // Set model inputs based on experience inputs.

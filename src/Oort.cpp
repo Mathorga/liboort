@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
-#include "SparsePerceptronNetwork.h"
-#include "SparsePerceptronModelParser.h"
+#include "LayeredPerceptronNetwork.h"
+#include "LayeredPerceptronModelParser.h"
 #include "SerialNerve.h"
 #include "utils.h"
 
@@ -16,8 +16,8 @@ int main(int argc, char const *argv[]) {
     double startTime = 0;
     double endTime = 0;
     char* modelFileName = nullptr;
-    Oort::SparsePerceptronNetwork* brain = nullptr;
-    Oort::SparsePerceptronModelParser* modelParser = new Oort::SparsePerceptronModelParser();
+    Oort::LayeredPerceptronNetwork* brain = nullptr;
+    Oort::LayeredPerceptronModelParser* modelParser = new Oort::LayeredPerceptronModelParser();
     VideoCapture eye(0);
     Mat tmpImage;
     Mat image;
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
     modelParser->readFile(modelFileName);
 
     // Set the brain model based on that read before.
-    brain = new Oort::SparsePerceptronNetwork(modelParser->getModel());
+    brain = new Oort::LayeredPerceptronNetwork(modelParser->getModel());
 
     reaction = (byte*) malloc(brain->getModel()->getOutputsNum());
 
@@ -83,7 +83,7 @@ int main(int argc, char const *argv[]) {
             // Upscale the image to show it on screen.
             resize(image, tmpImage, Size(), 10, 10, INTER_NEAREST);
 
-            // Display the resulting frame
+            // Display the resulting frame.
             imshow("Preview", tmpImage);
         }
         // Press ESC on keyboard to exit.
@@ -115,7 +115,7 @@ int main(int argc, char const *argv[]) {
         }
 
         // Send output to the nerve.
-        nerve->send(reaction, brain->getModel()->getOutputsNum());
+        // nerve->send(reaction, brain->getModel()->getOutputsNum());
 
         endTime = Oort::getTime();
 
