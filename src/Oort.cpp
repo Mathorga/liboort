@@ -45,6 +45,8 @@ int main(int argc, char const *argv[]) {
 
     // Read specified model file.
     modelParser->readFile(modelFileName);
+    //modelParser->getModel()->print();
+    // return 1;
 
     // Set the brain model based on that read before.
     brain = new Oort::LayeredPerceptronNetwork(modelParser->getModel());
@@ -104,6 +106,8 @@ int main(int argc, char const *argv[]) {
 
         // Feed the captured image to the brain.
         brain->setInput(eyeData);
+
+        // Calculate brain's output.
         brain->run();
 
         // Sleep for a while.

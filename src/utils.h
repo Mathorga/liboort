@@ -55,6 +55,7 @@ namespace Oort {
     std::vector<std::string> splitString(const std::string& inputString, char separator);
     double sigmoid(double input);
     double dSigmoid(double input);
+    void printPercentage(uint32_t value, uint32_t maxValue);
     // Vector<std::string> splitString(const std::string& inputString, char separator);
 
     // void dump(const uint8_t* image, unsigned int n, const char* filename);

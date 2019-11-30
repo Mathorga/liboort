@@ -4,9 +4,9 @@ namespace Oort {
     const uint8_t LayeredPerceptronModelParser::LYR_VALUE_DEPTH = 4;
 
     LayeredPerceptronModelParser::LayeredPerceptronModelParser() {
-        this->neuronIdDepth = 1;
+        this->neuronIdDepth = 2;
         this->neuronTypeDepth = 1;
-        this->neuronSynapsesNumDepth = 1;
+        this->neuronSynapsesNumDepth = 2;
         this->synapseWeightDepth = 2;
     }
 

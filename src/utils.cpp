@@ -97,6 +97,17 @@ namespace Oort {
         return sigmoid(input) * (1 - sigmoid(input));
     }
 
+    void printPercentage(uint32_t value, uint32_t maxValue) {
+        if (value < maxValue) {
+            if ((value * 100) / maxValue > ((value - 1) * 100) / maxValue) {
+                printf("\r%d%%", (value * 100) / maxValue);
+                fflush (stdout);
+            }
+        } else {
+            //TODO Print error.
+        }
+    }
+
     // Vector<std::String> splitString(std::String inputString, char separator) {
     //     Vector<std:string> elements;
     //     std::stringstream stringStream(inputString);

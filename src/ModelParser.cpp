@@ -11,9 +11,9 @@ namespace Oort {
 
     ModelParser::ModelParser() {
         // Set default depths.
-        this->neuronIdDepth = 1;
+        this->neuronIdDepth = 2;
         this->neuronTypeDepth = 1;
-        this->neuronSynapsesNumDepth = 1;
+        this->neuronSynapsesNumDepth = 2;
         this->synapseWeightDepth = 2;
     }
 

@@ -27,13 +27,13 @@ namespace Oort {
     }
 
     void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+        printf("\n");
         // Check if knowledge is consistent with model.
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.
             for (uint32_t i = 0; i < iterationsNum; i++) {
-                if ((i * 100) / iterationsNum > ((i - 1) * 100) / iterationsNum) {
-                    printf("\n%d%%\n", (i * 100) / iterationsNum);
-                }
+                printPercentage(i, iterationsNum);
+
                 // Loop through knowledge experiences.
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
                     // Set model inputs based on experience inputs.
@@ -52,8 +52,9 @@ namespace Oort {
         } else {
             // Knowledge size is not consistent with model size.
             printf("\n<LayeredPerceptronNetwork::train()> Error: knowledge size not consistent\n");
-            printf("\n%d %d %d %d\n", this->model->getInputsNum(), knowledge->getInputsNum(), this->model->getOutputsNum(), knowledge->getOutputsNum());
+            // printf("\n%d %d %d %d\n", this->model->getInputsNum(), knowledge->getInputsNum(), this->model->getOutputsNum(), knowledge->getOutputsNum());
         }
+        printf("\n");
     }
 
     neuron_value_t LayeredPerceptronNetwork::activate(neuron_value_t value) {
@@ -169,6 +170,11 @@ namespace Oort {
                 // Reset dInput and dOutput.
                 currentNeuron->setDInput(0.0);
                 currentNeuron->setDOutput(0.0);
+
+                // DEBUG
+                // if (i == 1) {
+                //     printf("\nvalue %f activated %f dactivated %f\n", value, currentNeuron->getValue(), currentNeuron->getDValue());
+                // }
             }
         }
     }
