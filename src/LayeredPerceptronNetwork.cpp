@@ -60,11 +60,23 @@ namespace Oort {
     neuron_value_t LayeredPerceptronNetwork::activate(neuron_value_t value) {
         // Sigmoid function.
         return (1 / (1 + (pow(M_E, -(value)))));
+
+        // Fast sigmoid functon.
+        // return (value / (1 + abs(value)));
+
+        // Hyperbolic tangent function.
+        // return tanh(value);
     }
 
     neuron_value_t LayeredPerceptronNetwork::dActivate(neuron_value_t value) {
         // Sigmoid derivative function.
         return this->activate(value) * (1 - this->activate(value));
+
+        // Fast sigmoid derivative function.
+        // return (1 / (exp(1 + abs(value)), 2));
+
+        // Hyperbolic tangent derivative function.
+        // return (1 - exp(tanh(value), 2));
     }
 
     void LayeredPerceptronNetwork::print() {

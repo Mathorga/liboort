@@ -101,7 +101,7 @@ namespace Oort {
         if (value < maxValue) {
             if ((value * 100) / maxValue > ((value - 1) * 100) / maxValue) {
                 printf("\r%d%%", (value * 100) / maxValue);
-                fflush (stdout);
+                fflush(stdout);
             }
         } else {
             //TODO Print error.
