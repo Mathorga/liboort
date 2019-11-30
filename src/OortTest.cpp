@@ -159,31 +159,31 @@ int main(int argc, char const *argv[]) {
 
 
 
-    Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
-    // Add input layer.
-    layerSizes->addLast(1);
-    layerSizes->addLast(200);
-
-    // Add output layer.
-    layerSizes->addLast(1);
-
-    LayeredPerceptronNetwork* lpn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
-
-    lpn->print();
-
-    neuron_value_t input = 0.4;
-    neuron_value_t expectedOutput = 0.8;
-
-    for (uint i = 0; i < 1000000; i++) {
-        lpn->setInput(&input);
-        lpn->setExpectedOutput(&expectedOutput);
-        lpn->run();
-        // lpn->print();
-        // usleep(1000);
-        lpn->correct();
-    }
-    lpn->run();
-    lpn->print();
+    // Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
+    // // Add input layer.
+    // layerSizes->addLast(1);
+    // layerSizes->addLast(200);
+    //
+    // // Add output layer.
+    // layerSizes->addLast(1);
+    //
+    // LayeredPerceptronNetwork* lpn = new LayeredPerceptronNetwork(new LayeredPerceptronModel(layerSizes));
+    //
+    // lpn->print();
+    //
+    // neuron_value_t input = 0.4;
+    // neuron_value_t expectedOutput = 0.8;
+    //
+    // for (uint i = 0; i < 1000000; i++) {
+    //     lpn->setInput(&input);
+    //     lpn->setExpectedOutput(&expectedOutput);
+    //     lpn->run();
+    //     // lpn->print();
+    //     // usleep(1000);
+    //     lpn->correct();
+    // }
+    // lpn->run();
+    // lpn->print();
 
 
 
