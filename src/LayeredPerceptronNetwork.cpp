@@ -1,13 +1,21 @@
 #include "LayeredPerceptronNetwork.h"
 
 namespace Oort {
+    const perceptron_error_t LayeredPerceptronNetwork::UNSET_ERROR = -1.0;
+    const learning_rate_t LayeredPerceptronNetwork::DEFAULT_LEARNING_RATE = 0.15;
+    const momentum_t LayeredPerceptronNetwork::DEFAULT_MOMENTUM = 0.5;
+
     LayeredPerceptronNetwork::LayeredPerceptronNetwork() {
         this->model = nullptr;
-        // this->error = 0.0;
+        this->error = UNSET_ERROR;
+        this->learningRate = DEFAULT_LEARNING_RATE;
+        this->momentum = DEFAULT_MOMENTUM;
     }
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork(LayeredPerceptronModel* model) {
         this->model = model;
+        this->error = UNSET_ERROR;
+        this->momentum = DEFAULT_MOMENTUM;
 
         // Calculate the learning rate based on the number of neurons:
         // the greater the number of neurons, the lower the learning rate.
@@ -59,13 +67,16 @@ namespace Oort {
 
     neuron_value_t LayeredPerceptronNetwork::activate(neuron_value_t value) {
         // Sigmoid function.
-        return (1 / (1 + (pow(M_E, -(value)))));
+        return (1 / (1 + (exp(-value))));
 
         // Fast sigmoid functon.
         // return (value / (1 + abs(value)));
 
         // Hyperbolic tangent function.
         // return tanh(value);
+
+        // Custom hyperbolic tangent function.
+        // return ((tanh(0.3 * value) / 2) + 0.5);
     }
 
     neuron_value_t LayeredPerceptronNetwork::dActivate(neuron_value_t value) {
@@ -77,6 +88,11 @@ namespace Oort {
 
         // Hyperbolic tangent derivative function.
         // return (1 - exp(tanh(value), 2));
+        // Approximate hyperbolic tangent derivative function.
+        // return 1.0 - value * value;
+
+        // Custom hyperbolic tangent derivative function.
+        // return (0.15 * (pow(1 / cosh(0.3 * value), 2)));
     }
 
     void LayeredPerceptronNetwork::print() {
@@ -179,14 +195,12 @@ namespace Oort {
                 // Derivative activation.
                 currentNeuron->setDValue(this->dActivate(value));
 
-                // Reset dInput and dOutput.
-                currentNeuron->setDInput(0.0);
-                currentNeuron->setDOutput(0.0);
+                // Reset error.
+                currentNeuron->setError(Perceptron::DEFAULT_ERROR);
 
-                // DEBUG
-                // if (i == 1) {
-                //     printf("\nvalue %f activated %f dactivated %f\n", value, currentNeuron->getValue(), currentNeuron->getDValue());
-                // }
+                // Reset dInput and dOutput.
+                // currentNeuron->setDInput(0.0);
+                // currentNeuron->setDOutput(0.0);
             }
         }
     }
@@ -209,40 +223,62 @@ namespace Oort {
 
                 // If output layer, then directly calculate the error.
                 if (i >= this->model->getLayersNum() - 1) {
+                    // Calculate global error of the network.
+                    // this->error += currentNeuron->getExpectedOutput() - currentNeuron->getValue();
+
                     // Compute error.
-                    currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
+                    // currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
+
+                    // Compute neuron error.
+                    currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
+                    // printf("\nError %f\n", currentNeuron->getError());
                 }
 
-                currentNeuron->setDInput(currentNeuron->getDValue() * currentNeuron->getDOutput());
+                // currentNeuron->setDInput(currentNeuron->getDValue() * currentNeuron->getDOutput());
 
-                // For each neuron connected to the current one, add to its error the weighted sum between all the
-                // weights coming to the current.
+                // Calculate neuron's gradient.
+                currentNeuron->setGradient(currentNeuron->getError() * currentNeuron->getDValue());
+                // printf("\ngrad %f\n", currentNeuron->getGradient());
+
+                // Once the gradient for the current neuron is calculated, loop through all the neurons connected to it
+                // and add to their error the weighted sum of the gradient of the current.
                 for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
 
                     // Calculate the dWeight of the current synapse.
-                    currentNeuron->getSynapse(k)->setDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
+                    // currentNeuron->getSynapse(k)->setDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
 
                     // Update the synapse's input neuron's dOutput.
-                    currentNeuron->getSynapse(k)->getInputNeuron()->setDOutput(currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput() + (currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput()));
+                    // currentNeuron->getSynapse(k)->getInputNeuron()->setDOutput(currentNeuron->getSynapse(k)->getInputNeuron()->getDOutput() + (currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput()));
+                    currentNeuron->getSynapse(k)->getInputNeuron()->addError(currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getError());
                 }
             }
         }
     }
 
     void LayeredPerceptronNetwork::adjustWeights() {
-        // Store the current synapse for simplicity.
+        // Store the current neuron and the current synapse for simplicity.
+        Perceptron* currentNeuron = nullptr;
         PerceptronSynapse* currentSynapse = nullptr;
 
         // Loop through layers of the model.
         for (vector_size_t i = 0; i < this->model->getLayersNum(); i++) {
             // Loop through neurons in each layer.
             for (vector_size_t j = 0; j < this->model->getLayer(i)->getSize(); j++) {
+                currentNeuron = this->model->getLayer(i)->getItem(j);
                 // Loop through synapses in each neuron.
                 for (vector_size_t k = 0; k < this->model->getLayer(i)->getItem(j)->getSynapsesNum(); k++) {
-                    currentSynapse = this->model->getLayer(i)->getItem(j)->getSynapse(k);
+                    currentSynapse = currentNeuron->getSynapse(k);
+
+                    // Calculate delta weight.
+                    currentSynapse->setDWeight(this->learningRate *
+                                               currentSynapse->getInputNeuron()->getValue() *
+                                               currentNeuron->getGradient() +
+                                               this->momentum *
+                                               currentSynapse->getDWeight());
 
                     // Update the actual synapse weight.
-                    currentSynapse->setWeight(currentSynapse->getWeight() - this->learningRate * currentSynapse->getDWeight());
+                    // currentSynapse->setWeight(currentSynapse->getWeight() - this->learningRate * currentSynapse->getDWeight());
+                    currentSynapse->setWeight(currentSynapse->getWeight() + currentSynapse->getDWeight());
                 }
             }
         }

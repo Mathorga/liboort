@@ -17,6 +17,10 @@ Copyright (C) 2019 Luka Micheletti
 namespace Oort {
     class LayeredPerceptronNetwork : public NeuralNetwork {
     public:
+        static const perceptron_error_t UNSET_ERROR;
+        static const learning_rate_t DEFAULT_LEARNING_RATE;
+        static const momentum_t DEFAULT_MOMENTUM;
+
         // Constructors.
         LayeredPerceptronNetwork();
         LayeredPerceptronNetwork(LayeredPerceptronModel* model);
@@ -53,7 +57,9 @@ namespace Oort {
         synapse_weight_t baseWeight;
         neuron_value_t baseValue;
         learning_rate_t learningRate;
-        Vector<perceptron_error_t>* errors;
+        momentum_t momentum;
+        // Vector<perceptron_error_t>* errors;
+        perceptron_error_t error;
 
         void computeValue();
         void computeError();

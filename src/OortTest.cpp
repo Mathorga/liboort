@@ -17,45 +17,38 @@ int main(int argc, char const *argv[]) {
 
     // #################################################################################################################
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
+    layerSizes->addLast(2);
     layerSizes->addLast(3);
-    layerSizes->addLast(2);
-    layerSizes->addLast(2);
     layerSizes->addLast(1);
     LayeredPerceptronModel* model = new LayeredPerceptronModel(layerSizes);
     LayeredPerceptronNetwork* network = new LayeredPerceptronNetwork(model);
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
-    inputs->addLast(0.1);
-    inputs->addLast(0.2);
-    inputs->addLast(0.3);
-    Vector<neuron_value_t>* _inputs = new Vector<neuron_value_t>();
-    _inputs->addLast(0.9);
-    _inputs->addLast(0.8);
-    _inputs->addLast(0.7);
-
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    expectedOutputs->addLast(0.6);
-
-    Vector<neuron_value_t>* _expectedOutputs = new Vector<neuron_value_t>();
-    _expectedOutputs->addLast(0.2);
-
-    for (int i = 0; i < 1000000; i++) {
+    for (int i = 0; i < 100000; i++) {
+        inputs->empty();
+        expectedOutputs->empty();
+        double in1 = (double) (rand() % 2);
+        double in2 = (double) (rand() % 2);
+        inputs->addLast(in1);
+        inputs->addLast(in2);
+        expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
         network->setInput(inputs);
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->correct();
-        network->setInput(_inputs);
-        network->setExpectedOutput(_expectedOutputs);
-        network->run();
-        network->correct();
+
+        printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }
 
-    network->setInput(inputs);
+
+    Vector<neuron_value_t>* testInputs = new Vector<neuron_value_t>();
+    testInputs->addLast(0.0);
+    testInputs->addLast(0.0);
+
+    network->setInput(testInputs);
     network->run();
-    network->print();
-    network->setInput(_inputs);
-    network->run();
-    network->print();
+    // network->print();
     // #################################################################################################################
 
 

@@ -40,9 +40,10 @@ namespace Oort {
         // Getters.
         vector_size_t getId();
         neuron_value_t getDValue();
-        neuron_value_t getDInput();
-        neuron_value_t getDOutput();
+        // neuron_value_t getDInput();
+        // neuron_value_t getDOutput();
         perceptron_error_t getError();
+        neuron_value_t getGradient();
         neuron_value_t getExpectedOutput();
         vector_size_t getSynapsesNum();
         Vector<PerceptronSynapse>* getSynapses();
@@ -51,21 +52,23 @@ namespace Oort {
 
         // Setters.
         void setDValue(neuron_value_t dValue);
-        void setDInput(neuron_value_t dInput);
-        void setDOutput(neuron_value_t dOutput);
+        // void setDInput(neuron_value_t dInput);
+        // void setDOutput(neuron_value_t dOutput);
         void setError(perceptron_error_t error);
         void addError(perceptron_error_t error);
+        void setGradient(neuron_value_t gradient);
         void setExpectedOutput(neuron_value_t expectedOutput);
 
     private:
         vector_size_t id;
         neuron_value_t dValue;
-        neuron_value_t dInput;
-        neuron_value_t dOutput;
+        // neuron_value_t dInput;
+        // neuron_value_t dOutput;
         perceptron_error_t error;
+        neuron_value_t gradient;
         neuron_value_t expectedOutput;
-        perceptron_error_t delta;
-        perceptron_error_t partialDelta;
+        // perceptron_error_t delta;
+        // perceptron_error_t partialDelta;
 
         Vector<PerceptronSynapse>* synapses;
     };

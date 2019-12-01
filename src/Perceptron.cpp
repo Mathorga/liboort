@@ -10,6 +10,7 @@ namespace Oort {
         this->value = DEFAULT_VALUE;
         this->error = DEFAULT_ERROR;
         this->synapses = new Vector<PerceptronSynapse>();
+        this->gradient = 0.0;
     }
 
     Perceptron::Perceptron(vector_size_t id, Neuron::NeuronType type) : Perceptron(id) {
@@ -57,16 +58,20 @@ namespace Oort {
         return this->dValue;
     }
 
-    neuron_value_t Perceptron::getDInput() {
-        return this->dInput;
-    }
+    // neuron_value_t Perceptron::getDInput() {
+    //     return this->dInput;
+    // }
 
-    neuron_value_t Perceptron::getDOutput() {
-        return this->dOutput;
-    }
+    // neuron_value_t Perceptron::getDOutput() {
+    //     return this->dOutput;
+    // }
 
     perceptron_error_t Perceptron::getError() {
         return this->error;
+    }
+
+    neuron_value_t Perceptron::getGradient() {
+        return this->gradient;
     }
 
     neuron_value_t Perceptron::getExpectedOutput() {
@@ -100,16 +105,20 @@ namespace Oort {
         this->dValue = dValue;
     }
 
-    void Perceptron::setDInput(neuron_value_t dInput) {
-        this->dInput = dInput;
-    }
+    // void Perceptron::setDInput(neuron_value_t dInput) {
+    //     this->dInput = dInput;
+    // }
 
-    void Perceptron::setDOutput(neuron_value_t dOutput) {
-        this->dOutput = dOutput;
-    }
+    // void Perceptron::setDOutput(neuron_value_t dOutput) {
+    //     this->dOutput = dOutput;
+    // }
 
     void Perceptron::setError(perceptron_error_t error) {
         this->error = error;
+    }
+
+    void Perceptron::setGradient(neuron_value_t gradient) {
+        this->gradient = gradient;
     }
 
     void Perceptron::addError(perceptron_error_t error) {
