@@ -25,9 +25,11 @@ namespace Oort {
 
         // Setters.
         void setDWeight(synapse_weight_t dWeight);
+        void setDeltaWeight(synapse_weight_t deltaWeight);
 
     private:
         synapse_weight_t dWeight;
+        synapse_weight_t deltaWeight;
         Perceptron* inputNeuron;
     };
 }

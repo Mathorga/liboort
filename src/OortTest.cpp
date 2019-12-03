@@ -18,25 +18,42 @@ int main(int argc, char const *argv[]) {
     // #################################################################################################################
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
     layerSizes->addLast(2);
-    layerSizes->addLast(3);
+    layerSizes->addLast(5);
     layerSizes->addLast(1);
     LayeredPerceptronModel* model = new LayeredPerceptronModel(layerSizes);
     LayeredPerceptronNetwork* network = new LayeredPerceptronNetwork(model);
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; i < 1000000; i++) {
         inputs->empty();
         expectedOutputs->empty();
         double in1 = (double) (rand() % 2);
         double in2 = (double) (rand() % 2);
+        in1 = in1 == 0.0 ? 0.01 : 0.99;
+        in2 = in2 == 0.0 ? 0.01 : 0.99;
+        // in1 = 0.99;
+        // in2 = 0.99;
         inputs->addLast(in1);
         inputs->addLast(in2);
-        expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
+        // expectedOutputs->addLast(in1 == in2 ? 0.21 : 0.75);
+        // expectedOutputs->addLast(0.99);
+        if (in1 == 0.01 && in2 == 0.01) {
+            expectedOutputs->addLast(0.21);
+        } else if (in1 == 0.01 && in2 == 0.99) {
+            expectedOutputs->addLast(0.75);
+        } else if (in1 == 0.99 && in2 == 0.01) {
+            expectedOutputs->addLast(0.99);
+        } else if (in1 == 0.99 && in2 == 0.99) {
+            expectedOutputs->addLast(0.01);
+        }
         network->setInput(inputs);
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->correct();
+
+        // network->print();
+        // usleep(1000000);
 
         printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }

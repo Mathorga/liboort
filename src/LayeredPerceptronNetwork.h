@@ -19,7 +19,7 @@ namespace Oort {
     public:
         static const perceptron_error_t UNSET_ERROR;
         static const learning_rate_t DEFAULT_LEARNING_RATE;
-        static const momentum_t DEFAULT_MOMENTUM;
+        // static const momentum_t DEFAULT_MOMENTUM;
 
         // Constructors.
         LayeredPerceptronNetwork();
@@ -57,7 +57,7 @@ namespace Oort {
         synapse_weight_t baseWeight;
         neuron_value_t baseValue;
         learning_rate_t learningRate;
-        momentum_t momentum;
+        // momentum_t momentum;
         // Vector<perceptron_error_t>* errors;
         perceptron_error_t error;
 
