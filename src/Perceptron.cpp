@@ -3,6 +3,7 @@
 namespace Oort {
     const neuron_value_t Perceptron::DEFAULT_VALUE = 0.5;
     const perceptron_error_t Perceptron::DEFAULT_ERROR = 0.0;
+    const neuron_value_t Perceptron::DEFAULT_BIAS = 1.0;
 
     Perceptron::Perceptron(vector_size_t id) {
         // TODO Implement real constructor.
@@ -10,6 +11,7 @@ namespace Oort {
         this->value = DEFAULT_VALUE;
         this->error = DEFAULT_ERROR;
         this->synapses = new Vector<PerceptronSynapse>();
+        this->bias = DEFAULT_BIAS;
         // this->gradient = 0.0;
     }
 
@@ -73,6 +75,10 @@ namespace Oort {
         return this->error;
     }
 
+    neuron_value_t Perceptron::getBias() {
+        return this->bias;
+    }
+
     // neuron_value_t Perceptron::getGradient() {
     //     return this->gradient;
     // }
@@ -122,6 +128,10 @@ namespace Oort {
 
     void Perceptron::setError(perceptron_error_t error) {
         this->error = error;
+    }
+
+    void Perceptron::setBias(neuron_value_t bias) {
+        this->bias = bias;
     }
 
     // void Perceptron::setGradient(neuron_value_t gradient) {

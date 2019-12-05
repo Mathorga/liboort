@@ -39,11 +39,11 @@ namespace Oort {
         this->adjustWeights();
     }
 
-    void SparsePerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+    void SparsePerceptronNetwork::train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize) {
         // Check if knowledge is consistent with model.
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.
-            for (uint32_t i = 0; i < iterationsNum; i++) {
+            for (uint32_t i = 0; i < epochsNum; i++) {
                 // Loop through knowledge experiences.
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
                     // Set model inputs based on experience inputs.

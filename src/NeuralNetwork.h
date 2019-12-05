@@ -14,7 +14,7 @@ namespace Oort {
         // Execute one iteration of the net.
         virtual void run() = 0;
         virtual void correct() = 0;
-        virtual void train(Knowledge* knowledge, uint32_t iterationsNum) = 0;
+        virtual void train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize) = 0;
     };
 }
 

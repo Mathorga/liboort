@@ -41,6 +41,10 @@ namespace Oort {
         this->dWeight = dWeight;
     }
 
+    void PerceptronSynapse::addDWeight(synapse_weight_t dWeight) {
+        this->dWeight += dWeight;
+    }
+
     void PerceptronSynapse::setDeltaWeight(synapse_weight_t deltaWeight) {
         this->deltaWeight = deltaWeight;
     }

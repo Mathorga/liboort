@@ -20,7 +20,7 @@ namespace Oort {
         // Calculate the learning rate based on the number of neurons:
         // the greater the number of neurons, the lower the learning rate.
         this->learningRate = 1 / (float) this->model->getNeuronsNum();
-        // this->learningRate = DEFAULT_LEARNING_RATE;
+        this->learningRate = DEFAULT_LEARNING_RATE;
     }
 
     void LayeredPerceptronNetwork::run() {
@@ -35,13 +35,13 @@ namespace Oort {
         this->adjustWeights();
     }
 
-    void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t iterationsNum) {
+    void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize) {
         printf("\n");
         // Check if knowledge is consistent with model.
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.
-            for (uint32_t i = 0; i < iterationsNum; i++) {
-                printPercentage(i, iterationsNum);
+            for (uint32_t i = 0; i < epochsNum; i++) {
+                printPercentage(i, epochsNum);
 
                 // Loop through knowledge experiences.
                 for (uint32_t j = 0; j < knowledge->getExperiencesNum(); j++) {
@@ -53,10 +53,9 @@ namespace Oort {
 
                     // Run the network in order to get outputs.
                     this->run();
-
-                    // Correct weights based on the output.
-                    this->correct();
                 }
+                // Correct weights based on the output.
+                this->correct();
             }
         } else {
             // Knowledge size is not consistent with model size.
@@ -191,9 +190,11 @@ namespace Oort {
                 }
 
                 // Activation.
+                // currentNeuron->setValue(this->activate(value + currentNeuron->getBias()));
                 currentNeuron->setValue(this->activate(value));
 
                 // Derivative activation.
+                // currentNeuron->setDValue(this->dActivate(value + currentNeuron->getBias()));
                 currentNeuron->setDValue(this->dActivate(value));
 
                 // Reset error.
@@ -229,7 +230,6 @@ namespace Oort {
 
                     // Compute error.
                     currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
-                    printf("\nError %f\n", currentNeuron->getDOutput());
 
                     // Compute neuron error.
                     // currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());
@@ -247,7 +247,7 @@ namespace Oort {
                 for (vector_size_t k = 0; k < currentNeuron->getSynapsesNum(); k++) {
 
                     // Calculate the dWeight of the current synapse.
-                    currentNeuron->getSynapse(k)->setDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
+                    currentNeuron->getSynapse(k)->addDWeight(currentNeuron->getSynapse(k)->getInputNeuron()->getValue() * currentNeuron->getDInput());
 
                     // Update the synapse's input neuron's dOutput.
                     currentNeuron->getSynapse(k)->getInputNeuron()->addDOutput(currentNeuron->getSynapse(k)->getWeight() * currentNeuron->getDInput());
@@ -280,7 +280,10 @@ namespace Oort {
 
                     // Update the actual synapse weight.
                     // currentSynapse->setDeltaWeight(this->learningRate * currentSynapse->getDWeight());
-                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * currentSynapse->getDWeight()));
+                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * (currentSynapse->getDWeight() / 100)));
+
+                    // Reset synapse's dWeight.
+                    currentSynapse->setDWeight(0.0);
                     // currentSynapse->setWeight(currentSynapse->getWeight() + currentSynapse->getDWeight());
                     // printf("\n%d - %d dWeight %f\n", currentSynapse->getInputNeuron()->getId(), currentNeuron->getId(), currentSynapse->getDWeight());
                 }

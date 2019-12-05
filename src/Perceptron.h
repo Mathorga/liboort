@@ -25,6 +25,7 @@ namespace Oort {
     public:
         static const neuron_value_t DEFAULT_VALUE;
         static const perceptron_error_t DEFAULT_ERROR;
+        static const neuron_value_t DEFAULT_BIAS;
         static Perceptron getNullPerceptron();
 
         // Constructors.
@@ -43,6 +44,7 @@ namespace Oort {
         neuron_value_t getDInput();
         neuron_value_t getDOutput();
         perceptron_error_t getError();
+        neuron_value_t getBias();
         // neuron_value_t getGradient();
         neuron_value_t getExpectedOutput();
         vector_size_t getSynapsesNum();
@@ -57,6 +59,7 @@ namespace Oort {
         void addDOutput(neuron_value_t dOutput);
         void setError(perceptron_error_t error);
         void addError(perceptron_error_t error);
+        void setBias(neuron_value_t bias);
         // void setGradient(neuron_value_t gradient);
         void setExpectedOutput(neuron_value_t expectedOutput);
 
@@ -66,6 +69,7 @@ namespace Oort {
         neuron_value_t dInput;
         neuron_value_t dOutput;
         perceptron_error_t error;
+        neuron_value_t bias;
         // neuron_value_t gradient;
         neuron_value_t expectedOutput;
         // perceptron_error_t delta;

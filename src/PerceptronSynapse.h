@@ -25,6 +25,7 @@ namespace Oort {
 
         // Setters.
         void setDWeight(synapse_weight_t dWeight);
+        void addDWeight(synapse_weight_t dWeight);
         void setDeltaWeight(synapse_weight_t deltaWeight);
 
     private:

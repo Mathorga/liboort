@@ -27,7 +27,7 @@ namespace Oort {
 
         void run();
         void correct();
-        void train(Knowledge* knowledge, uint32_t iterationsNum);
+        void train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize);
         neuron_value_t activate(neuron_value_t value);
         neuron_value_t dActivate(neuron_value_t value);
         void print();
@@ -52,7 +52,8 @@ namespace Oort {
         // Set the expected output for all output neurons.
         // Expected output vector size must be at least as big as model's output layer size.
         bool setExpectedOutput(Vector<neuron_value_t>* expectedOutput);
-
+        void computeError();
+        void adjustWeights();
     private:
         synapse_weight_t baseWeight;
         neuron_value_t baseValue;
@@ -60,10 +61,11 @@ namespace Oort {
         // momentum_t momentum;
         // Vector<perceptron_error_t>* errors;
         perceptron_error_t error;
+        vector_size_t batchSize;
 
         void computeValue();
-        void computeError();
-        void adjustWeights();
+        // void computeError();
+        // void adjustWeights();
 
         LayeredPerceptronModel* model;
     };

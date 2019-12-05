@@ -14,7 +14,7 @@ namespace Oort {
 
         void run();
         void correct();
-        void train(Knowledge* knowledge, uint32_t iterationsNum);
+        void train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize);
         neuron_value_t activate(perceptron_input_t value);
         neuron_value_t dActivate(perceptron_input_t value);
         void print();
