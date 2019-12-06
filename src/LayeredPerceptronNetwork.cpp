@@ -280,7 +280,7 @@ namespace Oort {
 
                     // Update the actual synapse weight.
                     // currentSynapse->setDeltaWeight(this->learningRate * currentSynapse->getDWeight());
-                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * (currentSynapse->getDWeight() / 100)));
+                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * (currentSynapse->getDWeight() / 10)));
 
                     // Reset synapse's dWeight.
                     currentSynapse->setDWeight(0.0);

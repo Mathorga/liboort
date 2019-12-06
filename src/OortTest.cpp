@@ -51,7 +51,8 @@ int main(int argc, char const *argv[]) {
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->computeError();
-        if (i % 100 == 0) {
+        if (i % 10 == 0) {
+            network->print();
             network->adjustWeights();
             network->print();
         }
