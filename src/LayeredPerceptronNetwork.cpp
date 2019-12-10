@@ -2,7 +2,7 @@
 
 namespace Oort {
     const perceptron_error_t LayeredPerceptronNetwork::UNSET_ERROR = -1.0;
-    const learning_rate_t LayeredPerceptronNetwork::DEFAULT_LEARNING_RATE = 1;
+    const learning_rate_t LayeredPerceptronNetwork::DEFAULT_LEARNING_RATE = 0.15;
     // const momentum_t LayeredPerceptronNetwork::DEFAULT_MOMENTUM = 0.1;
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork() {
@@ -235,7 +235,7 @@ namespace Oort {
                     currentNeuron->setDOutput(currentNeuron->getValue() - currentNeuron->getExpectedOutput());
 
                     // Calculate global error of the network.
-                    this->error += currentNeuron->getDOutput();
+                    this->error += pow(currentNeuron->getDOutput(), 2) / 2;
 
                     // Compute neuron error.
                     // currentNeuron->setError(currentNeuron->getExpectedOutput() - currentNeuron->getValue());

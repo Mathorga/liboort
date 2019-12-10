@@ -25,8 +25,9 @@ int main(int argc, char const *argv[]) {
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 1000000; i++) {
         // network->print();
+        perceptron_error_t error = 0.0;
         inputs->empty();
         expectedOutputs->empty();
         double in1 = (double) (rand() % 2);
@@ -44,6 +45,7 @@ int main(int argc, char const *argv[]) {
         network->run();
         // network->print();
         network->computeError();
+        error += network->getError();
         // network->print();
         // network->correct();
 
@@ -59,6 +61,7 @@ int main(int argc, char const *argv[]) {
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->computeError();
+        error += network->getError();
         // network->print();
 
         inputs->empty();
@@ -70,6 +73,7 @@ int main(int argc, char const *argv[]) {
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->computeError();
+        error += network->getError();
         // network->print();
 
         inputs->empty();
@@ -81,12 +85,14 @@ int main(int argc, char const *argv[]) {
         network->setExpectedOutput(expectedOutputs);
         network->run();
         network->computeError();
+        error += network->getError();
         // network->print();
 
         // network->print();
 
         network->adjustWeights();
-        printf("\nERROR %f\n", network->getError());
+        // network->print();
+        printf("\nERROR %f\n", error / 4);
         // network->print();
         // printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }
