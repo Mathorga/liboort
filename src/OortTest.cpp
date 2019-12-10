@@ -18,70 +18,125 @@ int main(int argc, char const *argv[]) {
     // #################################################################################################################
     Vector<vector_size_t>* layerSizes = new Vector<vector_size_t>();
     layerSizes->addLast(2);
-    layerSizes->addLast(5);
+    layerSizes->addLast(4);
     layerSizes->addLast(1);
     LayeredPerceptronModel* model = new LayeredPerceptronModel(layerSizes);
     LayeredPerceptronNetwork* network = new LayeredPerceptronNetwork(model);
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; i < 100; i++) {
+        // network->print();
         inputs->empty();
         expectedOutputs->empty();
         double in1 = (double) (rand() % 2);
         double in2 = (double) (rand() % 2);
-        in1 = in1 == 0.0 ? 0.01 : 0.99;
-        in2 = in2 == 0.0 ? 0.01 : 0.99;
-        // in1 = 0.99;
-        // in2 = 0.99;
-        inputs->addLast(in1);
-        inputs->addLast(in2);
-        expectedOutputs->addLast(in1 == in2 ? 0.01 : 0.99);
-        // expectedOutputs->addLast(0.99);
-        // if (in1 == 0.01 && in2 == 0.01) {
-        //     expectedOutputs->addLast(0.21);
-        // } else if (in1 == 0.01 && in2 == 0.99) {
-        //     expectedOutputs->addLast(0.75);
-        // } else if (in1 == 0.99 && in2 == 0.01) {
-        //     expectedOutputs->addLast(0.99);
-        // } else if (in1 == 0.99 && in2 == 0.99) {
-        //     expectedOutputs->addLast(0.01);
-        // }
+        // in1 = in1 == 0.0 ? 0.01 : 0.99;
+        // in2 = in2 == 0.0 ? 0.01 : 0.99;
+        in1 = 0.01;
+        in2 = 0.01;
+        inputs->addLast(0.0123);
+        inputs->addLast(0.0105);
+        // expectedOutputs->addLast(in1 == in2 ? 0.01 : 0.99);
+        expectedOutputs->addLast(0.0184);
         network->setInput(inputs);
         network->setExpectedOutput(expectedOutputs);
         network->run();
+        // network->print();
         network->computeError();
-        if (i % 10 == 0) {
-            network->print();
-            network->adjustWeights();
-            network->print();
-        }
+        // network->print();
         // network->correct();
 
         // network->print();
         // usleep(1000000);
 
-        printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
-    }
-
-    for (int i = 0; i < 10; i++) {
         inputs->empty();
         expectedOutputs->empty();
-        double in1 = (double) (rand() % 2);
-        double in2 = (double) (rand() % 2);
-        in1 = in1 == 0.0 ? 0.01 : 0.99;
-        in2 = in2 == 0.0 ? 0.01 : 0.99;
-        inputs->addLast(in1);
-        inputs->addLast(in2);
-        expectedOutputs->addLast(in1 == in2 ? 0.01 : 0.99);
+        inputs->addLast(0.989);
+        inputs->addLast(0.992);
+        expectedOutputs->addLast(0.0112);
         network->setInput(inputs);
+        network->setExpectedOutput(expectedOutputs);
         network->run();
+        network->computeError();
+        // network->print();
+
+        inputs->empty();
+        expectedOutputs->empty();
+        inputs->addLast(0.0117);
+        inputs->addLast(0.9992);
+        expectedOutputs->addLast(0.9981);
+        network->setInput(inputs);
+        network->setExpectedOutput(expectedOutputs);
+        network->run();
+        network->computeError();
+        // network->print();
+
+        inputs->empty();
+        expectedOutputs->empty();
+        inputs->addLast(0.9792);
+        inputs->addLast(0.0109);
+        expectedOutputs->addLast(0.9841);
+        network->setInput(inputs);
+        network->setExpectedOutput(expectedOutputs);
+        network->run();
+        network->computeError();
+        // network->print();
 
         // network->print();
-        // usleep(1000000);
 
-        printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
+        network->adjustWeights();
+        printf("\nERROR %f\n", network->getError());
+        // network->print();
+        // printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }
+
+    // network->print();
+    inputs->empty();
+    expectedOutputs->empty();
+    inputs->addLast(0.9792);
+    inputs->addLast(0.0109);
+
+    // network->adjustWeights();
+    inputs->empty();
+    inputs->addLast(0.01);
+    inputs->addLast(0.01);
+    network->setInput(inputs);
+    network->run();
+    printf("\nValue %f\n", network->getOutput()[0]);
+
+    inputs->empty();
+    inputs->addLast(0.99);
+    inputs->addLast(0.99);
+    network->setInput(inputs);
+    network->run();
+    printf("\nValue %f\n", network->getOutput()[0]);
+
+    inputs->empty();
+    inputs->addLast(0.01);
+    inputs->addLast(0.99);
+    network->setInput(inputs);
+    network->run();
+    printf("\nValue %f\n", network->getOutput()[0]);
+
+    // for (int i = 0; i < 10; i++) {
+    //     inputs->empty();
+    //     expectedOutputs->empty();
+    //     double in1 = (double) (rand() % 2);
+    //     double in2 = (double) (rand() % 2);
+    //     in1 = in1 == 0.0 ? 0.01 : 0.99;
+    //     in2 = in2 == 0.0 ? 0.01 : 0.99;
+    //     inputs->addLast(in1);
+    //     inputs->addLast(in2);
+    //     expectedOutputs->addLast(in1 == in2 ? 0.01 : 0.99);
+    //     network->setInput(inputs);
+    //     network->run();
+    //
+    //     // network->print();
+    //     // usleep(1000000);
+    //
+    //     printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
+    // }
     // #################################################################################################################
 
 

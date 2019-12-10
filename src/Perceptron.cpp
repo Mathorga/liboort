@@ -41,13 +41,13 @@ namespace Oort {
 
     void Perceptron::print() {
         setPrintColor(ANSI_COLOR_CYAN);
-        printf("\t|PERCEPTRON\n");
+        printf("\t|---------PERCEPTRON---------\n");
         printf("\t|Id %d\n", this->id);
         printf("\t|Type %d\n", this->type);
         printf("\t|Value %f\n", this->value);
-        printf("\t|DValue %f\n", this->dValue);
-        printf("\t|DOutput %f\n", this->dOutput);
-        printf("\t|DInput %f\n", this->dInput);
+        // printf("\t|DValue %f\n", this->dValue);
+        // printf("\t|DOutput %f\n", this->dOutput);
+        // printf("\t|DInput %f\n", this->dInput);
         // printf("\t|Error %f\n", this->error);
         setPrintColor(ANSI_COLOR_RESET);
         for (vector_size_t i = 0; i < this->synapses->getSize(); i++) {

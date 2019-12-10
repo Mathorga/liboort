@@ -36,6 +36,7 @@ namespace Oort {
         // Returns the whole model of the network.
         LayeredPerceptronModel* getModel();
         neuron_value_t* getOutput();
+        perceptron_error_t getError();
 
         // Setters.
         void setModel(LayeredPerceptronModel* model);

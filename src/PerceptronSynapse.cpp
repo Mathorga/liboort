@@ -1,7 +1,7 @@
 #include "PerceptronSynapse.h"
 
 namespace Oort {
-    const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.2;
+    const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.5;
     // const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = rand() / RAND_MAX;
 
     PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight) {
@@ -17,10 +17,10 @@ namespace Oort {
 
     void PerceptronSynapse::print() {
         setPrintColor(ANSI_COLOR_YELLOW);
-        printf("\t\t|SYNAPSE\n");
+        printf("\t\t|---------SYNAPSE---------\n");
         printf("\t\t|Input %d\n", this->inputNeuron->getId());
         printf("\t\t|Weight %.9f\n", this->weight);
-        printf("\t\t|DWeight %.9f\n", this->dWeight);
+        // printf("\t\t|DWeight %.9f\n", this->dWeight);
         // printf("\t\t|DeltaWeight %.9f\n", this->deltaWeight);
         setPrintColor(ANSI_COLOR_RESET);
     }
