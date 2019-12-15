@@ -53,7 +53,7 @@ int main(int argc, const char* argv[]) {
     // Train the network.
     printf("\nRunning network training for %d iterations\n", iterationsNum);
     startTime = getTime();
-    network->train(knowledgeParser->getKnowledge(), iterationsNum);
+    network->train(knowledgeParser->getKnowledge(), iterationsNum, knowledgeParser->getKnowledge()->getExperiencesNum());
     endTime = getTime();
     printf("\nTraining completed\nTotal training time %fs\n", endTime - startTime);
 
