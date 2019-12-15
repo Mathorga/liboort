@@ -2,18 +2,18 @@
 
 namespace Oort {
     const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = 0.5;
-    // const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = rand() / RAND_MAX;
+    // const synapse_weight_t PerceptronSynapse::DEFAULT_WEIGHT = dRandBetween(0.0, 1.0);
 
     PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron, synapse_weight_t weight) {
         this->weight = weight;
         this->inputNeuron = inputNeuron;
     }
 
-    PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron) : PerceptronSynapse(inputNeuron, DEFAULT_WEIGHT) {}
+    PerceptronSynapse::PerceptronSynapse(Perceptron* inputNeuron) : PerceptronSynapse(inputNeuron, dRandBetween(0.0, 1.0)/*DEFAULT_WEIGHT*/) {}
 
     PerceptronSynapse::PerceptronSynapse(synapse_weight_t weight) : PerceptronSynapse(nullptr, weight) {}
 
-    PerceptronSynapse::PerceptronSynapse() : PerceptronSynapse(nullptr, DEFAULT_WEIGHT) {}
+    PerceptronSynapse::PerceptronSynapse() : PerceptronSynapse(nullptr, dRandBetween(0.0, 1.0)/*DEFAULT_WEIGHT*/) {}
 
     void PerceptronSynapse::print() {
         setPrintColor(ANSI_COLOR_YELLOW);

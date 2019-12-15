@@ -2,7 +2,7 @@
 
 namespace Oort {
     const perceptron_error_t LayeredPerceptronNetwork::UNSET_ERROR = -1.0;
-    const learning_rate_t LayeredPerceptronNetwork::DEFAULT_LEARNING_RATE = 0.15;
+    const learning_rate_t LayeredPerceptronNetwork::DEFAULT_LEARNING_RATE = 0.99;
     // const momentum_t LayeredPerceptronNetwork::DEFAULT_MOMENTUM = 0.1;
 
     LayeredPerceptronNetwork::LayeredPerceptronNetwork() {

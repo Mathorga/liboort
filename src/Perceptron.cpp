@@ -29,7 +29,7 @@ namespace Oort {
 
     Perceptron::Perceptron(vector_size_t id, neuron_value_t value, vector_size_t synapsesNum) : Perceptron(id, value) {
         for (vector_size_t i = 0; i < synapsesNum; i++) {
-            this->synapses->addLast(new PerceptronSynapse(PerceptronSynapse::DEFAULT_WEIGHT));
+            this->synapses->addLast(new PerceptronSynapse(/*PerceptronSynapse::DEFAULT_WEIGHT*/));
         }
     }
 

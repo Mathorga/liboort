@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    for (int i = 0; i < 1000000; i++) {
+    for (int i = 0; i < 10000; i++) {
         // network->print();
         perceptron_error_t error = 0.0;
         inputs->empty();
@@ -36,9 +36,9 @@ int main(int argc, char const *argv[]) {
         // in2 = in2 == 0.0 ? 0.01 : 0.99;
         in1 = 0.01;
         in2 = 0.01;
-        inputs->addLast(0.0123);
-        inputs->addLast(0.0105);
-        // expectedOutputs->addLast(in1 == in2 ? 0.01 : 0.99);
+        inputs->addLast(in1);
+        inputs->addLast(in2);
+        // expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
         expectedOutputs->addLast(0.0184);
         network->setInput(inputs);
         network->setExpectedOutput(expectedOutputs);
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[]) {
 
         network->adjustWeights();
         // network->print();
-        printf("\nERROR %f\n", error / 4);
+        printf("\nERROR %f\n", error);
         // network->print();
         // printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }

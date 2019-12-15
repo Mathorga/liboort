@@ -2,10 +2,14 @@
 
 namespace Oort {
     double dRandBetween(double low, double high) {
+        // Randomize seed.
+        // srand(time(NULL));
         return ((double) rand() / RAND_MAX) * (high - low) + low;
     }
 
     int iRandBetween(int low, int high) {
+        // Randomize seed.
+        // srand(time(NULL));
         return rand() % high + low;
     }
 

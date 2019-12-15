@@ -105,7 +105,7 @@ namespace Oort {
                     // In order to fully connect the model, synapses are necessary between each layer, so they're
                     // created from the first non-input layer onwards.
                     for (vector_size_t k = 0; k < layerSize; k++) {
-                        this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
+                        this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k)/*, PerceptronSynapse::DEFAULT_WEIGHT*/));
                     }
                 }
 
@@ -151,7 +151,7 @@ namespace Oort {
                     // In order to fully connect the model, synapses are necessary between each layer, so they're
                     // created from the first non-input layer onwards.
                     for (vector_size_t k = 0; k < this->layers->getItem(i - 1)->getSize(); k++) {
-                        this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k), PerceptronSynapse::DEFAULT_WEIGHT));
+                        this->layers->getLast()->getLast()->getSynapses()->addLast(new PerceptronSynapse(this->layers->getItem(i - 1)->getItem(k)/*, PerceptronSynapse::DEFAULT_WEIGHT*/));
                     }
 
                     // Update index.
