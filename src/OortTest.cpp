@@ -90,7 +90,7 @@ int main(int argc, char const *argv[]) {
 
         // network->print();
 
-        network->adjustWeights();
+        network->adjustWeights(4);
         // network->print();
         printf("\nERROR %f\n", error);
         // network->print();
@@ -121,6 +121,13 @@ int main(int argc, char const *argv[]) {
     inputs->empty();
     inputs->addLast(0.01);
     inputs->addLast(0.99);
+    network->setInput(inputs);
+    network->run();
+    printf("\nValue %f\n", network->getOutput()[0]);
+
+    inputs->empty();
+    inputs->addLast(0.99);
+    inputs->addLast(0.01);
     network->setInput(inputs);
     network->run();
     printf("\nValue %f\n", network->getOutput()[0]);

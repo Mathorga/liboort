@@ -26,7 +26,13 @@ namespace Oort {
         LayeredPerceptronNetwork(LayeredPerceptronModel* model);
 
         void run();
-        void correct();
+        // void correct();
+        // Trains the network through so-called "batch training", so all the
+        // weights are upgraded only after batchSize experiences have been
+        // processed.
+        // If batchSize == knowledge size, then the training results in complete
+        // batch training; if batchSize == 1, then the training results in
+        // on-line training.
         void train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize);
         neuron_value_t activate(neuron_value_t value);
         neuron_value_t dActivate(neuron_value_t value);
@@ -53,8 +59,9 @@ namespace Oort {
         // Set the expected output for all output neurons.
         // Expected output vector size must be at least as big as model's output layer size.
         bool setExpectedOutput(Vector<neuron_value_t>* expectedOutput);
+        void setLearningRate(learning_rate_t learningRate);
         void computeError();
-        void adjustWeights();
+        void adjustWeights(uint32_t batchSize);
     private:
         synapse_weight_t baseWeight;
         neuron_value_t baseValue;

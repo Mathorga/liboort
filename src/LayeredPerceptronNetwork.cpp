@@ -27,16 +27,20 @@ namespace Oort {
         this->computeValue();
     }
 
-    void LayeredPerceptronNetwork::correct() {
-        // Compute the errors of the neurons of the net.
-        this->computeError();
-
-        // Adjust the synapses' weights based on the neurons' errors.
-        this->adjustWeights();
-    }
+    // void LayeredPerceptronNetwork::correct() {
+    //     // Compute the errors of the neurons of the net.
+    //     this->computeError();
+    //
+    //     // Adjust the synapses' weights based on the neurons' errors.
+    //     this->adjustWeights();
+    // }
 
     void LayeredPerceptronNetwork::train(Knowledge* knowledge, uint32_t epochsNum, uint32_t batchSize) {
         printf("\n");
+        // Keep track of the current experiences, so that the algorithm works
+        // even if batchSize is not a divisor of the knowledge size.
+        uint32_t count = 0;
+
         // Check if knowledge is consistent with model.
         if (this->model->getInputsNum() == knowledge->getInputsNum() && this->model->getOutputsNum() == knowledge->getOutputsNum()) {
             // Run the whole training iterationsNum times.
@@ -53,9 +57,28 @@ namespace Oort {
 
                     // Run the network in order to get outputs.
                     this->run();
+
+                    // Compute all the errors for each neuron.
+                    this->computeError();
+
+                    // Update the count.
+                    count++;
+
+                    // Update weights if batchSize iterations are performed.
+                    if (count == batchSize) {
+                        this->adjustWeights(count);
+                        count = 0;
+                    }
                 }
-                // Correct weights based on the output.
-                this->correct();
+                // If batchSize is not a divisor of the knowledge size, then
+                // some experiences are left out of the training and their value
+                // won't be added to the synapses weights.
+                // In order to avoid this, the weights are updated with the
+                // remaining experiences.
+                if (count != 0) {
+                    this->adjustWeights(count);
+                    count = 0;
+                }
             }
         } else {
             // Knowledge size is not consistent with model size.
@@ -149,6 +172,10 @@ namespace Oort {
             // Set expected output.
             this->model->getOutputLayer()->getItem(i)->setExpectedOutput(expectedOutput[i]);
         }
+    }
+
+    void LayeredPerceptronNetwork::setLearningRate(learning_rate_t learningRate) {
+        this->learningRate = learningRate;
     }
 
     bool LayeredPerceptronNetwork::setExpectedOutput(Vector<neuron_value_t>* expectedOutput) {
@@ -265,7 +292,7 @@ namespace Oort {
         }
     }
 
-    void LayeredPerceptronNetwork::adjustWeights() {
+    void LayeredPerceptronNetwork::adjustWeights(uint32_t batchSize) {
         // Store the current neuron and the current synapse for simplicity.
         Perceptron* currentNeuron = nullptr;
         PerceptronSynapse* currentSynapse = nullptr;
@@ -289,7 +316,7 @@ namespace Oort {
                     // Update the actual synapse weight.
                     // currentSynapse->setDeltaWeight(this->learningRate * currentSynapse->getDWeight());
                     // printf("\nDWeight %f\n", currentSynapse->getDWeight());
-                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * (currentSynapse->getDWeight() / 4)));
+                    currentSynapse->setWeight(currentSynapse->getWeight() - (this->learningRate * (currentSynapse->getDWeight() / batchSize)));
 
                     // Reset synapse's dWeight.
                     currentSynapse->setDWeight(0.0);
