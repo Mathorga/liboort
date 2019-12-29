@@ -5,6 +5,8 @@ namespace Oort {
     const perceptron_error_t Perceptron::DEFAULT_ERROR = 0.0;
     const neuron_value_t Perceptron::DEFAULT_BIAS = 1.0;
 
+    Perceptron::Perceptron() {}
+
     Perceptron::Perceptron(vector_size_t id) {
         // TODO Implement real constructor.
         this->id = id;

@@ -29,6 +29,7 @@ namespace Oort {
         static Perceptron getNullPerceptron();
 
         // Constructors.
+        Perceptron();
         Perceptron(vector_size_t id);
         Perceptron(vector_size_t id, Neuron::NeuronType type);
         Perceptron(vector_size_t id, neuron_value_t value);

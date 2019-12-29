@@ -58,13 +58,18 @@ namespace Oort {
             }
         }
         void addLast(T* item) {
-            T* tempItems;
+            T* newItems;
 
-            tempItems = (T*) realloc(this->items, (this->size + 1) * sizeof(T));
+            newItems = (T*) realloc(this->items, (this->size + 1) * sizeof(T));
+            // newItems = new T[this->size + 1];
 
-            if (tempItems != NULL) {
-                this->items = tempItems;
+            if (newItems != NULL) {
+                this->items = newItems;
+                // memcpy(newItems, this->items, this->size);
                 this->items[this->size] = (*item);
+                // newItems[this->size] = (*item);
+                // delete [] this->items;
+                // this->items = newItems;
                 this->size++;
             } else {
                 printf("\n<Vector::addLast()> Error: could not resize vector\n");
