@@ -109,9 +109,10 @@ int main(int argc, char const *argv[]) {
 
         // Calculate brain's output.
         brain->run();
+        brain->print();
 
         // Sleep for a while.
-        usleep(5000);
+        usleep(5000 * 1000);
 
         // Convert brain output to reaction (byte array).
         for (uint32_t j = 0; j < brain->getModel()->getOutputsNum(); j++) {

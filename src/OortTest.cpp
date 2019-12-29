@@ -25,76 +25,83 @@ int main(int argc, char const *argv[]) {
 
     Vector<neuron_value_t>* inputs = new Vector<neuron_value_t>();
     Vector<neuron_value_t>* expectedOutputs = new Vector<neuron_value_t>();
-    for (int i = 0; i < 10000; i++) {
+    for (int i = 0; i < 1000000; i++) {
+        // perceptron_error_t error = 0.0;
+        // inputs->empty();
+        // expectedOutputs->empty();
+        // double in1 = 0.01;
+        // double in2 = 0.01;
+        // inputs->addLast(in1);
+        // inputs->addLast(in2);
+        // expectedOutputs->addLast(0.0184);
+        // network->setInput(inputs);
+        // network->setExpectedOutput(expectedOutputs);
+        // network->run();
+        // network->computeError();
+        // error += network->getError();
+        //
+        // inputs->empty();
+        // expectedOutputs->empty();
+        // inputs->addLast(0.989);
+        // inputs->addLast(0.992);
+        // expectedOutputs->addLast(0.0112);
+        // network->setInput(inputs);
+        // network->setExpectedOutput(expectedOutputs);
+        // network->run();
+        // network->computeError();
+        // error += network->getError();
+        //
+        // inputs->empty();
+        // expectedOutputs->empty();
+        // inputs->addLast(0.0117);
+        // inputs->addLast(0.9992);
+        // expectedOutputs->addLast(0.9981);
+        // network->setInput(inputs);
+        // network->setExpectedOutput(expectedOutputs);
+        // network->run();
+        // network->computeError();
+        // error += network->getError();
+        //
+        // inputs->empty();
+        // expectedOutputs->empty();
+        // inputs->addLast(0.9792);
+        // inputs->addLast(0.0109);
+        // expectedOutputs->addLast(0.9841);
+        // network->setInput(inputs);
+        // network->setExpectedOutput(expectedOutputs);
+        // network->run();
+        // network->computeError();
+        // error += network->getError();
+        //
+        // network->adjustWeights(4);
+        // printf("\nERROR %f\n", error);
+        // // network->print();
+        // // printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
+        // // network->print();
+        // // usleep(1000000);
+
+
+
+
         // network->print();
         perceptron_error_t error = 0.0;
         inputs->empty();
         expectedOutputs->empty();
         double in1 = (double) (rand() % 2);
         double in2 = (double) (rand() % 2);
-        // in1 = in1 == 0.0 ? 0.01 : 0.99;
-        // in2 = in2 == 0.0 ? 0.01 : 0.99;
-        in1 = 0.01;
-        in2 = 0.01;
+        in1 = in1 == 0.0 ? 0.01 : 0.99;
+        in2 = in2 == 0.0 ? 0.01 : 0.99;
         inputs->addLast(in1);
         inputs->addLast(in2);
-        // expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
-        expectedOutputs->addLast(0.0184);
+        expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
         network->setInput(inputs);
         network->setExpectedOutput(expectedOutputs);
         network->run();
         // network->print();
         network->computeError();
         error += network->getError();
-        // network->print();
-        // network->correct();
-
-        // network->print();
-        // usleep(1000000);
-
-        inputs->empty();
-        expectedOutputs->empty();
-        inputs->addLast(0.989);
-        inputs->addLast(0.992);
-        expectedOutputs->addLast(0.0112);
-        network->setInput(inputs);
-        network->setExpectedOutput(expectedOutputs);
-        network->run();
-        network->computeError();
-        error += network->getError();
-        // network->print();
-
-        inputs->empty();
-        expectedOutputs->empty();
-        inputs->addLast(0.0117);
-        inputs->addLast(0.9992);
-        expectedOutputs->addLast(0.9981);
-        network->setInput(inputs);
-        network->setExpectedOutput(expectedOutputs);
-        network->run();
-        network->computeError();
-        error += network->getError();
-        // network->print();
-
-        inputs->empty();
-        expectedOutputs->empty();
-        inputs->addLast(0.9792);
-        inputs->addLast(0.0109);
-        expectedOutputs->addLast(0.9841);
-        network->setInput(inputs);
-        network->setExpectedOutput(expectedOutputs);
-        network->run();
-        network->computeError();
-        error += network->getError();
-        // network->print();
-
-        // network->print();
-
-        network->adjustWeights(4);
-        // network->print();
+        network->adjustWeights(1);
         printf("\nERROR %f\n", error);
-        // network->print();
-        // printf("\n%d expected %f actual %f\n", i, *(expectedOutputs->getLast()), network->getOutput()[0]);
     }
 
     // network->print();
