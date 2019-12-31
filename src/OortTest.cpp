@@ -89,8 +89,8 @@ int main(int argc, char const *argv[]) {
         expectedOutputs->empty();
         double in1 = (double) (rand() % 2);
         double in2 = (double) (rand() % 2);
-        in1 = in1 == 0.0 ? 0.01 : 0.99;
-        in2 = in2 == 0.0 ? 0.01 : 0.99;
+        // in1 = in1 == 0.0 ? 0.01 : 0.99;
+        // in2 = in2 == 0.0 ? 0.01 : 0.99;
         inputs->addLast(in1);
         inputs->addLast(in2);
         expectedOutputs->addLast(in1 == in2 ? 0.0 : 1.0);
@@ -104,37 +104,31 @@ int main(int argc, char const *argv[]) {
         printf("\nERROR %f\n", error);
     }
 
-    // network->print();
-    inputs->empty();
-    expectedOutputs->empty();
-    inputs->addLast(0.9792);
-    inputs->addLast(0.0109);
-
     // network->adjustWeights();
     inputs->empty();
-    inputs->addLast(0.01);
-    inputs->addLast(0.01);
+    inputs->addLast(0.0);
+    inputs->addLast(0.0);
     network->setInput(inputs);
     network->run();
     printf("\nValue %f\n", network->getOutput()[0]);
 
     inputs->empty();
-    inputs->addLast(0.99);
-    inputs->addLast(0.99);
+    inputs->addLast(1.0);
+    inputs->addLast(1.0);
     network->setInput(inputs);
     network->run();
     printf("\nValue %f\n", network->getOutput()[0]);
 
     inputs->empty();
-    inputs->addLast(0.01);
-    inputs->addLast(0.99);
+    inputs->addLast(0.0);
+    inputs->addLast(1.0);
     network->setInput(inputs);
     network->run();
     printf("\nValue %f\n", network->getOutput()[0]);
 
     inputs->empty();
-    inputs->addLast(0.99);
-    inputs->addLast(0.01);
+    inputs->addLast(1.0);
+    inputs->addLast(0.0);
     network->setInput(inputs);
     network->run();
     printf("\nValue %f\n", network->getOutput()[0]);
