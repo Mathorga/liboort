@@ -33,14 +33,17 @@ namespace Oort {
             inactive = 0
         };
 
+        // Maybe a dedicated class should be created.
+        // For now, since the layer should perform no actions, it should be good
+        // as it is.
         struct Layer {
             // Structure containing every neuron value in a single layer.
             neuron_value_t* neuronValues;
             array_size_t neuronsNum;
 
             // The structure defines the direction of connections between
-            // layers: each element is an array that represents all the layers
-            // the current one has connections to.
+            // layers: each element is the index of a layer the current one has
+            // connections to.
             layer_id_t* targets;
             array_size_t targetsNum;
 
