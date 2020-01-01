@@ -32,9 +32,9 @@ defaultExe: OortTest OortImgGrabber OortKnlMaker OortTrainer Oort #OortNNTest
 %.o: $(SRC_DIR)/%.cpp
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
 
-# OortGraph: OortGraph.o \
-# 		   NeuralGraph.o
-# 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
+OortGraph: OortGraph.o \
+		   NeuralGraph.o
+	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 Oort: Oort.o \
 	  utils.o \
