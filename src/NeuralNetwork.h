@@ -5,9 +5,10 @@
 #include "Knowledge.h"
 #include "utils.h"
 
+#define learning_rate_t double
+#define momentum_t double
+
 namespace Oort {
-    #define learning_rate_t double
-    #define momentum_t double
 
     class NeuralNetwork {
     public:
