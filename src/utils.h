@@ -29,6 +29,7 @@
 #include <vector>
 
 #define IDX(i, j, n) ((i) * (n) + (j))
+#define IDX2D(i, j, n) ((i) * (n) + (j))
 #define byte unsigned char
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
