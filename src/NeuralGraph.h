@@ -28,9 +28,9 @@ namespace Oort {
         static const array_size_t DEFAULT_LAYERS_NUM;
         static const array_size_t DEFAULT_LAYER_SIZE;
 
-        enum Activation {
-            active = 1,
-            inactive = 0
+        enum ActivationValue {
+            ACTIVE = 1,
+            INACTIVE = 0
         };
 
         // Maybe a dedicated class should be created.
@@ -60,19 +60,27 @@ namespace Oort {
             // Every element is an array of 2D matrices whose values are
             // multiplicated to the corrisponding weight matrix using the
             // Hadamard product.
-            Activation** synapseActivations;
+            ActivationValue** synapseActivations;
         };
 
         // Constructors.
-        NeuralGraph();
         // Creates a standard feedforward neural network, since no custom
         // structure is defined.
         NeuralGraph(array_size_t layersNum, array_size_t* layerSizes);
+        // Creates a standard feedforward neural network with fixed layer size,
+        // since no custom structure is defined.
+        NeuralGraph(array_size_t layersNum);
+        NeuralGraph();
 
         // Getters.
-        neuron_value_t** getNeuronValues();
-        synapse_weight_t** getSynapseWeights();
-        Activation** getSynapseActivations();
+        // Returns neuron values from the output layer.
+        neuron_value_t* getOutput();
+        array_size_t getOutputSize();
+
+        // Setters.
+        // Sets values to the first layer of neurons.
+        void setInput(neuron_value_t* inputValues);
+        void setInput(neuron_value_t* inputValues, array_size_t inputSize);
 
     private:
         struct Layer* layers;

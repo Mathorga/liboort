@@ -29,6 +29,10 @@
 #include <vector>
 
 #define IDX(i, j, n) ((i) * (n) + (j))
+// Translates bidimensional indexes to a monodimensional one.
+// |i| is the column index.
+// |j| is the row index.
+// |n| is the number of columns (length of the rows).
 #define IDX2D(i, j, n) ((i) * (n) + (j))
 #define byte unsigned char
 #define ANSI_COLOR_RED     "\x1b[31m"
