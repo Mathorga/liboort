@@ -20,6 +20,7 @@ Copyright (C) 2020  Luka Micheletti
 #define neuron_value_t double
 #define synapse_weight_t double
 #define layer_id_t uint8_t
+#define loops_count_t uint32_t
 
 namespace Oort {
 
@@ -27,6 +28,7 @@ namespace Oort {
     public:
         static const array_size_t DEFAULT_LAYERS_NUM;
         static const array_size_t DEFAULT_LAYER_SIZE;
+        static const array_size_t DEFAULT_LOOPS_COUNT;
 
         enum ActivationValue {
             ACTIVE = 1,
@@ -71,6 +73,14 @@ namespace Oort {
         // since no custom structure is defined.
         NeuralGraph(array_size_t layersNum);
         NeuralGraph();
+
+        // Computes the value of the whole neural network using the specified
+        // loops count, meaning that, if there are any backward connections,
+        // they are performed <loopsCount> times.
+        void computeValue(loops_count_t loopsCount);
+        // Computes the value of the whole neural network using the default
+        // loops count.
+        void computeValue();
 
         // Getters.
         // Returns neuron values from the output layer.

@@ -3,6 +3,7 @@
 namespace Oort {
     const array_size_t NeuralGraph::DEFAULT_LAYERS_NUM = 3;
     const array_size_t NeuralGraph::DEFAULT_LAYER_SIZE = 5;
+    const array_size_t NeuralGraph::DEFAULT_LOOPS_COUNT = 1;
 
     NeuralGraph::NeuralGraph(array_size_t layersNum, array_size_t* layerSizes) {
         // Define layers number.
@@ -81,6 +82,14 @@ namespace Oort {
     }
 
     NeuralGraph::NeuralGraph() : NeuralGraph(DEFAULT_LAYERS_NUM) {}
+
+    void NeuralGraph::computeValue(loops_count_t loopsCount) {
+        
+    }
+
+    void NeuralGraph::computeValue() {
+        this->computeValue(DEFAULT_LOOPS_COUNT);
+    }
 
     neuron_value_t* NeuralGraph::getOutput() {
         // Return neuron values from the last layer of the graph.
