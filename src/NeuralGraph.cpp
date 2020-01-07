@@ -3,7 +3,7 @@
 namespace Oort {
     const array_size_t NeuralGraph::DEFAULT_LAYERS_NUM = 3;
     const array_size_t NeuralGraph::DEFAULT_LAYER_SIZE = 5;
-    const array_size_t NeuralGraph::DEFAULT_LOOPS_COUNT = 1;
+    const array_size_t NeuralGraph::DEFAULT_LOOPS_NUM = 1;
 
     NeuralGraph::NeuralGraph(array_size_t layersNum, array_size_t* layerSizes) {
         // Define layers number.
@@ -19,7 +19,7 @@ namespace Oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                this->layers[i].targets = (layer_id_t*) malloc(sizeof(layer_id_t));
+                this->layers[i].targets = (layers_num_t*) malloc(sizeof(layers_num_t));
                 this->layers[i].targets[0] = i + 1;
                 this->layers[i].targetsNum = 1;
             } else {
@@ -57,7 +57,7 @@ namespace Oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                this->layers[i].targets = (layer_id_t*) malloc(sizeof(layer_id_t));
+                this->layers[i].targets = (layers_num_t*) malloc(sizeof(layers_num_t));
                 this->layers[i].targets[0] = i + 1;
                 this->layers[i].targetsNum = 1;
             } else {
@@ -83,12 +83,46 @@ namespace Oort {
 
     NeuralGraph::NeuralGraph() : NeuralGraph(DEFAULT_LAYERS_NUM) {}
 
-    void NeuralGraph::computeValue(loops_count_t loopsCount) {
-        
+    void NeuralGraph::computeValue(loops_num_t loopsNum) {
+        // Loop counter used to keep track of the performed loops.
+        // loops_num_t loopsCount = 0;
+
+        // Placeholder for synapses number between two layers.
+        array_size_t synapsesNum = 0;
+
+        // Placeholder for actual synapses values, after activation.
+        synapse_weight_t* activatedSynapses = nullptr;
+
+        // Temp array to store inputs to target layers.
+        neuron_value_t* targetInputs = nullptr;
+
+        // Loop through layers of the graph.
+        for (array_size_t i = 0; i < this->layersNum; i++) {
+            // Loop through the current layer's targets.
+            for (array_size_t j = 0; j < this->layers[i].targetsNum; j++) {
+                // Calculate the exact number of synapses between the current
+                // layer and its current target.
+                synapsesNum = this->layers[i].neuronsNum * this->layers[this->layers[i].targets[j]].neuronsNum;
+
+                // Allocate activated synapses.
+                activatedSynapses = (synapse_weight_t*) malloc(synapsesNum * sizeof(synapse_weight_t));
+                // Activate synapses.
+                fHMatMul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
+
+                // Compute neuron values.
+                fMatMul(targetInputs,
+                        this->layers[i].neuronValues,
+                        1, this->layers[i].neuronsNum,
+                        activatedSynapses,
+                        this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
+
+                free(activatedSynapses);
+            }
+        }
     }
 
     void NeuralGraph::computeValue() {
-        this->computeValue(DEFAULT_LOOPS_COUNT);
+        this->computeValue(DEFAULT_LOOPS_NUM);
     }
 
     neuron_value_t* NeuralGraph::getOutput() {

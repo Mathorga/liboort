@@ -65,6 +65,12 @@ namespace Oort {
 
     // void dump(const uint8_t* image, unsigned int n, const char* filename);
     // uint8_t* readImage(const char* filename, const uint8_t n);
+
+    // Matrices functions.
+    void fMatMul(double* result,
+                 double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
+                 double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum);
+    void fHMatMul(double* result, double* firstMatrix, double* secondMatrix, uint32_t matrixSize);
 }
 
 #endif

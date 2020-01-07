@@ -19,8 +19,9 @@ Copyright (C) 2020  Luka Micheletti
 #define array_size_t uint32_t
 #define neuron_value_t double
 #define synapse_weight_t double
-#define layer_id_t uint8_t
-#define loops_count_t uint32_t
+#define layers_num_t uint8_t
+#define loops_num_t uint32_t
+#define activation_type_t double
 
 namespace Oort {
 
@@ -28,12 +29,12 @@ namespace Oort {
     public:
         static const array_size_t DEFAULT_LAYERS_NUM;
         static const array_size_t DEFAULT_LAYER_SIZE;
-        static const array_size_t DEFAULT_LOOPS_COUNT;
+        static const array_size_t DEFAULT_LOOPS_NUM;
 
-        enum ActivationValue {
-            ACTIVE = 1,
-            INACTIVE = 0
-        };
+        // enum ActivationValue {
+        //     ACTIVE = 1,
+        //     INACTIVE = 0
+        // };
 
         // Maybe a dedicated class should be created.
         // For now, since the layer should perform no actions, it should be good
@@ -46,7 +47,7 @@ namespace Oort {
             // The structure defines the direction of connections between
             // layers: each element is the index of a layer the current one has
             // connections to.
-            layer_id_t* targets;
+            layers_num_t* targets;
             array_size_t targetsNum;
 
             // Structure containing synapse weights coming from the layer.
@@ -62,7 +63,7 @@ namespace Oort {
             // Every element is an array of 2D matrices whose values are
             // multiplicated to the corrisponding weight matrix using the
             // Hadamard product.
-            ActivationValue** synapseActivations;
+            activation_type_t** synapseActivations;
         };
 
         // Constructors.
@@ -75,11 +76,11 @@ namespace Oort {
         NeuralGraph();
 
         // Computes the value of the whole neural network using the specified
-        // loops count, meaning that, if there are any backward connections,
-        // they are performed <loopsCount> times.
-        void computeValue(loops_count_t loopsCount);
+        // loops number, meaning that, if there are any backward connections,
+        // they are performed <loopsNum> times.
+        void computeValue(loops_num_t loopsNum);
         // Computes the value of the whole neural network using the default
-        // loops count.
+        // loops number.
         void computeValue();
 
         // Getters.
