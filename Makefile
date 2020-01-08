@@ -34,7 +34,8 @@ defaultExe: OortTest OortImgGrabber OortKnlMaker OortTrainer Oort #OortNNTest
 
 OortGraph: OortGraph.o \
 		   NeuralGraph.o \
-		   utils.o
+		   matrix.o \
+		   calculus.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 Oort: Oort.o \

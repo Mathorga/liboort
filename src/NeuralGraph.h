@@ -14,7 +14,7 @@ Copyright (C) 2020  Luka Micheletti
 #ifndef __NEURAL_GRAPH__
 #define __NEURAL_GRAPH__
 
-#include "utils.h"
+#include "matrix.h"
 
 #define array_size_t uint32_t
 #define neuron_value_t double
@@ -23,18 +23,12 @@ Copyright (C) 2020  Luka Micheletti
 #define loops_num_t uint32_t
 #define activation_type_t double
 
-namespace Oort {
-
+namespace oort {
     class NeuralGraph {
     public:
         static const array_size_t DEFAULT_LAYERS_NUM;
         static const array_size_t DEFAULT_LAYER_SIZE;
         static const array_size_t DEFAULT_LOOPS_NUM;
-
-        // enum ActivationValue {
-        //     ACTIVE = 1,
-        //     INACTIVE = 0
-        // };
 
         // Maybe a dedicated class should be created.
         // For now, since the layer should perform no actions, it should be good
@@ -69,10 +63,10 @@ namespace Oort {
         // Constructors.
         // Creates a standard feedforward neural network, since no custom
         // structure is defined.
-        NeuralGraph(array_size_t layersNum, array_size_t* layerSizes);
+        NeuralGraph(layers_num_t layersNum, array_size_t* layerSizes);
         // Creates a standard feedforward neural network with fixed layer size,
         // since no custom structure is defined.
-        NeuralGraph(array_size_t layersNum);
+        NeuralGraph(layers_num_t layersNum);
         NeuralGraph();
 
         // Computes the value of the whole neural network using the specified

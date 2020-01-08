@@ -1,11 +1,11 @@
 #include "NeuralGraph.h"
 
-namespace Oort {
+namespace oort {
     const array_size_t NeuralGraph::DEFAULT_LAYERS_NUM = 3;
     const array_size_t NeuralGraph::DEFAULT_LAYER_SIZE = 5;
     const array_size_t NeuralGraph::DEFAULT_LOOPS_NUM = 1;
 
-    NeuralGraph::NeuralGraph(array_size_t layersNum, array_size_t* layerSizes) {
+    NeuralGraph::NeuralGraph(layers_num_t layersNum, array_size_t* layerSizes) {
         // Define layers number.
         this->layersNum = layersNum;
 
@@ -43,7 +43,7 @@ namespace Oort {
         }
     }
 
-    NeuralGraph::NeuralGraph(array_size_t layersNum) {
+    NeuralGraph::NeuralGraph(layers_num_t layersNum) {
         // Define layers number.
         this->layersNum = layersNum;
 
@@ -106,15 +106,21 @@ namespace Oort {
 
                 // Allocate activated synapses.
                 activatedSynapses = (synapse_weight_t*) malloc(synapsesNum * sizeof(synapse_weight_t));
+
+                // Allocate target inputs.
+                targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(neuron_value_t));
+
                 // Activate synapses.
-                fHMatMul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
+                hMatMul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
 
                 // Compute neuron values.
-                fMatMul(targetInputs,
-                        this->layers[i].neuronValues,
-                        1, this->layers[i].neuronsNum,
-                        activatedSynapses,
-                        this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
+                matMul(targetInputs,
+                       this->layers[i].neuronValues,
+                       1, this->layers[i].neuronsNum,
+                       activatedSynapses,
+                       this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
+
+                sigmoidMat(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
 
                 free(activatedSynapses);
             }
