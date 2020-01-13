@@ -40,7 +40,7 @@
 // |k| is the index in the third dimension.
 // |m| is the size of the first dimension.
 // |n| is the size of the second dimension.
-#define IDX3D(i, j, k, m, n) ((i * n + j) + m * n * k)
+#define IDX3D(i, j, k, m, n) (((i * m) + j) + (m * n * k))
 #define byte unsigned char
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
