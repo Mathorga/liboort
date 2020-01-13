@@ -30,10 +30,17 @@
 
 #define IDX(i, j, n) ((i) * (n) + (j))
 // Translates bidimensional indexes to a monodimensional one.
-// |i| is the column index.
-// |j| is the row index.
+// |i| is the row index.
+// |j| is the column index.
 // |n| is the number of columns (length of the rows).
-#define IDX2D(i, j, n) ((i) * (n) + (j))
+#define IDX2D(i, j, n) ((i * n) + j)
+// Translates tridimensional indexes to a monodimensional one.
+// |i| is the index in the first dimension.
+// |j| is the index in the second dimension.
+// |k| is the index in the third dimension.
+// |m| is the size of the first dimension.
+// |n| is the size of the second dimension.
+#define IDX3D(i, j, k, m, n) (((i * m) + j) + (m * n * k))
 #define byte unsigned char
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
