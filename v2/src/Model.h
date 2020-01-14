@@ -88,7 +88,7 @@ namespace oort {
         void setInput(neuron_value_t* inputValues, array_size_t inputSize);
 
     private:
-        struct Layer* layers;
+        Layer* layers;
         array_size_t layersNum;
     };
 }

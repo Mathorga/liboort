@@ -10,7 +10,7 @@ namespace oort {
         this->layersNum = layersNum;
 
         // Allocate layers.
-        this->layers = (struct Layer*) malloc(this->layersNum * sizeof(struct Layer));
+        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
 
         // Loop through layers in order to update sizes and allocate memory for
         // each one of them.
@@ -48,7 +48,7 @@ namespace oort {
         this->layersNum = layersNum;
 
         // Allocate layers.
-        this->layers = (struct Layer*) malloc(this->layersNum * sizeof(struct Layer));
+        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
 
         // Loop through layers in order to update sizes and allocate memory for
         // each one of them.
@@ -111,16 +111,16 @@ namespace oort {
                 targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(neuron_value_t));
 
                 // Activate synapses.
-                hmatmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
+                hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
 
                 // Compute neuron values.
-                matmul(targetInputs,
+                mul(targetInputs,
                        this->layers[i].neuronValues,
                        1, this->layers[i].neuronsNum,
                        activatedSynapses,
                        this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
 
-                sigmoidmat(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
+                sigmoid(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
 
                 free(activatedSynapses);
             }
