@@ -73,4 +73,14 @@ namespace oort {
         clock_gettime(CLOCK_MONOTONIC, &ts);
         return ts.tv_nsec;//tv_sec + (double)ts.tv_nsec / 1e9;
     }
+
+    void print(const dtensor2d t) {
+        printf("\nTENSOR2D\n");
+        for (uint32_t i = 0; i < t.width; i++) {
+            for (uint32_t j = 0; j < t.height; j++) {
+                printf("%f\t", t.values[IDX2D(i, j, t.width)]);
+            }
+            printf("\n");
+        }
+    }
 }
