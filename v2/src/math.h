@@ -41,6 +41,11 @@ namespace oort {
         uint32_t depth;
         T* values;
     };
+    struct dtensor {
+        uint32_t dimNum;
+        uint32_t* dimSizes;
+        double* values;
+    };
     struct dtensor1d {
         uint32_t width;
         double* values;
@@ -79,9 +84,13 @@ namespace oort {
     };
 
     // Functions definitions.
+    // Calculates the sigmoid of the given value.
     double sigmoid(const double value);
+    // Calculates the fast sigmoid of the given value.
     double fsigmoid(const double value);
+    // Calculates the derivative sigmoid of the given value.
     double dsigmoid(const double value);
+    // Calculates the derivative fast sigmoid of the given value.
     double dfsigmoid(const double value);
     // Matrices functions.
     void mul(double* result,
