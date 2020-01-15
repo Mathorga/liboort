@@ -98,6 +98,8 @@ namespace oort {
              double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum);
     // Performs the dot product between 2D tensors <t1> and <t2>.
     void mul(const dtensor2d result, const dtensor2d t1, const dtensor2d t2);
+    void mul(const dtensor2d result, const dtensor2d t1, const dtensor1d t2);
+    void mul(const dtensor1d result, const dtensor1d t1, const dtensor2d t2);
     void hmul(uint32_t* result, uint32_t* firstMatrix, uint32_t* secondMatrix, uint32_t matrixSize);
     void hmul(double* result, double* firstMatrix, double* secondMatrix, uint32_t matrixSize);
     // Performs the Hadamard product between 2D tensors <t1> and <t2>.
