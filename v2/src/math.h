@@ -96,14 +96,19 @@ namespace oort {
     void mul(double* result,
              double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
              double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum);
+    // Performs the dot product between 2D tensors <t1> and <t2>.
     void mul(const dtensor2d result, const dtensor2d t1, const dtensor2d t2);
     void hmul(uint32_t* result, uint32_t* firstMatrix, uint32_t* secondMatrix, uint32_t matrixSize);
     void hmul(double* result, double* firstMatrix, double* secondMatrix, uint32_t matrixSize);
+    // Performs the Hadamard product between 2D tensors <t1> and <t2>.
     void hmul(const dtensor2d result, const dtensor2d t1, const dtensor2d t2);
     void smul(uint32_t* result, uint32_t value, uint32_t* matrix, uint32_t matrixSize);
     void smul(double* result, double value, double* matrix, uint32_t matrixSize);
+    // Performs the scalar product between scalar <value> and 2D tensor <t>.
     void smul(const dtensor2d result, const double value, const dtensor2d t);
     void sigmoid(double* result, double* matrix, uint32_t matrixSize);
+    // Calculates the sigmoid of every value of 2D tensor <t> and puts them in
+    // <result>.
     void sigmoid(const dtensor2d result, const dtensor2d t);
 
     // Calculates the derivative of the given function in x = <value>.
