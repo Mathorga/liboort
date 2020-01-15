@@ -111,16 +111,16 @@ namespace oort {
                 targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(neuron_value_t));
 
                 // Activate synapses.
-                hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
+                math::hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
 
                 // Compute neuron values.
-                mul(targetInputs,
+                math::mul(targetInputs,
                        this->layers[i].neuronValues,
                        1, this->layers[i].neuronsNum,
                        activatedSynapses,
                        this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
 
-                sigmoid(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
+                math::sigmoid(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
 
                 free(activatedSynapses);
             }
