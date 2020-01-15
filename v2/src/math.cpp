@@ -75,6 +75,11 @@ namespace oort {
             result[i] = sigmoid(matrix[i]);
         }
     }
+    void sigmoid(const dtensor2d result, const dtensor2d t) {
+        for (uint32_t i = 0; i < t.width * t.height; i++) {
+            result.values[i] = sigmoid(t.values[i]);
+        }
+    }
 
     double Sigmoid::operator() (const double value) {
         return 1 / (1 + exp(-value));

@@ -59,6 +59,13 @@ int main(int argc, char const *argv[]) {
     }
     print(t);
 
+    dtensor2d t2;
+    t2.width = 5;
+    t2.height = 4;
+    t2.values = (double*) malloc(t.width * t.height * sizeof(double));
+    sigmoid(t2, t);
+    print(t2);
+
     printf("\nSizeof tensor1d %luB\n", sizeof(t));
 
     return 0;

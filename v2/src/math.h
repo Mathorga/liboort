@@ -93,10 +93,16 @@ namespace oort {
     void hmul(const dtensor2d result, const dtensor2d t1, const dtensor2d t2);
     void smul(uint32_t* result, uint32_t value, uint32_t* matrix, uint32_t matrixSize);
     void smul(double* result, double value, double* matrix, uint32_t matrixSize);
-    void smul(const dtensor2d result, const double value, const dtensor2d matrix);
+    void smul(const dtensor2d result, const double value, const dtensor2d t);
     void sigmoid(double* result, double* matrix, uint32_t matrixSize);
+    void sigmoid(const dtensor2d result, const dtensor2d t);
 
-    double der(const double value, UnaryFunction* function, const double epsilon);
+    // Calculates the derivative of the given function in x = <value>.
+    // Default epsilon is 0.01.
     double der(const double value, UnaryFunction* function);
+    // Calculates the derivative of the given function in x = <value>, using the
+    // given epsilon.
+    double der(const double value, UnaryFunction* function, const double epsilon);
+    // Calculates the given function in x = <value>.
     double prim(const double value, UnaryFunction* function);
 }

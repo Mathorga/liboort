@@ -76,8 +76,8 @@ namespace oort {
 
     void print(const dtensor2d t) {
         printf("\nTENSOR2D\n");
-        for (uint32_t i = 0; i < t.width; i++) {
-            for (uint32_t j = 0; j < t.height; j++) {
+        for (uint32_t i = 0; i < t.height; i++) {
+            for (uint32_t j = 0; j < t.width; j++) {
                 printf("%f\t", t.values[IDX2D(i, j, t.width)]);
             }
             printf("\n");
