@@ -1,4 +1,4 @@
 # Oort
-Brain code for autonomous robot Oort
+Low level deep learning library for edge devices, desktop and server environments.
 
-To compile just run make.
+To compile examples just run make.
