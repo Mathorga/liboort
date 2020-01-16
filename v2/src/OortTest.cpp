@@ -51,8 +51,8 @@ int main(int argc, char const *argv[]) {
     printf("\nSigmoid %f\nFast Sigmoid %f\nSigmoid Der %f\nFast Sigmoid Der %f\n", sigmTime / 1000000, fSigmTime / 1000000, dSigmTime / 1000000, dFSigmTime / 1000000);
 
     math::dtensor2d t;
-    t.width = 5;
-    t.height = 4;
+    t.width = 4;
+    t.height = 5;
     t.values = (double*) malloc(t.width * t.height * sizeof(double));
     for (uint32_t i = 0; i < t.width * t.height; i++) {
         t.values[i] = i;
@@ -78,7 +78,7 @@ int main(int argc, char const *argv[]) {
     math::dtensor1d res;
     res.width = 4;
     res.values = (double*) malloc(res.width * sizeof(double));
-    df = math::mul(res, t, t2);
+    df = math::mul(res, t2, t);
     print(res);
 
     printf("\nSizeof tensor1d %luB\t%d\n", sizeof(t), df);

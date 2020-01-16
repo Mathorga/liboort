@@ -65,12 +65,10 @@ namespace oort {
             error err = error::NO_ERROR;
             if (t1.width == t2.height &&
                 res.width == t2.width) {
-                for (uint32_t i = 0; i < t1.width; i++) {
-                    for (uint32_t j = 0; j < t2.width; j++) {
-                        res.values[IDX2D(i, j, t2.width)] = 0.0;
-                        for (uint32_t k = 0; k < t1.width; k++) {
-                            res.values[IDX2D(i, j, t2.width)] += t1.values[IDX2D(i, k, t1.width)] * t2.values[IDX2D(k, j, t2.width)];
-                        }
+                for (uint32_t i = 0; i < t2.width; i++) {
+                    res.values[i] = 0.0;
+                    for (uint32_t j = 0; j < t1.width; j++) {
+                        res.values[i] += t1.values[j] * t2.values[IDX2D(j, i, t2.width)];
                     }
                 }
             } else {
