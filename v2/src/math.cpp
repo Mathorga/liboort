@@ -51,12 +51,9 @@ namespace oort {
             if (t1.width == t2.width &&
                 res.width == t1.height) {
                 for (uint32_t i = 0; i < t1.height; i++) {
+                    res.values[i] = 0.0;
                     for (uint32_t j = 0; j < t2.width; j++) {
-                        res.values[IDX2D(i, j, t2.width)] = 0.0;
-                        for (uint32_t k = 0; k < t1.width; k++) {
-                            printf("\n%d %d %d %d\n", i, j, k, IDX2D(i, j, t2.width));
-                            res.values[IDX2D(i, j, t2.width)] += t1.values[IDX2D(i, k, t1.width)] * t2.values[IDX2D(k, j, t2.width)];
-                        }
+                        res.values[i] += t1.values[IDX2D(i, j, t1.width)] * t2.values[j];
                     }
                 }
             } else {
