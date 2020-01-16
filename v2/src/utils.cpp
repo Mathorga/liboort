@@ -74,6 +74,12 @@ namespace oort {
         return ts.tv_nsec;//tv_sec + (double)ts.tv_nsec / 1e9;
     }
 
+    void print(const math::dtensor1d t) {
+        printf("\nTENSOR1D\n");
+        for (uint32_t i = 0; i < t.width; i++) {
+            printf("%f\t", t.values[i]);
+        }
+    }
     void print(const math::dtensor2d t) {
         printf("\nTENSOR2D\n");
         for (uint32_t i = 0; i < t.height; i++) {

@@ -46,7 +46,7 @@ namespace oort {
             }
             return err;
         }
-        error mul(const dtensor2d res, const dtensor2d t1, const dtensor1d t2) {
+        error mul(const dtensor1d res, const dtensor2d t1, const dtensor1d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width &&
                 res.width == t1.height) {
@@ -54,6 +54,7 @@ namespace oort {
                     for (uint32_t j = 0; j < t2.width; j++) {
                         res.values[IDX2D(i, j, t2.width)] = 0.0;
                         for (uint32_t k = 0; k < t1.width; k++) {
+                            printf("\n%d %d %d %d\n", i, j, k, IDX2D(i, j, t2.width));
                             res.values[IDX2D(i, j, t2.width)] += t1.values[IDX2D(i, k, t1.width)] * t2.values[IDX2D(k, j, t2.width)];
                         }
                     }

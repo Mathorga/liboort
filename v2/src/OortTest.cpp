@@ -66,20 +66,18 @@ int main(int argc, char const *argv[]) {
     // sigmoid(sigm, t);
     // print(sigm);
 
-    math::dtensor2d t2;
-    t2.width = 4;
-    t2.height = 5;
-    t2.values = (double*) malloc(t2.width * t2.height * sizeof(double));
-    for (uint32_t i = 0; i < t2.width * t2.height; i++) {
+    math::dtensor1d t2;
+    t2.width = 5;
+    t2.values = (double*) malloc(t2.width * sizeof(double));
+    for (uint32_t i = 0; i < t2.width; i++) {
         t2.values[i] = i;
     }
     print(t2);
 
     int df = 0;
-    math::dtensor2d res;
+    math::dtensor1d res;
     res.width = 4;
-    res.height = 4;
-    res.values = (double*) malloc(res.width * res.height * sizeof(double));
+    res.values = (double*) malloc(res.width * sizeof(double));
     df = math::mul(res, t, t2);
     print(res);
 

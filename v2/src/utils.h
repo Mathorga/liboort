@@ -23,6 +23,7 @@ namespace oort {
     double byteArrayToDouble(byte* values, uint8_t depth);
     double getTime();
     double getNanoTime();
+    void print(const math::dtensor1d t);
     void print(const math::dtensor2d t);
 }
 

@@ -1,6 +1,8 @@
 #include <math.h>
 // Fixed size int types definitions.
 #include <stdint.h>
+// Debug.
+#include <stdio.h>
 
 // Translates bidimensional indexes to a monodimensional one.
 // |i| is the row index.
