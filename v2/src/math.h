@@ -70,8 +70,6 @@ namespace oort {
             double* values;
         };
 
-        struct str {};
-
         // Functors definitions.
         class UnaryFunction {
         public:

@@ -81,6 +81,15 @@ int main(int argc, char const *argv[]) {
     df = math::mul(res, t2, t);
     print(res);
 
+
+    sTime = getNanoTime();
+    for (int i = 0; i < 1000000; i++) {
+        math::mul(res, t2, t);
+    }
+    eTime = getNanoTime();
+
+    printf("\nTIME %f\n", (eTime - sTime) / 1000000);
+
     printf("\nSizeof tensor1d %luB\t%d\n", sizeof(t), df);
 
     return 0;
