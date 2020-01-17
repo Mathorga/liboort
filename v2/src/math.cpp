@@ -135,6 +135,30 @@ namespace oort {
             }
             return err;
         }
+        error alloc(const dtensor1d t, const uint32_t width) {
+            t.values = (double*) malloc(width * sizeof(double));
+            return error::NO_ERROR;
+        }
+        error alloc(const dtensor2d t, const uint32_t width, const uint32_t height) {
+            t.values = (double*) malloc(width * height * sizeof(double));
+            return error::NO_ERROR;
+        }
+        error alloc(const dtensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t.values = (double*) malloc(width * height * depth * sizeof(double));
+            return error::NO_ERROR;
+        }
+        error alloc(const itensor1d t, const uint32_t width) {
+            t.values = (uint32_t*) malloc(width * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
+        error alloc(const itensor2d t, const uint32_t width, const uint32_t height) {
+            t.values = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
+        error alloc(const itensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t.values = (uint32_t*) malloc(width * height * depth * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
 
         double Sigmoid::operator() (const double value) {
             return 1 / (1 + exp(-value));

@@ -19,27 +19,17 @@ namespace oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                this->layers[i].targets = (layers_num_t*) malloc(sizeof(layers_num_t));
-                this->layers[i].targets[0] = i + 1;
-                this->layers[i].targetsNum = 1;
+                math::alloc(this->layers[i].targets, 1);
+                this->layers[i].targets.values[0] = i + 1;
             } else {
-                this->layers[i].targetsNum = 0;
+                math::alloc(this->layers[i].targets, 0);
             }
 
             // Allocate synapses.
-            this->layers[i].synapseWeights = (synapse_weight_t**) malloc(this->layers[i].targetsNum * sizeof(synapse_weight_t*));
-            for (uint32_t j = 0; j < this->layers[i].targetsNum; j++) {
-                // The number of synapses the current layer to its jth target
-                // is equal to the product between its neurons number and its
-                // target's neurons number.
-                this->layers[i].synapseWeights[j] = (synapse_weight_t*) malloc(this->layers[i].neuronsNum * this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(synapse_weight_t));
-            }
+            this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
 
             // Set layer size.
-            this->layers[i].neuronsNum = layerSizes[i];
-
-            // Allocate neuron values.
-            this->layers[i].neuronValues = (neuron_value_t*) malloc(this->layers[i].neuronsNum * sizeof(neuron_value_t));
+            math::alloc(this->layers[i].neuronValues, layerSizes[i]);
         }
     }
 
@@ -57,27 +47,17 @@ namespace oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                this->layers[i].targets = (layers_num_t*) malloc(sizeof(layers_num_t));
-                this->layers[i].targets[0] = i + 1;
-                this->layers[i].targetsNum = 1;
+                this->layers[i].targets.width = 1;
+                this->layers[i].targets.values[0] = i + 1;
             } else {
-                this->layers[i].targetsNum = 0;
+                this->layers[i].targets.width = 0;
             }
 
             // Allocate synapses.
-            this->layers[i].synapseWeights = (synapse_weight_t**) malloc(this->layers[i].targetsNum * sizeof(synapse_weight_t*));
-            for (uint32_t j = 0; j < this->layers[i].targetsNum; j++) {
-                // The number of synapses the current layer to its jth target
-                // is equal to the product between its neurons number and its
-                // target's neurons number.
-                this->layers[i].synapseWeights[j] = (synapse_weight_t*) malloc(this->layers[i].neuronsNum * this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(synapse_weight_t));
-            }
+            this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
 
             // Set layer size.
-            this->layers[i].neuronsNum = DEFAULT_LAYER_SIZE;
-
-            // Allocate neuron values.
-            this->layers[i].neuronValues = (neuron_value_t*) malloc(this->layers[i].neuronsNum * sizeof(neuron_value_t));
+            this->layers[i].neuronValues.width = DEFAULT_LAYER_SIZE;
         }
     }
 
@@ -91,24 +71,24 @@ namespace oort {
         array_size_t synapsesNum = 0;
 
         // Placeholder for actual synapses values, after activation.
-        synapse_weight_t* activatedSynapses = nullptr;
+        math::dtensor1d activatedSynapses;
 
         // Temp array to store inputs to target layers.
-        neuron_value_t* targetInputs = nullptr;
+        math::dtensor1d targetInputs;
 
         // Loop through layers of the graph.
         for (array_size_t i = 0; i < this->layersNum; i++) {
             // Loop through the current layer's targets.
-            for (array_size_t j = 0; j < this->layers[i].targetsNum; j++) {
+            for (array_size_t j = 0; j < this->layers[i].targets.width; j++) {
                 // Calculate the exact number of synapses between the current
                 // layer and its current target.
-                synapsesNum = this->layers[i].neuronsNum * this->layers[this->layers[i].targets[j]].neuronsNum;
+                synapsesNum = this->layers[i].neuronValues.width * this->layers[this->layers[i].targets.values[j]].neuronValues.width;
 
                 // Allocate activated synapses.
-                activatedSynapses = (synapse_weight_t*) malloc(synapsesNum * sizeof(synapse_weight_t));
+                activatedSynapses.width = synapsesNum;
 
                 // Allocate target inputs.
-                targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets[j]].neuronsNum * sizeof(neuron_value_t));
+                targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets.values[j]].neuronValues.width * sizeof(neuron_value_t));
 
                 // Activate synapses.
                 math::hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);

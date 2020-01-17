@@ -49,6 +49,26 @@ namespace oort {
             uint32_t depth;
             T* values;
         };
+        struct itensor {
+            uint32_t dimNum;
+            uint32_t* dimSizes;
+            uint32_t* values;
+        };
+        struct itensor1d {
+            uint32_t width;
+            uint32_t* values;
+        };
+        struct itensor2d {
+            uint32_t width;
+            uint32_t height;
+            uint32_t* values;
+        };
+        struct itensor3d {
+            uint32_t width;
+            uint32_t height;
+            uint32_t depth;
+            uint32_t* values;
+        };
         struct dtensor {
             uint32_t dimNum;
             uint32_t* dimSizes;
@@ -120,6 +140,12 @@ namespace oort {
         // Calculates the sigmoid of every value of 2D tensor <t> and puts them in
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
+        error alloc(const dtensor1d t, const uint32_t width);
+        error alloc(const dtensor2d t, const uint32_t width, const uint32_t height);
+        error alloc(const dtensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth);
+        error alloc(const itensor1d t, const uint32_t width);
+        error alloc(const itensor2d t, const uint32_t width, const uint32_t height);
+        error alloc(const itensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth);
 
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.

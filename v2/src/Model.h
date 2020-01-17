@@ -35,20 +35,18 @@ namespace oort {
         // as it is.
         struct Layer {
             // Structure containing every neuron value in a single layer.
-            neuron_value_t* neuronValues;
-            array_size_t neuronsNum;
+            math::dtensor1d neuronValues;
 
             // The structure defines the direction of connections between
             // layers: each element is the index of a layer the current one has
             // connections to.
-            layers_num_t* targets;
-            array_size_t targetsNum;
+            math::itensor1d targets;
 
             // Structure containing synapse weights coming from the layer.
             // Every element is an array of 2D matrices of values representing
             // connections between the current layer and another one referred by
             // <targets> at the same index.
-            synapse_weight_t** synapseWeights;
+            math::dtensor2d* synapseWeights;
 
             // Since some synapses may be inactive, an activation is used to
             // enable or disable them during computations.
@@ -57,7 +55,7 @@ namespace oort {
             // Every element is an array of 2D matrices whose values are
             // multiplicated to the corrisponding weight matrix using the
             // Hadamard product.
-            activation_type_t** synapseActivations;
+            math::dtensor2d* synapseActivations;
         };
 
         // Constructors.
