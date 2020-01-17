@@ -82,8 +82,7 @@ namespace oort {
 
         // Setters.
         // Sets values to the first layer of neurons.
-        void setInput(neuron_value_t* inputValues);
-        void setInput(neuron_value_t* inputValues, array_size_t inputSize);
+        void setInput(math::dtensor1d inputValues);
 
     private:
         Layer* layers;

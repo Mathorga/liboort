@@ -19,17 +19,22 @@ namespace oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                math::alloc(this->layers[i].targets, 1);
+                math::alloc(&(this->layers[i].targets), 1);
                 this->layers[i].targets.values[0] = i + 1;
             } else {
-                math::alloc(this->layers[i].targets, 0);
+                math::alloc(&(this->layers[i].targets), 0);
             }
 
-            // Allocate synapses.
+            // Allocate synapses and activations.
             this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
+            this->layers[i].synapseActivations = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
+            for (uint32_t j = 0; j < this->layers[i].targets.width; j++) {
+                math::alloc(&(this->layers[i].synapseWeights[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
+                math::alloc(&(this->layers[i].synapseActivations[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
+            }
 
             // Set layer size.
-            math::alloc(this->layers[i].neuronValues, layerSizes[i]);
+            math::alloc(&(this->layers[i].neuronValues), layerSizes[i]);
         }
     }
 
@@ -47,17 +52,20 @@ namespace oort {
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
             if (i < this->layersNum - 1) {
-                this->layers[i].targets.width = 1;
+                math::alloc(&(this->layers[i].targets), 1);
                 this->layers[i].targets.values[0] = i + 1;
             } else {
-                this->layers[i].targets.width = 0;
+                math::alloc(&(this->layers[i].targets), 0);
             }
 
             // Allocate synapses.
             this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
+            for (uint32_t j = 0; j < this->layers[i].targets.width; j++) {
+                math::alloc(&(this->layers[i].synapseWeights[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
+            }
 
             // Set layer size.
-            this->layers[i].neuronValues.width = DEFAULT_LAYER_SIZE;
+            math::alloc(&(this->layers[i].neuronValues), DEFAULT_LAYER_SIZE);
         }
     }
 
@@ -67,11 +75,8 @@ namespace oort {
         // Loop counter used to keep track of the performed loops.
         // loops_num_t loopsCount = 0;
 
-        // Placeholder for synapses number between two layers.
-        array_size_t synapsesNum = 0;
-
         // Placeholder for actual synapses values, after activation.
-        math::dtensor1d activatedSynapses;
+        math::dtensor2d activatedSynapses;
 
         // Temp array to store inputs to target layers.
         math::dtensor1d targetInputs;
@@ -80,29 +85,24 @@ namespace oort {
         for (array_size_t i = 0; i < this->layersNum; i++) {
             // Loop through the current layer's targets.
             for (array_size_t j = 0; j < this->layers[i].targets.width; j++) {
-                // Calculate the exact number of synapses between the current
-                // layer and its current target.
-                synapsesNum = this->layers[i].neuronValues.width * this->layers[this->layers[i].targets.values[j]].neuronValues.width;
-
                 // Allocate activated synapses.
-                activatedSynapses.width = synapsesNum;
+                math::alloc(&(activatedSynapses), this->layers[i].synapseWeights[j].width, this->layers[i].synapseWeights[j].height);
+                math::copy(activatedSynapses, this->layers[i].synapseWeights[j]);
 
                 // Allocate target inputs.
-                targetInputs = (neuron_value_t*) malloc(this->layers[this->layers[i].targets.values[j]].neuronValues.width * sizeof(neuron_value_t));
+                math::alloc(&(targetInputs), this->layers[i].synapseWeights[j].width);
 
                 // Activate synapses.
-                math::hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j], synapsesNum);
+                math::hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j]);
 
                 // Compute neuron values.
-                math::mul(targetInputs,
-                       this->layers[i].neuronValues,
-                       1, this->layers[i].neuronsNum,
-                       activatedSynapses,
-                       this->layers[i].neuronsNum, this->layers[this->layers[i].targets[j]].neuronsNum);
+                math::mul(targetInputs, this->layers[i].neuronValues, activatedSynapses);
 
-                math::sigmoid(this->layers[this->layers[i].targets[j]].neuronValues, targetInputs, this->layers[this->layers[i].targets[j]].neuronsNum);
+                // Activate neurons.
+                math::sigmoid(this->layers[this->layers[i].targets.values[j]].neuronValues, targetInputs);
 
-                free(activatedSynapses);
+                math::dealloc(activatedSynapses);
+                math::dealloc(targetInputs);
             }
         }
     }
@@ -113,27 +113,16 @@ namespace oort {
 
     neuron_value_t* Model::getOutput() {
         // Return neuron values from the last layer of the graph.
-        return this->layers[this->layersNum - 1].neuronValues;
+        return this->layers[this->layersNum - 1].neuronValues.values;
     }
 
     array_size_t Model::getOutputSize() {
         // Return the size of the last layer of the graph.
-        return this->layers[this->layersNum - 1].neuronsNum;
+        return this->layers[this->layersNum - 1].neuronValues.width;
     }
 
-    void Model::setInput(neuron_value_t* inputValues) {
+    void Model::setInput(math::dtensor1d inputValues) {
         // Set neuron values only to the first layer of the graph.
-        this->layers[0].neuronValues = inputValues;
-    }
-
-    void Model::setInput(neuron_value_t* inputValues, array_size_t inputSize) {
-        // Check if the passed size is consistent with the graph size.
-        if (inputSize == this->layers[0].neuronsNum) {
-            // Input size is consistent, so set neuron values.
-            this->layers[0].neuronValues = inputValues;
-        } else {
-            // Show error.
-            printf("\n<Model::setInput()> Error: input size is not consistent:\nActual input size %d\nGiven input size %d\n", this->layers[0].neuronsNum, inputSize);
-        }
+        math::copy(this->layers[0].neuronValues, inputValues);
     }
 }

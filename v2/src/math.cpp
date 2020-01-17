@@ -128,35 +128,76 @@ namespace oort {
             }
             return err;
         }
+        error sigmoid(const dtensor1d res, const dtensor1d t) {
+            for (uint32_t i = 0; i < t.width; i++) {
+                res.values[i] = sigmoid(t.values[i]);
+            }
+            return error::NO_ERROR;
+        }
         error sigmoid(const dtensor2d res, const dtensor2d t) {
-            error err = error::NO_ERROR;
             for (uint32_t i = 0; i < t.width * t.height; i++) {
                 res.values[i] = sigmoid(t.values[i]);
             }
-            return err;
-        }
-        error alloc(const dtensor1d t, const uint32_t width) {
-            t.values = (double*) malloc(width * sizeof(double));
             return error::NO_ERROR;
         }
-        error alloc(const dtensor2d t, const uint32_t width, const uint32_t height) {
-            t.values = (double*) malloc(width * height * sizeof(double));
+        error sigmoid(const dtensor3d res, const dtensor3d t) {
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                res.values[i] = sigmoid(t.values[i]);
+            }
             return error::NO_ERROR;
         }
-        error alloc(const dtensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth) {
-            t.values = (double*) malloc(width * height * depth * sizeof(double));
+        error alloc(dtensor1d* t, const uint32_t width) {
+            t->values = (double*) malloc(width * sizeof(double));
             return error::NO_ERROR;
         }
-        error alloc(const itensor1d t, const uint32_t width) {
-            t.values = (uint32_t*) malloc(width * sizeof(uint32_t));
+        error alloc(dtensor2d* t, const uint32_t width, const uint32_t height) {
+            t->values = (double*) malloc(width * height * sizeof(double));
             return error::NO_ERROR;
         }
-        error alloc(const itensor2d t, const uint32_t width, const uint32_t height) {
-            t.values = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+        error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->values = (double*) malloc(width * height * depth * sizeof(double));
             return error::NO_ERROR;
         }
-        error alloc(const itensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth) {
-            t.values = (uint32_t*) malloc(width * height * depth * sizeof(uint32_t));
+        error alloc(itensor1d* t, const uint32_t width) {
+            t->values = (uint32_t*) malloc(width * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
+        error alloc(itensor2d* t, const uint32_t width, const uint32_t height) {
+            t->values = (uint32_t*) malloc(width * height * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
+        error alloc(itensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->values = (uint32_t*) malloc(width * height * depth * sizeof(uint32_t));
+            return error::NO_ERROR;
+        }
+        error copy(const dtensor1d t1, const dtensor1d t2) {
+            for (uint32_t i = 0; i < t1.width; i++) {
+                t1.values[i] = t2.values[i];
+            }
+            return error::NO_ERROR;
+        }
+        error copy(const dtensor2d t1, const dtensor2d t2) {
+            for (uint32_t i = 0; i < t1.width * t1.height; i++) {
+                t1.values[i] = t2.values[i];
+            }
+            return error::NO_ERROR;
+        }
+        error copy(const dtensor3d t1, const dtensor3d t2) {
+            for (uint32_t i = 0; i < t1.width * t1.height * t1.depth; i++) {
+                t1.values[i] = t2.values[i];
+            }
+            return error::NO_ERROR;
+        }
+        error dealloc(const dtensor1d t) {
+            free(t.values);
+            return error::NO_ERROR;
+        }
+        error dealloc(const dtensor2d t) {
+            free(t.values);
+            return error::NO_ERROR;
+        }
+        error dealloc(const dtensor3d t) {
+            free(t.values);
             return error::NO_ERROR;
         }
 

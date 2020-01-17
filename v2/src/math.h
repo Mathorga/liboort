@@ -1,6 +1,8 @@
 #include <math.h>
 // Fixed size int types definitions.
 #include <stdint.h>
+// Inlcudes free().
+#include <stdlib.h>
 // Debug.
 #include <stdio.h>
 
@@ -137,15 +139,23 @@ namespace oort {
         // Performs the scalar product between scalar <value> and 2D tensor <t>.
         error smul(const dtensor2d res, const double value, const dtensor2d t);
         error sigmoid(double* res, double* matrix, uint32_t matrixSize);
+        error sigmoid(const dtensor1d res, const dtensor1d t);
         // Calculates the sigmoid of every value of 2D tensor <t> and puts them in
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
-        error alloc(const dtensor1d t, const uint32_t width);
-        error alloc(const dtensor2d t, const uint32_t width, const uint32_t height);
-        error alloc(const dtensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth);
-        error alloc(const itensor1d t, const uint32_t width);
-        error alloc(const itensor2d t, const uint32_t width, const uint32_t height);
-        error alloc(const itensor3d t, const uint32_t width, const uint32_t height, const uint32_t depth);
+        error sigmoid(const dtensor3d res, const dtensor3d t);
+        error alloc(dtensor1d* t, const uint32_t width);
+        error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
+        error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
+        error alloc(itensor1d* t, const uint32_t width);
+        error alloc(itensor2d* t, const uint32_t width, const uint32_t height);
+        error alloc(itensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
+        error copy(const dtensor1d t1, const dtensor1d t2);
+        error copy(const dtensor2d t1, const dtensor2d t2);
+        error copy(const dtensor3d t1, const dtensor3d t2);
+        error dealloc(const dtensor1d t);
+        error dealloc(const dtensor2d t);
+        error dealloc(const dtensor3d t);
 
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.
