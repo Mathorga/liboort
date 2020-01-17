@@ -1,8 +1,6 @@
 #include <math.h>
 // Fixed size int types definitions.
 #include <stdint.h>
-// Inlcudes free().
-#include <stdlib.h>
 // Debug.
 #include <stdio.h>
 

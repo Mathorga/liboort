@@ -84,7 +84,7 @@ int main(int argc, char const *argv[]) {
 
     sTime = getNanoTime();
     for (int i = 0; i < 1000000; i++) {
-        math::mul(res, t2, t);
+        math::sigmoid(res, t2, t);
     }
     eTime = getNanoTime();
 
