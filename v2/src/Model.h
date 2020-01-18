@@ -61,6 +61,9 @@ namespace oort {
         // Constructors.
         // Creates a standard feedforward neural network, since no custom
         // structure is defined.
+        Model(math::dtensor1d layerSizes);
+        // Creates a standard feedforward neural network, since no custom
+        // structure is defined.
         Model(layers_num_t layersNum, array_size_t* layerSizes);
         // Creates a standard feedforward neural network with fixed layer size,
         // since no custom structure is defined.
