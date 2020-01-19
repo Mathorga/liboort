@@ -119,6 +119,12 @@ namespace oort {
         // Calculates the derivative fast sigmoid of the given value.
         double dfsigmoid(const double value);
         // Matrices functions.
+        error zero(const dtensor1d t);
+        error zero(const dtensor2d t);
+        error zero(const dtensor3d t);
+        error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2);
+        error add(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
+        error add(const dtensor3d res, const dtensor3d t1, const dtensor3d t2);
         error mul(double* res,
                   double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
                   double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum);

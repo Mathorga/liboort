@@ -113,6 +113,7 @@ namespace oort {
 
         // Temp array to store inputs to target layers.
         math::dtensor1d targetInputs;
+        math::dtensor1d activatedInputs;
 
         // Loop through layers of the graph.
         for (array_size_t i = 0; i < this->layersNum; i++) {
@@ -124,6 +125,8 @@ namespace oort {
 
                 // Allocate target inputs.
                 math::alloc(&(targetInputs), this->layers[i].synapseWeights[j].width);
+                // Allocate activated inputs.
+                math::alloc(&(activatedInputs), this->layers[i].synapseWeights[j].width);
 
                 // Activate synapses.
                 math::hmul(activatedSynapses, this->layers[i].synapseWeights[j], this->layers[i].synapseActivations[j]);
@@ -132,10 +135,12 @@ namespace oort {
                 math::mul(targetInputs, this->layers[i].neuronValues, activatedSynapses);
 
                 // Activate neurons.
-                math::sigmoid(this->layers[this->layers[i].targets.values[j]].neuronValues, targetInputs);
+                math::sigmoid(activatedInputs, targetInputs);
+                math::add(this->layers[this->layers[i].targets.values[j]].neuronValues, this->layers[this->layers[i].targets.values[j]].neuronValues, activatedInputs);
 
                 math::dealloc(activatedSynapses);
                 math::dealloc(targetInputs);
+                math::dealloc(activatedInputs);
             }
         }
     }

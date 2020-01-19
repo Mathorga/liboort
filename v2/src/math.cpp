@@ -14,6 +14,57 @@ namespace oort {
         double dfsigmoid(const double value) {
             return 1 / (2 * pow((1 + abs(value)), 2));
         }
+        error zero(const dtensor1d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width; i++) {
+                t.values[i] = 0.0;
+            }
+            return err;
+        }
+        error zero(const dtensor2d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width * t.height; i++) {
+                t.values[i] = 0.0;
+            }
+            return err;
+        }
+        error zero(const dtensor3d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                t.values[i] = 0.0;
+            }
+            return err;
+        }
+        error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width && res.width == t2.width) {
+                for (uint32_t i = 0; i < res.width; i++) {
+                    res.values[i] = t1.values[i] * t2.values[i];
+                }
+            }
+            return err;
+        }
+        error add(const dtensor2d res, const dtensor2d t1, const dtensor2d t2) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width && res.width == t2.width &&
+                t1.height == t2.height && res.height == t2.height) {
+                for (uint32_t i = 0; i < res.width * res.height; i++) {
+                    res.values[i] = t1.values[i] * t2.values[i];
+                }
+            }
+            return err;
+        }
+        error add(const dtensor3d res, const dtensor3d t1, const dtensor3d t2) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width && res.width == t2.width &&
+                t1.height == t2.height && res.height == t2.height &&
+                t1.depth == t2.depth && res.depth == t2.depth) {
+                for (uint32_t i = 0; i < res.width * res.height * res.depth; i++) {
+                    res.values[i] = t1.values[i] * t2.values[i];
+                }
+            }
+            return err;
+        }
         error mul(double* res,
                   double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
                   double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum) {
