@@ -65,20 +65,6 @@ namespace oort {
             }
             return err;
         }
-        error mul(double* res,
-                  double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
-                  double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < firstRowsNum; i++) {
-                for (uint32_t j = 0; j < secondColsNum; j++) {
-                    res[IDX2D(i, j, secondColsNum)] = 0.0;
-                    for (uint32_t k = 0; k < firstColsNum; k++) {
-                        res[IDX2D(i, j, secondColsNum)] += firstMatrix[IDX2D(i, k, firstColsNum)] * secondMatrix[IDX2D(k, j, secondColsNum)];
-                    }
-                }
-            }
-            return err;
-        }
         error mul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.height &&
@@ -127,20 +113,6 @@ namespace oort {
             }
             return err;
         }
-        error hmul(uint32_t* res, uint32_t* firstMatrix, uint32_t* secondMatrix, uint32_t matrixSize) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < matrixSize; i++) {
-                res[i] = firstMatrix[i] * secondMatrix[i];
-            }
-            return err;
-        }
-        error hmul(double* res, double* firstMatrix, double* secondMatrix, uint32_t matrixSize) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < matrixSize; i++) {
-                res[i] = firstMatrix[i] * secondMatrix[i];
-            }
-            return err;
-        }
         error hmul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width &&
@@ -151,31 +123,10 @@ namespace oort {
             }
             return err;
         }
-        error smul(uint32_t* res, uint32_t value, uint32_t* matrix, uint32_t matrixSize) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < matrixSize; i++) {
-                res[i] = value * matrix[i];
-            }
-            return err;
-        }
-        error smul(double* res, double value, double* matrix, uint32_t matrixSize) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < matrixSize; i++) {
-                res[i] = value * matrix[i];
-            }
-            return err;
-        }
         error smul(const dtensor2d res, const double value, const dtensor2d t) {
             error err = error::NO_ERROR;
             for (uint32_t i = 0; i < t.width * t.height; i++) {
                 res.values[i] = value * t.values[i];
-            }
-            return err;
-        }
-        error sigmoid(double* res, double* matrix, uint32_t matrixSize) {
-            error err = error::NO_ERROR;
-            for (uint32_t i = 0; i < matrixSize; i++) {
-                res[i] = sigmoid(matrix[i]);
             }
             return err;
         }
@@ -198,26 +149,38 @@ namespace oort {
             return error::NO_ERROR;
         }
         error alloc(dtensor1d* t, const uint32_t width) {
+            t->width = width;
             t->values = (double*) malloc(width * sizeof(double));
             return error::NO_ERROR;
         }
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height) {
+            t->width = width;
+            t->height = height;
             t->values = (double*) malloc(width * height * sizeof(double));
             return error::NO_ERROR;
         }
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->width = width;
+            t->height = height;
+            t->depth = depth;
             t->values = (double*) malloc(width * height * depth * sizeof(double));
             return error::NO_ERROR;
         }
         error alloc(itensor1d* t, const uint32_t width) {
+            t->width = width;
             t->values = (uint32_t*) malloc(width * sizeof(uint32_t));
             return error::NO_ERROR;
         }
         error alloc(itensor2d* t, const uint32_t width, const uint32_t height) {
+            t->width = width;
+            t->height = height;
             t->values = (uint32_t*) malloc(width * height * sizeof(uint32_t));
             return error::NO_ERROR;
         }
         error alloc(itensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->width = width;
+            t->height = height;
+            t->depth = depth;
             t->values = (uint32_t*) malloc(width * height * depth * sizeof(uint32_t));
             return error::NO_ERROR;
         }

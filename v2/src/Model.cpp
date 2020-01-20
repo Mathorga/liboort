@@ -3,102 +3,131 @@
 namespace oort {
     const array_size_t Model::DEFAULT_LAYERS_NUM = 3;
     const array_size_t Model::DEFAULT_LAYER_SIZE = 5;
-    const array_size_t Model::DEFAULT_LOOPS_NUM = 1;
+    const array_size_t Model::DEFAULT_LOOPS_NUM = 0;
 
-    Model::Model(math::dtensor1d layerSizes) {
-        // Define layers number.
-        this->layersNum = layerSizes.width;
-
+    Model::Model(math::itensor2d structure) {
         // Allocate layers.
-        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
+        math::alloc(&(this->layers), structure.width, structure.height);
 
-        // Loop through layers in order to update sizes and allocate memory for
-        // each one of them.
-        for (uint32_t i = 0; i < this->layersNum; i++) {
-            // Allocate and set target for each layer but the last one.
-            // For feedforward neural networks, connections only exist between
-            // each layer and the next one.
-            if (i < this->layersNum - 1) {
-                math::alloc(&(this->layers[i].targets), 1);
-                this->layers[i].targets.values[0] = i + 1;
-            } else {
-                math::alloc(&(this->layers[i].targets), 0);
+        // Loop through mamory loops of the network in order to allocate each
+        // one of them.
+        for (uint32_t i = 0; i < this->layers.height; i++) {
+            // Loop through layers in each mem loop.
+            for (uint32_t j = 0; j < this->layers.width; j++) {
+                // Allocate and set target for each layer but the last one.
+                // For feedforward neural networks, connections only exist between
+                // each layer and the next one.
+                if (i < this->layers.width - 1) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].targets), 1);
+                    this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[0] = i + 1;
+                } else {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].targets), 0);
+                }
+
+                // Allocate synapses and activations.
+                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].targets.width * sizeof(math::dtensor2d));
+                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].targets.width * sizeof(math::dtensor2d));
+                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].targets.width; k++) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]), this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[k]].neuronValues.width, this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues.width);
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]), this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[k]].neuronValues.width, this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues.width);
+                }
+
+                // Allocate neurons.
+                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues), structure.values[IDX2D(i, j, this->layers.width)]);
             }
-
-            // Allocate synapses and activations.
-            this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
-            this->layers[i].synapseActivations = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
-            for (uint32_t j = 0; j < this->layers[i].targets.width; j++) {
-                math::alloc(&(this->layers[i].synapseWeights[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
-                math::alloc(&(this->layers[i].synapseActivations[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
-            }
-
-            // Set layer size.
-            math::alloc(&(this->layers[i].neuronValues), layerSizes.values[i]);
         }
     }
 
-    Model::Model(layers_num_t layersNum, array_size_t* layerSizes) {
-        // Define layers number.
-        this->layersNum = layersNum;
-
+    Model::Model(math::itensor1d structure) {
         // Allocate layers.
-        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
+        math::alloc(&(this->layers), structure.width, 1);
 
-        // Loop through layers in order to update sizes and allocate memory for
-        // each one of them.
-        for (uint32_t i = 0; i < this->layersNum; i++) {
+        // There is only one mem loop, so loop through its layers.
+        for (uint32_t i = 0; i < this->layers.width; i++) {
             // Allocate and set target for each layer but the last one.
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
-            if (i < this->layersNum - 1) {
-                math::alloc(&(this->layers[i].targets), 1);
-                this->layers[i].targets.values[0] = i + 1;
+            if (i < this->layers.width - 1) {
+                math::alloc(&(this->layers.values[i].targets), 1);
+                this->layers.values[i].targets.values[0] = i + 1;
             } else {
-                math::alloc(&(this->layers[i].targets), 0);
+                math::alloc(&(this->layers.values[i].targets), 0);
             }
 
             // Allocate synapses and activations.
-            this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
-            this->layers[i].synapseActivations = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
-            for (uint32_t j = 0; j < this->layers[i].targets.width; j++) {
-                math::alloc(&(this->layers[i].synapseWeights[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
-                math::alloc(&(this->layers[i].synapseActivations[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
+            this->layers.values[i].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[i].targets.width * sizeof(math::dtensor2d));
+            this->layers.values[i].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[i].targets.width * sizeof(math::dtensor2d));
+            for (uint32_t k = 0; k < this->layers.values[i].targets.width; k++) {
+                math::alloc(&(this->layers.values[i].synapseWeights[k]), this->layers.values[this->layers.values[i].targets.values[k]].neuronValues.width, this->layers.values[i].neuronValues.width);
+                math::alloc(&(this->layers.values[i].synapseActivations[k]), this->layers.values[this->layers.values[i].targets.values[k]].neuronValues.width, this->layers.values[i].neuronValues.width);
             }
 
-            // Set layer size.
-            math::alloc(&(this->layers[i].neuronValues), layerSizes[i]);
+            // Allocate neurons.
+            math::alloc(&(this->layers.values[i].neuronValues), structure.values[i]);
         }
     }
+
+    Model::Model(loops_num_t memloopsNum, layers_num_t layersNum, array_size_t* layerSizes) {
+        // Allocate layers.
+        math::alloc(&(this->layers), layersNum, memloopsNum);
+
+        // Loop through mamory loops of the network in order to allocate each
+        // one of them.
+        for (uint32_t i = 0; i < this->layers.height; i++) {
+            // Loop through layers in each mem loop.
+            for (uint32_t j = 0; j < this->layers.width; j++) {
+                // Allocate and set target for each layer but the last one.
+                // For feedforward neural networks, connections only exist between
+                // each layer and the next one.
+                if (i < this->layers.width - 1) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].targets), 1);
+                    this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[0] = i + 1;
+                } else {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].targets), 0);
+                }
+
+                // Allocate synapses and activations.
+                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].targets.width * sizeof(math::dtensor2d));
+                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].targets.width * sizeof(math::dtensor2d));
+                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].targets.width; k++) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]), this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[k]].neuronValues.width, this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues.width);
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]), this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].targets.values[k]].neuronValues.width, this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues.width);
+                }
+
+                // Allocate neurons.
+                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].neuronValues), layerSizes[IDX2D(i, j, this->layers.width)]);
+            }
+        }
+    }
+
+    Model::Model(layers_num_t layersNum, array_size_t* layerSizes) : Model(1, layersNum, layerSizes) {}
 
     Model::Model(layers_num_t layersNum) {
-        // Define layers number.
-        this->layersNum = layersNum;
-
         // Allocate layers.
-        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
+        math::alloc(&(this->layers), layersNum, 1);
 
-        // Loop through layers in order to update sizes and allocate memory for
-        // each one of them.
-        for (uint32_t i = 0; i < this->layersNum; i++) {
+        // There is only one mem loop, so loop through its layers.
+        for (uint32_t i = 0; i < this->layers.width; i++) {
             // Allocate and set target for each layer but the last one.
             // For feedforward neural networks, connections only exist between
             // each layer and the next one.
-            if (i < this->layersNum - 1) {
-                math::alloc(&(this->layers[i].targets), 1);
-                this->layers[i].targets.values[0] = i + 1;
+            if (i < this->layers.width - 1) {
+                math::alloc(&(this->layers.values[i].targets), 1);
+                this->layers.values[i].targets.values[0] = i + 1;
             } else {
-                math::alloc(&(this->layers[i].targets), 0);
+                math::alloc(&(this->layers.values[i].targets), 0);
             }
 
-            // Allocate synapses.
-            this->layers[i].synapseWeights = (math::dtensor2d*) malloc(this->layers[i].targets.width * sizeof(math::dtensor2d));
-            for (uint32_t j = 0; j < this->layers[i].targets.width; j++) {
-                math::alloc(&(this->layers[i].synapseWeights[j]), this->layers[this->layers[i].targets.values[j]].neuronValues.width, this->layers[i].neuronValues.width);
+            // Allocate synapses and activations.
+            this->layers.values[i].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[i].targets.width * sizeof(math::dtensor2d));
+            this->layers.values[i].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[i].targets.width * sizeof(math::dtensor2d));
+            for (uint32_t k = 0; k < this->layers.values[i].targets.width; k++) {
+                math::alloc(&(this->layers.values[i].synapseWeights[k]), this->layers.values[this->layers.values[i].targets.values[k]].neuronValues.width, this->layers.values[i].neuronValues.width);
+                math::alloc(&(this->layers.values[i].synapseActivations[k]), this->layers.values[this->layers.values[i].targets.values[k]].neuronValues.width, this->layers.values[i].neuronValues.width);
             }
 
-            // Set layer size.
-            math::alloc(&(this->layers[i].neuronValues), DEFAULT_LAYER_SIZE);
+            // Allocate neurons.
+            math::alloc(&(this->layers.values[i].neuronValues), DEFAULT_LAYER_SIZE);
         }
     }
 

@@ -59,9 +59,15 @@ namespace oort {
         };
 
         // Constructors.
-        // Creates a standard feedforward neural network, since no custom
-        // structure is defined.
-        Model(math::dtensor1d layerSizes);
+        // Creates a recurrent neural network using the speicified structure:
+        // <structure.width> layers for <structure.height> mem loops.
+        Model(math::itensor2d structure);
+        // Creates a standard feedforward neural network, since no mem loop
+        // count is specified.
+        Model(math::itensor1d structure);
+        // Creates a recurrent neural network using the specified mem loops and
+        // the specified layer sizes.
+        Model(loops_num_t memloopsNum, layers_num_t layersNum, array_size_t* layerSizes);
         // Creates a standard feedforward neural network, since no custom
         // structure is defined.
         Model(layers_num_t layersNum, array_size_t* layerSizes);
@@ -88,8 +94,13 @@ namespace oort {
         void setInput(math::dtensor1d inputValues);
 
     private:
-        Layer* layers;
-        array_size_t layersNum;
+        // The 2D Tensor represents the structure of the network.
+        // In order to include the case of recurrent neural network, more than
+        // one neural network need to be hold in memory.
+        // To do so, a 2D tensor is used. Its width represents the number of
+        // layers of the network, while its height represents the number of
+        // memory loops of the network.
+        math::tensor2d<Layer> layers;
     };
 }
 

@@ -118,36 +118,36 @@ namespace oort {
         double dsigmoid(const double value);
         // Calculates the derivative fast sigmoid of the given value.
         double dfsigmoid(const double value);
-        // Matrices functions.
+
+
+        // Tensor functions.
         error zero(const dtensor1d t);
         error zero(const dtensor2d t);
         error zero(const dtensor3d t);
         error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2);
         error add(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
         error add(const dtensor3d res, const dtensor3d t1, const dtensor3d t2);
-        error mul(double* res,
-                  double* firstMatrix, uint32_t firstRowsNum, uint32_t firstColsNum,
-                  double* secondMatrix, uint32_t secondRowsNum, uint32_t secondColsNum);
         // Performs the dot product between 2D tensors <t1> and <t2>.
         error mul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
         // Performs the dot product between 2D tensor <t1> and 1D tensor <t2>.
         error mul(const dtensor1d res, const dtensor2d t1, const dtensor1d t2);
         // Performs the dot product between 1D tensor <t1> and 2D tensor <t2>.
         error mul(const dtensor1d res, const dtensor1d t1, const dtensor2d t2);
-        error hmul(uint32_t* res, uint32_t* firstMatrix, uint32_t* secondMatrix, uint32_t matrixSize);
-        error hmul(double* res, double* firstMatrix, double* secondMatrix, uint32_t matrixSize);
         // Performs the Hadamard product between 2D tensors <t1> and <t2>.
         error hmul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
-        error smul(uint32_t* res, uint32_t value, uint32_t* matrix, uint32_t matrixSize);
-        error smul(double* res, double value, double* matrix, uint32_t matrixSize);
         // Performs the scalar product between scalar <value> and 2D tensor <t>.
         error smul(const dtensor2d res, const double value, const dtensor2d t);
-        error sigmoid(double* res, double* matrix, uint32_t matrixSize);
         error sigmoid(const dtensor1d res, const dtensor1d t);
         // Calculates the sigmoid of every value of 2D tensor <t> and puts them in
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
         error sigmoid(const dtensor3d res, const dtensor3d t);
+        template <typename T>
+        error alloc(tensor1d<T>* t, const uint32_t width);
+        template <typename T>
+        error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height);
+        template <typename T>
+        error alloc(tensor3d<T>* t, const uint32_t width, const uint32_t height, const uint32_t depth);
         error alloc(dtensor1d* t, const uint32_t width);
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
