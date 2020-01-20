@@ -145,7 +145,12 @@ namespace oort {
         template <typename T>
         error alloc(tensor1d<T>* t, const uint32_t width);
         template <typename T>
-        error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height);
+        error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height) {
+            t->width = width;
+            t->height = height;
+            t->values = (T*) malloc(width * height * sizeof(T));
+            return error::NO_ERROR;
+        }
         template <typename T>
         error alloc(tensor3d<T>* t, const uint32_t width, const uint32_t height, const uint32_t depth);
         error alloc(dtensor1d* t, const uint32_t width);
@@ -157,6 +162,7 @@ namespace oort {
         error copy(const dtensor1d t1, const dtensor1d t2);
         error copy(const dtensor2d t1, const dtensor2d t2);
         error copy(const dtensor3d t1, const dtensor3d t2);
+        error copy(const dtensor2d t1, const dtensor1d t2, const uint32_t index);
         error dealloc(const dtensor1d t);
         error dealloc(const dtensor2d t);
         error dealloc(const dtensor3d t);

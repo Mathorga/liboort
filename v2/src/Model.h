@@ -28,14 +28,16 @@ namespace oort {
     public:
         static const array_size_t DEFAULT_LAYERS_NUM;
         static const array_size_t DEFAULT_LAYER_SIZE;
-        static const array_size_t DEFAULT_LOOPS_NUM;
+        static const array_size_t DEFAULT_MEM_LOOPS_NUM;
 
         // Maybe a dedicated class should be created.
         // For now, since the layer should perform no actions, it should be good
         // as it is.
         struct Layer {
-            // Structure containing every neuron value in a single layer.
-            math::dtensor1d neuronValues;
+            // Structure containing every unactivated value in a single layer.
+            math::dtensor1d composedValues;
+            // Structure containing every activated value in a single layer.
+            math::dtensor1d activatedValues;
 
             // The structure defines the direction of connections between
             // layers: each element is the index of a layer the current one has
@@ -76,12 +78,7 @@ namespace oort {
         Model(layers_num_t layersNum);
         Model();
 
-        // Computes the value of the whole neural network using the specified
-        // loops number, meaning that, if there are any backward connections,
-        // they are performed <loopsNum> times.
-        void computeValue(loops_num_t loopsNum);
-        // Computes the value of the whole neural network using the default
-        // loops number.
+        // Computes the value of the whole neural network.
         void computeValue();
 
         // Getters.

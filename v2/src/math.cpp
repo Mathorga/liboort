@@ -148,6 +148,27 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+        template <typename T>
+        error alloc(tensor1d<T>* t, const uint32_t width) {
+            t->width = width;
+            t->values = (T*) malloc(width * sizeof(T));
+            return error::NO_ERROR;
+        }
+        // template <typename T>
+        // error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height) {
+        //     t->width = width;
+        //     t->height = height;
+        //     t->values = (T*) malloc(width * height * sizeof(T));
+        //     return error::NO_ERROR;
+        // }
+        template <typename T>
+        error alloc(tensor3d<T>* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->width = width;
+            t->height = height;
+            t->depth = depth;
+            t->values = (T*) malloc(width * height * depth * sizeof(T));
+            return error::NO_ERROR;
+        }
         error alloc(dtensor1d* t, const uint32_t width) {
             t->width = width;
             t->values = (double*) malloc(width * sizeof(double));
@@ -201,6 +222,17 @@ namespace oort {
                 t1.values[i] = t2.values[i];
             }
             return error::NO_ERROR;
+        }
+        error copy(const dtensor2d t1, const dtensor1d t2, const uint32_t index) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width) {
+                for (uint32_t i = 0; i < t1.width; i++) {
+                    t1.values[IDX2D(i, index, t1.width)] = t2.values[i];
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+            return err;
         }
         error dealloc(const dtensor1d t) {
             free(t.values);
