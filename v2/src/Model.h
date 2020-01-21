@@ -41,8 +41,8 @@ namespace oort {
 
             // The structure defines the direction of connections between
             // layers: each element is the index of a layer the current one has
-            // connections to.
-            math::itensor1d targets;
+            // connections from.
+            math::itensor1d dependencies;
 
             // Structure containing synapse weights coming from the layer.
             // Every element is an array of 2D matrices of values representing

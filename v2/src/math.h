@@ -1,3 +1,6 @@
+#ifndef __MATH__
+#define __MATH__
+
 #include <math.h>
 // Fixed size int types definitions.
 #include <stdint.h>
@@ -119,6 +122,15 @@ namespace oort {
         // Calculates the derivative fast sigmoid of the given value.
         double dfsigmoid(const double value);
 
+        // Calculates the derivative of the given function in x = <value>.
+        // Default epsilon is 0.01.
+        double der(const double value, UnaryFunction* function);
+        // Calculates the derivative of the given function in x = <value>, using the
+        // given epsilon.
+        double der(const double value, UnaryFunction* function, const double epsilon);
+        // Calculates the given function in x = <value>.
+        double prim(const double value, UnaryFunction* function);
+
 
         // Tensor functions.
         error zero(const dtensor1d t);
@@ -142,17 +154,6 @@ namespace oort {
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
         error sigmoid(const dtensor3d res, const dtensor3d t);
-        template <typename T>
-        error alloc(tensor1d<T>* t, const uint32_t width);
-        template <typename T>
-        error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height) {
-            t->width = width;
-            t->height = height;
-            t->values = (T*) malloc(width * height * sizeof(T));
-            return error::NO_ERROR;
-        }
-        template <typename T>
-        error alloc(tensor3d<T>* t, const uint32_t width, const uint32_t height, const uint32_t depth);
         error alloc(dtensor1d* t, const uint32_t width);
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
@@ -166,14 +167,32 @@ namespace oort {
         error dealloc(const dtensor1d t);
         error dealloc(const dtensor2d t);
         error dealloc(const dtensor3d t);
-
-        // Calculates the derivative of the given function in x = <value>.
-        // Default epsilon is 0.01.
-        double der(const double value, UnaryFunction* function);
-        // Calculates the derivative of the given function in x = <value>, using the
-        // given epsilon.
-        double der(const double value, UnaryFunction* function, const double epsilon);
-        // Calculates the given function in x = <value>.
-        double prim(const double value, UnaryFunction* function);
+        // Template functions.
+        template <typename T>
+        error alloc(tensor1d<T>* t, const uint32_t width) {
+            t->width = width;
+            t->values = (T*) malloc(width * sizeof(T));
+            return error::NO_ERROR;
+        }
+        template <typename T>
+        error alloc(tensor2d<T>* t, const uint32_t width, const uint32_t height) {
+            t->width = width;
+            t->height = height;
+            t->values = (T*) malloc(width * height * sizeof(T));
+            return error::NO_ERROR;
+        }
+        template <typename T>
+        error alloc(tensor3d<T>* t, const uint32_t width, const uint32_t height, const uint32_t depth) {
+            t->width = width;
+            t->height = height;
+            t->depth = depth;
+            t->values = (T*) malloc(width * height * depth * sizeof(T));
+            return error::NO_ERROR;
+        }
     }
 }
+
+// Add definitions for template functions.
+// #include "math.cpp"
+
+#endif
