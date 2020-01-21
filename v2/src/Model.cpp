@@ -101,7 +101,7 @@ namespace oort {
                     math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 0);
                 } else {
                     math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 1);
-                    this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[0] = j - 1;
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies, j - 1);
                 }
 
                 // Allocate neurons.
@@ -122,7 +122,10 @@ namespace oort {
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
                     math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k], 1.0);
+                    printf("\nSynapse weights for layers %d to %d\n", k, IDX2D(i, j, this->layers.width));
                     print(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]);
+                    printf("\nSynapse activations for layers %d to %d\n", k, IDX2D(i, j, this->layers.width));
+                    print(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
                 }
             }
         }
