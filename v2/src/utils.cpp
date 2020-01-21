@@ -75,16 +75,31 @@ namespace oort {
     }
 
     void print(const math::dtensor1d t) {
-        printf("\nTENSOR1D\n");
+        printf("\nDTENSOR1D\n");
         for (uint32_t i = 0; i < t.width; i++) {
             printf("%f\t", t.values[i]);
         }
     }
     void print(const math::dtensor2d t) {
-        printf("\nTENSOR2D\n");
+        printf("\nDTENSOR2D\n");
         for (uint32_t i = 0; i < t.height; i++) {
             for (uint32_t j = 0; j < t.width; j++) {
                 printf("%f\t", t.values[IDX2D(i, j, t.width)]);
+            }
+            printf("\n");
+        }
+    }
+    void print(const math::itensor1d t) {
+        printf("\nITENSOR1D\n");
+        for (uint32_t i = 0; i < t.width; i++) {
+            printf("%d\t", t.values[i]);
+        }
+    }
+    void print(const math::itensor2d t) {
+        printf("\nITENSOR2D\n");
+        for (uint32_t i = 0; i < t.height; i++) {
+            for (uint32_t j = 0; j < t.width; j++) {
+                printf("%d\t", t.values[IDX2D(i, j, t.width)]);
             }
             printf("\n");
         }

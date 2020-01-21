@@ -35,6 +35,24 @@ namespace oort {
             }
             return err;
         }
+        error init(const dtensor1d t, const double value) {
+            for (uint32_t i = 0; i < t.width; i++) {
+                t.values[i] = value;
+            }
+            return error::NO_ERROR;
+        }
+        error init(const dtensor2d t, const double value) {
+            for (uint32_t i = 0; i < t.width * t.height; i++) {
+                t.values[i] = value;
+            }
+            return error::NO_ERROR;
+        }
+        error init(const dtensor3d t, const double value) {
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                t.values[i] = value;
+            }
+            return error::NO_ERROR;
+        }
         error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width) {

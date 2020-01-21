@@ -25,6 +25,8 @@ namespace oort {
     double getNanoTime();
     void print(const math::dtensor1d t);
     void print(const math::dtensor2d t);
+    void print(const math::itensor1d t);
+    void print(const math::itensor2d t);
 }
 
 #endif
