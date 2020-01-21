@@ -75,8 +75,10 @@ namespace oort {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width) {
                 for (uint32_t i = 0; i < res.width; i++) {
-                    res.values[i] = t1.values[i] * t2.values[i];
+                    res.values[i] = t1.values[i] + t2.values[i];
                 }
+            } else {
+                err = error::WRONG_SIZE;
             }
             return err;
         }
@@ -85,7 +87,7 @@ namespace oort {
             if (t1.width == t2.width && res.width == t2.width &&
                 t1.height == t2.height && res.height == t2.height) {
                 for (uint32_t i = 0; i < res.width * res.height; i++) {
-                    res.values[i] = t1.values[i] * t2.values[i];
+                    res.values[i] = t1.values[i] + t2.values[i];
                 }
             }
             return err;
@@ -96,7 +98,7 @@ namespace oort {
                 t1.height == t2.height && res.height == t2.height &&
                 t1.depth == t2.depth && res.depth == t2.depth) {
                 for (uint32_t i = 0; i < res.width * res.height * res.depth; i++) {
-                    res.values[i] = t1.values[i] * t2.values[i];
+                    res.values[i] = t1.values[i] + t2.values[i];
                 }
             }
             return err;

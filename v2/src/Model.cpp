@@ -122,10 +122,6 @@ namespace oort {
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
                     math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k], 1.0);
-                    printf("\nSynapse weights for layers %d to %d\n", k, IDX2D(i, j, this->layers.width));
-                    print(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]);
-                    printf("\nSynapse activations for layers %d to %d\n", k, IDX2D(i, j, this->layers.width));
-                    print(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
                 }
             }
         }
@@ -199,12 +195,8 @@ namespace oort {
 
         // Loop through the graph's mem loops.
         for (array_size_t i = 0; i < this->layers.height; i++) {
-            // Loop through layers of the graph.
-            for (array_size_t j = 0; j < this->layers.width; j++) {
-                // Activate values of the current layer.
-                math::sigmoid(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues,
-                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
-
+            // Loop through layers of the graph avoiding the input one.
+            for (array_size_t j = 1; j < this->layers.width; j++) {
                 // Loop through the current layer's targets.
                 for (array_size_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
                     // Allocate activated synapses.
@@ -213,8 +205,8 @@ namespace oort {
                                 this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k].height);
                     math::copy(activatedSynapses, this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]);
 
-                    // Allocate target inputs.
-                    math::alloc(&(inputs), this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[j].height);
+                    // Allocate inputs.
+                    math::alloc(&(inputs), this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k].width);
 
                     // Activate synapses.
                     math::hmul(activatedSynapses,
@@ -222,7 +214,7 @@ namespace oort {
                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
 
                     // Compute target inputs from the current layer.
-                    math::mul(inputs, this->layers.values[IDX2D(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], i, this->layers.width)].activatedValues, activatedSynapses);
+                    math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
 
                     // Add computed values to target's composition.
                     math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
@@ -232,13 +224,17 @@ namespace oort {
                     math::dealloc(activatedSynapses);
                     math::dealloc(inputs);
                 }
+
+                // Activate values of the current layer if not input.
+                math::sigmoid(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues,
+                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
             }
         }
     }
 
     neuron_value_t* Model::getOutput() {
         // Return neuron values from the last layer of the graph.
-        return this->layers.values[IDX2D(this->layers.width - 1, this->layers.height - 1, this->layers.width)].activatedValues.values;
+        return this->layers.values[IDX2D((this->layers.height - 1), (this->layers.width - 1), this->layers.width)].activatedValues.values;
     }
 
     array_size_t Model::getOutputSize() {
@@ -248,6 +244,7 @@ namespace oort {
 
     void Model::setInput(math::dtensor1d inputValues) {
         // Set neuron values only to the first layer of the graph.
-        math::copy(this->layers.values[IDX2D(0, this->layers.height - 1, this->layers.width)].activatedValues, inputValues);
+        math::copy(this->layers.values[IDX2D((this->layers.height - 1), 0, this->layers.width)].activatedValues, inputValues);
+        // print(this->layers.values[0].activatedValues);
     }
 }

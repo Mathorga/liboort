@@ -10,11 +10,19 @@ int main(int argc, char const *argv[]) {
 
     math::dtensor1d inputs;
     math::alloc(&inputs, 2);
-    inputs.values[0] = 0;
-    inputs.values[1] = 1;
+    inputs.values[0] = 0.0;
+    inputs.values[1] = 1.0;
 
     double sTime = 0.0;
     double eTime = 0.0;
+
+    testGraph->setInput(inputs);
+    testGraph->computeValue();
+
+    double* outs = testGraph->getOutput();
+
+    printf("\nOUTPUT %f\n", outs[0]);
+
 
     return 0;
 }
