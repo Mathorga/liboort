@@ -182,16 +182,7 @@ namespace oort {
 
         // Shift mem loops to the left in order to make space for a new one.
         // The oldest one is removed.
-        for (uint32_t i = 1; i < this->layers.height; i++) {
-            for (uint32_t j = 0; j < this->layers.width; j++) {
-                this->layers.values[IDX2D(i, j - 1, this->layers.width)] = this->layers.values[IDX2D(i, j, this->layers.width)];
-            }
-            if (i == this->layers.height - 1) {
-                for (uint32_t j = 0; j < this->layers.width; j++) {
-                    math::zero(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
-                }
-            }
-        }
+        this->shiftUp();
 
         // Loop through the graph's mem loops.
         for (array_size_t i = 0; i < this->layers.height; i++) {
@@ -218,8 +209,14 @@ namespace oort {
                     // comes from the current layer or one that comes after it).
                     if (this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k] >= j) {
                         // The dependency is recurrent, so take values from the
-                        // mem loop before the current one.
-                        math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[IDX((k - 1), this->layers.height)], this->layers.width)].activatedValues, activatedSynapses);
+                        // mem loop before the current one, if there is one.
+                        if (i > 0) {
+                            math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[IDX((k - 1), this->layers.height)], this->layers.width)].activatedValues, activatedSynapses);
+                        } else {
+                            // The current mem loop is the first one, so unset
+                            // the inputs.
+                            math::zero(inputs);
+                        }
                     } else {
                         // The dependency is not recurrent, so take values from
                         // the current mem loop.
@@ -256,5 +253,18 @@ namespace oort {
         // Set neuron values only to the first layer of the graph.
         math::copy(this->layers.values[IDX2D((this->layers.height - 1), 0, this->layers.width)].activatedValues, inputValues);
         // print(this->layers.values[0].activatedValues);
+    }
+
+    void Model::shiftUp() {
+        for (uint32_t i = 1; i < this->layers.height; i++) {
+            for (uint32_t j = 0; j < this->layers.width; j++) {
+                this->layers.values[IDX2D(i, (j - 1), this->layers.width)] = this->layers.values[IDX2D(i, j, this->layers.width)];
+            }
+            if (i == this->layers.height - 1) {
+                for (uint32_t j = 0; j < this->layers.width; j++) {
+                    math::zero(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
+                }
+            }
+        }
     }
 }

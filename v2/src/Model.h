@@ -98,6 +98,8 @@ namespace oort {
         // layers of the network, while its height represents the number of
         // memory loops of the network.
         math::tensor2d<Layer> layers;
+
+        void shiftUp();
     };
 }
 
