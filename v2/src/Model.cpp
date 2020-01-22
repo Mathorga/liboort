@@ -213,8 +213,18 @@ namespace oort {
                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k],
                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
 
-                    // Compute target inputs from the current layer.
-                    math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
+                    // Compute target inputs to the current layer.
+                    // Check if the current dependency is recurrent (i.e. it
+                    // comes from the current layer or one that comes after it).
+                    if (this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k] >= j) {
+                        // The dependency is recurrent, so take values from the
+                        // mem loop before the current one.
+                        math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[IDX((k - 1), this->layers.height)], this->layers.width)].activatedValues, activatedSynapses);
+                    } else {
+                        // The dependency is not recurrent, so take values from
+                        // the current mem loop.
+                        math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
+                    }
 
                     // Add computed values to target's composition.
                     math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
