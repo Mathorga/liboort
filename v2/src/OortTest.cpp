@@ -23,6 +23,8 @@ int main(int argc, char const *argv[]) {
 
     printf("\nOUTPUT %f\n", outs[0]);
 
+    printf("\n%d\n", -2 % 3);
+
 
     return 0;
 }

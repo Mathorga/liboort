@@ -10,7 +10,7 @@
 // Translate an id wrapping it to the provided size (pacman effect).
 // [i] is the given index.
 // [n] is the size over which to wrap.
-#define IDX(i, n) (i % n)
+#define IDX(i, n) (i < 0 ? (i % n) : (n + (i % n)))
 // Translates bidimensional indexes to a monodimensional one.
 // |i| is the row index.
 // |j| is the column index.
