@@ -30,6 +30,11 @@ namespace oort {
         static const array_size_t DEFAULT_LAYER_SIZE;
         static const array_size_t DEFAULT_MEM_LOOPS_NUM;
 
+        enum activation {
+            SIGMOID,
+            RELU
+        };
+
         // Maybe a dedicated class should be created.
         // For now, since the layer should perform no actions, it should be good
         // as it is.
@@ -44,20 +49,29 @@ namespace oort {
             // connections from.
             math::itensor1d dependencies;
 
-            // Structure containing synapse weights coming from the layer.
-            // Every element is an array of 2D matrices of values representing
+            // Structure containing weights coming to the layer.
+            // Each element is an array of 2D tensors of values representing
             // connections between the current layer and another one referred by
-            // <targets> at the same index.
-            math::dtensor2d* synapseWeights;
+            // <dependencies> at the same index.
+            math::dtensor2d* weights;
+
+            // Structure containing biases coming to the layer.
+            // Each element is a 1D tensor of values used to provide fixed
+            // values to the layer.
+            math::dtensor1d* biases;
 
             // Since some synapses may be inactive, an activation is used to
             // enable or disable them during computations.
-            // The structure has the same size as <synapseWeights> and its
+            // The structure has the same size as <weights> and its
             // values can only be 1 or 0.
             // Every element is an array of 2D matrices whose values are
             // multiplicated to the corrisponding weight matrix using the
             // Hadamard product.
             math::dtensor2d* synapseActivations;
+
+            // Maybe add an activetion function to the layer itself, in order to
+            // differentiate between each layer.
+            // activation activationFunction;
         };
 
         // Constructors.

@@ -24,24 +24,33 @@ namespace oort {
                     this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[0] = i - 1;
                 }
 
-                // Allocate neurons.
+                // Allocate values.
                 math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues), structure.values[IDX2D(i, j, this->layers.width)]);
                 math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), structure.values[IDX2D(i, j, this->layers.width)]);
 
-                // Allocate synapses and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
+                // Allocate weights and activations.
+                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]),
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
-                    // Set all synapse values to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k], 1.0);
+                    // Set all weights to 1.
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
                     math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
                     math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k], 1.0);
+                }
+
+                // Allocate biases.
+                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
+                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
+                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
+                    // Set all biases to 1.
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
                 }
             }
         }
@@ -68,19 +77,28 @@ namespace oort {
             math::alloc(&(this->layers.values[i].activatedValues), structure.values[i]);
 
             // Allocate synapses and activations.
-            this->layers.values[i].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor2d));
+            this->layers.values[i].weights = (math::dtensor2d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor2d));
             this->layers.values[i].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor2d));
             for (uint32_t k = 0; k < this->layers.values[i].dependencies.width; k++) {
-                math::alloc(&(this->layers.values[i].synapseWeights[k]),
+                math::alloc(&(this->layers.values[i].weights[k]),
                             this->layers.values[i].composedValues.width,
                             this->layers.values[this->layers.values[i].dependencies.values[k]].composedValues.width);
                 // Set all synapse values to 1.
-                math::init(this->layers.values[i].synapseWeights[k], 1.0);
+                math::init(this->layers.values[i].weights[k], 1.0);
                 math::alloc(&(this->layers.values[i].synapseActivations[k]),
                             this->layers.values[i].composedValues.width,
                             this->layers.values[this->layers.values[i].dependencies.values[k]].composedValues.width);
                 // Set all synapse activations to 1.
                 math::init(this->layers.values[i].synapseActivations[k], 1.0);
+            }
+
+            // Allocate biases.
+            this->layers.values[i].biases = (math::dtensor1d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor1d));
+            for (uint32_t k = 0; k < this->layers.values[i].dependencies.width; k++) {
+                math::alloc(&(this->layers.values[i].biases[k]),
+                            this->layers.values[i].composedValues.width);
+                // Set all biases to 1.
+                math::init(this->layers.values[i].biases[k], 1.0);
             }
         }
     }
@@ -109,19 +127,28 @@ namespace oort {
                 math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), layerSizes[IDX2D(i, j, this->layers.width)]);
 
                 // Allocate synapses and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
+                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]),
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k], 1.0);
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
                     math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
                     math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k], 1.0);
+                }
+
+                // Allocate biases.
+                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
+                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
+                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
+                    // Set all biases to 1.
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
                 }
             }
         }
@@ -153,19 +180,28 @@ namespace oort {
                 math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), DEFAULT_LAYER_SIZE);
 
                 // Allocate synapses and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
+                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
                 for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]),
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k], 1.0);
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
                     math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]),
                                 this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
                                 this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
                     math::init(this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k], 1.0);
+                }
+
+                // Allocate biases.
+                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
+                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
+                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
+                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
+                    // Set all biases to 1.
+                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
                 }
             }
         }
@@ -192,16 +228,16 @@ namespace oort {
                 for (array_size_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
                     // Allocate activated synapses.
                     math::alloc(&(activatedSynapses),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k].width,
-                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k].height);
-                    math::copy(activatedSynapses, this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k]);
+                                this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].width,
+                                this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].height);
+                    math::copy(activatedSynapses, this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]);
 
                     // Allocate inputs.
-                    math::alloc(&(inputs), this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k].width);
+                    math::alloc(&(inputs), this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].width);
 
                     // Activate synapses.
                     math::hmul(activatedSynapses,
-                               this->layers.values[IDX2D(i, j, this->layers.width)].synapseWeights[k],
+                               this->layers.values[IDX2D(i, j, this->layers.width)].weights[k],
                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
 
                     // Compute target inputs to the current layer.
@@ -223,10 +259,15 @@ namespace oort {
                         math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
                     }
 
-                    // Add computed values to target's composition.
+                    // Add computed values to the layer composition.
                     math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
                               this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
                               inputs);
+
+                    // Add biases from the current dependency.
+                    math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
+                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
+                              this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
 
                     math::dealloc(activatedSynapses);
                     math::dealloc(inputs);
