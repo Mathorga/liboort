@@ -69,7 +69,7 @@ namespace oort {
             // Hadamard product.
             math::dtensor2d* synapseActivations;
 
-            // Maybe add an activetion function to the layer itself, in order to
+            //TODO Add an activation function to the layer itself, in order to
             // differentiate between each layer.
             // activation activationFunction;
         };
@@ -93,7 +93,7 @@ namespace oort {
         Model();
 
         // Computes the value of the whole neural network.
-        void computeValue();
+        void compute();
 
         // Getters.
         // Returns neuron values from the output layer.

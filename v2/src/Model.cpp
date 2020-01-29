@@ -209,7 +209,7 @@ namespace oort {
 
     Model::Model() : Model(DEFAULT_LAYERS_NUM) {}
 
-    void Model::computeValue() {
+    void Model::compute() {
         // Placeholder for actual synapses values, after activation.
         math::dtensor2d activatedSynapses;
 
@@ -240,7 +240,7 @@ namespace oort {
                                this->layers.values[IDX2D(i, j, this->layers.width)].weights[k],
                                this->layers.values[IDX2D(i, j, this->layers.width)].synapseActivations[k]);
 
-                    // Compute target inputs to the current layer.
+                    // Compute inputs to the current layer.
                     // Check if the current dependency is recurrent (i.e. it
                     // comes from the current layer or one that comes after it).
                     if (this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k] >= j) {

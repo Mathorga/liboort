@@ -34,8 +34,10 @@ defaultExe: OortTest
 
 OortTest: OortTest.o \
 		  Model.o \
-		  math.o \
-		  utils.o
+		  GDTrainer.o \
+		  Trainer.o \
+		  utils.o \
+		  math.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 create:
