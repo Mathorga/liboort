@@ -32,7 +32,9 @@ namespace oort {
 
         enum activation {
             SIGMOID,
-            RELU
+            RELU,
+            TANH,
+            LINEAR
         };
 
         // Maybe a dedicated class should be created.
