@@ -34,6 +34,7 @@ namespace oort {
             SIGMOID,
             RELU,
             TANH,
+            SOFTMAX,
             LINEAR
         };
 
