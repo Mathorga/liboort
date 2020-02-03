@@ -186,6 +186,24 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+        error normalize(const dtensor1d res, const dtensor1d t, const double mean, const double stddev) {
+            for (uint32_t i = 0; i < t.width; i++) {
+                res.values[i] = (t.values[i] - mean) / stddev;
+            }
+            return error::NO_ERROR;
+        }
+        error normalize(const dtensor2d res, const dtensor2d t, const double mean, const double stddev) {
+            for (uint32_t i = 0; i < t.width * t.height; i++) {
+                res.values[i] = (t.values[i] - mean) / stddev;
+            }
+            return error::NO_ERROR;
+        }
+        error normalize(const dtensor3d res, const dtensor3d t, const double mean, const double stddev) {
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                res.values[i] = (t.values[i] - mean) / stddev;
+            }
+            return error::NO_ERROR;
+        }
         error alloc(dtensor1d* t, const uint32_t width) {
             t->width = width;
             t->values = (double*) malloc(width * sizeof(double));

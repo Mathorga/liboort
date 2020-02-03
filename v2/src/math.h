@@ -164,6 +164,9 @@ namespace oort {
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
         error sigmoid(const dtensor3d res, const dtensor3d t);
+        error normalize(const dtensor1d res, const dtensor1d t, const double mean, const double stddev);
+        error normalize(const dtensor2d res, const dtensor2d t, const double mean, const double stddev);
+        error normalize(const dtensor3d res, const dtensor3d t, const double mean, const double stddev);
         error alloc(dtensor1d* t, const uint32_t width);
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
