@@ -290,7 +290,7 @@ namespace oort {
         return this->layers.values[IDX2D(this->layers.width - 1, this->layers.height - 1, this->layers.width)].activatedValues.width;
     }
 
-    void Model::setInput(math::dtensor1d inputValues) {
+    void Model::feed(math::dtensor1d inputValues) {
         // Set neuron values only to the first layer of the graph.
         math::copy(this->layers.values[IDX2D((this->layers.height - 1), 0, this->layers.width)].activatedValues, inputValues);
         // print(this->layers.values[0].activatedValues);

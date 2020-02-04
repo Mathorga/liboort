@@ -16,7 +16,7 @@ int main(int argc, char const *argv[]) {
     double sTime = 0.0;
     double eTime = 0.0;
 
-    testGraph->setInput(inputs);
+    testGraph->feed(inputs);
     testGraph->compute();
 
     double* outs = testGraph->getOutput();

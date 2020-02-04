@@ -105,7 +105,7 @@ namespace oort {
 
         // Setters.
         // Sets values to the first layer of neurons.
-        void setInput(math::dtensor1d inputValues);
+        void feed(math::dtensor1d inputValues);
 
     private:
         // The 2D Tensor represents the structure of the network.
