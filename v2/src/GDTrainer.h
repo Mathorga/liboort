@@ -19,6 +19,14 @@ namespace oort {
         // Trains the model.
         void train();
 
+        // Getters.
+        double getLearningRate();
+        uint32_t getBatchSize();
+
+        // Setters.
+        void setLearningRate(double learningRate);
+        void setBatchSize(uint32_t batchSize);
+
     private:
         double learningRate;
         uint32_t batchSize;
