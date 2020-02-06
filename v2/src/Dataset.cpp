@@ -1,33 +1,33 @@
-#include "Knowledge.h"
+#include "Dataset.h"
 
 namespace Oort {
-    const vector_size_t Knowledge::DEFAULT_INPUTS_NUM = 100;
-    const vector_size_t Knowledge::DEFAULT_OUTPUTS_NUM = 1;
+    const vector_size_t Dataset::DEFAULT_INPUTS_NUM = 100;
+    const vector_size_t Dataset::DEFAULT_OUTPUTS_NUM = 1;
 
-    Knowledge::Knowledge() {
+    Dataset::Dataset() {
         this->inputsNum = DEFAULT_INPUTS_NUM;
         this->outputsNum = DEFAULT_OUTPUTS_NUM;
         this->experiences = new Vector<Experience>();
     }
 
-    Knowledge::Knowledge(vector_size_t inputsNum, vector_size_t outputsNum) {
+    Dataset::Dataset(vector_size_t inputsNum, vector_size_t outputsNum) {
         this->inputsNum = inputsNum;
         this->outputsNum = outputsNum;
         this->experiences = new Vector<Experience>();
     }
 
-    void Knowledge::addExperience(Experience* experience) {
-        // Check if inputs and outputs numbers of the experience match those of the knowledge.
+    void Dataset::addExperience(Experience* experience) {
+        // Check if inputs and outputs numbers of the experience match those of the Dataset.
         // Print an error in case of inconsistency.
         if (experience->getInputsNum() == this->inputsNum && experience->getOutputsNum() == this->outputsNum) {
             this->experiences->addLast(*experience);
         } else {
             printf("\nmyIns %d, myOuts %d, expIns %d, expOuts %d\n", this->inputsNum, this->outputsNum, experience->getInputsNum(), experience->getOutputsNum());
-            printf("\n<Knowledge.addExperience()> Error adding experience: Inconsistent size\n");
+            printf("\n<Dataset.addExperience()> Error adding experience: Inconsistent size\n");
         }
     }
 
-    void Knowledge::addExperiences(Experience* experiences, vector_size_t size) {
+    void Dataset::addExperiences(Experience* experiences, vector_size_t size) {
         vector_size_t errorsNum = 0;
 
         for (vector_size_t i = 0; i < size; i++) {
@@ -38,12 +38,12 @@ namespace Oort {
             }
         }
         if (errorsNum > 0) {
-            printf("\n<Knowledge.addExperiences()> Error adding %d experiences: Inconsistent sizes\n", errorsNum);
+            printf("\n<Dataset.addExperiences()> Error adding %d experiences: Inconsistent sizes\n", errorsNum);
         }
     }
 
-    void Knowledge::print() {
-        printf("\nKnowledge - Inputs %d Outputs %d\n", this->inputsNum, this->outputsNum);
+    void Dataset::print() {
+        printf("\nDataset - Inputs %d Outputs %d\n", this->inputsNum, this->outputsNum);
 
         // Print all experiences.
         for (vector_size_t i = 0; i < this->experiences->getSize(); i++) {
@@ -51,27 +51,27 @@ namespace Oort {
         }
     }
 
-    vector_size_t Knowledge::getInputsNum() {
+    vector_size_t Dataset::getInputsNum() {
         return this->inputsNum;
     }
 
-    vector_size_t Knowledge::getOutputsNum() {
+    vector_size_t Dataset::getOutputsNum() {
         return this->outputsNum;
     }
 
-    Experience* Knowledge::getExperience(vector_size_t index) {
+    Experience* Dataset::getExperience(vector_size_t index) {
         return this->experiences->getItem(index);
     }
 
-    Experience* Knowledge::getExperiences() {
+    Experience* Dataset::getExperiences() {
         return this->experiences->getItems();
     }
 
-    Vector<Experience>* Knowledge::getExperiencesVector() {
+    Vector<Experience>* Dataset::getExperiencesVector() {
         return this->experiences;
     }
 
-    vector_size_t Knowledge::getExperiencesNum() {
+    vector_size_t Dataset::getExperiencesNum() {
         return this->experiences->getSize();
     }
 }

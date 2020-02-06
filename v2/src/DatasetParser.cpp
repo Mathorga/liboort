@@ -1,22 +1,22 @@
-#include "KnowledgeParser.h"
+#include "DatasetParser.h"
 
 namespace Oort {
-    const uint8_t KnowledgeParser::HEADER_LENGTH = 9;
-    const uint8_t KnowledgeParser::INPUTS_NUM_DEPTH = 4;
-    const uint8_t KnowledgeParser::OUTPUTS_NUM_DEPTH = 4;
-    const uint8_t KnowledgeParser::DEFAULT_VALUE_DEPTH = 1;
-    const uint8_t KnowledgeParser::MAX_VALUE_DEPTH = 4;
+    const uint8_t DatasetParser::HEADER_LENGTH = 9;
+    const uint8_t DatasetParser::INPUTS_NUM_DEPTH = 4;
+    const uint8_t DatasetParser::OUTPUTS_NUM_DEPTH = 4;
+    const uint8_t DatasetParser::DEFAULT_VALUE_DEPTH = 1;
+    const uint8_t DatasetParser::MAX_VALUE_DEPTH = 4;
 
-    KnowledgeParser::KnowledgeParser() {
-        this->knowledge = nullptr;
+    DatasetParser::DatasetParser() {
+        this->dataset = nullptr;
         this->depth = 0;
     }
 
-    KnowledgeParser::KnowledgeParser(Knowledge* knowledge) {
-        this->knowledge = knowledge;
+    DatasetParser::DatasetParser(Dataset* dataset) {
+        this->dataset = dataset;
     }
 
-    void KnowledgeParser::readFile(char* fileName) {
+    void DatasetParser::readFile(char* fileName) {
         FILE* inputFile = nullptr;
         uint32_t inputsNum = 0;
         uint32_t outputsNum = 0;
@@ -33,7 +33,7 @@ namespace Oort {
         // format.
         if (strstr(fileName, ".knl") == nullptr) {
             // Warning: the file might not be the right format.
-            printf("\n<KnowledgeParser::readFile()> Warning: file doesn't have a .knl extension\n");
+            printf("\n<DatasetParser::readFile()> Warning: file doesn't have a .knl extension\n");
         }
 
         // Open input file in binary read mode.
@@ -53,8 +53,8 @@ namespace Oort {
             // outputsNum = header[1];
             // depth = header[2];
 
-            // Create knowledge.
-            this->knowledge = new Knowledge(inputsNum, outputsNum);
+            // Create dataset.
+            this->dataset = new Dataset(inputsNum, outputsNum);
 
             while(!feof(inputFile)) {
                 inputs = (byte*) malloc(depth * inputsNum);
@@ -96,7 +96,7 @@ namespace Oort {
                     // Convert integer to neuron value.
                     outputVector->addLast(currentValue / pow(2, depth * 8));
                 }
-                this->knowledge->addExperience(new Experience(inputVector, outputVector));
+                this->dataset->addExperience(new Experience(inputVector, outputVector));
                 free(inputs);
                 free(outputs);
 
@@ -115,11 +115,11 @@ namespace Oort {
             fclose(inputFile);
         } else {
             // There was an error opening the file.
-            printf("\n<KnowledgeParser::readFile()> Error: could not open file %s\n", fileName);
+            printf("\n<DatasetParser::readFile()> Error: could not open file %s\n", fileName);
         }
     }
 
-    void KnowledgeParser::writeFile(char* fileName) {
+    void DatasetParser::writeFile(char* fileName) {
         FILE* outputFile = nullptr;
         uint8_t depth = 0;
         byte* value = nullptr;
@@ -133,8 +133,8 @@ namespace Oort {
             depth = this->depth;
         }
 
-        // Check if knowledge was previously set. return if not.
-        if (this->knowledge) {
+        // Check if dataset was previously set. return if not.
+        if (this->dataset) {
             // Open the file in binary write mode.
             // fopen() automatically creates the file if not alredy present, so there's no need to check for its
             // existence.
@@ -143,20 +143,20 @@ namespace Oort {
             // Check if the file was correctly opened.
             if (outputFile != nullptr) {
                 // Write header.
-                fwrite(uintToByteArray(this->knowledge->getInputsNum(), INPUTS_NUM_DEPTH), INPUTS_NUM_DEPTH, 1, outputFile);
-                fwrite(uintToByteArray(this->knowledge->getOutputsNum(), OUTPUTS_NUM_DEPTH), OUTPUTS_NUM_DEPTH, 1, outputFile);
-                // fputc(this->knowledge->getInputsNum(), outputFile);
-                // fputc(this->knowledge->getOutputsNum(), outputFile);
+                fwrite(uintToByteArray(this->dataset->getInputsNum(), INPUTS_NUM_DEPTH), INPUTS_NUM_DEPTH, 1, outputFile);
+                fwrite(uintToByteArray(this->dataset->getOutputsNum(), OUTPUTS_NUM_DEPTH), OUTPUTS_NUM_DEPTH, 1, outputFile);
+                // fputc(this->dataset->getInputsNum(), outputFile);
+                // fputc(this->dataset->getOutputsNum(), outputFile);
                 fputc(depth, outputFile);
 
-                // Write knowledge data.
+                // Write dataset data.
                 // Loop through experiences.
-                for (vector_size_t i = 0; i < this->knowledge->getExperiencesNum(); i++) {
+                for (vector_size_t i = 0; i < this->dataset->getExperiencesNum(); i++) {
                     // Write experience inputs.
-                    for (vector_size_t j = 0; j < this->knowledge->getInputsNum(); j++) {
+                    for (vector_size_t j = 0; j < this->dataset->getInputsNum(); j++) {
 
                         // Convert neuron value to integer value.
-                        intValue = this->knowledge->getExperience(i)->getInput(j) * pow(2, depth * 8);
+                        intValue = this->dataset->getExperience(i)->getInput(j) * pow(2, depth * 8);
 
                         // Convert the value to a depth-long byte array.
                         value = uintToByteArray(intValue, depth);
@@ -168,9 +168,9 @@ namespace Oort {
                     }
 
                     // Write experience outputs.
-                    for (vector_size_t j = 0; j < this->knowledge->getOutputsNum(); j++) {
+                    for (vector_size_t j = 0; j < this->dataset->getOutputsNum(); j++) {
                         // Convert neuron value to integer value.
-                        intValue = this->knowledge->getExperience(i)->getOutput(j) * pow(2, depth * 8);
+                        intValue = this->dataset->getExperience(i)->getOutput(j) * pow(2, depth * 8);
 
                         // Convert the value to a depth-long byte array.
                         value = uintToByteArray(intValue, depth);
@@ -186,23 +186,23 @@ namespace Oort {
                 fclose(outputFile);
             } else {
                 // There was an error opening the file.
-                printf("\n<KnowledgeParser::writeFile()> Error: file not opened %s\n", fileName);
+                printf("\n<DatasetParser::writeFile()> Error: file not opened %s\n", fileName);
             }
         } else {
-            printf("\n<KnowledgeParser::writeFile()> Error: knowledge not set\n");
+            printf("\n<DatasetParser::writeFile()> Error: dataset not set\n");
         }
         return;
     }
 
-    Knowledge* KnowledgeParser::getKnowledge() {
-        return this->knowledge;
+    Dataset* DatasetParser::getDataset() {
+        return this->dataset;
     }
 
-    void KnowledgeParser::setKnowledge(Knowledge* knowledge) {
-        this->knowledge = knowledge;
+    void DatasetParser::setDataset(Dataset* dataset) {
+        this->dataset = dataset;
     }
 
-    void KnowledgeParser::setDepth(uint8_t depth) {
+    void DatasetParser::setDepth(uint8_t depth) {
         this->depth = depth;
     }
 }

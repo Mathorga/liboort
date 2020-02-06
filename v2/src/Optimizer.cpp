@@ -1,13 +1,13 @@
-#include "Trainer.h"
+#include "Optimizer.h"
 
 namespace oort {
     // Getters.
-    Model* Trainer::getModel() {
+    Model* Optimizer::getModel() {
         return this->model;
     }
 
     // Setters.
-    void Trainer::setModel(Model* model) {
+    void Optimizer::setModel(Model* model) {
         this->model = model;
     }
 }

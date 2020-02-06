@@ -1,24 +1,24 @@
-#include "GDTrainer.h"
+#include "GDOptimizer.h"
 
 namespace oort {
-    void GDTrainer::train() {
+    void GDOptimizer::run() {
         //TODO
         return;
     }
 
     // Getters.
-    double GDTrainer::getLearningRate() {
+    double GDOptimizer::getLearningRate() {
         return this->learningRate;
     }
-    uint32_t GDTrainer::getBatchSize() {
+    uint32_t GDOptimizer::getBatchSize() {
         return this->batchSize;
     }
 
     // Setters.
-    void GDTrainer::setLearningRate(double learningRate) {
+    void GDOptimizer::setLearningRate(double learningRate) {
         this->learningRate = learningRate;
     }
-    void GDTrainer::setBatchSize(uint32_t batchSize) {
+    void GDOptimizer::setBatchSize(uint32_t batchSize) {
         this->batchSize = batchSize;
     }
 }
