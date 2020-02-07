@@ -70,7 +70,9 @@ namespace oort {
             // Every element is an array of 2D matrices whose values are
             // multiplicated to the corrisponding weight matrix using the
             // Hadamard product.
-            math::dtensor2d* synapseActivations;
+            math::dtensor2d* weightActivations;
+
+            // Do I also need a bias activation???
 
             // Add an activation function to the layer itself, in order to
             // differentiate between each layer.
