@@ -30,6 +30,7 @@ namespace oort {
     private:
         double learningRate;
         uint32_t batchSize;
+        uint32_t epochsNum;
     };
 }
 

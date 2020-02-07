@@ -34,8 +34,8 @@ defaultExe: OortTest
 
 OortTest: OortTest.o \
 		  Model.o \
-		  GDTrainer.o \
-		  Trainer.o \
+		  GDOptimizer.o \
+		  Optimizer.o \
 		  utils.o \
 		  math.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)

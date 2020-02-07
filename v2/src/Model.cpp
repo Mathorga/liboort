@@ -248,6 +248,7 @@ namespace oort {
                         // mem loop before the current one, if there is one.
                         if (i > 0) {
                             math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[IDX((k - 1), this->layers.height)], this->layers.width)].activatedValues, activatedSynapses);
+                            math::add(inputs, inputs, this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
                         } else {
                             // The current mem loop is the first one, so unset
                             // the inputs.
@@ -257,6 +258,7 @@ namespace oort {
                         // The dependency is not recurrent, so take values from
                         // the current mem loop.
                         math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
+                        math::add(inputs, inputs, this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
                     }
 
                     // Add computed values to the layer composition.

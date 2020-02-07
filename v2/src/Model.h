@@ -72,9 +72,9 @@ namespace oort {
             // Hadamard product.
             math::dtensor2d* synapseActivations;
 
-            //TODO Add an activation function to the layer itself, in order to
+            // Add an activation function to the layer itself, in order to
             // differentiate between each layer.
-            // activation activationFunction;
+            activation activationFunction;
         };
 
         // Constructors.
