@@ -29,7 +29,7 @@ namespace Oort {
     private:
         vector_size_t inputsNum;
         vector_size_t outputsNum;
-        Vector<Experience>* experiences;
+        tensor1d<Experience> experiences;
     };
 }
 
