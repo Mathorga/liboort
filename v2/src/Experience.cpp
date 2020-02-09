@@ -1,7 +1,7 @@
 #include "Experience.h"
 
-namespace Oort {
-    Experience::Experience(dtensor1d inputs, dtensor1d outputs) {
+namespace oort {
+    Experience::Experience(math::dtensor1d inputs, math::dtensor1d outputs) {
         this->inputs = inputs;
         this->outputs = outputs;
     }
@@ -15,29 +15,29 @@ namespace Oort {
 
     void Experience::print() {
         printf("\nExperience\n");
-        for (uint32_t i = 0; i < this->inputs->getSize(); i++) {
-            printf("%f ", *(this->inputs->getItem(i)));
+        for (uint32_t i = 0; i < this->inputs.width; i++) {
+            printf("%f ", this->inputs.values[i]);
         }
         printf("\t");
-        for (uint32_t i = 0; i < this->outputs->getSize(); i++) {
-            printf("%f ", *(this->outputs->getItem(i)));
+        for (uint32_t i = 0; i < this->outputs.width; i++) {
+            printf("%f ", this->outputs.values[i]);
         }
         printf("\n\n");
     }
 
     double Experience::getInput(uint32_t index) {
-        return *(this->inputs->getItem(index));
+        return this->inputs.values[index];
     }
 
     double Experience::getOutput(uint32_t index) {
-        return *(this->outputs->getItem(index));
+        return this->outputs.values[index];
     }
 
-    dtensor2d Experience::getInputs() {
+    math::dtensor1d Experience::getInputs() {
         return this->inputs;
     }
 
-    dtensor2d Experience::getOutputs() {
+    math::dtensor1d Experience::getOutputs() {
         return this->outputs;
     }
 
@@ -49,11 +49,11 @@ namespace Oort {
         return this->outputs.width;
     }
 
-    void Experience::setInputs(dtensor1d inputs) {
+    void Experience::setInputs(math::dtensor1d inputs) {
         this->inputs = inputs;
     }
 
-    void Experience::setOutputs(dtensor1d outputs) {
+    void Experience::setOutputs(math::dtensor1d outputs) {
         this->outputs = outputs;
     }
 }

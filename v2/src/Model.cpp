@@ -282,7 +282,7 @@ namespace oort {
         }
     }
 
-    neuron_value_t* Model::getOutput() {
+    double* Model::getOutput() {
         // Return neuron values from the last layer of the graph.
         return this->layers.values[IDX2D((this->layers.height - 1), (this->layers.width - 1), this->layers.width)].activatedValues.values;
     }

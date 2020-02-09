@@ -17,7 +17,6 @@ Copyright (C) 2020  Luka Micheletti
 #include "utils.h"
 
 #define array_size_t uint32_t
-#define neuron_value_t double
 #define synapse_weight_t double
 #define layers_num_t uint8_t
 #define loops_num_t uint32_t
@@ -102,7 +101,7 @@ namespace oort {
 
         // Getters.
         // Returns neuron values from the output layer.
-        neuron_value_t* getOutput();
+        double* getOutput();
         array_size_t getOutputSize();
 
         // Setters.

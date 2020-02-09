@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "GDTrainer.h"
+#include "Experience.h"
 
 using namespace oort;
 

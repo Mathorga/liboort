@@ -36,6 +36,7 @@ OortTest: OortTest.o \
 		  Model.o \
 		  GDTrainer.o \
 		  Trainer.o \
+		  Experience.o \
 		  utils.o \
 		  math.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
