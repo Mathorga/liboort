@@ -1,6 +1,6 @@
 /*
 ********************************************************************************
-Optimizer.h
+Trainer.h
 
 Definition of the general class for training models.
 
@@ -8,13 +8,13 @@ Copyright (C) 2020  Luka Micheletti
 ********************************************************************************
 */
 
-#ifndef __OPTIMIZER__
-#define __OPTIMIZER__
+#ifndef __TRAINER__
+#define __TRAINER__
 
 #include "Model.h"
 
 namespace oort {
-    class Optimizer {
+    class Trainer {
     public:
         // Optimizes the model.
         // The method needs to be implemented in child classes.

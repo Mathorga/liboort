@@ -1,22 +1,22 @@
-#include "DatasetParser.h"
+#include "KnowledgeParser.h"
 
 namespace Oort {
-    const uint8_t DatasetParser::HEADER_LENGTH = 9;
-    const uint8_t DatasetParser::INPUTS_NUM_DEPTH = 4;
-    const uint8_t DatasetParser::OUTPUTS_NUM_DEPTH = 4;
-    const uint8_t DatasetParser::DEFAULT_VALUE_DEPTH = 1;
-    const uint8_t DatasetParser::MAX_VALUE_DEPTH = 4;
+    const uint8_t KnowledgeParser::HEADER_LENGTH = 9;
+    const uint8_t KnowledgeParser::INPUTS_NUM_DEPTH = 4;
+    const uint8_t KnowledgeParser::OUTPUTS_NUM_DEPTH = 4;
+    const uint8_t KnowledgeParser::DEFAULT_VALUE_DEPTH = 1;
+    const uint8_t KnowledgeParser::MAX_VALUE_DEPTH = 4;
 
-    DatasetParser::DatasetParser() {
+    KnowledgeParser::KnowledgeParser() {
         this->dataset = nullptr;
         this->depth = 0;
     }
 
-    DatasetParser::DatasetParser(Dataset* dataset) {
+    KnowledgeParser::KnowledgeParser(Knowledge* dataset) {
         this->dataset = dataset;
     }
 
-    void DatasetParser::readFile(char* fileName) {
+    void KnowledgeParser::readFile(char* fileName) {
         FILE* inputFile = nullptr;
         uint32_t inputsNum = 0;
         uint32_t outputsNum = 0;
@@ -33,7 +33,7 @@ namespace Oort {
         // format.
         if (strstr(fileName, ".knl") == nullptr) {
             // Warning: the file might not be the right format.
-            printf("\n<DatasetParser::readFile()> Warning: file doesn't have a .knl extension\n");
+            printf("\n<KnowledgeParser::readFile()> Warning: file doesn't have a .knl extension\n");
         }
 
         // Open input file in binary read mode.
@@ -54,7 +54,7 @@ namespace Oort {
             // depth = header[2];
 
             // Create dataset.
-            this->dataset = new Dataset(inputsNum, outputsNum);
+            this->dataset = new Knowledge(inputsNum, outputsNum);
 
             while(!feof(inputFile)) {
                 inputs = (byte*) malloc(depth * inputsNum);
@@ -115,11 +115,11 @@ namespace Oort {
             fclose(inputFile);
         } else {
             // There was an error opening the file.
-            printf("\n<DatasetParser::readFile()> Error: could not open file %s\n", fileName);
+            printf("\n<KnowledgeParser::readFile()> Error: could not open file %s\n", fileName);
         }
     }
 
-    void DatasetParser::writeFile(char* fileName) {
+    void KnowledgeParser::writeFile(char* fileName) {
         FILE* outputFile = nullptr;
         uint8_t depth = 0;
         byte* value = nullptr;
@@ -186,23 +186,23 @@ namespace Oort {
                 fclose(outputFile);
             } else {
                 // There was an error opening the file.
-                printf("\n<DatasetParser::writeFile()> Error: file not opened %s\n", fileName);
+                printf("\n<KnowledgeParser::writeFile()> Error: file not opened %s\n", fileName);
             }
         } else {
-            printf("\n<DatasetParser::writeFile()> Error: dataset not set\n");
+            printf("\n<KnowledgeParser::writeFile()> Error: dataset not set\n");
         }
         return;
     }
 
-    Dataset* DatasetParser::getDataset() {
+    Knowledge* KnowledgeParser::getKnowledge() {
         return this->dataset;
     }
 
-    void DatasetParser::setDataset(Dataset* dataset) {
+    void KnowledgeParser::setKnowledge(Knowledge* dataset) {
         this->dataset = dataset;
     }
 
-    void DatasetParser::setDepth(uint8_t depth) {
+    void KnowledgeParser::setDepth(uint8_t depth) {
         this->depth = depth;
     }
 }

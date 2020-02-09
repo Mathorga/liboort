@@ -2,38 +2,33 @@
 #define __EXPERIENCE__
 
 #include "utils.h"
-#include "Vector.h"
-#include "Neuron.h"
 
-namespace Oort {
+namespace oort {
     class Experience {
     public:
+        Experience(dtensor1d inputs, dtensor1d outputs);
+        Experience(uint32_t inputsNum, uint32_t outputsNum);
         Experience();
-        Experience(vector_size_t inputsNum, vector_size_t outputsNum);
-        Experience(vector_size_t inputsNum, neuron_value_t* inputValues, vector_size_t outputsNum, neuron_value_t* outputValues);
-        Experience(Vector<neuron_value_t>* inputs, Vector<neuron_value_t>* outputs);
 
         void print();
 
         // Getters.
-        neuron_value_t getInput(vector_size_t index);
-        neuron_value_t getOutput(vector_size_t index);
-        neuron_value_t* getInputs();
-        neuron_value_t* getOutputs();
-        Vector<neuron_value_t>* getInputsVector();
-        Vector<neuron_value_t>* getOutputsVector();
-        vector_size_t getInputsNum();
-        vector_size_t getOutputsNum();
+        neuron_value_t getInput(uint32_t index);
+        neuron_value_t getOutput(uint32_t index);
+        dtensor2d getInputs();
+        dtensor2d getOutputs();
+        uint32_t getInputsNum();
+        uint32_t getOutputsNum();
 
         // Setters.
-        void setInputs(neuron_value_t* inputs, vector_size_t inputsNum);
-        void setInputs(Vector<neuron_value_t>* inputs);
-        void setOutputs(neuron_value_t* outputs, vector_size_t outputsNum);
-        void setOutputs(Vector<neuron_value_t>* outputs);
+        void setInputs(neuron_value_t* inputs, uint32_t inputsNum);
+        void setInputs(dtensor1d inputs);
+        void setOutputs(neuron_value_t* outputs, uint32_t outputsNum);
+        void setOutputs(dtensor1d outputs);
 
     private:
-        Vector<neuron_value_t>* inputs;
-        Vector<neuron_value_t>* outputs;
+        dtensor1d inputs;
+        dtensor1d outputs;
     };
 }
 
