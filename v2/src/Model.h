@@ -16,18 +16,12 @@ Copyright (C) 2020  Luka Micheletti
 
 #include "utils.h"
 
-#define array_size_t uint32_t
-#define synapse_weight_t double
-#define layers_num_t uint8_t
-#define loops_num_t uint32_t
-#define activation_type_t double
-
 namespace oort {
     class Model {
     public:
-        static const array_size_t DEFAULT_LAYERS_NUM;
-        static const array_size_t DEFAULT_LAYER_SIZE;
-        static const array_size_t DEFAULT_MEM_LOOPS_NUM;
+        static const uint32_t DEFAULT_LAYERS_NUM;
+        static const uint32_t DEFAULT_LAYER_SIZE;
+        static const uint32_t DEFAULT_MEM_LOOPS_NUM;
 
         enum activation {
             SIGMOID,
@@ -79,21 +73,15 @@ namespace oort {
         };
 
         // Constructors.
-        // Creates a recurrent neural network using the speicified structure:
-        // <structure.width> layers for <structure.height> mem loops.
-        Model(math::itensor2d structure);
-        // Creates a standard feedforward neural network, since no mem loop
-        // count is specified.
-        Model(math::itensor1d structure);
         // Creates a recurrent neural network using the specified mem loops and
         // the specified layer sizes.
-        Model(loops_num_t memloopsNum, layers_num_t layersNum, array_size_t* layerSizes);
+        Model(uint32_t memLoopsNum, uint32_t layersNum, uint32_t* layerSizes);
         // Creates a standard feedforward neural network, since no custom
         // structure is defined.
-        Model(layers_num_t layersNum, array_size_t* layerSizes);
+        Model(uint32_t layersNum, uint32_t* layerSizes);
         // Creates a standard feedforward neural network with fixed layer size,
         // since no custom structure is defined.
-        Model(layers_num_t layersNum);
+        Model(uint32_t layersNum);
         Model();
 
         // Computes the value of the whole neural network.
@@ -102,7 +90,7 @@ namespace oort {
         // Getters.
         // Returns neuron values from the output layer.
         double* getOutput();
-        array_size_t getOutputSize();
+        uint32_t getOutputSize();
 
         // Setters.
         // Sets values to the first layer of neurons.
@@ -115,7 +103,14 @@ namespace oort {
         // To do so, a 2D tensor is used. Its width represents the number of
         // layers of the network, while its height represents the number of
         // memory loops of the network.
-        math::tensor2d<Layer> layers;
+        // math::tensor2d<Layer> layers;
+
+        // Number of memory loops, used to implement recurrent neural networks.
+        uint32_t memLoopsNum;
+        // Number of layers in each memory loop.
+        uint32_t layersNum;
+        // Actual layers of the network.
+        Layer** layers;
 
         void shiftUp();
     };

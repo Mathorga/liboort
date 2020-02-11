@@ -11,25 +11,24 @@ namespace Oort {
         static const vector_size_t DEFAULT_OUTPUTS_NUM;
 
         Knowledge();
-        Knowledge(vector_size_t inputsNum, vector_size_t outputsNum);
+        Knowledge(uint32_t inputsNum, uint32_t outputsNum);
 
         void addExperience(Experience* experience);
-        void addExperiences(Experience* experiences, vector_size_t size);
+        void addExperiences(Experience* experiences, uint32_t size);
         void addExperiences(Vector<Experience>* experiences);
         void print();
 
         // Getters.
-        vector_size_t getInputsNum();
-        vector_size_t getOutputsNum();
-        Experience* getExperience(vector_size_t index);
-        Experience* getExperiences();
-        Vector<Experience>* getExperiencesVector();
-        vector_size_t getExperiencesNum();
+        uint32_t getInputsNum();
+        uint32_t getOutputsNum();
+        Experience* getExperience(uint32_t index);
+        math::tensor1d<Experience> getExperiences();
+        uint32_t getExperiencesNum();
 
     private:
-        vector_size_t inputsNum;
-        vector_size_t outputsNum;
-        tensor1d<Experience> experiences;
+        uint32_t inputsNum;
+        uint32_t outputsNum;
+        math::tensor1d<Experience> experiences;
     };
 }
 

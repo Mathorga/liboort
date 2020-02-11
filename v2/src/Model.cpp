@@ -1,207 +1,123 @@
 #include "Model.h"
 
 namespace oort {
-    const array_size_t Model::DEFAULT_LAYERS_NUM = 3;
-    const array_size_t Model::DEFAULT_LAYER_SIZE = 5;
-    const array_size_t Model::DEFAULT_MEM_LOOPS_NUM = 0;
+    const uint32_t Model::DEFAULT_LAYERS_NUM = 3;
+    const uint32_t Model::DEFAULT_LAYER_SIZE = 5;
+    const uint32_t Model::DEFAULT_MEM_LOOPS_NUM = 0;
 
-    Model::Model(math::itensor2d structure) {
+    Model::Model(uint32_t memLoopsNum, uint32_t layersNum, uint32_t* layerSizes) {
+        // Set size members.
+        this->memLoopsNum = memLoopsNum;
+        this->layersNum = layersNum;
+
         // Allocate layers.
-        math::alloc(&(this->layers), structure.width, structure.height);
+        this->layers = (Layer**) malloc(this->memLoopsNum * sizeof(Layer*));
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
+            this->layers[i] = (Layer*) malloc(this->layersNum * sizeof(Layer));
+        }
 
         // Loop through memory loops of the network in order to allocate each
         // one of them.
-        for (uint32_t i = 0; i < this->layers.height; i++) {
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
             // Loop through layers in each mem loop.
-            for (uint32_t j = 0; j < this->layers.width; j++) {
-                // Allocate and set dependency for each layer but the first one.
-                // For feedforward neural networks, connections only exist
-                // between each layer and the next one.
-                if (i <= 0) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 0);
-                } else {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 1);
-                    this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[0] = i - 1;
-                }
-
-                // Allocate values.
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues), structure.values[IDX2D(i, j, this->layers.width)]);
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), structure.values[IDX2D(i, j, this->layers.width)]);
-
-                // Allocate weights and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
-                    // Set all weights to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
-                    // Set all synapse activations to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k], 1.0);
-                }
-
-                // Allocate biases.
-                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
-                    // Set all biases to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
-                }
-            }
-        }
-    }
-
-    Model::Model(math::itensor1d structure) {
-        // Allocate layers.
-        math::alloc(&(this->layers), structure.width, 1);
-
-        // There is only one mem loop, so loop through its layers.
-        for (uint32_t i = 0; i < this->layers.width; i++) {
-            // Allocate and set dependency for each layer but the first one.
-            // For feedforward neural networks, connections only exist
-            // between each layer and the next one.
-            if (i <= 0) {
-                math::alloc(&(this->layers.values[i].dependencies), 0);
-            } else {
-                math::alloc(&(this->layers.values[i].dependencies), 1);
-                this->layers.values[i].dependencies.values[0] = i - 1;
-            }
-
-            // Allocate neurons.
-            math::alloc(&(this->layers.values[i].composedValues), structure.values[i]);
-            math::alloc(&(this->layers.values[i].activatedValues), structure.values[i]);
-
-            // Allocate synapses and activations.
-            this->layers.values[i].weights = (math::dtensor2d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor2d));
-            this->layers.values[i].weightActivations = (math::dtensor2d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor2d));
-            for (uint32_t k = 0; k < this->layers.values[i].dependencies.width; k++) {
-                math::alloc(&(this->layers.values[i].weights[k]),
-                            this->layers.values[i].composedValues.width,
-                            this->layers.values[this->layers.values[i].dependencies.values[k]].composedValues.width);
-                // Set all synapse values to 1.
-                math::init(this->layers.values[i].weights[k], 1.0);
-                math::alloc(&(this->layers.values[i].weightActivations[k]),
-                            this->layers.values[i].composedValues.width,
-                            this->layers.values[this->layers.values[i].dependencies.values[k]].composedValues.width);
-                // Set all synapse activations to 1.
-                math::init(this->layers.values[i].weightActivations[k], 1.0);
-            }
-
-            // Allocate biases.
-            this->layers.values[i].biases = (math::dtensor1d*) malloc(this->layers.values[i].dependencies.width * sizeof(math::dtensor1d));
-            for (uint32_t k = 0; k < this->layers.values[i].dependencies.width; k++) {
-                math::alloc(&(this->layers.values[i].biases[k]),
-                            this->layers.values[i].composedValues.width);
-                // Set all biases to 1.
-                math::init(this->layers.values[i].biases[k], 1.0);
-            }
-        }
-    }
-
-    Model::Model(loops_num_t memloopsNum, layers_num_t layersNum, array_size_t* layerSizes) {
-        // Allocate layers.
-        math::alloc(&(this->layers), layersNum, memloopsNum);
-
-        // Loop through memory loops of the network in order to allocate each
-        // one of them.
-        for (uint32_t i = 0; i < this->layers.height; i++) {
-            // Loop through layers in each mem loop.
-            for (uint32_t j = 0; j < this->layers.width; j++) {
+            for (uint32_t j = 0; j < this->layersNum; j++) {
                 // Allocate and set dependency for each layer but the first one.
                 // For feedforward neural networks, connections only exist
                 // between each layer and the next one.
                 if (j <= 0) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 0);
+                    math::alloc(&(this->layers[i][j].dependencies), 0);
                 } else {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 1);
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies, j - 1);
+                    math::alloc(&(this->layers[i][j].dependencies), 1);
+                    math::init(this->layers[i][j].dependencies, j - 1);
                 }
 
                 // Allocate neurons.
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues), layerSizes[IDX2D(i, j, this->layers.width)]);
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), layerSizes[IDX2D(i, j, this->layers.width)]);
+                math::alloc(&(this->layers[i][j].composedValues), layerSizes[j]);
+                math::alloc(&(this->layers[i][j].activatedValues), layerSizes[j]);
 
                 // Allocate synapses and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
+                this->layers[i][j].weights = (math::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor2d));
+                this->layers[i][j].weightActivations = (math::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor2d));
+                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
+                    math::alloc(&(this->layers[i][j].weights[k]),
+                                this->layers[i][j].composedValues.width,
+                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
+                    math::init(this->layers[i][j].weights[k], 1.0);
+                    math::alloc(&(this->layers[i][j].weightActivations[k]),
+                                this->layers[i][j].composedValues.width,
+                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k], 1.0);
+                    math::init(this->layers[i][j].weightActivations[k], 1.0);
                 }
 
                 // Allocate biases.
-                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
+                this->layers[i][j].biases = (math::dtensor1d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor1d));
+                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
+                    math::alloc(&(this->layers[i][j].biases[k]),
+                                this->layers[i][j].composedValues.width);
                     // Set all biases to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
+                    math::init(this->layers[i][j].biases[k], 1.0);
                 }
             }
         }
     }
 
-    Model::Model(layers_num_t layersNum, array_size_t* layerSizes) : Model(1, layersNum, layerSizes) {}
+    Model::Model(uint32_t layersNum, uint32_t* layerSizes) : Model(1, layersNum, layerSizes) {}
 
-    Model::Model(layers_num_t layersNum) {
+    Model::Model(uint32_t layersNum) {
+        // Set size members.
+        this->memLoopsNum = 1;
+        this->layersNum = layersNum;
+
         // Allocate layers.
-        math::alloc(&(this->layers), layersNum, 1);
+        this->layers = (Layer**) malloc(this->memLoopsNum * sizeof(Layer*));
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
+            this->layers[i] = (Layer*) malloc(this->layersNum * sizeof(Layer));
+        }
 
         // Loop through memory loops of the network in order to allocate each
         // one of them.
-        for (uint32_t i = 0; i < this->layers.height; i++) {
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
             // Loop through layers in each mem loop.
-            for (uint32_t j = 0; j < this->layers.width; j++) {
+            for (uint32_t j = 0; j < this->layersNum; j++) {
                 // Allocate and set dependency for each layer but the first one.
                 // For feedforward neural networks, connections only exist
                 // between each layer and the next one.
                 if (i <= 0) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 0);
+                    math::alloc(&(this->layers[i][j].dependencies), 0);
                 } else {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies), 1);
-                    this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[0] = i - 1;
+                    math::alloc(&(this->layers[i][j].dependencies), 1);
+                    this->layers[i][j].dependencies.values[0] = i - 1;
                 }
 
                 // Allocate neurons.
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues), DEFAULT_LAYER_SIZE);
-                math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues), DEFAULT_LAYER_SIZE);
+                math::alloc(&(this->layers[i][j].composedValues), DEFAULT_LAYER_SIZE);
+                math::alloc(&(this->layers[i][j].activatedValues), DEFAULT_LAYER_SIZE);
 
                 // Allocate synapses and activations.
-                this->layers.values[IDX2D(i, j, this->layers.width)].weights = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations = (math::dtensor2d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor2d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
+                this->layers[i][j].weights = (math::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor2d));
+                this->layers[i][j].weightActivations = (math::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor2d));
+                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
+                    math::alloc(&(this->layers[i][j].weights[k]),
+                                this->layers[i][j].composedValues.width,
+                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weights[k], 1.0);
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width,
-                                this->layers.values[this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k]].composedValues.width);
+                    math::init(this->layers[i][j].weights[k], 1.0);
+                    math::alloc(&(this->layers[i][j].weightActivations[k]),
+                                this->layers[i][j].composedValues.width,
+                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse activations to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k], 1.0);
+                    math::init(this->layers[i][j].weightActivations[k], 1.0);
                 }
 
                 // Allocate biases.
-                this->layers.values[IDX2D(i, j, this->layers.width)].biases = (math::dtensor1d*) malloc(this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width * sizeof(math::dtensor1d));
-                for (uint32_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
-                    math::alloc(&(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].composedValues.width);
+                this->layers[i][j].biases = (math::dtensor1d*) malloc(this->layers[i][j].dependencies.width * sizeof(math::dtensor1d));
+                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
+                    math::alloc(&(this->layers[i][j].biases[k]),
+                                this->layers[i][j].composedValues.width);
                     // Set all biases to 1.
-                    math::init(this->layers.values[IDX2D(i, j, this->layers.width)].biases[k], 1.0);
+                    math::init(this->layers[i][j].biases[k], 1.0);
                 }
             }
         }
@@ -221,34 +137,34 @@ namespace oort {
         this->shiftUp();
 
         // Loop through the graph's mem loops.
-        for (array_size_t i = 0; i < this->layers.height; i++) {
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
             // Loop through layers of the graph avoiding the input one.
-            for (array_size_t j = 1; j < this->layers.width; j++) {
+            for (uint32_t j = 1; j < this->layersNum; j++) {
                 // Loop through the current layer's targets.
-                for (array_size_t k = 0; k < this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.width; k++) {
+                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
                     // Allocate activated synapses.
                     math::alloc(&(activatedSynapses),
-                                this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].width,
-                                this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].height);
-                    math::copy(activatedSynapses, this->layers.values[IDX2D(i, j, this->layers.width)].weights[k]);
+                                this->layers[i][j].weights[k].width,
+                                this->layers[i][j].weights[k].height);
+                    math::copy(activatedSynapses, this->layers[i][j].weights[k]);
 
                     // Allocate inputs.
-                    math::alloc(&(inputs), this->layers.values[IDX2D(i, j, this->layers.width)].weights[k].width);
+                    math::alloc(&(inputs), this->layers[i][j].weights[k].width);
 
                     // Activate synapses.
                     math::hmul(activatedSynapses,
-                               this->layers.values[IDX2D(i, j, this->layers.width)].weights[k],
-                               this->layers.values[IDX2D(i, j, this->layers.width)].weightActivations[k]);
+                               this->layers[i][j].weights[k],
+                               this->layers[i][j].weightActivations[k]);
 
                     // Compute inputs to the current layer.
                     // Check if the current dependency is recurrent (i.e. it
                     // comes from the current layer or one that comes after it).
-                    if (this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k] >= j) {
+                    if (this->layers[i][j].dependencies.values[k] >= j) {
                         // The dependency is recurrent, so take values from the
                         // mem loop before the current one, if there is one.
                         if (i > 0) {
-                            math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[IDX((k - 1), this->layers.height)], this->layers.width)].activatedValues, activatedSynapses);
-                            math::add(inputs, inputs, this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
+                            math::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[IDX((k - 1), this->memLoopsNum)]].activatedValues, activatedSynapses);
+                            math::add(inputs, inputs, this->layers[i][j].biases[k]);
                         } else {
                             // The current mem loop is the first one, so unset
                             // the inputs.
@@ -257,55 +173,53 @@ namespace oort {
                     } else {
                         // The dependency is not recurrent, so take values from
                         // the current mem loop.
-                        math::mul(inputs, this->layers.values[IDX2D(i, this->layers.values[IDX2D(i, j, this->layers.width)].dependencies.values[k], this->layers.width)].activatedValues, activatedSynapses);
-                        math::add(inputs, inputs, this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
+                        math::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[k]].activatedValues, activatedSynapses);
+                        math::add(inputs, inputs, this->layers[i][j].biases[k]);
                     }
 
                     // Add computed values to the layer composition.
-                    math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
-                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
+                    math::add(this->layers[i][j].composedValues,
+                              this->layers[i][j].composedValues,
                               inputs);
 
                     // Add biases from the current dependency.
-                    math::add(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
-                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues,
-                              this->layers.values[IDX2D(i, j, this->layers.width)].biases[k]);
+                    math::add(this->layers[i][j].composedValues,
+                              this->layers[i][j].composedValues,
+                              this->layers[i][j].biases[k]);
 
                     math::dealloc(activatedSynapses);
                     math::dealloc(inputs);
                 }
 
                 // Activate values of the current layer if not input.
-                math::sigmoid(this->layers.values[IDX2D(i, j, this->layers.width)].activatedValues,
-                              this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
+                math::sigmoid(this->layers[i][j].activatedValues,
+                              this->layers[i][j].composedValues);
             }
         }
     }
 
     double* Model::getOutput() {
         // Return neuron values from the last layer of the graph.
-        return this->layers.values[IDX2D((this->layers.height - 1), (this->layers.width - 1), this->layers.width)].activatedValues.values;
+        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.values;
     }
 
-    array_size_t Model::getOutputSize() {
+    uint32_t Model::getOutputSize() {
         // Return the size of the last layer of the graph.
-        return this->layers.values[IDX2D(this->layers.width - 1, this->layers.height - 1, this->layers.width)].activatedValues.width;
+        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.width;
     }
 
     void Model::feed(math::dtensor1d inputValues) {
         // Set neuron values only to the first layer of the graph.
-        math::copy(this->layers.values[IDX2D((this->layers.height - 1), 0, this->layers.width)].activatedValues, inputValues);
+        math::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
         // print(this->layers.values[0].activatedValues);
     }
 
     void Model::shiftUp() {
-        for (uint32_t i = 1; i < this->layers.height; i++) {
-            for (uint32_t j = 0; j < this->layers.width; j++) {
-                this->layers.values[IDX2D(i, (j - 1), this->layers.width)] = this->layers.values[IDX2D(i, j, this->layers.width)];
-            }
-            if (i == this->layers.height - 1) {
-                for (uint32_t j = 0; j < this->layers.width; j++) {
-                    math::zero(this->layers.values[IDX2D(i, j, this->layers.width)].composedValues);
+        for (uint32_t i = 1; i < this->memLoopsNum; i++) {
+            this->layers[i - 1] = this->layers[i];
+            if (i == this->memLoopsNum - 1) {
+                for (uint32_t j = 0; j < this->layersNum; j++) {
+                    math::zero(this->layers[i][j].composedValues);
                 }
             }
         }
