@@ -134,7 +134,7 @@ namespace oort {
 
         // Shift mem loops to the left in order to make space for a new one.
         // The oldest one is removed.
-        this->shiftUp();
+        this->shift();
 
         // Loop through the graph's mem loops.
         for (uint32_t i = 0; i < this->memLoopsNum; i++) {
@@ -214,7 +214,7 @@ namespace oort {
         // print(this->layers.values[0].activatedValues);
     }
 
-    void Model::shiftUp() {
+    void Model::shift() {
         for (uint32_t i = 1; i < this->memLoopsNum; i++) {
             this->layers[i - 1] = this->layers[i];
             if (i == this->memLoopsNum - 1) {

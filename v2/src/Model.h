@@ -112,7 +112,7 @@ namespace oort {
         // Actual layers of the network.
         Layer** layers;
 
-        void shiftUp();
+        void shift();
     };
 }
 
