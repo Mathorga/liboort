@@ -1,6 +1,6 @@
 #include "Model.h"
 #include "GradientDescender.h"
-#include "Experience.h"
+#include "Knowledge.h"
 
 using namespace oort;
 
@@ -10,8 +10,6 @@ int main(int argc, char const *argv[]) {
 
     Model* testGraph = new Model(3, layerSizes);
     Trainer* optim = new GradientDescender();
-
-    Experience exp(2, 1);
 
     math::dtensor1d inputs;
     math::alloc(&inputs, 2);
