@@ -18,11 +18,11 @@ namespace oort {
         for (uint32_t i = 0; i < this->inputs.width; i++) {
             printf("%f ", this->inputs.values[i]);
         }
-        printf("\t");
+        printf("    ");
         for (uint32_t i = 0; i < this->outputs.width; i++) {
             printf("%f ", this->outputs.values[i]);
         }
-        printf("\n\n");
+        printf("\n");
     }
 
     double Experience::getInput(uint32_t index) {
