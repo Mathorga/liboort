@@ -34,8 +34,9 @@ defaultExe: OortTest
 
 OortTest: OortTest.o \
 		  Model.o \
-		  GDTrainer.o \
+		  GradientDescender.o \
 		  Trainer.o \
+		  Knowledge.o \
 		  Experience.o \
 		  utils.o \
 		  math.o

@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "GDTrainer.h"
+#include "GradientDescender.h"
 #include "Experience.h"
 
 using namespace oort;
@@ -9,7 +9,9 @@ int main(int argc, char const *argv[]) {
     uint32_t layerSizes[3] = {2, 4, 1};
 
     Model* testGraph = new Model(3, layerSizes);
-    Trainer* optim = new GDTrainer();
+    Trainer* optim = new GradientDescender();
+
+    Experience exp(2, 1);
 
     math::dtensor1d inputs;
     math::alloc(&inputs, 2);
@@ -27,7 +29,6 @@ int main(int argc, char const *argv[]) {
     printf("\nOUTPUT %f\n", outs[0]);
 
     printf("\n%d\n", -2 % 3);
-
 
     return 0;
 }

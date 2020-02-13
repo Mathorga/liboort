@@ -12,20 +12,19 @@ namespace oort {
 
     Knowledge::Knowledge() : Knowledge(DEFAULT_INPUTS_NUM, DEFAULT_OUTPUTS_NUM) {}
 
-    void Knowledge::addExperience(Experience* experience) {
+    void Knowledge::addExperience(Experience experience) {
         // Check if inputs and outputs numbers of the experience match those of the Knowledge.
         // Print an error in case of inconsistency.
-        if (experience->getInputsNum() == this->inputsNum && experience->getOutputsNum() == this->outputsNum) {
-            // Check if there's at least one experience, otherwise allocate
-            // it.
+        if (experience.getInputsNum() == this->inputsNum && experience.getOutputsNum() == this->outputsNum) {
+            // Check if there's at least one experience, otherwise allocate it.
             if (this->experiencesNum <= 0) {
-                this->experiences = (Experience*) malloc(sizeof(Experience));
-                this->experiences[0] = experience;
                 this->experiencesNum++;
+                this->experiences = (Experience*) malloc(sizeof(Experience));
             } else {
                 this->experiencesNum++;
                 this->experiences = (Experience*) realloc(this->experiences, this->experiencesNum * sizeof(Experience));
             }
+            this->experiences[this->experiencesNum - 1] = experience;
         } else {
             printf("\n<Knowledge.addExperience()> Error adding experience: Inconsistent size\n");
         }
@@ -34,7 +33,7 @@ namespace oort {
     void Knowledge::addExperiences(Experience* experiences, uint32_t size) {
         // Add all the given experiences.
         for (uint32_t i = 0; i < size; i++) {
-            this->addExperience(experiences[i])
+            this->addExperience(experiences[i]);
         }
     }
 
@@ -42,8 +41,8 @@ namespace oort {
         printf("\nKnowledge - Inputs %d Outputs %d\n", this->inputsNum, this->outputsNum);
 
         // Print all experiences.
-        for (uint32_t i = 0; i < this->experiences->getSize(); i++) {
-            this->experiences[i]->print();
+        for (uint32_t i = 0; i < this->experiencesNum; i++) {
+            this->experiences[i].print();
         }
     }
 
@@ -55,7 +54,7 @@ namespace oort {
         return this->outputsNum;
     }
 
-    Experience* Knowledge::getExperience(uint32_t index) {
+    Experience Knowledge::getExperience(uint32_t index) {
         return this->experiences[index];
     }
 

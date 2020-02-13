@@ -13,14 +13,14 @@ namespace oort {
         Knowledge(uint32_t inputsNum, uint32_t outputsNum);
         Knowledge();
 
-        void addExperience(Experience* experience);
+        void addExperience(Experience experience);
         void addExperiences(Experience* experiences, uint32_t size);
         void print();
 
         // Getters.
         uint32_t getInputsNum();
         uint32_t getOutputsNum();
-        Experience* getExperience(uint32_t index);
+        Experience getExperience(uint32_t index);
         Experience* getExperiences();
         uint32_t getExperiencesNum();
 

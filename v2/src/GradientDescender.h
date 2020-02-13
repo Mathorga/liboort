@@ -1,20 +1,20 @@
 /*
 ********************************************************************************
-GDTrainer.h
+GradientDescender.h
 
-Definition of the general class for stochastic gradient descent learning.
+Definition of the general class for gradient descent learning.
 
 Copyright (C) 2020  Luka Micheletti
 ********************************************************************************
 */
 
-#ifndef __G_D_TRAINER__
-#define __G_D_TRAINER__
+#ifndef __GRADIENT_DESCENDER__
+#define __GRADIENT_DESCENDER__
 
 #include "Trainer.h"
 
 namespace oort {
-    class GDTrainer : public Trainer {
+    class GradientDescender : public Trainer {
     public:
         // Optimizes the model.
         void run();

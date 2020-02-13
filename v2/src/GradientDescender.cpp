@@ -1,28 +1,28 @@
-#include "GDTrainer.h"
+#include "GradientDescender.h"
 
 namespace oort {
-    void GDTrainer::run() {
+    void GradientDescender::run() {
         // Loop for specified epochs number.
         for (uint32_t i = 0; i < this->epochsNum; i++) {
             //TODO Loop through knowledge data.
-            
+
         }
         return;
     }
 
     // Getters.
-    double GDTrainer::getLearningRate() {
+    double GradientDescender::getLearningRate() {
         return this->learningRate;
     }
-    uint32_t GDTrainer::getBatchSize() {
+    uint32_t GradientDescender::getBatchSize() {
         return this->batchSize;
     }
 
     // Setters.
-    void GDTrainer::setLearningRate(double learningRate) {
+    void GradientDescender::setLearningRate(double learningRate) {
         this->learningRate = learningRate;
     }
-    void GDTrainer::setBatchSize(uint32_t batchSize) {
+    void GradientDescender::setBatchSize(uint32_t batchSize) {
         this->batchSize = batchSize;
     }
 }
