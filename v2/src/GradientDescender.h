@@ -12,6 +12,7 @@ Copyright (C) 2020  Luka Micheletti
 #define __GRADIENT_DESCENDER__
 
 #include "Trainer.h"
+#include "Knowledge.h"
 
 namespace oort {
     class GradientDescender : public Trainer {
@@ -22,16 +23,18 @@ namespace oort {
         // Getters.
         double getLearningRate();
         uint32_t getBatchSize();
+        uint32_t getEpochsNum();
 
         // Setters.
         void setLearningRate(double learningRate);
         void setBatchSize(uint32_t batchSize);
+        void setEpochsNum(uint32_t epochsNum);
 
     private:
         double learningRate;
         uint32_t batchSize;
         uint32_t epochsNum;
-        // Knowledge knowledge;
+        Knowledge knowledge;
     };
 }
 

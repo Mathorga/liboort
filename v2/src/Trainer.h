@@ -28,7 +28,7 @@ namespace oort {
         // Returns the model.
         void setModel(Model* model);
 
-    private:
+    protected:
         Model* model;
     };
 }

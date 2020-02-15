@@ -100,15 +100,19 @@ namespace oort {
         // Functors definitions.
         class UnaryFunction {
         public:
-            virtual double operator() (const double value) = 0;
+            virtual double operator() (const double x) = 0;
+        };
+        class BinaryFunction {
+        public:
+            virtual double operator() (const double x1, const double x2) = 0;
         };
         class Sigmoid : public UnaryFunction {
         public:
-            double operator() (const double value);
+            double operator() (const double x);
         };
         class FastSigmoid : public UnaryFunction {
         public:
-            double operator() (const double value);
+            double operator() (const double x);
         };
 
         // Functions definitions.
@@ -123,12 +127,12 @@ namespace oort {
 
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.
-        double der(const double value, UnaryFunction* function);
+        double der(const double x, UnaryFunction* function);
         // Calculates the derivative of the given function in x = <value>, using the
         // given epsilon.
-        double der(const double value, UnaryFunction* function, const double epsilon);
+        double der(const double x, UnaryFunction* function, const double e);
         // Calculates the given function in x = <value>.
-        double prim(const double value, UnaryFunction* function);
+        double prim(const double x, UnaryFunction* function);
 
 
         // Tensor functions.

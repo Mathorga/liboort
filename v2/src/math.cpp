@@ -289,14 +289,14 @@ namespace oort {
             return 0.5 * value / (1 + abs(value)) + 0.5;
         }
 
-        double der(const double value, UnaryFunction* function, const double epsilon) {
-            return ((*function)(value + epsilon) - (*function)(value - epsilon)) / (2 * epsilon);
+        double der(const double x, UnaryFunction* function, const double e) {
+            return ((*function)(x + e) - (*function)(x - e)) / (2 * e);
         }
-        double der(const double value, UnaryFunction* function) {
-            return ((*function)(value + 0.01) - (*function)(value - 0.01)) / 0.02;
+        double der(const double x, UnaryFunction* function) {
+            return ((*function)(x + 0.01) - (*function)(x - 0.01)) / 0.02;
         }
-        double prim(const double value, UnaryFunction* function) {
-            return (*function)(value);
+        double prim(const double x, UnaryFunction* function) {
+            return (*function)(x);
         }
     }
 }
