@@ -1,13 +1,13 @@
-#include "Trainer.h"
+#include "ModelWorker.h"
 
 namespace oort {
     // Getters.
-    Model* Trainer::getModel() {
+    Model* ModelWorker::getModel() {
         return this->model;
     }
 
     // Setters.
-    void Trainer::setModel(Model* model) {
+    void ModelWorker::setModel(Model* model) {
         this->model = model;
     }
 }

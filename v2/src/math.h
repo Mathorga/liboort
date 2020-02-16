@@ -106,6 +106,10 @@ namespace oort {
         public:
             virtual double operator() (const double x1, const double x2) = 0;
         };
+        class DTensor1DFunction {
+        public:
+            virtual dtensor1d operator() (const dtensor1d x1) = 0;
+        };
         class Sigmoid : public UnaryFunction {
         public:
             double operator() (const double x);
