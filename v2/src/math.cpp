@@ -186,6 +186,63 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+        error mse(double* res, const dtensor1d t1, const dtensor1d t2) {
+            error err = error::NO_ERROR;
+            (*res) = 0.0;
+
+            if (t1.width == t2.width) {
+                // Sum all squared errors.
+                for (uint32_t i = 0; i < t1.width; i++) {
+                    (*res) += pow(t1.values[i] - t2.values[i], 2);
+                }
+
+                // Compute the mean error.
+                (*res) /= t1.width;
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error mse(double* res, const dtensor2d t1, const dtensor2d t2) {
+            error err = error::NO_ERROR;
+            (*res) = 0.0;
+
+            if (t1.width == t2.width &&
+                t1.height == t2.height) {
+                // Sum all squared errors.
+                for (uint32_t i = 0; i < t1.width * t1.height; i++) {
+                    (*res) += pow(t1.values[i] - t2.values[i], 2);
+                }
+
+                // Compute the mean error.
+                (*res) /= (t1.width * t1.height);
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error mse(double* res, const dtensor3d t1, const dtensor3d t2) {
+            error err = error::NO_ERROR;
+            (*res) = 0.0;
+
+            if (t1.width == t2.width &&
+                t1.height == t2.height &&
+                t1.depth == t2.depth) {
+                // Sum all squared errors.
+                for (uint32_t i = 0; i < t1.width * t1.height * t1.depth; i++) {
+                    (*res) += pow(t1.values[i] - t2.values[i], 2);
+                }
+
+                // Compute the mean error.
+                (*res) /= (t1.width * t1.height * t1.depth);
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
         error normalize(const dtensor1d res, const dtensor1d t, const double mean, const double stddev) {
             for (uint32_t i = 0; i < t.width; i++) {
                 res.values[i] = (t.values[i] - mean) / stddev;
@@ -289,14 +346,56 @@ namespace oort {
             return 0.5 * value / (1 + abs(value)) + 0.5;
         }
 
-        double der(const double x, UnaryFunction* function, const double e) {
+        double der(const double x, DUnaryFunction* function, const double e) {
             return ((*function)(x + e) - (*function)(x - e)) / (2 * e);
         }
-        double der(const double x, UnaryFunction* function) {
+        double der(const double x, DUnaryFunction* function) {
             return ((*function)(x + 0.01) - (*function)(x - 0.01)) / 0.02;
         }
-        double prim(const double x, UnaryFunction* function) {
+        double prim(const double x, DUnaryFunction* function) {
             return (*function)(x);
+        }
+        error prim(const dtensor1d res, const dtensor1d t, DUnaryFunction* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width) {
+                for (uint32_t i = 0; i < t.width; i++) {
+                    res.values[i] = (*function)(t.values[i]);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error prim(const dtensor2d res, const dtensor2d t, DUnaryFunction* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width &&
+                t.height == res.height) {
+                for (uint32_t i = 0; i < (t.width * t.height); i++) {
+                    res.values[i] = (*function)(t.values[i]);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error prim(const dtensor3d res, const dtensor3d t, DUnaryFunction* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width &&
+                t.height == res.height &&
+                t.depth == res.depth) {
+                for (uint32_t i = 0; i < (t.width * t.height * t.depth); i++) {
+                    res.values[i] = (*function)(t.values[i]);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
         }
     }
 }

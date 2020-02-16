@@ -98,25 +98,25 @@ namespace oort {
         };
 
         // Functors definitions.
-        class UnaryFunction {
+        class DUnaryFunction {
         public:
             virtual double operator() (const double x) = 0;
         };
-        class BinaryFunction {
+        class Sigmoid : public DUnaryFunction {
         public:
-            virtual double operator() (const double x1, const double x2) = 0;
+            double operator() (const double x);
+        };
+        class FastSigmoid : public DUnaryFunction {
+        public:
+            double operator() (const double x);
         };
         class DTensor1DFunction {
         public:
-            virtual dtensor1d operator() (const dtensor1d x1) = 0;
+            virtual double operator() (const dtensor1d x) = 0;
         };
-        class Sigmoid : public UnaryFunction {
+        class MSE : public DTensor1DFunction {
         public:
-            double operator() (const double x);
-        };
-        class FastSigmoid : public UnaryFunction {
-        public:
-            double operator() (const double x);
+            double operator() (const dtensor1d x);
         };
 
         // Functions definitions.
@@ -131,12 +131,16 @@ namespace oort {
 
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.
-        double der(const double x, UnaryFunction* function);
+        double der(const double x, DUnaryFunction* function);
         // Calculates the derivative of the given function in x = <value>, using the
         // given epsilon.
-        double der(const double x, UnaryFunction* function, const double e);
+        double der(const double x, DUnaryFunction* function, const double e);
         // Calculates the given function in x = <value>.
-        double prim(const double x, UnaryFunction* function);
+        double prim(const double x, DUnaryFunction* function);
+        double prim(const double x, DTensor1DFunction* function);
+        error prim(const dtensor1d res, const dtensor1d t, DUnaryFunction* function);
+        error prim(const dtensor2d res, const dtensor2d t, DUnaryFunction* function);
+        error prim(const dtensor3d res, const dtensor3d t, DUnaryFunction* function);
 
 
         // Tensor functions.
@@ -167,6 +171,9 @@ namespace oort {
         // <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
         error sigmoid(const dtensor3d res, const dtensor3d t);
+        error mse(double* res, const dtensor1d t1, const dtensor1d t2);
+        error mse(double* res, const dtensor2d t1, const dtensor2d t2);
+        error mse(double* res, const dtensor3d t1, const dtensor3d t2);
         error normalize(const dtensor1d res, const dtensor1d t, const double mean, const double stddev);
         error normalize(const dtensor2d res, const dtensor2d t, const double mean, const double stddev);
         error normalize(const dtensor3d res, const dtensor3d t, const double mean, const double stddev);
