@@ -86,25 +86,18 @@ namespace oort {
 
         // Computes the value of the whole neural network.
         void compute();
+        // Sets values to the first layer of neurons.
+        void feed(math::dtensor1d inputValues);
+        // Sets the activation function for all the layers of the network.
+        // The new function is applied to all mem loops as well.
+        void setActivation(math::DUnFunc* function);
 
-        // Getters.
+        // Accessors.
         // Returns neuron values from the output layer.
         double* getOutput();
         uint32_t getOutputSize();
 
-        // Setters.
-        // Sets values to the first layer of neurons.
-        void feed(math::dtensor1d inputValues);
-
     private:
-        // The 2D Tensor represents the structure of the network.
-        // In order to include the case of recurrent neural network, more than
-        // one neural network need to be hold in memory.
-        // To do so, a 2D tensor is used. Its width represents the number of
-        // layers of the network, while its height represents the number of
-        // memory loops of the network.
-        // math::tensor2d<Layer> layers;
-
         // Number of memory loops, used to implement recurrent neural networks.
         uint32_t memLoopsNum;
         // Number of layers in each memory loop.

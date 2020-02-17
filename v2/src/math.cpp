@@ -345,6 +345,18 @@ namespace oort {
         double FastSigmoid::operator() (const double value) {
             return 0.5 * value / (1 + abs(value)) + 0.5;
         }
+        double ReLu::operator() (const double value) {
+            return value > 0.0 ? value : 0.0;
+        }
+        double HTan::operator() (const double value) {
+            return tanh(value);
+        }
+        double Identity::operator() (const double value) {
+            return value;
+        }
+        double BinStep::operator() (const double value) {
+            return value >= 0.0 ? 1.0 : 0.0;
+        }
 
         double der(const double x, DUnFunc* function, const double e) {
             return ((*function)(x + e) - (*function)(x - e)) / (2 * e);

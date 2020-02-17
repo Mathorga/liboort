@@ -98,23 +98,39 @@ namespace oort {
         };
 
         // Functors definitions.
-        class DUnFunc {
+        struct DUnFunc {
         public:
             virtual double operator() (const double x) = 0;
         };
-        class Sigmoid : public DUnFunc {
+        struct Sigmoid : public DUnFunc {
         public:
             double operator() (const double x);
         };
-        class FastSigmoid : public DUnFunc {
+        struct FastSigmoid : public DUnFunc {
         public:
             double operator() (const double x);
         };
-        class DT1DBinFunc {
+        struct ReLu : public DUnFunc {
+        public:
+            double operator() (const double x);
+        };
+        struct HTan : public DUnFunc {
+        public:
+            double operator() (const double x);
+        };
+        struct Identity : public DUnFunc {
+        public:
+            double operator() (const double x);
+        };
+        struct BinStep : public DUnFunc {
+        public:
+            double operator() (const double x);
+        };
+        struct DT1DBinFunc {
         public:
             virtual double operator() (const dtensor1d t1, const dtensor1d t2) = 0;
         };
-        class MSE : public DT1DBinFunc {
+        struct MSE : public DT1DBinFunc {
         public:
             double operator() (const dtensor1d t1, const dtensor1d t2);
         };

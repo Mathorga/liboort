@@ -207,6 +207,20 @@ namespace oort {
         }
     }
 
+    void Model::feed(math::dtensor1d inputValues) {
+        // Set neuron values only to the first layer of the graph.
+        math::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
+        // print(this->layers.values[0].activatedValues);
+    }
+
+    void Model::setActivation(math::DUnFunc* function) {
+        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
+            for (uint32_t j = 0; j < this->layersNum; j++) {
+                this->layers[i][j].activationFunction = function;
+            }
+        }
+    }
+
     double* Model::getOutput() {
         // Return neuron values from the last layer of the graph.
         return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.values;
@@ -215,12 +229,6 @@ namespace oort {
     uint32_t Model::getOutputSize() {
         // Return the size of the last layer of the graph.
         return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.width;
-    }
-
-    void Model::feed(math::dtensor1d inputValues) {
-        // Set neuron values only to the first layer of the graph.
-        math::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
-        // print(this->layers.values[0].activatedValues);
     }
 
     void Model::shift() {
