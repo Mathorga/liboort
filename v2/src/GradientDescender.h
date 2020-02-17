@@ -20,12 +20,10 @@ namespace oort {
         // Optimizes the model.
         void run();
 
-        // Getters.
+        // Accessors.
         double getLearningRate();
         uint32_t getBatchSize();
         uint32_t getEpochsNum();
-
-        // Setters.
         void setLearningRate(double learningRate);
         void setBatchSize(uint32_t batchSize);
         void setEpochsNum(uint32_t epochsNum);
@@ -35,6 +33,7 @@ namespace oort {
         uint32_t batchSize;
         uint32_t epochsNum;
         Knowledge knowledge;
+        math::DT1DBinFunc* costFunction;
     };
 }
 

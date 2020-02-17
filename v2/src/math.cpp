@@ -357,6 +357,19 @@ namespace oort {
         double BinStep::operator() (const double value) {
             return value >= 0.0 ? 1.0 : 0.0;
         }
+        double MSE::operator() (const dtensor1d t1, const dtensor1d t2) {
+            double res = 0.0;
+
+            // Sum all squared errors.
+            for (uint32_t i = 0; i < t1.width; i++) {
+                res += pow(t1.values[i] - t2.values[i], 2);
+            }
+
+            // Compute the mean error.
+            res /= t1.width;
+
+            return res;
+        }
 
         double der(const double x, DUnFunc* function, const double e) {
             return ((*function)(x + e) - (*function)(x - e)) / (2 * e);
@@ -408,6 +421,20 @@ namespace oort {
             }
 
             return err;
+        }
+        double der(const dtensor1d t1, const dtensor1d t2, const uint32_t i, DT1DBinFunc* function) {
+            dtensor1d tLess;
+            dtensor1d tMore;
+            alloc(&tLess, t1.width);
+            alloc(&tMore, t1.width);
+            copy(tLess, t1);
+            copy(tMore, t1);
+            tLess.values[i] -= 0.01;
+            tMore.values[i] -= 0.01;
+            return ((*function)(tMore, t2) - (*function)(tLess, t2)) / 0.02;
+        }
+        double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function) {
+            return (*function)(t1, t2);
         }
     }
 }

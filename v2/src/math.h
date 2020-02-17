@@ -153,11 +153,11 @@ namespace oort {
         double der(const double x, DUnFunc* function, const double e);
         // Calculates the given function in x = <value>.
         double prim(const double x, DUnFunc* function);
-        double prim(const double x, DT1DBinFunc* function);
         error prim(const dtensor1d res, const dtensor1d t, DUnFunc* function);
         error prim(const dtensor2d res, const dtensor2d t, DUnFunc* function);
         error prim(const dtensor3d res, const dtensor3d t, DUnFunc* function);
-
+        double der(const dtensor1d t1, const dtensor1d t2, const uint32_t i, DT1DBinFunc* function);
+        double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
 
         // Tensor functions.
         error zero(const dtensor1d t);

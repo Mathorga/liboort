@@ -221,9 +221,9 @@ namespace oort {
         }
     }
 
-    double* Model::getOutput() {
+    math::dtensor1d Model::getOutput() {
         // Return neuron values from the last layer of the graph.
-        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.values;
+        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues;
     }
 
     uint32_t Model::getOutputSize() {

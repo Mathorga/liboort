@@ -2,6 +2,8 @@
 
 namespace oort {
     void GradientDescender::run() {
+        double error = 0.0;
+
         // Loop for specified epochs number.
         for (uint32_t i = 0; i < this->epochsNum; i++) {
             // Loop through knowledge data.
@@ -13,6 +15,7 @@ namespace oort {
                 this->model->compute();
 
                 // Calculate the error of the model.
+                error = math::prim(this->model->getOutput(), this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
                 // Check if batch size or knowledge size is reached. If so
                 // update weights and biases.

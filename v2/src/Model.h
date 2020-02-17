@@ -94,7 +94,7 @@ namespace oort {
 
         // Accessors.
         // Returns neuron values from the output layer.
-        double* getOutput();
+        math::dtensor1d getOutput();
         uint32_t getOutputSize();
 
     private:

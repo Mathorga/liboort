@@ -22,9 +22,9 @@ int main(int argc, char const *argv[]) {
     testGraph->feed(inputs);
     testGraph->compute();
 
-    double* outs = testGraph->getOutput();
+    math::dtensor1d outs = testGraph->getOutput();
 
-    printf("\nOUTPUT %f\n", outs[0]);
+    printf("\nOUTPUT %f\n", outs.values[0]);
 
     printf("\n%d\n", -2 % 3);
 
