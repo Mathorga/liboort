@@ -98,25 +98,25 @@ namespace oort {
         };
 
         // Functors definitions.
-        class DUnaryFunction {
+        class DUnFunc {
         public:
             virtual double operator() (const double x) = 0;
         };
-        class Sigmoid : public DUnaryFunction {
+        class Sigmoid : public DUnFunc {
         public:
             double operator() (const double x);
         };
-        class FastSigmoid : public DUnaryFunction {
+        class FastSigmoid : public DUnFunc {
         public:
             double operator() (const double x);
         };
-        class DTensor1DFunction {
+        class DT1DBinFunc {
         public:
-            virtual double operator() (const dtensor1d x) = 0;
+            virtual double operator() (const dtensor1d t1, const dtensor1d t2) = 0;
         };
-        class MSE : public DTensor1DFunction {
+        class MSE : public DT1DBinFunc {
         public:
-            double operator() (const dtensor1d x);
+            double operator() (const dtensor1d t1, const dtensor1d t2);
         };
 
         // Functions definitions.
@@ -131,16 +131,16 @@ namespace oort {
 
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.
-        double der(const double x, DUnaryFunction* function);
+        double der(const double x, DUnFunc* function);
         // Calculates the derivative of the given function in x = <value>, using the
         // given epsilon.
-        double der(const double x, DUnaryFunction* function, const double e);
+        double der(const double x, DUnFunc* function, const double e);
         // Calculates the given function in x = <value>.
-        double prim(const double x, DUnaryFunction* function);
-        double prim(const double x, DTensor1DFunction* function);
-        error prim(const dtensor1d res, const dtensor1d t, DUnaryFunction* function);
-        error prim(const dtensor2d res, const dtensor2d t, DUnaryFunction* function);
-        error prim(const dtensor3d res, const dtensor3d t, DUnaryFunction* function);
+        double prim(const double x, DUnFunc* function);
+        double prim(const double x, DT1DBinFunc* function);
+        error prim(const dtensor1d res, const dtensor1d t, DUnFunc* function);
+        error prim(const dtensor2d res, const dtensor2d t, DUnFunc* function);
+        error prim(const dtensor3d res, const dtensor3d t, DUnFunc* function);
 
 
         // Tensor functions.

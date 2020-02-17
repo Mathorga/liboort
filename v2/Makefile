@@ -35,7 +35,7 @@ defaultExe: OortTest
 OortTest: OortTest.o \
 		  Model.o \
 		  GradientDescender.o \
-		  ModelWorker.o \
+		  Trainer.o \
 		  Knowledge.o \
 		  Experience.o \
 		  utils.o \

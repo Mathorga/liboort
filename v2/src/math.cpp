@@ -346,16 +346,16 @@ namespace oort {
             return 0.5 * value / (1 + abs(value)) + 0.5;
         }
 
-        double der(const double x, DUnaryFunction* function, const double e) {
+        double der(const double x, DUnFunc* function, const double e) {
             return ((*function)(x + e) - (*function)(x - e)) / (2 * e);
         }
-        double der(const double x, DUnaryFunction* function) {
+        double der(const double x, DUnFunc* function) {
             return ((*function)(x + 0.01) - (*function)(x - 0.01)) / 0.02;
         }
-        double prim(const double x, DUnaryFunction* function) {
+        double prim(const double x, DUnFunc* function) {
             return (*function)(x);
         }
-        error prim(const dtensor1d res, const dtensor1d t, DUnaryFunction* function) {
+        error prim(const dtensor1d res, const dtensor1d t, DUnFunc* function) {
             error err = error::NO_ERROR;
 
             if (t.width == res.width) {
@@ -368,7 +368,7 @@ namespace oort {
 
             return err;
         }
-        error prim(const dtensor2d res, const dtensor2d t, DUnaryFunction* function) {
+        error prim(const dtensor2d res, const dtensor2d t, DUnFunc* function) {
             error err = error::NO_ERROR;
 
             if (t.width == res.width &&
@@ -382,7 +382,7 @@ namespace oort {
 
             return err;
         }
-        error prim(const dtensor3d res, const dtensor3d t, DUnaryFunction* function) {
+        error prim(const dtensor3d res, const dtensor3d t, DUnFunc* function) {
             error err = error::NO_ERROR;
 
             if (t.width == res.width &&

@@ -69,7 +69,7 @@ namespace oort {
 
             // Add an activation function to the layer itself, in order to
             // differentiate between each layer.
-            activation activationFunction;
+            math::DUnFunc* activationFunction;
         };
 
         // Constructors.

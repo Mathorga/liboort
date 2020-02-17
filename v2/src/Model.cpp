@@ -59,6 +59,9 @@ namespace oort {
                     // Set all biases to 1.
                     math::init(this->layers[i][j].biases[k], 1.0);
                 }
+
+                // Set activation function.
+                this->layers[i][j].activationFunction = new math::Sigmoid();
             }
         }
     }
@@ -119,6 +122,9 @@ namespace oort {
                     // Set all biases to 1.
                     math::init(this->layers[i][j].biases[k], 1.0);
                 }
+
+                // Set activation function.
+                this->layers[i][j].activationFunction = new math::Sigmoid();
             }
         }
     }
@@ -192,8 +198,11 @@ namespace oort {
                 }
 
                 // Activate values of the current layer if not input.
-                math::sigmoid(this->layers[i][j].activatedValues,
-                              this->layers[i][j].composedValues);
+                math::prim(this->layers[i][j].activatedValues,
+                           this->layers[i][j].composedValues,
+                           this->layers[i][j].activationFunction);
+                // math::sigmoid(this->layers[i][j].activatedValues,
+                //               this->layers[i][j].composedValues);
             }
         }
     }
