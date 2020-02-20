@@ -255,6 +255,16 @@ namespace oort {
         return layerDeps;
     }
 
+    math::dtensor1d Model::getLayerActivatedVals(uint32_t index) {
+        math::dtensor1d layerVals;
+
+        if (index <= this->layersNum) {
+            layerVals = this->layers[0][index].activatedValues;
+        }
+
+        return layerVals;
+    }
+
     void Model::shift() {
         for (uint32_t i = 1; i < this->memLoopsNum; i++) {
             this->layers[i - 1] = this->layers[i];

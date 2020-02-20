@@ -99,6 +99,7 @@ namespace oort {
         uint32_t getLayersNum();
         uint32_t getLayerSize(uint32_t index);
         math::itensor1d getLayerDeps(uint32_t index);
+        math::dtensor1d getLayerActivatedVals(uint32_t index);
 
     private:
         // Number of memory loops, used to implement recurrent neural networks.
