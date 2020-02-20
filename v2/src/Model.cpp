@@ -231,6 +231,30 @@ namespace oort {
         return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.width;
     }
 
+    uint32_t Model::getLayersNum() {
+        return this->layersNum;
+    }
+
+    uint32_t Model::getLayerSize(uint32_t index) {
+        uint32_t layerSize = 0;
+
+        if (index <= this->layersNum) {
+            layerSize = this->layers[0][index].activatedValues.width;
+        }
+
+        return layerSize;
+    }
+
+    math::itensor1d Model::getLayerDeps(uint32_t index) {
+        math::itensor1d layerDeps;
+
+        if (index <= this->layersNum) {
+            layerDeps = this->layers[0][index].dependencies;
+        }
+
+        return layerDeps;
+    }
+
     void Model::shift() {
         for (uint32_t i = 1; i < this->memLoopsNum; i++) {
             this->layers[i - 1] = this->layers[i];

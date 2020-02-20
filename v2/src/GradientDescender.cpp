@@ -3,6 +3,9 @@
 namespace oort {
     void GradientDescender::run() {
         double error = 0.0;
+        math::dtensor1d vals;
+        math::dtensor1d derivedVals;
+        math::itensor1d deps;
 
         // Loop for specified epochs number.
         for (uint32_t i = 0; i < this->epochsNum; i++) {
@@ -14,8 +17,32 @@ namespace oort {
                 // Run the model.
                 this->model->compute();
 
+                // Get the predicted output from the model.
+                vals = this->model->getOutput();
+
                 // Calculate the error of the model.
-                error = math::prim(this->model->getOutput(), this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+
+                // Backpropagate the error.
+                for (uint32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
+                    // Allocate derived values.
+                    math::alloc(&derivedVals, this->model->getLayerSize(l));
+
+                    // Get layer dependencies.
+                    deps = this->model->getLayerDeps(l);
+
+                    if (l == this->model->getLayersNum() - 1) {
+                        // Compute the error partial derivative with respect to each output.
+                        math::der(derivedVals, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                    }
+
+                    //TODO Loop through dependencies.
+                    // for () {
+                    //
+                    // }
+
+                    math::dealloc(derivedVals);
+                }
 
                 // Check if batch size or knowledge size is reached. If so
                 // update weights and biases.

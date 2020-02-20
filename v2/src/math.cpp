@@ -422,6 +422,20 @@ namespace oort {
 
             return err;
         }
+        error der(const dtensor1d res, const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function) {
+            error err = error::NO_ERROR;
+
+            // Check if sizes are correct
+            if (res.width == t1.width && t1.width == t2.width) {
+                for (uint32_t i = 0; i < res.width; i++) {
+                    res.values[i] = der(t1, t2, i, function);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
         double der(const dtensor1d t1, const dtensor1d t2, const uint32_t i, DT1DBinFunc* function) {
             dtensor1d tLess;
             dtensor1d tMore;

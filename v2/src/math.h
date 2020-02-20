@@ -156,6 +156,7 @@ namespace oort {
         error prim(const dtensor1d res, const dtensor1d t, DUnFunc* function);
         error prim(const dtensor2d res, const dtensor2d t, DUnFunc* function);
         error prim(const dtensor3d res, const dtensor3d t, DUnFunc* function);
+        error der(const dtensor1d res, const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
         double der(const dtensor1d t1, const dtensor1d t2, const uint32_t i, DT1DBinFunc* function);
         double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
 
