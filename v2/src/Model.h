@@ -96,6 +96,7 @@ namespace oort {
         // Returns neuron values from the output layer.
         math::dtensor1d getOutput();
         uint32_t getOutputSize();
+        uint32_t getMemLoopsNum();
         uint32_t getLayersNum();
         uint32_t getLayerSize(uint32_t index);
         math::itensor1d getLayerDeps(uint32_t index);

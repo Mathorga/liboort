@@ -231,6 +231,10 @@ namespace oort {
         return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.width;
     }
 
+    uint32_t Model::getMemLoopsNum() {
+        return this->memLoopsNum;
+    }
+
     uint32_t Model::getLayersNum() {
         return this->layersNum;
     }

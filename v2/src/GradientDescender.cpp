@@ -6,7 +6,15 @@ namespace oort {
         math::dtensor1d vals;
         math::dtensor1d dIn;
         math::itensor1d deps;
-        math::dtensor1d dOut;
+        math::dtensor1d** dOuts;
+
+        dOuts = (math::dtensor1d**) malloc(this->model->getMemLoopsNum() * sizeof(math::dtensor1d*));
+        for (uint32_t i = 0; i < this->model->getMemLoopsNum(); i++) {
+            dOuts[i] = (math::dtensor1d*) malloc(this->model->getLayersNum() * sizeof(math::dtensor1d));
+            for (uint32_t j = 0; j < this->model->getLayersNum(); j++) {
+                math::alloc(&(dOuts[i][j]), this->model->getLayerSize(j));
+            }
+        }
 
         // Loop for specified epochs number.
         for (uint32_t i = 0; i < this->epochsNum; i++) {
@@ -36,11 +44,12 @@ namespace oort {
                     math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
                     //TODO Add up to all dOuts.
+                    // for (uint32_t d = 0; d < deps.width; d++) {
+                    //
+                    // }
 
                     // Reset vals for the next layer.
-                    math::copy(vals, dOut);
-
-                    math::dealloc(dOut);
+                    // math::copy(vals, dOut);
 
                     math::dealloc(dIn);
                 }
@@ -52,6 +61,15 @@ namespace oort {
                 }
             }
         }
+
+        for (uint32_t i = 0; i < this->model->getMemLoopsNum(); i++) {
+            for (uint32_t j = 0; j < this->model->getLayersNum(); j++) {
+                math::dealloc(dOuts[i][j]);
+            }
+            delete dOuts[i];
+        }
+        delete dOuts;
+
         return;
     }
 
