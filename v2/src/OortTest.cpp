@@ -6,20 +6,20 @@ using namespace oort;
 
 int main(int argc, char const *argv[]) {
 
-    uint32_t layerSizes[3] = {2, 4, 1};
+    uint32_t layerSizes[3] = {2, 2, 1};
 
     Model* testGraph = new Model(3, layerSizes);
-    Trainer* optim = new GradientDescender();
+    GradientDescender* optim = new GradientDescender();
+    optim->setEpochsNum(10000);
+    optim->setLearningRate(0.1);
 
-    math::dtensor1d inputs;
-    math::alloc(&inputs, 2);
-    inputs.values[0] = 0.0;
-    inputs.values[1] = 1.0;
+    math::dtensor1d ins;
+    math::alloc(&ins, 2);
 
     double sTime = 0.0;
     double eTime = 0.0;
 
-    testGraph->feed(inputs);
+    testGraph->feed(ins);
     testGraph->compute();
 
     math::dtensor1d outs = testGraph->getOutput();
