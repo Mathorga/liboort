@@ -13,6 +13,7 @@ namespace oort {
             dOuts[i] = (math::dtensor1d*) malloc(this->model->getLayersNum() * sizeof(math::dtensor1d));
             for (uint32_t j = 0; j < this->model->getLayersNum(); j++) {
                 math::alloc(&(dOuts[i][j]), this->model->getLayerSize(j));
+                math::zero(dOuts[i][j]);
             }
         }
 
@@ -43,10 +44,10 @@ namespace oort {
                     // Compute the error partial derivative with respect to each output.
                     math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
-                    //TODO Add up to all dOuts.
-                    // for (uint32_t d = 0; d < deps.width; d++) {
-                    //
-                    // }
+                    // Add up to all dOuts.
+                    for (uint32_t d = 0; d < deps.width; d++) {
+                        math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
+                    }
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);
