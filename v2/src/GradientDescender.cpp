@@ -29,6 +29,7 @@ namespace oort {
 
                 // Get the predicted output from the model.
                 vals = this->model->getOutput();
+                print(vals);
 
                 // Calculate the error of the model.
                 error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
@@ -41,24 +42,27 @@ namespace oort {
                     // Get layer dependencies.
                     deps = this->model->getLayerDeps(l);
 
-                    // Compute the error partial derivative with respect to each output.
-                    math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
-
-                    // Add up to all dOuts.
-                    for (uint32_t d = 0; d < deps.width; d++) {
-                        math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
-                    }
-
-                    // Reset vals for the next layer.
-                    // math::copy(vals, dOut);
-
-                    math::dealloc(dIn);
-                }
-
-                // Check if batch size or knowledge size is reached. If so
-                // update weights and biases.
-                if (j % this->batchSize == 0 || j == this->knowledge.getExperiencesNum() - 1) {
-                    // Update weights and biases.
+            //         // Compute the error partial derivative with respect to each output.
+            //         math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+            //
+            //         // Add up to all dOuts.
+            //         for (uint32_t d = 0; d < deps.width; d++) {
+            //             math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
+            //         }
+            //
+            //         // Compute weight delta and apply it.
+            //         // math::hmul();
+            //
+            //         // Reset vals for the next layer.
+            //         // math::copy(vals, dOut);
+            //
+            //         math::dealloc(dIn);
+            //     }
+            //
+            //     // Check if batch size or knowledge size is reached. If so
+            //     // update weights and biases.
+            //     if (j % this->batchSize == 0 || j == this->knowledge.getExperiencesNum() - 1) {
+            //         // Update weights and biases.
                 }
             }
         }
@@ -94,5 +98,11 @@ namespace oort {
     }
     void GradientDescender::setEpochsNum(uint32_t epochsNum) {
         this->epochsNum = epochsNum;
+    }
+    void GradientDescender::setKnowledge(Knowledge knowledge) {
+        this->knowledge = knowledge;
+    }
+    void GradientDescender::setCostFunction(math::DT1DBinFunc* costFunction) {
+        this->costFunction = costFunction;
     }
 }

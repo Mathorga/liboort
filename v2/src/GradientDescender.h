@@ -27,6 +27,8 @@ namespace oort {
         void setLearningRate(double learningRate);
         void setBatchSize(uint32_t batchSize);
         void setEpochsNum(uint32_t epochsNum);
+        void setKnowledge(Knowledge knowledge);
+        void setCostFunction(math::DT1DBinFunc* costFunction);
 
     private:
         double learningRate;
