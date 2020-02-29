@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
 
     Model* testGraph = new Model(3, layerSizes);
     GradientDescender* optim = new GradientDescender();
-    optim->setEpochsNum(10);
+    optim->setEpochsNum(1);
     optim->setLearningRate(0.1);
     optim->setModel(testGraph);
     optim->setCostFunction(new math::MSE());

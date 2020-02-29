@@ -4,9 +4,10 @@ namespace oort {
     void GradientDescender::run() {
         double error = 0.0;
         math::dtensor1d vals;
-        math::dtensor1d dIn;
         math::itensor1d deps;
+        math::dtensor1d dIn;
         math::dtensor1d** dOuts;
+        math::dtensor1d dWeight;
 
         dOuts = (math::dtensor1d**) malloc(this->model->getMemLoopsNum() * sizeof(math::dtensor1d*));
         for (uint32_t i = 0; i < this->model->getMemLoopsNum(); i++) {
@@ -29,41 +30,44 @@ namespace oort {
 
                 // Get the predicted output from the model.
                 vals = this->model->getOutput();
-                print(vals);
 
                 // Calculate the error of the model.
                 error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
                 // Backpropagate the error.
-                for (uint32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
+                for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
                     // Allocate derived values.
                     math::alloc(&dIn, this->model->getLayerSize(l));
+                    // Allocate delta weights.
+                    math::alloc(&dWeight, this->model->getLayerSize(l));
 
                     // Get layer dependencies.
                     deps = this->model->getLayerDeps(l);
 
-            //         // Compute the error partial derivative with respect to each output.
-            //         math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
-            //
-            //         // Add up to all dOuts.
-            //         for (uint32_t d = 0; d < deps.width; d++) {
-            //             math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
-            //         }
-            //
-            //         // Compute weight delta and apply it.
-            //         // math::hmul();
-            //
-            //         // Reset vals for the next layer.
-            //         // math::copy(vals, dOut);
-            //
-            //         math::dealloc(dIn);
-            //     }
+                    // Compute the error partial derivative with respect to each output.
+                    math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+
+                    // Add up to all dOuts.
+                    for (uint32_t d = 0; d < deps.width; d++) {
+                        math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
+                    }
+
+                    // Compute weight delta and apply it.
+                    printf("\nActivated values for layer %d", l);
+                    print(this->model->getLayerActivatedVals(l));
+                    math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
+
+                    // Reset vals for the next layer.
+                    // math::copy(vals, dOut);
+
+                    math::dealloc(dIn);
+                }
             //
             //     // Check if batch size or knowledge size is reached. If so
             //     // update weights and biases.
             //     if (j % this->batchSize == 0 || j == this->knowledge.getExperiencesNum() - 1) {
             //         // Update weights and biases.
-                }
+                // }
             }
         }
 
