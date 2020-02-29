@@ -51,14 +51,25 @@ int main(int argc, char const *argv[]) {
 
     // testGraph->feed(ins);
     // testGraph->compute();
+    testGraph->feed(ds.getExperience(0).getInputs());
+    testGraph->compute();
+    math::dtensor1d out = testGraph->getOutput();
+    printf("\nOUTPUT %f\n", out.values[0]);
+
+    testGraph->feed(ds.getExperience(0).getInputs());
+    testGraph->compute();
+    out = testGraph->getOutput();
+    printf("\nOUTPUT %f\n", out.values[0]);
+
 
     optim->setKnowledge(ds);
-    optim->run();
+    // optim->run();
 
 
-    math::dtensor1d outs = testGraph->getOutput();
-
-    printf("\nOUTPUT %f\n", outs.values[0]);
+    testGraph->feed(ds.getExperience(0).getInputs());
+    testGraph->compute();
+    out = testGraph->getOutput();
+    printf("\nOUTPUT %f\n", out.values[0]);
 
     return 0;
 }

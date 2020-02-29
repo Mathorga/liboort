@@ -22,6 +22,7 @@ namespace oort {
         static const uint32_t DEFAULT_LAYERS_NUM;
         static const uint32_t DEFAULT_LAYER_SIZE;
         static const uint32_t DEFAULT_MEM_LOOPS_NUM;
+        static const double DEFAULT_SYNAPSE_WEIGHT;
 
         enum activation {
             SIGMOID,

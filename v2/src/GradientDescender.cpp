@@ -53,9 +53,9 @@ namespace oort {
                     }
 
                     // Compute weight delta and apply it.
-                    printf("\nActivated values for layer %d", l);
-                    print(this->model->getLayerActivatedVals(l));
-                    math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
+                    // printf("\nActivated values for layer %d", l);
+                    // print(this->model->getLayerActivatedVals(l));
+                    // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);

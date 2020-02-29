@@ -4,6 +4,7 @@ namespace oort {
     const uint32_t Model::DEFAULT_LAYERS_NUM = 3;
     const uint32_t Model::DEFAULT_LAYER_SIZE = 5;
     const uint32_t Model::DEFAULT_MEM_LOOPS_NUM = 0;
+    const double Model::DEFAULT_SYNAPSE_WEIGHT = 0.5;
 
     Model::Model(uint32_t memLoopsNum, uint32_t layersNum, uint32_t* layerSizes) {
         // Set size members.
@@ -43,7 +44,7 @@ namespace oort {
                                 this->layers[i][j].composedValues.width,
                                 this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers[i][j].weights[k], 1.0);
+                    math::init(this->layers[i][j].weights[k], DEFAULT_SYNAPSE_WEIGHT);
                     math::alloc(&(this->layers[i][j].weightActivations[k]),
                                 this->layers[i][j].composedValues.width,
                                 this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
@@ -106,7 +107,7 @@ namespace oort {
                                 this->layers[i][j].composedValues.width,
                                 this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
                     // Set all synapse weights to 1.
-                    math::init(this->layers[i][j].weights[k], 1.0);
+                    math::init(this->layers[i][j].weights[k], DEFAULT_SYNAPSE_WEIGHT);
                     math::alloc(&(this->layers[i][j].weightActivations[k]),
                                 this->layers[i][j].composedValues.width,
                                 this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
@@ -138,14 +139,14 @@ namespace oort {
         // Temp array to store inputs to target layers.
         math::dtensor1d inputs;
 
-        // Shift mem loops to the left in order to make space for a new one.
-        // The oldest one is removed.
-        this->shift();
-
         // Loop through the graph's mem loops.
         for (uint32_t i = 0; i < this->memLoopsNum; i++) {
             // Loop through layers of the graph avoiding the input one.
             for (uint32_t j = 1; j < this->layersNum; j++) {
+                // Clear layer's values.
+                math::zero(this->layers[i][j].composedValues);
+                math::zero(this->layers[i][j].activatedValues);
+
                 // Loop through the current layer's targets.
                 for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
                     // Allocate activated synapses.
@@ -201,13 +202,15 @@ namespace oort {
                 math::prim(this->layers[i][j].activatedValues,
                            this->layers[i][j].composedValues,
                            this->layers[i][j].activationFunction);
-                // math::sigmoid(this->layers[i][j].activatedValues,
-                //               this->layers[i][j].composedValues);
             }
         }
     }
 
     void Model::feed(math::dtensor1d inputValues) {
+        // Shift mem loops to the left in order to make space for a new one.
+        // The oldest one is removed.
+        this->shift();
+
         // Set neuron values only to the first layer of the graph.
         math::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
         // print(this->layers.values[0].activatedValues);
