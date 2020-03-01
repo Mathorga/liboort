@@ -463,9 +463,11 @@ namespace oort {
             alloc(&tMore, t1.width);
             copy(tLess, t1);
             copy(tMore, t1);
-            tLess.values[i] -= 0.01;
-            tMore.values[i] -= 0.01;
-            return ((*function)(tMore, t2) - (*function)(tLess, t2)) / 0.02;
+            tLess.values[i] -= 0.001;
+            tMore.values[i] += 0.001;
+            // printf("\nTLESS %f\n", tLess.values[i]);
+            // printf("\nTMORE %f\n", tMore.values[i]);
+            return ((*function)(tMore, t2) - (*function)(tLess, t2)) / 0.002;
         }
         double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function) {
             return (*function)(t1, t2);

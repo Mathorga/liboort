@@ -91,14 +91,14 @@ namespace oort {
         }
     }
     void print(const math::itensor1d t) {
-        printf("\nITENSOR1D\n");
+        printf("\nITENSOR1D %d\n", t.width);
         for (uint32_t i = 0; i < t.width; i++) {
             printf("%d\t", t.values[i]);
         }
         printf("\n");
     }
     void print(const math::itensor2d t) {
-        printf("\nITENSOR2D\n");
+        printf("\nITENSOR2D %dx%d\n", t.width, t.height);
         for (uint32_t i = 0; i < t.height; i++) {
             for (uint32_t j = 0; j < t.width; j++) {
                 printf("%d\t", t.values[IDX2D(i, j, t.width)]);

@@ -33,9 +33,15 @@ namespace oort {
 
                 // Calculate the error of the model.
                 error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                // printf("\nERROR %f\n", error);
 
                 // Calculate the error detivative to the output layer of the network.
                 math::der(dOuts[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                // printf("\nSTART");
+                // print(dOuts[0][this->model->getLayersNum() - 1]);
+                // print(vals);
+                // print(this->knowledge.getExperience(j).getOutputs());
+                // printf("END\n");
 
                 // Backpropagate the error.
                 for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
@@ -57,11 +63,18 @@ namespace oort {
 
                     // Compute weight delta and apply it.
                     math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
+                    printf("\nDWeight");
+                    print(dWeight);
+                    printf("\nActivVals");
+                    print(this->model->getLayerActivatedVals(l));
+                    printf("\nDOuts");
+                    print(dOuts[0][l]);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);
 
                     math::dealloc(dIn);
+                    math::dealloc(dWeight);
                 }
             //
             //     // Check if batch size or knowledge size is reached. If so
