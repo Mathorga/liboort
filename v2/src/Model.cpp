@@ -262,6 +262,16 @@ namespace oort {
         return layerDeps;
     }
 
+    math::dtensor1d Model::getLayerComposedVals(uint32_t index) {
+        math::dtensor1d layerVals;
+
+        if (index <= this->layersNum) {
+            layerVals = this->layers[0][index].composedValues;
+        }
+
+        return layerVals;
+    }
+
     math::dtensor1d Model::getLayerActivatedVals(uint32_t index) {
         math::dtensor1d layerVals;
 

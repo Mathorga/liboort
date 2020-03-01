@@ -55,7 +55,13 @@ namespace oort {
                     // Compute weight delta and apply it.
                     // printf("\nActivated values for layer %d", l);
                     // print(this->model->getLayerActivatedVals(l));
+                    printf("\nCAPRONE\n");
+                    print(this->model->getLayerComposedVals(l));
+                    print(this->model->getLayerActivatedVals(l));
+                    printf("\nIMPALA\n");
+                    print(dOuts[0][l]);
                     // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
+                    // print(dWeight);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);

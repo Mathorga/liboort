@@ -58,10 +58,10 @@ int main(int argc, char const *argv[]) {
     optim->run();
 
 
-    // testGraph->feed(ds.getExperience(0).getInputs());
-    // testGraph->compute();
+    testGraph->feed(ds.getExperience(2).getInputs());
+    testGraph->compute();
     math::dtensor1d out = testGraph->getOutput();
-    printf("\nOUTPUT %f\n", out.values[0]);
+    print(out);
 
     return 0;
 }
