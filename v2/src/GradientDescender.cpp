@@ -34,6 +34,9 @@ namespace oort {
                 // Calculate the error of the model.
                 error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
+                // Calculate the error detivative to the output layer of the network.
+                math::der(dOuts[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+
                 // Backpropagate the error.
                 for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
                     // Allocate derived values.
@@ -44,8 +47,8 @@ namespace oort {
                     // Get layer dependencies.
                     deps = this->model->getLayerDeps(l);
 
-                    // Compute the error partial derivative with respect to each output.
-                    math::der(dIn, vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                    // Compute input derivative for the current layer.
+                    math::hmul(dIn, this->model->getLayerComposedVals(l), dOuts[0][l]);
 
                     // Add up to all dOuts.
                     for (uint32_t d = 0; d < deps.width; d++) {
@@ -53,15 +56,7 @@ namespace oort {
                     }
 
                     // Compute weight delta and apply it.
-                    // printf("\nActivated values for layer %d", l);
-                    // print(this->model->getLayerActivatedVals(l));
-                    printf("\nCAPRONE\n");
-                    print(this->model->getLayerComposedVals(l));
-                    print(this->model->getLayerActivatedVals(l));
-                    printf("\nIMPALA\n");
-                    print(dOuts[0][l]);
-                    // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
-                    // print(dWeight);
+                    math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);

@@ -151,11 +151,31 @@ namespace oort {
             }
             return err;
         }
+        error hmul(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width && res.width == t2.width) {
+                for (uint32_t i = 0; i < res.width; i++) {
+                    res.values[i] = t1.values[i] * t2.values[i];
+                }
+            }
+            return err;
+        }
         error hmul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width &&
                 t1.height == t2.height && res.height == t2.height) {
                 for (uint32_t i = 0; i < res.width * res.height; i++) {
+                    res.values[i] = t1.values[i] * t2.values[i];
+                }
+            }
+            return err;
+        }
+        error hmul(const dtensor3d res, const dtensor3d t1, const dtensor3d t2) {
+            error err = error::NO_ERROR;
+            if (t1.width == t2.width && res.width == t2.width &&
+                t1.height == t2.height && res.height == t2.height &&
+                t1.depth == t2.depth && res.depth == t2.depth) {
+                for (uint32_t i = 0; i < res.width * res.height * res.depth; i++) {
                     res.values[i] = t1.values[i] * t2.values[i];
                 }
             }

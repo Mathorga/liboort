@@ -179,8 +179,10 @@ namespace oort {
         error mul(const dtensor1d res, const dtensor2d t1, const dtensor1d t2);
         // Performs the dot product between 1D tensor <t1> and 2D tensor <t2>.
         error mul(const dtensor1d res, const dtensor1d t1, const dtensor2d t2);
+        error hmul(const dtensor1d res, const dtensor1d t1, const dtensor1d t2);
         // Performs the Hadamard product between 2D tensors <t1> and <t2>.
         error hmul(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
+        error hmul(const dtensor3d res, const dtensor3d t1, const dtensor3d t2);
         // Performs the scalar product between scalar <value> and 2D tensor <t>.
         error smul(const dtensor2d res, const double value, const dtensor2d t);
         error sigmoid(const dtensor1d res, const dtensor1d t);
