@@ -282,6 +282,26 @@ namespace oort {
         return layerVals;
     }
 
+    math::dtensor1d* Model::getLayerBiases(uint32_t index) {
+        math::dtensor1d* layerBiases;
+
+        if (index <= this->layersNum) {
+            layerBiases = this->layers[0][index].biases;
+        }
+
+        return layerBiases;
+    }
+
+    uint32_t Model::getLayerDepsNum(uint32_t index) {
+        uint32_t layerDepsNum;
+
+        if (index <= this->layersNum) {
+            layerDepsNum = this->layers[0][index].dependencies.width;
+        }
+
+        return layerDepsNum;
+    }
+
     void Model::shift() {
         for (uint32_t i = 1; i < this->memLoopsNum; i++) {
             this->layers[i - 1] = this->layers[i];
