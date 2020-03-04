@@ -55,20 +55,31 @@ namespace oort {
 
                     // Compute input derivative for the current layer.
                     math::hmul(dIn, this->model->getLayerComposedVals(l), dOuts[0][l]);
+                    // printf("\nDIn, %d", l);
+                    // print(dIn);
+                    // printf("\nDOuts, %d", l);
+                    // print(dOuts[0][l]);
+                    // printf("\nCompVals, %d", l);
+                    // print(this->model->getLayerComposedVals(l));
 
                     // Add up to all dOuts.
                     for (uint32_t d = 0; d < deps.width; d++) {
-                        math::add(dOuts[0][deps.values[d]], dOuts[0][deps.values[d]], dIn);
+                        // printf("\nAdding %d %d\n", d, deps.values[d]);
+                        math::cadd(dOuts[0][deps.values[d]], dIn);
+                        // printf("\nDIn, %d", l);
+                        // print(dIn);
+                        // printf("\nDOuts, %d", l);
+                        // print(dOuts[0][deps.values[d]]);
                     }
 
                     // Compute weight delta and apply it.
                     math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
-                    printf("\nDWeight");
-                    print(dWeight);
-                    printf("\nActivVals");
-                    print(this->model->getLayerActivatedVals(l));
-                    printf("\nDOuts");
-                    print(dOuts[0][l]);
+                    // printf("\nDWeight");
+                    // print(dWeight);
+                    // printf("\nActivVals");
+                    // print(this->model->getLayerActivatedVals(l));
+                    // printf("\nDOuts, %d", l);
+                    // print(dOuts[0][l]);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);

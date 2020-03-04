@@ -170,6 +170,7 @@ namespace oort {
         error init(const itensor1d t, const uint32_t value);
         error init(const itensor2d t, const uint32_t value);
         error init(const itensor3d t, const uint32_t value);
+        error cadd(const dtensor1d res, const dtensor1d t);
         error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2);
         error add(const dtensor2d res, const dtensor2d t1, const dtensor2d t2);
         error add(const dtensor3d res, const dtensor3d t1, const dtensor3d t2);

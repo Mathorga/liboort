@@ -71,6 +71,17 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+        error cadd(const dtensor1d res, const dtensor1d t) {
+            double sum = 0.0;
+            for (uint32_t i = 0; i < t.width; i++) {
+                sum += t.values[i];
+            }
+
+            for (uint32_t i = 0; i < res.width; i++) {
+                res.values[i] += sum;
+            }
+            return error::NO_ERROR;
+        }
         error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width) {
