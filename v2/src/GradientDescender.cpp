@@ -5,18 +5,20 @@ namespace oort {
         double error = 0.0;
         math::dtensor1d vals;
         math::itensor1d deps;
+        math::dtensor1d dActivatedVals;
+        math::dtensor1d** dOut;
         math::dtensor1d dIn;
-        math::dtensor1d** dOuts;
         math::dtensor2d* dWeight;
         math::dtensor1d* dBias;
+        math::dtensor1d cDOut;
 
-        // Allocate dOuts.
-        dOuts = (math::dtensor1d**) malloc(this->model->getMemLoopsNum() * sizeof(math::dtensor1d*));
+        // Allocate dOut.
+        dOut = (math::dtensor1d**) malloc(this->model->getMemLoopsNum() * sizeof(math::dtensor1d*));
         for (uint32_t i = 0; i < this->model->getMemLoopsNum(); i++) {
-            dOuts[i] = (math::dtensor1d*) malloc(this->model->getLayersNum() * sizeof(math::dtensor1d));
+            dOut[i] = (math::dtensor1d*) malloc(this->model->getLayersNum() * sizeof(math::dtensor1d));
             for (uint32_t j = 0; j < this->model->getLayersNum(); j++) {
-                math::alloc(&(dOuts[i][j]), this->model->getLayerSize(j));
-                math::zero(dOuts[i][j]);
+                math::alloc(&(dOut[i][j]), this->model->getLayerSize(j));
+                math::zero(dOut[i][j]);
             }
         }
 
@@ -37,18 +39,11 @@ namespace oort {
                 error = math::prim(vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
                 printf("\nERROR %f\n", error);
 
-                // Calculate the error detivative to the output layer of the network.
-                math::der(dOuts[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
-                // printf("\nSTART");
-                // print(dOuts[0][this->model->getLayersNum() - 1]);
-                // print(vals);
-                // print(this->knowledge.getExperience(j).getOutputs());
-                // printf("END\n");
+                // Calculate dOut for the last layer (i.e. output layer) based on expected output.
+                math::der(dOut[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
 
                 // Backpropagate the error.
                 for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
-                    // Allocate derived values.
-                    math::alloc(&dIn, this->model->getLayerSize(l));
                     // Allocate delta weights.
                     dWeight = (math::dtensor2d*) malloc(this->model->getLayerDepsNum(l) * sizeof(math::dtensor2d));
                     for (uint32_t d = 0; d < this->model->getLayerDepsNum(l); d++) {
@@ -58,43 +53,37 @@ namespace oort {
                         math::zero(dWeight[d]);
                     }
 
+                    // Allocate dActivatedVals.
+                    math::alloc(&dActivatedVals, this->model->getLayerSize(l));
+
                     // Get layer dependencies.
                     deps = this->model->getLayerDeps(l);
 
-                    // Compute input derivative for the current layer.
-                    math::hmul(dIn, this->model->getLayerComposedVals(l), dOuts[0][l]);
-                    // printf("\nDIn, %d", l);
-                    // print(dIn);
-                    // printf("\nDOuts, %d", l);
-                    // print(dOuts[0][l]);
-                    // printf("\nCompVals, %d", l);
-                    // print(this->model->getLayerComposedVals(l));
+                    // Compute dIn based on dOut.
+                    math::der(dActivatedVals, this->model->getLayerComposedVals(l), this->model->getLayerActivation(l));
+                    math::hmul(dIn, dActivatedVals, dOut[0][l]);
 
                     // Add up to all dOuts.
                     for (uint32_t d = 0; d < deps.width; d++) {
-                        // printf("\nAdding %d %d\n", d, deps.values[d]);
-                        math::cadd(dOuts[0][deps.values[d]], dIn);
-                        // printf("\nDIn, %d", l);
-                        // print(dIn);
-                        // printf("\nDOuts, %d", l);
-                        // print(dOuts[0][deps.values[d]]);
+                        math::mul(cDOut, this->model->getLayerWeights(l)[d], dIn);
+                        math::cadd(dOut[0][deps.values[d]], dIn);
                     }
 
                     // Compute weight delta and apply it.
-                    // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dOuts[0][l]);
+                    // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dIn[0][l]);
                     // printf("\nDWeight");
                     // print(dWeight);
                     // printf("\nActivVals");
                     // print(this->model->getLayerActivatedVals(l));
-                    // printf("\nDOuts, %d", l);
-                    // print(dOuts[0][l]);
+                    // printf("\ndIn, %d", l);
+                    // print(dIn[0][l]);
 
                     // math::add(this->model->getLayerWeights);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);
 
-                    math::dealloc(dIn);
+                    // math::dealloc(dOut);
                     for (uint32_t d = 0; d < this->model->getLayerDepsNum(l); d++) {
                         math::dealloc(dWeight[d]);
                     }
@@ -111,11 +100,11 @@ namespace oort {
 
         for (uint32_t i = 0; i < this->model->getMemLoopsNum(); i++) {
             for (uint32_t j = 0; j < this->model->getLayersNum(); j++) {
-                math::dealloc(dOuts[i][j]);
+                math::dealloc(dOut[i][j]);
             }
-            delete dOuts[i];
+            delete dOut[i];
         }
-        delete dOuts;
+        delete dOut;
 
         return;
     }

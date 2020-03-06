@@ -282,6 +282,16 @@ namespace oort {
         return layerVals;
     }
 
+    math::dtensor2d* Model::getLayerWeights(uint32_t index) {
+        math::dtensor2d* layerWeights;
+
+        if (index <= this->layersNum) {
+            layerWeights = this->layers[0][index].weights;
+        }
+
+        return layerWeights;
+    }
+
     math::dtensor1d* Model::getLayerBiases(uint32_t index) {
         math::dtensor1d* layerBiases;
 
@@ -300,6 +310,16 @@ namespace oort {
         }
 
         return layerDepsNum;
+    }
+
+    math::DUnFunc* Model::getLayerActivation(uint32_t index) {
+        math::DUnFunc* layerActivation;
+
+        if (index <= this->layersNum) {
+            layerActivation = this->layers[0][index].activationFunction;
+        }
+
+        return layerActivation;
     }
 
     void Model::shift() {

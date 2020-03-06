@@ -453,6 +453,48 @@ namespace oort {
 
             return err;
         }
+        error der(const dtensor1d res, const dtensor1d t, DUnFunc* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width) {
+                for (uint32_t i = 0; i < t.width; i++) {
+                    res.values[i] = der(t.values[i], function);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error der(const dtensor2d res, const dtensor2d t, DUnFunc* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width &&
+                t.height == res.height) {
+                for (uint32_t i = 0; i < (t.width * t.height); i++) {
+                    res.values[i] = der(t.values[i], function);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
+        error der(const dtensor3d res, const dtensor3d t, DUnFunc* function) {
+            error err = error::NO_ERROR;
+
+            if (t.width == res.width &&
+                t.height == res.height &&
+                t.depth == res.depth) {
+                for (uint32_t i = 0; i < (t.width * t.height * t.depth); i++) {
+                    res.values[i] = der(t.values[i], function);
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
         error der(const dtensor1d res, const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function) {
             error err = error::NO_ERROR;
 
