@@ -69,14 +69,14 @@ namespace oort {
                     // Compute weight delta and apply it.
                     for (uint32_t d = 0; d < deps.width; d++) {
                         math::mul(dWeight[d], this->model->getLayerActivatedVals(deps.values[d]), dIn);
-                        printf("\nDWeight");
-                        print(dWeight[d]);
+                        // printf("\nDWeight");
+                        // print(dWeight[d]);
                         // printf("\nActivVals");
                         // print(this->model->getLayerActivatedVals(l));
                         // printf("\ndIn, %d", l);
                         // print(dIn[0][l]);
 
-                        // math::add(this->model->getLayerWeights(l)[d], );
+                        math::add(this->model->getLayerWeights(l)[d], dWeight[d]);
                     }
 
                     // Add up to all dOuts.
