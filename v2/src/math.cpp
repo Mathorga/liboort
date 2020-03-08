@@ -82,6 +82,42 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+        error add(const dtensor1d res, const dtensor1d t) {
+            error err = error::NO_ERROR;
+            if (res.width == t.width) {
+                for (uint32_t i = 0; i < res.width; i++) {
+                    res.values[i] += t.values[i];
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+            return err;
+        }
+        error add(const dtensor2d res, const dtensor2d t) {
+            error err = error::NO_ERROR;
+            if (res.width == t.width &&
+                res.height == t.height) {
+                for (uint32_t i = 0; i < res.width * res.height; i++) {
+                    res.values[i] += t.values[i];
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+            return err;
+        }
+        error add(const dtensor3d res, const dtensor3d t) {
+            error err = error::NO_ERROR;
+            if (res.width == t.width &&
+                res.height == t.height &&
+                res.depth == t.depth) {
+                for (uint32_t i = 0; i < res.width * res.height * res.depth; i++) {
+                    res.values[i] += t.values[i];
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+            return err;
+        }
         error add(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width) {

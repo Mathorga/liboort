@@ -76,7 +76,7 @@ namespace oort {
                         // printf("\ndIn, %d", l);
                         // print(dIn[0][l]);
 
-                        // math::add(this->model->getLayerWeights);
+                        // math::add(this->model->getLayerWeights(l)[d], );
                     }
 
                     // Add up to all dOuts.
