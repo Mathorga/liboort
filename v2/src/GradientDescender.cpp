@@ -53,6 +53,9 @@ namespace oort {
                         math::zero(dWeight[d]);
                     }
 
+                    // Allocate dIn.
+                    math::alloc(&dIn, this->model->getLayerSize(l));
+
                     // Allocate dActivatedVals.
                     math::alloc(&dActivatedVals, this->model->getLayerSize(l));
 
@@ -65,8 +68,10 @@ namespace oort {
 
                     // Add up to all dOuts.
                     for (uint32_t d = 0; d < deps.width; d++) {
+                        math::alloc(&cDOut, this->model->getLayerWeights(l)[d].height);
                         math::mul(cDOut, this->model->getLayerWeights(l)[d], dIn);
-                        math::cadd(dOut[0][deps.values[d]], dIn);
+                        math::cadd(dOut[0][deps.values[d]], cDOut);
+                        math::dealloc(cDOut);
                     }
 
                     // Compute weight delta and apply it.
@@ -83,7 +88,7 @@ namespace oort {
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);
 
-                    // math::dealloc(dOut);
+                    math::dealloc(dIn);
                     for (uint32_t d = 0; d < this->model->getLayerDepsNum(l); d++) {
                         math::dealloc(dWeight[d]);
                     }
