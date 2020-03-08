@@ -66,6 +66,19 @@ namespace oort {
                     math::der(dActivatedVals, this->model->getLayerComposedVals(l), this->model->getLayerActivation(l));
                     math::hmul(dIn, dActivatedVals, dOut[0][l]);
 
+                    // Compute weight delta and apply it.
+                    for (uint32_t d = 0; d < deps.width; d++) {
+                        math::mul(dWeight[d], this->model->getLayerActivatedVals(deps.values[d]), dIn);
+                        printf("\nDWeight");
+                        print(dWeight[d]);
+                        // printf("\nActivVals");
+                        // print(this->model->getLayerActivatedVals(l));
+                        // printf("\ndIn, %d", l);
+                        // print(dIn[0][l]);
+
+                        // math::add(this->model->getLayerWeights);
+                    }
+
                     // Add up to all dOuts.
                     for (uint32_t d = 0; d < deps.width; d++) {
                         math::alloc(&cDOut, this->model->getLayerWeights(l)[d].height);
@@ -73,17 +86,6 @@ namespace oort {
                         math::cadd(dOut[0][deps.values[d]], cDOut);
                         math::dealloc(cDOut);
                     }
-
-                    // Compute weight delta and apply it.
-                    // math::hmul(dWeight, this->model->getLayerActivatedVals(l), dIn[0][l]);
-                    // printf("\nDWeight");
-                    // print(dWeight);
-                    // printf("\nActivVals");
-                    // print(this->model->getLayerActivatedVals(l));
-                    // printf("\ndIn, %d", l);
-                    // print(dIn[0][l]);
-
-                    // math::add(this->model->getLayerWeights);
 
                     // Reset vals for the next layer.
                     // math::copy(vals, dOut);

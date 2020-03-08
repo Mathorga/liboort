@@ -162,6 +162,22 @@ namespace oort {
             }
             return err;
         }
+        error mul(const dtensor2d res, const dtensor1d t1, const dtensor1d t2) {
+            error err = error::NO_ERROR;
+
+            if (res.width == t2.width &&
+                res.height == t1.width) {
+                for (uint32_t i = 0; i < t1.width; i++) {
+                    for (uint32_t j = 0; j < t2.width; j++) {
+                        res.values[IDX2D(i, j, res.width)] = t1.values[i] * t2.values[j];
+                    }
+                }
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
         error hmul(const dtensor1d res, const dtensor1d t1, const dtensor1d t2) {
             error err = error::NO_ERROR;
             if (t1.width == t2.width && res.width == t2.width) {
