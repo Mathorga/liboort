@@ -10,7 +10,7 @@ int main(int argc, char const *argv[]) {
 
     Model* testGraph = new Model(3, layerSizes);
     GradientDescender* optim = new GradientDescender();
-    optim->setEpochsNum(100);
+    optim->setEpochsNum(1);
     optim->setLearningRate(0.1);
     optim->setModel(testGraph);
     optim->setCostFunction(new math::MSE());
@@ -44,9 +44,9 @@ int main(int argc, char const *argv[]) {
     ins4.values[1] = 1.0;
     outs4.values[0] = 0.0;
     Knowledge ds(2, 1);
-    ds.addExperience(Experience(ins4, outs4));
-    ds.addExperience(Experience(ins1, outs1));
-    ds.addExperience(Experience(ins2, outs2));
+    // ds.addExperience(Experience(ins4, outs4));
+    // ds.addExperience(Experience(ins1, outs1));
+    // ds.addExperience(Experience(ins2, outs2));
     ds.addExperience(Experience(ins3, outs3));
 
     // testGraph->feed(ds.getExperience(0).getInputs());
@@ -57,9 +57,9 @@ int main(int argc, char const *argv[]) {
     optim->setKnowledge(ds);
     optim->run();
 
-
-    testGraph->feed(ds.getExperience(2).getInputs());
+    testGraph->feed(ds.getExperience(0).getInputs());
     testGraph->compute();
+
     math::dtensor1d out = testGraph->getOutput();
     print(out);
 
