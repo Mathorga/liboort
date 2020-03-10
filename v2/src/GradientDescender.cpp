@@ -41,6 +41,8 @@ namespace oort {
 
                 // Calculate dOut for the last layer (i.e. output layer) based on expected output.
                 math::der(dOut[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
+                printf("\nOUT LAYER DOUT");
+                print(dOut[0][this->model->getLayersNum() - 1]);
 
                 // Backpropagate the error.
                 for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {

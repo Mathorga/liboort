@@ -47,7 +47,7 @@ int main(int argc, char const *argv[]) {
     // ds.addExperience(Experience(ins4, outs4));
     // ds.addExperience(Experience(ins1, outs1));
     // ds.addExperience(Experience(ins2, outs2));
-    ds.addExperience(Experience(ins3, outs3));
+    ds.addExperience(Experience(ins1, outs1));
 
     // testGraph->feed(ds.getExperience(0).getInputs());
     // testGraph->compute();
