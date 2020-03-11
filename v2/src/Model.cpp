@@ -181,18 +181,12 @@ namespace oort {
                         // The dependency is not recurrent, so take values from
                         // the current mem loop.
                         math::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[k]].activatedValues, activatedSynapses);
-                        math::add(inputs, inputs, this->layers[i][j].biases[k]);
+                        math::add(inputs, this->layers[i][j].biases[k]);
                     }
 
                     // Add computed values to the layer composition.
                     math::add(this->layers[i][j].composedValues,
-                              this->layers[i][j].composedValues,
                               inputs);
-
-                    // Add biases from the current dependency.
-                    math::add(this->layers[i][j].composedValues,
-                              this->layers[i][j].composedValues,
-                              this->layers[i][j].biases[k]);
 
                     math::dealloc(activatedSynapses);
                     math::dealloc(inputs);
@@ -213,7 +207,6 @@ namespace oort {
 
         // Set neuron values only to the first layer of the graph.
         math::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
-        // print(this->layers.values[0].activatedValues);
     }
 
     void Model::setActivation(math::DUnFunc* function) {

@@ -44,15 +44,15 @@ int main(int argc, char const *argv[]) {
     ins4.values[1] = 1.0;
     outs4.values[0] = 0.0;
     Knowledge ds(2, 1);
-    // ds.addExperience(Experience(ins4, outs4));
     // ds.addExperience(Experience(ins1, outs1));
     // ds.addExperience(Experience(ins2, outs2));
-    ds.addExperience(Experience(ins1, outs1));
+    ds.addExperience(Experience(ins3, outs3));
+    // ds.addExperience(Experience(ins4, outs4));
 
-    // testGraph->feed(ds.getExperience(0).getInputs());
-    // testGraph->compute();
-    // math::dtensor1d out = testGraph->getOutput();
-    // printf("\nOUTPUT %f\n", out.values[0]);
+    testGraph->feed(ds.getExperience(0).getInputs());
+    testGraph->compute();
+    math::dtensor1d out = testGraph->getOutput();
+    print(out);
 
     optim->setKnowledge(ds);
     optim->run();
@@ -60,8 +60,8 @@ int main(int argc, char const *argv[]) {
     testGraph->feed(ds.getExperience(0).getInputs());
     testGraph->compute();
 
-    math::dtensor1d out = testGraph->getOutput();
-    print(out);
+    // math::dtensor1d out = testGraph->getOutput();
+    // print(out);
 
     return 0;
 }
