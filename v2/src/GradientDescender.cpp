@@ -41,8 +41,8 @@ namespace oort {
 
                 // Calculate dOut for the last layer (i.e. output layer) based on expected output.
                 math::der(dOut[0][this->model->getLayersNum() - 1], vals, this->knowledge.getExperience(j).getOutputs(), this->costFunction);
-                printf("\nOUT LAYER DOUT");
-                print(dOut[0][this->model->getLayersNum() - 1]);
+                // printf("\nOUT LAYER DOUT");
+                // print(dOut[0][this->model->getLayersNum() - 1]);
 
                 // Backpropagate the error.
                 for (int32_t l = this->model->getLayersNum() - 1; l >= 0; l--) {
@@ -71,8 +71,8 @@ namespace oort {
                     // Compute weight delta and apply it.
                     for (uint32_t d = 0; d < deps.width; d++) {
                         math::mul(dWeight[d], this->model->getLayerActivatedVals(deps.values[d]), dIn);
-                        printf("\nDWeight");
-                        print(dWeight[d]);
+                        // printf("\nDWeight");
+                        // print(dWeight[d]);
                         // printf("\nActivVals");
                         // print(this->model->getLayerActivatedVals(l));
                         // printf("\ndIn, %d", l);

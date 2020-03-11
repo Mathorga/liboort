@@ -171,6 +171,7 @@ namespace oort {
                         // mem loop before the current one, if there is one.
                         if (i > 0) {
                             math::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[IDX((k - 1), this->memLoopsNum)]].activatedValues, activatedSynapses);
+                            // Add biases from the current dependency.
                             math::add(inputs, inputs, this->layers[i][j].biases[k]);
                         } else {
                             // The current mem loop is the first one, so unset
@@ -181,6 +182,7 @@ namespace oort {
                         // The dependency is not recurrent, so take values from
                         // the current mem loop.
                         math::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[k]].activatedValues, activatedSynapses);
+                        // Add biases from the current dependency.
                         math::add(inputs, this->layers[i][j].biases[k]);
                     }
 
