@@ -1,14 +1,14 @@
 #include "Experience.h"
 
 namespace oort {
-    Experience::Experience(math::dtensor1d inputs, math::dtensor1d outputs) {
+    Experience::Experience(tensor::dtensor1d inputs, tensor::dtensor1d outputs) {
         this->inputs = inputs;
         this->outputs = outputs;
     }
 
     Experience::Experience(uint32_t inputsNum, uint32_t outputsNum) {
-        math::alloc(&(this->inputs), inputsNum);
-        math::alloc(&(this->outputs), outputsNum);
+        tensor::alloc(&(this->inputs), inputsNum);
+        tensor::alloc(&(this->outputs), outputsNum);
     }
 
     Experience::Experience() : Experience(0, 0) {}
@@ -33,11 +33,11 @@ namespace oort {
         return this->outputs.values[index];
     }
 
-    math::dtensor1d Experience::getInputs() {
+    tensor::dtensor1d Experience::getInputs() {
         return this->inputs;
     }
 
-    math::dtensor1d Experience::getOutputs() {
+    tensor::dtensor1d Experience::getOutputs() {
         return this->outputs;
     }
 
@@ -49,11 +49,11 @@ namespace oort {
         return this->outputs.width;
     }
 
-    void Experience::setInputs(math::dtensor1d inputs) {
+    void Experience::setInputs(tensor::dtensor1d inputs) {
         this->inputs = inputs;
     }
 
-    void Experience::setOutputs(math::dtensor1d outputs) {
+    void Experience::setOutputs(tensor::dtensor1d outputs) {
         this->outputs = outputs;
     }
 }

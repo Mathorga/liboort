@@ -25,7 +25,7 @@
 #define IDX3D(i, j, k, m, n) (((i * m) + j) + (m * n * k))
 
 namespace oort {
-    namespace math {
+    namespace tensor {
         // Error definitions.
         enum error {
             NO_ERROR = 0,
@@ -164,9 +164,13 @@ namespace oort {
         double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
 
         // Tensor functions.
+        template <typename T>
+        error zero(const tensor<T> t);
         error zero(const dtensor1d t);
         error zero(const dtensor2d t);
         error zero(const dtensor3d t);
+        template <typename T>
+        error init(const tensor<T> t, const T value);
         error init(const dtensor1d t, const double value);
         error init(const dtensor2d t, const double value);
         error init(const dtensor3d t, const double value);
@@ -245,6 +249,6 @@ namespace oort {
 }
 
 // Add definitions for template functions.
-// #include "math.cpp"
+// #include "tensor.cpp"
 
 #endif

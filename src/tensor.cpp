@@ -1,7 +1,7 @@
-#include "math.h"
+#include "tensor.h"
 
 namespace oort {
-    namespace math {
+    namespace tensor {
         double sigmoid(const double value) {
             return (1 / (1 + (exp(-value))));
         }

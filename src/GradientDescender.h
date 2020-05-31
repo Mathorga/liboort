@@ -28,14 +28,14 @@ namespace oort {
         void setBatchSize(uint32_t batchSize);
         void setEpochsNum(uint32_t epochsNum);
         void setKnowledge(Knowledge knowledge);
-        void setCostFunction(math::DT1DBinFunc* costFunction);
+        void setCostFunction(tensor::DT1DBinFunc* costFunction);
 
     private:
         double learningRate;
         uint32_t batchSize;
         uint32_t epochsNum;
         Knowledge knowledge;
-        math::DT1DBinFunc* costFunction;
+        tensor::DT1DBinFunc* costFunction;
     };
 }
 
