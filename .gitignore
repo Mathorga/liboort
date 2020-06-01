@@ -37,3 +37,6 @@ bld/*
 *.la
 *.a
 *.lib
+
+# VSCode files
+*.vscode
