@@ -62,7 +62,7 @@ namespace oort {
         return ts.tv_nsec;//tv_sec + (double)ts.tv_nsec / 1e9;
     }
 
-    void printDim(const uint32_t dim, uint32_t* index, const tensor::dtensor t) {
+    void printDim(const uint32_t dim, uint32_t* index, const math::dtensor t) {
         if (dim == 0) {
             // Print values.
             for (uint32_t i = 0; i < t.dimSizes[dim]; i++) {
@@ -77,7 +77,7 @@ namespace oort {
         }
     }
 
-    void print(const tensor::dtensor t) {
+    void print(const math::dtensor t) {
         uint32_t index = 0;
         printf("\nDTENSOR\n");
         printf("[");
@@ -86,14 +86,14 @@ namespace oort {
         printf("\n");
     }
 
-    void print(const tensor::dtensor1d t) {
+    void print(const math::dtensor1d t) {
         printf("\nDTENSOR1D\n");
         for (uint32_t i = 0; i < t.width; i++) {
             printf("%.8f\t", t.values[i]);
         }
         printf("\n");
     }
-    void print(const tensor::dtensor2d t) {
+    void print(const math::dtensor2d t) {
         printf("\nDTENSOR2D\n");
         for (uint32_t i = 0; i < t.height; i++) {
             for (uint32_t j = 0; j < t.width; j++) {
@@ -102,14 +102,14 @@ namespace oort {
             printf("\n");
         }
     }
-    void print(const tensor::itensor1d t) {
+    void print(const math::itensor1d t) {
         printf("\nITENSOR1D %d\n", t.width);
         for (uint32_t i = 0; i < t.width; i++) {
             printf("%d\t", t.values[i]);
         }
         printf("\n");
     }
-    void print(const tensor::itensor2d t) {
+    void print(const math::itensor2d t) {
         printf("\nITENSOR2D %dx%d\n", t.width, t.height);
         for (uint32_t i = 0; i < t.height; i++) {
             for (uint32_t j = 0; j < t.width; j++) {

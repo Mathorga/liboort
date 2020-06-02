@@ -8,7 +8,7 @@
 #include <unistd.h>
 // Error Number Definitions.
 #include <errno.h>
-#include "tensor.h"
+#include "math.h"
 
 #define byte unsigned char
 
@@ -23,12 +23,12 @@ namespace oort {
     double byteArrayToDouble(byte* values, uint8_t depth);
     double getTime();
     double getNanoTime();
-    void printDim(const uint32_t dim, uint32_t* index, const tensor::dtensor t);
-    void print(const tensor::dtensor t);
-    void print(const tensor::dtensor1d t);
-    void print(const tensor::dtensor2d t);
-    void print(const tensor::itensor1d t);
-    void print(const tensor::itensor2d t);
+    void printDim(const uint32_t dim, uint32_t* index, const math::dtensor t);
+    void print(const math::dtensor t);
+    void print(const math::dtensor1d t);
+    void print(const math::dtensor2d t);
+    void print(const math::itensor1d t);
+    void print(const math::itensor2d t);
 }
 
 #endif

@@ -27,7 +27,7 @@
 #define IDX3D(i, j, k, m, n) (((i * m) + j) + (m * n * k))
 
 namespace oort {
-    namespace tensor {
+    namespace math {
         // Error definitions.
         enum error {
             NO_ERROR = 0,

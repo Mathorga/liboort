@@ -1,132 +1,85 @@
 #include "Model.h"
 
 namespace oort {
-    const uint32_t Model::DEFAULT_LAYERS_NUM = 3;
+    const uint32_t Model::DEFAULT_LAYERS_NUM = 0;
     const uint32_t Model::DEFAULT_LAYER_SIZE = 5;
-    const uint32_t Model::DEFAULT_MEM_LOOPS_NUM = 0;
     const double Model::DEFAULT_SYNAPSE_WEIGHT = 0.5;
 
-    Model::Model(uint32_t memLoopsNum, uint32_t layersNum, uint32_t* layerSizes) {
+    Model::Model(uint32_t layersNum, uint32_t* layerSizes){
         // Set size members.
-        this->memLoopsNum = memLoopsNum;
         this->layersNum = layersNum;
 
         // Allocate layers.
-        this->layers = (Layer**) malloc(this->memLoopsNum * sizeof(Layer*));
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            this->layers[i] = (Layer*) malloc(this->layersNum * sizeof(Layer));
-        }
+        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
 
-        // Loop through memory loops of the network in order to allocate each
-        // one of them.
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            // Loop through layers in each mem loop.
-            for (uint32_t j = 0; j < this->layersNum; j++) {
-                // Allocate and set dependency for each layer but the first one.
-                // For feedforward neural networks, connections only exist
-                // between each layer and the next one.
-                if (j <= 0) {
-                    tensor::alloc(&(this->layers[i][j].dependencies), 0);
-                } else {
-                    tensor::alloc(&(this->layers[i][j].dependencies), 1);
-                    tensor::init(this->layers[i][j].dependencies, j - 1);
-                }
+        // Loop through layers.
+        for (uint32_t i = 0; i < this->layersNum; i++) {
+            // Allocate neurons.
+            math::alloc(&(this->layers[i].composedValues), layerSizes[i]);
+            math::alloc(&(this->layers[i].activatedValues), layerSizes[i]);
 
-                // Allocate neurons.
-                tensor::alloc(&(this->layers[i][j].composedValues), layerSizes[j]);
-                tensor::alloc(&(this->layers[i][j].activatedValues), layerSizes[j]);
-
+            // Only allocate synapses for layers after the first, since the first layer has no synapses or biases coming to it.
+            if (i > 0) {
                 // Allocate synapses and activations.
-                this->layers[i][j].weights = (tensor::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor2d));
-                this->layers[i][j].weightActivations = (tensor::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor2d));
-                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
-                    tensor::alloc(&(this->layers[i][j].weights[k]),
-                                this->layers[i][j].composedValues.width,
-                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
-                    // Set all synapse weights to 1.
-                    tensor::init(this->layers[i][j].weights[k], DEFAULT_SYNAPSE_WEIGHT);
-                    tensor::alloc(&(this->layers[i][j].weightActivations[k]),
-                                this->layers[i][j].composedValues.width,
-                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
-                    // Set all synapse activations to 1.
-                    tensor::init(this->layers[i][j].weightActivations[k], 1.0);
-                }
+                math::alloc(&(this->layers[i].weights),
+                            this->layers[i].composedValues.width,
+                            this->layers[i - 1].composedValues.width);
+                // Set all synapse weights to 1.
+                math::init(this->layers[i].weights, DEFAULT_SYNAPSE_WEIGHT);
+                math::alloc(&(this->layers[i].weightActivations),
+                            this->layers[i].composedValues.width,
+                            this->layers[i - 1].composedValues.width);
+                // Set all synapse activations to 1.
+                math::init(this->layers[i].weightActivations, 1.0);
 
                 // Allocate biases.
-                this->layers[i][j].biases = (tensor::dtensor1d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor1d));
-                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
-                    tensor::alloc(&(this->layers[i][j].biases[k]),
-                                this->layers[i][j].composedValues.width);
-                    // Set all biases to 1.
-                    tensor::init(this->layers[i][j].biases[k], 1.0);
-                }
-
-                // Set activation function.
-                this->layers[i][j].activationFunction = new tensor::Sigmoid();
+                math::alloc(&(this->layers[i].biases),
+                            this->layers[i].composedValues.width);
+                // Set all biases to 1.
+                math::init(this->layers[i].biases, 1.0);
             }
+
+            // Set activation function.
+            this->layers[i].activationFunction = new math::Sigmoid();
         }
     }
 
-    Model::Model(uint32_t layersNum, uint32_t* layerSizes) : Model(1, layersNum, layerSizes) {}
-
     Model::Model(uint32_t layersNum) {
         // Set size members.
-        this->memLoopsNum = 1;
         this->layersNum = layersNum;
 
         // Allocate layers.
-        this->layers = (Layer**) malloc(this->memLoopsNum * sizeof(Layer*));
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            this->layers[i] = (Layer*) malloc(this->layersNum * sizeof(Layer));
-        }
+        this->layers = (Layer*) malloc(this->layersNum * sizeof(Layer));
 
-        // Loop through memory loops of the network in order to allocate each
-        // one of them.
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            // Loop through layers in each mem loop.
-            for (uint32_t j = 0; j < this->layersNum; j++) {
-                // Allocate and set dependency for each layer but the first one.
-                // For feedforward neural networks, connections only exist
-                // between each layer and the next one.
-                if (i <= 0) {
-                    tensor::alloc(&(this->layers[i][j].dependencies), 0);
-                } else {
-                    tensor::alloc(&(this->layers[i][j].dependencies), 1);
-                    this->layers[i][j].dependencies.values[0] = i - 1;
-                }
+        // Loop through layers in each mem loop.
+        for (uint32_t i = 0; i < this->layersNum; i++) {
+            // Allocate neurons.
+            math::alloc(&(this->layers[i].composedValues), DEFAULT_LAYER_SIZE);
+            math::alloc(&(this->layers[i].activatedValues), DEFAULT_LAYER_SIZE);
 
-                // Allocate neurons.
-                tensor::alloc(&(this->layers[i][j].composedValues), DEFAULT_LAYER_SIZE);
-                tensor::alloc(&(this->layers[i][j].activatedValues), DEFAULT_LAYER_SIZE);
-
+            // Only allocate synapses for layers after the first, since the first layer has no synapses or biases coming to it.
+            if (i > 0) {
                 // Allocate synapses and activations.
-                this->layers[i][j].weights = (tensor::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor2d));
-                this->layers[i][j].weightActivations = (tensor::dtensor2d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor2d));
-                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
-                    tensor::alloc(&(this->layers[i][j].weights[k]),
-                                this->layers[i][j].composedValues.width,
-                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
-                    // Set all synapse weights to 1.
-                    tensor::init(this->layers[i][j].weights[k], DEFAULT_SYNAPSE_WEIGHT);
-                    tensor::alloc(&(this->layers[i][j].weightActivations[k]),
-                                this->layers[i][j].composedValues.width,
-                                this->layers[i][this->layers[i][j].dependencies.values[k]].composedValues.width);
-                    // Set all synapse activations to 1.
-                    tensor::init(this->layers[i][j].weightActivations[k], 1.0);
-                }
+                math::alloc(&(this->layers[i].weights),
+                            this->layers[i].composedValues.width,
+                            this->layers[i - 1].composedValues.width);
+                // Set all synapse weights to 1.
+                math::init(this->layers[i].weights, DEFAULT_SYNAPSE_WEIGHT);
+                math::alloc(&(this->layers[i].weightActivations),
+                            this->layers[i].composedValues.width,
+                            this->layers[i - 1].composedValues.width);
+                // Set all synapse activations to 1.
+                math::init(this->layers[i].weightActivations, 1.0);
 
                 // Allocate biases.
-                this->layers[i][j].biases = (tensor::dtensor1d*) malloc(this->layers[i][j].dependencies.width * sizeof(tensor::dtensor1d));
-                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
-                    tensor::alloc(&(this->layers[i][j].biases[k]),
-                                this->layers[i][j].composedValues.width);
-                    // Set all biases to 1.
-                    tensor::init(this->layers[i][j].biases[k], 1.0);
-                }
-
-                // Set activation function.
-                this->layers[i][j].activationFunction = new tensor::Sigmoid();
+                math::alloc(&(this->layers[i].biases),
+                            this->layers[i].composedValues.width);
+                // Set all biases to 1.
+                math::init(this->layers[i].biases, 1.0);
             }
+
+            // Set activation function.
+            this->layers[i].activationFunction = new math::Sigmoid();
         }
     }
 
@@ -134,103 +87,69 @@ namespace oort {
 
     void Model::compute() {
         // Placeholder for actual synapses values, after activation.
-        tensor::dtensor2d activatedSynapses;
+        math::dtensor2d activatedSynapses;
 
         // Temp array to store inputs to target layers.
-        tensor::dtensor1d inputs;
+        math::dtensor1d inputs;
 
-        // Loop through the graph's mem loops.
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            // Loop through layers of the graph avoiding the input one.
-            for (uint32_t j = 1; j < this->layersNum; j++) {
-                // Clear layer's values.
-                tensor::zero(this->layers[i][j].composedValues);
-                tensor::zero(this->layers[i][j].activatedValues);
+        // Loop through layers of the graph avoiding the input one.
+        for (uint32_t i = 1; i < this->layersNum; i++) {
+            // Clear layer's values.
+            math::zero(this->layers[i].composedValues);
+            math::zero(this->layers[i].activatedValues);
 
-                // Loop through the current layer's targets.
-                for (uint32_t k = 0; k < this->layers[i][j].dependencies.width; k++) {
-                    // Allocate activated synapses.
-                    tensor::alloc(&(activatedSynapses),
-                                this->layers[i][j].weights[k].width,
-                                this->layers[i][j].weights[k].height);
-                    tensor::copy(activatedSynapses, this->layers[i][j].weights[k]);
+            // Allocate activated synapses.
+            math::alloc(&(activatedSynapses),
+                        this->layers[i].weights.width,
+                        this->layers[i].weights.height);
+            math::copy(activatedSynapses, this->layers[i].weights);
 
-                    // Allocate inputs.
-                    tensor::alloc(&(inputs), this->layers[i][j].weights[k].width);
+            // Allocate inputs.
+            math::alloc(&(inputs), this->layers[i].weights.width);
 
-                    // Activate synapses.
-                    tensor::hmul(activatedSynapses,
-                               this->layers[i][j].weights[k],
-                               this->layers[i][j].weightActivations[k]);
+            // Activate synapses.
+            math::hmul(activatedSynapses,
+                       this->layers[i].weights,
+                       this->layers[i].weightActivations);
 
-                    // Compute inputs to the current layer.
-                    // Check if the current dependency is recurrent (i.e. it
-                    // comes from the current layer or one that comes after it).
-                    if (this->layers[i][j].dependencies.values[k] >= j) {
-                        // The dependency is recurrent, so take values from the
-                        // mem loop before the current one, if there is one.
-                        if (i > 0) {
-                            tensor::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[IDX((k - 1), this->memLoopsNum)]].activatedValues, activatedSynapses);
-                            // Add biases from the current dependency.
-                            tensor::add(inputs, inputs, this->layers[i][j].biases[k]);
-                        } else {
-                            // The current mem loop is the first one, so unset
-                            // the inputs.
-                            tensor::zero(inputs);
-                        }
-                    } else {
-                        // The dependency is not recurrent, so take values from
-                        // the current mem loop.
-                        tensor::mul(inputs, this->layers[i][this->layers[i][j].dependencies.values[k]].activatedValues, activatedSynapses);
-                        // Add biases from the current dependency.
-                        tensor::add(inputs, this->layers[i][j].biases[k]);
-                    }
+            // Compute inputs to the current layer.
+            math::mul(inputs, this->layers[i - 1].activatedValues, activatedSynapses);
+            // Add biases from the current dependency.
+            math::add(inputs, this->layers[i].biases);
 
-                    // Add computed values to the layer composition.
-                    tensor::add(this->layers[i][j].composedValues,
-                              inputs);
+            // Add computed values to the layer composition.
+            math::add(this->layers[i].composedValues,
+                      inputs);
 
-                    tensor::dealloc(activatedSynapses);
-                    tensor::dealloc(inputs);
-                }
+            math::dealloc(activatedSynapses);
+            math::dealloc(inputs);
 
-                // Activate values of the current layer if not input.
-                tensor::prim(this->layers[i][j].activatedValues,
-                           this->layers[i][j].composedValues,
-                           this->layers[i][j].activationFunction);
-            }
+            // Activate values of the current layer if not input.
+            math::prim(this->layers[i].activatedValues,
+                       this->layers[i].composedValues,
+                       this->layers[i].activationFunction);
         }
     }
 
-    void Model::feed(tensor::dtensor1d inputValues) {
-        // Shift mem loops to the left in order to make space for a new one.
-        // The oldest one is removed.
-        this->shift();
-
+    void Model::feed(math::dtensor1d inputValues) {
         // Set neuron values only to the first layer of the graph.
-        tensor::copy(this->layers[this->memLoopsNum - 1][0].activatedValues, inputValues);
+        math::copy(this->layers[0].activatedValues, inputValues);
     }
 
-    void Model::setActivation(tensor::DUnFunc* function) {
-        for (uint32_t i = 0; i < this->memLoopsNum; i++) {
-            for (uint32_t j = 0; j < this->layersNum; j++) {
-                this->layers[i][j].activationFunction = function;
-            }
+    void Model::setActivation(math::DUnFunc* function) {
+        for (uint32_t i = 0; i < this->layersNum; i++) {
+            this->layers[i].activationFunction = function;
         }
     }
 
-    tensor::dtensor1d Model::getOutput() {
+    math::dtensor1d Model::getOutput() {
         // Return neuron values from the last layer of the graph.
-        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues;
+        return this->layers[this->layersNum - 1].activatedValues;
     }
 
     uint32_t Model::getOutputSize() {
         // Return the size of the last layer of the graph.
-        return this->layers[this->memLoopsNum - 1][this->layersNum - 1].activatedValues.width;
-    }
-
-    uint32_t Model::getMemLoopsNum() {
-        return this->memLoopsNum;
+        return this->layers[this->layersNum - 1].activatedValues.width;
     }
 
     uint32_t Model::getLayersNum() {
@@ -241,90 +160,59 @@ namespace oort {
         uint32_t layerSize = 0;
 
         if (index <= this->layersNum) {
-            layerSize = this->layers[0][index].activatedValues.width;
+            layerSize = this->layers[index].activatedValues.width;
         }
 
         return layerSize;
     }
 
-    tensor::itensor1d Model::getLayerDeps(uint32_t index) {
-        tensor::itensor1d layerDeps;
+    math::dtensor1d Model::getLayerComposedVals(uint32_t index) {
+        math::dtensor1d layerVals;
 
         if (index <= this->layersNum) {
-            layerDeps = this->layers[0][index].dependencies;
-        }
-
-        return layerDeps;
-    }
-
-    tensor::dtensor1d Model::getLayerComposedVals(uint32_t index) {
-        tensor::dtensor1d layerVals;
-
-        if (index <= this->layersNum) {
-            layerVals = this->layers[0][index].composedValues;
+            layerVals = this->layers[index].composedValues;
         }
 
         return layerVals;
     }
 
-    tensor::dtensor1d Model::getLayerActivatedVals(uint32_t index) {
-        tensor::dtensor1d layerVals;
+    math::dtensor1d Model::getLayerActivatedVals(uint32_t index) {
+        math::dtensor1d layerVals;
 
         if (index <= this->layersNum) {
-            layerVals = this->layers[0][index].activatedValues;
+            layerVals = this->layers[index].activatedValues;
         }
 
         return layerVals;
     }
 
-    tensor::dtensor2d* Model::getLayerWeights(uint32_t index) {
-        tensor::dtensor2d* layerWeights;
+    math::dtensor2d Model::getLayerWeights(uint32_t index) {
+        math::dtensor2d layerWeights;
 
         if (index <= this->layersNum) {
-            layerWeights = this->layers[0][index].weights;
+            layerWeights = this->layers[index].weights;
         }
 
         return layerWeights;
     }
 
-    tensor::dtensor1d* Model::getLayerBiases(uint32_t index) {
-        tensor::dtensor1d* layerBiases;
+    math::dtensor1d Model::getLayerBiases(uint32_t index) {
+        math::dtensor1d layerBiases;
 
         if (index <= this->layersNum) {
-            layerBiases = this->layers[0][index].biases;
+            layerBiases = this->layers[index].biases;
         }
 
         return layerBiases;
     }
 
-    uint32_t Model::getLayerDepsNum(uint32_t index) {
-        uint32_t layerDepsNum;
+    math::DUnFunc* Model::getLayerActivation(uint32_t index) {
+        math::DUnFunc* layerActivation;
 
         if (index <= this->layersNum) {
-            layerDepsNum = this->layers[0][index].dependencies.width;
-        }
-
-        return layerDepsNum;
-    }
-
-    tensor::DUnFunc* Model::getLayerActivation(uint32_t index) {
-        tensor::DUnFunc* layerActivation;
-
-        if (index <= this->layersNum) {
-            layerActivation = this->layers[0][index].activationFunction;
+            layerActivation = this->layers[index].activationFunction;
         }
 
         return layerActivation;
-    }
-
-    void Model::shift() {
-        for (uint32_t i = 1; i < this->memLoopsNum; i++) {
-            this->layers[i - 1] = this->layers[i];
-            if (i == this->memLoopsNum - 1) {
-                for (uint32_t j = 0; j < this->layersNum; j++) {
-                    tensor::zero(this->layers[i][j].composedValues);
-                }
-            }
-        }
     }
 }
