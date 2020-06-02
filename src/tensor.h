@@ -2,6 +2,8 @@
 #define __MATH__
 
 #include <math.h>
+// Time functions and types, used for random seeds generation.
+#include <time.h>
 // Fixed size int types definitions.
 #include <stdint.h>
 // Debug.
@@ -56,44 +58,72 @@ namespace oort {
             uint32_t depth;
             T* values;
         };
+
+        // Int tensors.
+        // ND.
         struct itensor {
             uint32_t dimNum;
             uint32_t* dimSizes;
             uint32_t* values;
         };
+        // 1D.
         struct itensor1d {
             uint32_t width;
             uint32_t* values;
         };
+        // 2D.
         struct itensor2d {
             uint32_t width;
             uint32_t height;
             uint32_t* values;
         };
+        // 3D.
         struct itensor3d {
             uint32_t width;
             uint32_t height;
             uint32_t depth;
             uint32_t* values;
         };
+        // 4D.
+        struct itensor4d {
+            uint32_t width;
+            uint32_t height;
+            uint32_t depth;
+            uint32_t length;
+            uint32_t* values;
+        };
+
+        // Double tensors.
+        // ND.
         struct dtensor {
             uint32_t dimNum;
             uint32_t* dimSizes;
             double* values;
         };
+        // 1D.
         struct dtensor1d {
             uint32_t width;
             double* values;
         };
+        // 2D.
         struct dtensor2d {
             uint32_t width;
             uint32_t height;
             double* values;
         };
+        // 3D.
         struct dtensor3d {
             uint32_t width;
             uint32_t height;
             uint32_t depth;
+            double* values;
+        };
+        // 4D.
+        struct dtensor4d {
+            uint32_t width;
+            uint32_t height;
+            uint32_t depth;
+            uint32_t length;
             double* values;
         };
 
@@ -145,6 +175,11 @@ namespace oort {
         // Calculates the derivative fast sigmoid of the given value.
         double dfsigmoid(const double value);
 
+        // Returns a random double number between <low> and <high>.
+        double drand(double low, double high);
+        // Returns a random integer number between <low> and <high>.
+        uint32_t irand(const uint32_t low, const uint32_t high);
+
         // Calculates the derivative of the given function in x = <value>.
         // Default epsilon is 0.01.
         double der(const double x, DUnFunc* function);
@@ -164,13 +199,17 @@ namespace oort {
         double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
 
         // Tensor functions.
-        template <typename T>
-        error zero(const tensor<T> t);
+        //TODO
+        error zero(const dtensor t);
         error zero(const dtensor1d t);
         error zero(const dtensor2d t);
         error zero(const dtensor3d t);
-        template <typename T>
-        error init(const tensor<T> t, const T value);
+        // Initializes the given ND tensor <t> with incremental values, starting from 0 to the number of values it holds.
+        error inc(const dtensor t);
+        // Initializes the given ND tensor <t> with random values between 0 and <max>.
+        error rinit(const dtensor t, const double max);
+        //TODO
+        error init(const dtensor t, const double value);
         error init(const dtensor1d t, const double value);
         error init(const dtensor2d t, const double value);
         error init(const dtensor3d t, const double value);
@@ -179,6 +218,8 @@ namespace oort {
         error init(const itensor3d t, const uint32_t value);
         error cadd(const dtensor1d res, const dtensor1d t);
         // Performs the addition of tensor <t> to tensor <res>.
+        //TODO
+        error add(const dtensor res, const dtensor t);
         error add(const dtensor1d res, const dtensor1d t);
         error add(const dtensor2d res, const dtensor2d t);
         error add(const dtensor3d res, const dtensor3d t);
@@ -200,8 +241,7 @@ namespace oort {
         // Performs the scalar product between scalar <value> and 2D tensor <t>.
         error smul(const dtensor2d res, const double value, const dtensor2d t);
         error sigmoid(const dtensor1d res, const dtensor1d t);
-        // Calculates the sigmoid of every value of 2D tensor <t> and puts them in
-        // <res>.
+        // Calculates the sigmoid of every value of 2D tensor <t> and puts them in <res>.
         error sigmoid(const dtensor2d res, const dtensor2d t);
         error sigmoid(const dtensor3d res, const dtensor3d t);
         error mse(double* res, const dtensor1d t1, const dtensor1d t2);
@@ -210,6 +250,8 @@ namespace oort {
         error normalize(const dtensor1d res, const dtensor1d t, const double mean, const double stddev);
         error normalize(const dtensor2d res, const dtensor2d t, const double mean, const double stddev);
         error normalize(const dtensor3d res, const dtensor3d t, const double mean, const double stddev);
+        // Allocate an ND tensor given the number of dimensions and the size of each dimension.
+        error alloc(dtensor* t, uint32_t* dimSizes, const uint32_t dimNum);
         error alloc(dtensor1d* t, const uint32_t width);
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);

@@ -14,6 +14,17 @@ namespace oort {
         double dfsigmoid(const double value) {
             return 1 / (2 * pow((1 + abs(value)), 2));
         }
+        double drand(const double low, const double high) {
+            // Randomize seed.
+            // srand(time(NULL));
+            return ((double) rand() / RAND_MAX) * (high - low) + low;
+        }
+
+        uint32_t irand(const uint32_t low, const uint32_t high) {
+            // Randomize seed.
+            // srand(time(NULL));
+            return rand() % high + low;
+        }
         error zero(const dtensor1d t) {
             error err = error::NO_ERROR;
             for (uint32_t i = 0; i < t.width; i++) {
@@ -34,6 +45,42 @@ namespace oort {
                 t.values[i] = 0.0;
             }
             return err;
+        }
+        error inc(const dtensor t) {
+            // Get the total size of the tensor.
+            uint32_t size = 0;
+            for (uint32_t i = 0; i < t.dimNum; i++) {
+                if (size <= 0) {
+                    size = t.dimSizes[i];
+                } else {
+                    size *= t.dimSizes[i];
+                }
+            }
+
+            for (uint32_t i = 0; i < size; i++) {
+                t.values[i] = i;
+            }
+
+            return error::NO_ERROR;
+        }
+        error rinit(const dtensor t, const double max) {
+            // Get the total size of the tensor.
+            uint32_t size = 0;
+            for (uint32_t i = 0; i < t.dimNum; i++) {
+                if (size <= 0) {
+                    size = t.dimSizes[i];
+                } else {
+                    size *= t.dimSizes[i];
+                }
+            }
+
+            srand(time(NULL));
+
+            for (uint32_t i = 0; i < size; i++) {
+                t.values[i] = drand(0, max);
+            }
+
+            return error::NO_ERROR;
         }
         error init(const dtensor1d t, const double value) {
             for (uint32_t i = 0; i < t.width; i++) {
@@ -342,6 +389,30 @@ namespace oort {
             for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
                 res.values[i] = (t.values[i] - mean) / stddev;
             }
+            return error::NO_ERROR;
+        }
+
+        error alloc(dtensor* t, uint32_t* dimSizes, const uint32_t dimNum) {
+            // Keep track of the overall size of the tensor.
+            uint32_t size = 0;
+            t->dimNum = dimNum;
+            t->dimSizes = (uint32_t*) malloc(dimNum * sizeof(uint32_t));
+
+            // Loop through dimensions to set their size.
+            for (uint32_t i = 0; i < dimNum; i++) {
+                t->dimSizes[i] = dimSizes[i];
+
+                // Update the overall size at each loop.
+                if (size <= 0) {
+                    size = dimSizes[i];
+                } else {
+                    size *= dimSizes[i];
+                }
+            }
+
+            // Allocate the tensor based on the overall size.
+            t->values = (double*) malloc(size * sizeof(double));
+
             return error::NO_ERROR;
         }
         error alloc(dtensor1d* t, const uint32_t width) {

@@ -1,18 +1,6 @@
 #include "utils.h"
 
 namespace oort {
-    double dRandBetween(double low, double high) {
-        // Randomize seed.
-        // srand(time(NULL));
-        return ((double) rand() / RAND_MAX) * (high - low) + low;
-    }
-
-    int iRandBetween(int low, int high) {
-        // Randomize seed.
-        // srand(time(NULL));
-        return rand() % high + low;
-    }
-
     byte* uintToByteArray(uint32_t value, uint8_t depth) {
         // Check if depth is between 1 and 4.
         if (depth < 1) {
@@ -72,6 +60,30 @@ namespace oort {
         struct timespec ts;
         clock_gettime(CLOCK_MONOTONIC, &ts);
         return ts.tv_nsec;//tv_sec + (double)ts.tv_nsec / 1e9;
+    }
+
+    void printDim(const uint32_t dim, uint32_t* index, const tensor::dtensor t) {
+        if (dim == 0) {
+            // Print values.
+            for (uint32_t i = 0; i < t.dimSizes[dim]; i++) {
+                printf(" %.8f ", t.values[(*index)++]);
+            }
+        } else {
+            for (uint32_t i = 0; i < t.dimSizes[dim]; i++) {
+                printf("[");
+                printDim(dim - 1, index, t);
+                printf("]");
+            }
+        }
+    }
+
+    void print(const tensor::dtensor t) {
+        uint32_t index = 0;
+        printf("\nDTENSOR\n");
+        printf("[");
+        printDim(t.dimNum - 1, &index, t);
+        printf("]");
+        printf("\n");
     }
 
     void print(const tensor::dtensor1d t) {
