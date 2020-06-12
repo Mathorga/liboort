@@ -1,6 +1,6 @@
 CCOMP = gcc
 
-STD_CCOMP_FLAGS = -std=c++17 -Wall -pedantic -g -fopenmp
+STD_CCOMP_FLAGS = -std=c++14 -Wall -pedantic -g -fopenmp
 CCOMP_FLAGS = $(STD_CCOMP_FLAGS)
 CLINK_FLAGS =
 

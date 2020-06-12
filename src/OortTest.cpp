@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "GradientDescender.h"
 #include "Knowledge.h"
+#include <torch/script.h>
 
 using namespace oort;
 
