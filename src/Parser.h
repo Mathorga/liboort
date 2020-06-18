@@ -3,7 +3,7 @@
 
 #include "utils.h"
 
-namespace Oort {
+namespace oort {
     class Parser {
     public:
         // Read data from a file and store it.

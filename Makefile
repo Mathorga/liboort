@@ -30,6 +30,7 @@ defaultExe: OortTest
 	$(CCOMP) $(CCOMP_FLAGS) -c $^ -o $(BLD_DIR)/$@
 
 OortTest: OortTest.o \
+		  DenseLayer.o \
 		  Model.o \
 		  GradientDescender.o \
 		  Trainer.o \
