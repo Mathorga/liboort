@@ -265,6 +265,10 @@ namespace oort {
         error dealloc(const dtensor1d t);
         error dealloc(const dtensor2d t);
         error dealloc(const dtensor3d t);
+        //TODO
+        error reshape(const dtensor t, const uint32_t* sizes);
+        error flatten(const dtensor t);
+
         // Template functions.
         template <typename T>
         error alloc(tensor1d<T>* t, const uint32_t width) {

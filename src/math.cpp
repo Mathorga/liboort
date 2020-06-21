@@ -492,6 +492,26 @@ namespace oort {
             free(t.values);
             return error::NO_ERROR;
         }
+        error flatten(const dtensor t) {
+            // Keep track of the overall size of the tensor.
+            uint32_t* sizes[1];
+            sizes[0] = 0;
+
+            // Loop through dimensions to multiply their sizes..
+            for (uint32_t i = 0; i < t.dimNum; i++) {
+                // Update the overall size at each loop.
+                if (sizes[0] <= 0) {
+                    sizes[0] = t.dimSizes[i];
+                } else {
+                    sizes[0] *= t.dimSizes[i];
+                }
+            }
+
+            // Reshape the tensor with the given 1D (flat) shape.
+            reshape(t, sizes);
+
+            return error::NO_ERROR;
+        }
 
         double Sigmoid::operator() (const double value) {
             return 1 / (1 + exp(-value));

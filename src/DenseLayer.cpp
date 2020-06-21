@@ -7,6 +7,7 @@ namespace oort {
         math::alloc(&(this->composedValues), );
     }
     void DenseLayer::step(math::dtensor input) {
-
+        math::dtensor flat;
+        math::flatten(flat, input);
     }
 }
