@@ -25,6 +25,27 @@ namespace oort {
             // srand(time(NULL));
             return rand() % high + low;
         }
+        error zero(const itensor1d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width; i++) {
+                t.values[i] = 0;
+            }
+            return err;
+        }
+        error zero(const itensor2d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width * t.height; i++) {
+                t.values[i] = 0;
+            }
+            return err;
+        }
+        error zero(const itensor3d t) {
+            error err = error::NO_ERROR;
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                t.values[i] = 0;
+            }
+            return err;
+        }
         error zero(const dtensor1d t) {
             error err = error::NO_ERROR;
             for (uint32_t i = 0; i < t.width; i++) {
@@ -492,12 +513,48 @@ namespace oort {
             free(t.values);
             return error::NO_ERROR;
         }
+        error reshape(dtensor t, uint32_t* dimSizes, const uint32_t dimNum) {
+            error err = error::NO_ERROR;
+            // Keep track of the overall actual and given sizes in order to compare them.
+            uint32_t actualSize = 0;
+            uint32_t givenSize = 0;
+
+            // Loop through actual dimensions to multiply their sizes.
+            for (uint32_t i = 0; i < t.dimNum; i++) {
+                // Update the overall size at each loop.
+                if (actualSize <= 0) {
+                    actualSize = t.dimSizes[i];
+                } else {
+                    actualSize *= t.dimSizes[i];
+                }
+            }
+
+            // Loop through given dimensions to multiply their sizes.
+            for (uint32_t i = 0; i < dimNum; i++) {
+                // Update the overall size at each loop.
+                if (givenSize <= 0) {
+                    givenSize = dimSizes[i];
+                } else {
+                    givenSize *= dimSizes[i];
+                }
+            }
+
+            // Reshape only if sizes match.
+            if (givenSize == actualSize) {
+                t.dimNum = dimNum;
+                t.dimSizes = dimSizes;
+            } else {
+                err = error::WRONG_SIZE;
+            }
+
+            return err;
+        }
         error flatten(const dtensor t) {
             // Keep track of the overall size of the tensor.
-            uint32_t* sizes[1];
+            uint32_t sizes[1];
             sizes[0] = 0;
 
-            // Loop through dimensions to multiply their sizes..
+            // Loop through dimensions to multiply their sizes.
             for (uint32_t i = 0; i < t.dimNum; i++) {
                 // Update the overall size at each loop.
                 if (sizes[0] <= 0) {
@@ -508,7 +565,7 @@ namespace oort {
             }
 
             // Reshape the tensor with the given 1D (flat) shape.
-            reshape(t, sizes);
+            reshape(t, sizes, 1);
 
             return error::NO_ERROR;
         }

@@ -199,6 +199,9 @@ namespace oort {
         double prim(const dtensor1d t1, const dtensor1d t2, DT1DBinFunc* function);
 
         // Tensor functions.
+        error zero(const itensor1d t);
+        error zero(const itensor2d t);
+        error zero(const itensor3d t);
         //TODO
         error zero(const dtensor t);
         error zero(const dtensor1d t);
@@ -266,7 +269,7 @@ namespace oort {
         error dealloc(const dtensor2d t);
         error dealloc(const dtensor3d t);
         //TODO
-        error reshape(const dtensor t, const uint32_t* sizes);
+        error reshape(dtensor t, uint32_t* sizes, const uint32_t numSizes);
         error flatten(const dtensor t);
 
         // Template functions.
