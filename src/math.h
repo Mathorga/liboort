@@ -31,7 +31,8 @@ namespace oort {
         // Error definitions.
         enum error {
             NO_ERROR = 0,
-            WRONG_SIZE = 1
+            WRONG_SIZE = 1,
+            WRONG_DIMS = 2
         };
         // Types definitions.
         template <typename T>
@@ -261,6 +262,7 @@ namespace oort {
         error alloc(itensor1d* t, const uint32_t width);
         error alloc(itensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(itensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
+        error copy(const dtensor1d t1, const dtensor t2);
         error copy(const dtensor1d t1, const dtensor1d t2);
         error copy(const dtensor2d t1, const dtensor2d t2);
         error copy(const dtensor3d t1, const dtensor3d t2);
@@ -268,7 +270,6 @@ namespace oort {
         error dealloc(const dtensor1d t);
         error dealloc(const dtensor2d t);
         error dealloc(const dtensor3d t);
-        //TODO
         error reshape(dtensor t, uint32_t* sizes, const uint32_t numSizes);
         error flatten(const dtensor t);
 

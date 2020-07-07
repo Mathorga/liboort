@@ -1,7 +1,7 @@
 #include "DenseLayer.h"
 
 namespace oort {
-    DenseLayer::DenseLayer(const uint32_t inSize, const uint32_t outSize) {
+    DenseLayer::DenseLayer(const uint32_t inSize, const uint32_t outSize) : Layer(inSize, outSize) {
         math::alloc(&(this->weight), inSize, outSize);
         math::alloc(&(this->bias), outSize);
         math::alloc(&(this->composedValues), outSize);
@@ -9,9 +9,17 @@ namespace oort {
     }
 
     void DenseLayer::step(math::dtensor input) {
-        // Flatten the input in order to easily use it.
-        math::flatten(input);
+        // Create a temporary flat input tensor.
+        math::dtensor1d flatInput;
+        math::alloc(&flatInput, this->inSize);
 
-        // math::mul(this->composedValues, this->weight, input);
+        // Copy input to flat.
+        math::copy(flatInput, input);
+
+        // Multiply input to weight to get composed values (without bias).
+        math::mul(this->activatedValues, this->weight, this->composedValues);
+
+        // Free temporary tensor.
+        math::dealloc(flatInput);
     }
 }

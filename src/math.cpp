@@ -472,6 +472,33 @@ namespace oort {
             t->values = (uint32_t*) malloc(width * height * depth * sizeof(uint32_t));
             return error::NO_ERROR;
         }
+        error copy(const dtensor1d t1, const dtensor t2) {
+            error err = error::NO_ERROR;
+
+            // Size of the ND tensor.
+            uint32_t size = 0;
+
+            // Loop through actual dimensions to multiply their sizes.
+            for (uint32_t i = 0; i < t2.dimNum; i++) {
+                // Update the overall size at each loop.
+                if (size <= 0) {
+                    size = t2.dimSizes[i];
+                } else {
+                    size *= t2.dimSizes[i];
+                }
+            }
+
+            if (size != t1.width) {
+                // The overall size of t2 does not match the width of t1.
+                err = error::WRONG_SIZE;
+            } else {
+                // Sizes match, so copy.
+                for (uint32_t i = 0; i < t1.width; i++) {
+                    t1.values[i] = t2.values[i];
+                }
+            }
+            return err;
+        }
         error copy(const dtensor1d t1, const dtensor1d t2) {
             for (uint32_t i = 0; i < t1.width; i++) {
                 t1.values[i] = t2.values[i];
