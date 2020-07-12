@@ -17,7 +17,13 @@ namespace oort {
         math::copy(flatInput, input);
 
         // Multiply input to weight to get composed values (without bias).
-        math::mul(this->activatedValues, this->weight, this->composedValues);
+        math::mul(this->composedValues, this->weight, flatInput);
+
+        // Add bias.
+        math::add(this->composedValues, this->bias);
+
+        // Activate layer.
+        math::prim(this->activatedValues, this->composedValues, this->activationFunction);
 
         // Free temporary tensor.
         math::dealloc(flatInput);

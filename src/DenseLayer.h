@@ -19,10 +19,20 @@ namespace oort {
         DenseLayer(const uint32_t inSize, const uint32_t outSize);
         void step(math::dtensor input);
     private:
+        // Layer weight matrix.
         math::dtensor2d weight;
+
+        // Layer bias array.
         math::dtensor1d bias;
+
+        // Layer values before activation.
         math::dtensor1d composedValues;
+
+        // Layer values after activation.
         math::dtensor1d activatedValues;
+
+        // Layer activation function.
+        math::DUnFunc* activationFunction;
     };
 }
 
