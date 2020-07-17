@@ -18,6 +18,7 @@ namespace oort {
     public:
         Layer(const uint32_t inSize, const uint32_t outSize);
         virtual void step(math::dtensor input) = 0;
+        virtual void print() = 0;
     protected:
         uint32_t inSize;
         uint32_t outSize;

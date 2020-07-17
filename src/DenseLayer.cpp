@@ -28,4 +28,9 @@ namespace oort {
         // Free temporary tensor.
         math::dealloc(flatInput);
     }
+
+    void DenseLayer::print() {
+        printf("Inputs %d Outputs %d\n", this->inSize, this->outSize);
+        utils::print(this->composedValues);
+    }
 }

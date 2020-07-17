@@ -1,6 +1,6 @@
 CCOMP = gcc
 
-STD_CCOMP_FLAGS = -std=c++14 -Wall -pedantic -g -fopenmp
+STD_CCOMP_FLAGS = -std=c++11 -Wall -pedantic -g -fopenmp
 CCOMP_FLAGS = $(STD_CCOMP_FLAGS)
 CLINK_FLAGS =
 
@@ -33,12 +33,10 @@ OortTest: OortTest.o \
 		  Layer.o \
 		  DenseLayer.o \
 		  Model.o \
-		  GradientDescender.o \
-		  Trainer.o \
 		  Knowledge.o \
 		  Experience.o \
 		  utils.o \
-		  tensor.o
+		  math.o
 	$(CCOMP) $(CLINK_FLAGS) $(patsubst %.o, $(BLD_DIR)/%.o, $^) -o $(BIN_DIR)/$@ $(LIBS)
 
 create:

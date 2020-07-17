@@ -12,12 +12,14 @@ Copyright (C) 2020  Luka Micheletti
 #define __DENSE_LAYER__
 
 #include "Layer.h"
+#include "utils.h"
 
 namespace oort {
     class DenseLayer : public Layer {
     public:
         DenseLayer(const uint32_t inSize, const uint32_t outSize);
         void step(math::dtensor input);
+        void print();
     private:
         // Layer weight matrix.
         math::dtensor2d weight;

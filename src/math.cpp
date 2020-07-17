@@ -17,7 +17,8 @@ namespace oort {
         double drand(const double low, const double high) {
             // Randomize seed.
             // srand(time(NULL));
-            return ((double) rand() / RAND_MAX) * (high - low) + low;
+            double res = (((double) rand() / RAND_MAX) * (high - low) + low);
+            return res;
         }
 
         uint32_t irand(const uint32_t low, const uint32_t high) {
@@ -98,6 +99,15 @@ namespace oort {
             srand(time(NULL));
 
             for (uint32_t i = 0; i < size; i++) {
+                t.values[i] = drand(0, max);
+            }
+
+            return error::NO_ERROR;
+        }
+        error rinit(const dtensor1d t, const double max) {
+            srand(time(NULL));
+
+            for (uint32_t i = 0; i < t.width; i++) {
                 t.values[i] = drand(0, max);
             }
 
