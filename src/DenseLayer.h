@@ -20,6 +20,13 @@ namespace oort {
         DenseLayer(const uint32_t inSize, const uint32_t outSize);
         void step(math::dtensor input);
         void print();
+
+        // Getters.
+        math::dtensor2d getWeight();
+        math::DUnFunc* getActivationFunction();
+
+        // Setters.
+        void setActivationFunction(math::DUnFunc* function);
     private:
         // Layer weight matrix.
         math::dtensor2d weight;

@@ -17,8 +17,7 @@ namespace oort {
         double drand(const double low, const double high) {
             // Randomize seed.
             // srand(time(NULL));
-            double res = (((double) rand() / RAND_MAX) * (high - low) + low);
-            return res;
+            return ((double) rand() / RAND_MAX) * (high - low) + low;
         }
 
         uint32_t irand(const uint32_t low, const uint32_t high) {
@@ -108,6 +107,15 @@ namespace oort {
             srand(time(NULL));
 
             for (uint32_t i = 0; i < t.width; i++) {
+                t.values[i] = drand(0, max);
+            }
+
+            return error::NO_ERROR;
+        }
+        error rinit(const dtensor2d t, const double max) {
+            srand(time(NULL));
+
+            for (uint32_t i = 0; i < t.width * t.height; i++) {
                 t.values[i] = drand(0, max);
             }
 
@@ -446,6 +454,19 @@ namespace oort {
 
             return error::NO_ERROR;
         }
+        error alloc(dtensor* t, uint32_t width) {
+            // Set the number of dimensions.
+            t->dimNum = 1;
+
+            // Allocate dimension sizes.
+            t->dimSizes = (uint32_t*) malloc(sizeof(uint32_t));
+            t->dimSizes[0] = width;
+
+            // Allocate values.
+            t->values = (double*) malloc(width * sizeof(double));
+
+            return error::NO_ERROR; 
+        }
         error alloc(dtensor1d* t, const uint32_t width) {
             t->width = width;
             t->values = (double*) malloc(width * sizeof(double));
@@ -607,24 +628,31 @@ namespace oort {
             return error::NO_ERROR;
         }
 
+        DUnFunc::~DUnFunc(){}
         double Sigmoid::operator() (const double value) {
             return 1 / (1 + exp(-value));
         }
+        Sigmoid::~Sigmoid() {}
         double FastSigmoid::operator() (const double value) {
             return 0.5 * value / (1 + abs(value)) + 0.5;
         }
+        FastSigmoid::~FastSigmoid() {}
         double ReLu::operator() (const double value) {
             return value > 0.0 ? value : 0.0;
         }
+        ReLu::~ReLu(){}
         double HTan::operator() (const double value) {
             return tanh(value);
         }
+        HTan::~HTan(){}
         double Identity::operator() (const double value) {
             return value;
         }
+        Identity::~Identity(){}
         double BinStep::operator() (const double value) {
             return value >= 0.0 ? 1.0 : 0.0;
         }
+        BinStep::~BinStep(){}
         double MSE::operator() (const dtensor1d t1, const dtensor1d t2) {
             double res = 0.0;
 

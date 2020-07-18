@@ -132,30 +132,37 @@ namespace oort {
         struct DUnFunc {
         public:
             virtual double operator() (const double x) = 0;
+            virtual ~DUnFunc() = 0;
         };
         struct Sigmoid : public DUnFunc {
         public:
             double operator() (const double x);
+            ~Sigmoid();
         };
         struct FastSigmoid : public DUnFunc {
         public:
             double operator() (const double x);
+            ~FastSigmoid();
         };
         struct ReLu : public DUnFunc {
         public:
             double operator() (const double x);
+            ~ReLu();
         };
         struct HTan : public DUnFunc {
         public:
             double operator() (const double x);
+            ~HTan();
         };
         struct Identity : public DUnFunc {
         public:
             double operator() (const double x);
+            ~Identity();
         };
         struct BinStep : public DUnFunc {
         public:
             double operator() (const double x);
+            ~BinStep();
         };
         struct DT1DBinFunc {
         public:
@@ -213,6 +220,7 @@ namespace oort {
         // Initializes the given ND tensor <t> with random values between 0 and <max>.
         error rinit(const dtensor t, const double max);
         error rinit(const dtensor1d t, const double max);
+        error rinit(const dtensor2d t, const double max);
         //TODO
         error init(const dtensor t, const double value);
         error init(const dtensor1d t, const double value);
@@ -257,6 +265,8 @@ namespace oort {
         error normalize(const dtensor3d res, const dtensor3d t, const double mean, const double stddev);
         // Allocate an ND tensor given the number of dimensions and the size of each dimension.
         error alloc(dtensor* t, uint32_t* dimSizes, const uint32_t dimNum);
+        // Allocate an ND tensor with a single dimension.
+        error alloc(dtensor* t, uint32_t width);
         error alloc(dtensor1d* t, const uint32_t width);
         error alloc(dtensor2d* t, const uint32_t width, const uint32_t height);
         error alloc(dtensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
