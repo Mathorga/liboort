@@ -18,8 +18,10 @@ namespace oort {
         this->activationFunction = new math::Sigmoid();
 
         // Randomly init weight and bias.
-        math::rinit(this->weight, 1);
-        math::rinit(this->bias, 1);
+        // math::rinit(this->weight, 1);
+        // math::rinit(this->bias, 1);
+        math::init(this->weight, 0.1);
+        math::zero(this->bias);
     }
 
     void DenseLayer::step(math::dtensor input) {
@@ -27,42 +29,25 @@ namespace oort {
         math::dtensor1d flatInput;
         math::alloc(&flatInput, this->inSize);
 
-        printf("\nHERE 1\n");
-
         // Copy input to flat.
         math::copy(flatInput, input);
-
-        printf("\nHERE 2\n");
 
         // Multiply input to weight to get composed values (without bias).
         math::mul(this->composedValues, this->weight, flatInput);
 
-        printf("\nHERE 3\n");
-        utils::print(flatInput);
-        utils::print(this->composedValues);
-
         // Add bias.
         math::add(this->composedValues, this->bias);
-
-        printf("\nHERE 4\n");
-        utils::print(this->bias);
-        utils::print(this->composedValues);
-        utils::print(this->activatedValues);
 
         // Activate layer.
         math::prim(this->activatedValues, this->composedValues, this->activationFunction);
 
-        printf("\nHERE 5\n");
-
         // Free temporary tensor.
         math::dealloc(flatInput);
-
-        printf("\nHERE 6\n");
     }
 
     void DenseLayer::print() {
         printf("Inputs %d Outputs %d\n", this->inSize, this->outSize);
-        utils::print(this->composedValues);
+        utils::print(this->activatedValues);
     }
 
     void DenseLayer::setActivationFunction(math::DUnFunc* function) {

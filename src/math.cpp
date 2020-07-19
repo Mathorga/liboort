@@ -121,6 +121,23 @@ namespace oort {
 
             return error::NO_ERROR;
         }
+        error init(const dtensor t, const double value) {
+            // Get the total size of the tensor.
+            uint32_t size = 0;
+            for (uint32_t i = 0; i < t.dimNum; i++) {
+                if (size <= 0) {
+                    size = t.dimSizes[i];
+                } else {
+                    size *= t.dimSizes[i];
+                }
+            }
+
+            for (uint32_t i = 0; i < size; i++) {
+                t.values[i] = value;
+            }
+
+            return error::NO_ERROR;
+        }
         error init(const dtensor1d t, const double value) {
             for (uint32_t i = 0; i < t.width; i++) {
                 t.values[i] = value;

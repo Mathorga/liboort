@@ -221,7 +221,6 @@ namespace oort {
         error rinit(const dtensor t, const double max);
         error rinit(const dtensor1d t, const double max);
         error rinit(const dtensor2d t, const double max);
-        //TODO
         error init(const dtensor t, const double value);
         error init(const dtensor1d t, const double value);
         error init(const dtensor2d t, const double value);

@@ -8,10 +8,11 @@ int main(int argc, char const *argv[]) {
     Layer* testLayer = new DenseLayer(2, 4);
     math::dtensor testInput;
     math::alloc(&testInput, 2);
-    math::rinit(testInput, 1.0);
+    // math::rinit(testInput, 1.0);
+    math::init(testInput, 0.5);
     utils::print(testInput);
     testLayer->step(testInput);
-    // testLayer->print();
+    testLayer->print();
 
     return 0;
 }
