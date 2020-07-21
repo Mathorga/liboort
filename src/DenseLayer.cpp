@@ -18,10 +18,8 @@ namespace oort {
         this->activationFunction = new math::Sigmoid();
 
         // Randomly init weight and bias.
-        // math::rinit(this->weight, 1);
-        // math::rinit(this->bias, 1);
-        math::init(this->weight, 0.1);
-        math::zero(this->bias);
+        math::rinit(this->weight, 1);
+        math::rinit(this->bias, 1);
     }
 
     void DenseLayer::step(math::dtensor input) {
@@ -45,9 +43,21 @@ namespace oort {
         math::dealloc(flatInput);
     }
 
+    void DenseLayer::backprop() {
+        //TODO
+    }
+
     void DenseLayer::print() {
         printf("Inputs %d Outputs %d\n", this->inSize, this->outSize);
         utils::print(this->activatedValues);
+    }
+
+    math::dtensor2d DenseLayer::getWeight() {
+        return this->weight;
+    }
+
+    math::DUnFunc* DenseLayer::getActivationFunction() {
+        return this->activationFunction;
     }
 
     void DenseLayer::setActivationFunction(math::DUnFunc* function) {

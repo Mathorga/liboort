@@ -2,7 +2,8 @@
 ********************************************************************************
 DenseLayer.h
 
-TODO
+The class implements a fully connected layer defined as:
+output = activation((input * weight) + bias)
 
 Copyright (C) 2020  Luka Micheletti
 ********************************************************************************
@@ -17,8 +18,10 @@ Copyright (C) 2020  Luka Micheletti
 namespace oort {
     class DenseLayer : public Layer {
     public:
+        // Creates a DenseLayer given its input size and output size.
         DenseLayer(const uint32_t inSize, const uint32_t outSize);
         void step(math::dtensor input);
+        void backprop();
         void print();
 
         // Getters.
