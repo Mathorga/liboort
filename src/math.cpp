@@ -20,6 +20,7 @@ namespace oort {
             return ((double) rand() / RAND_MAX) * (high - low) + low;
         }
 
+        // Initialization functions.
         uint32_t irand(const uint32_t low, const uint32_t high) {
             // Randomize seed.
             // srand(time(NULL));
@@ -174,6 +175,8 @@ namespace oort {
             }
             return error::NO_ERROR;
         }
+
+        // Operation functions.
         error cadd(const dtensor1d res, const dtensor1d t) {
             double sum = 0.0;
             for (uint32_t i = 0; i < t.width; i++) {
@@ -448,6 +451,7 @@ namespace oort {
             return error::NO_ERROR;
         }
 
+        // Allocation functions.
         error alloc(dtensor* t, uint32_t* dimSizes, const uint32_t dimNum) {
             // Keep track of the overall size of the tensor.
             uint32_t size = 0;
@@ -645,6 +649,7 @@ namespace oort {
             return error::NO_ERROR;
         }
 
+        // Functors.
         DUnFunc::~DUnFunc(){}
         double Sigmoid::operator() (const double value) {
             return 1 / (1 + exp(-value));
@@ -684,6 +689,7 @@ namespace oort {
             return res;
         }
 
+        // Functor operations.
         double der(const double x, DUnFunc* function, const double e) {
             return ((*function)(x + e) - (*function)(x - e)) / (2 * e);
         }

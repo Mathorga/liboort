@@ -11,12 +11,10 @@ Copyright (C) 2020  Luka Micheletti
 #ifndef __POOLING_LAYER__
 #define __POOLING_LAYER__
 
-#include "Layer.h"
-#include "utils.h"
+#include "ChanneledLayer.h"
 
 namespace oort {
-    class PoolingLayer : public Layer {
-    };
+    class PoolingLayer : public ChanneledLayer {};
 }
 
 #endif
