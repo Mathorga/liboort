@@ -1,7 +1,8 @@
 #include "DenseLayer.h"
 
 namespace oort {
-    DenseLayer::DenseLayer(const uint32_t inSize, const uint32_t outSize) : Layer(inSize, outSize) {
+    DenseLayer::DenseLayer(const uint32_t inSize, const uint32_t outSize) :
+    Layer(inSize, outSize) {
         // Allocate weight.
         math::alloc(&(this->weight), inSize, outSize);
 

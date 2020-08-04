@@ -1,5 +1,6 @@
 #include "math.h"
 #include "DenseLayer.h"
+#include "Pooling2DLayer.h"
 
 using namespace oort;
 

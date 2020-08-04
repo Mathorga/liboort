@@ -31,7 +31,9 @@ defaultExe: OortTest
 
 OortTest: OortTest.o \
 		  Layer.o \
+		  ConvolutionalLayer.o \
 		  PoolingLayer.o \
+		  Pooling2DLayer.o \
 		  DenseLayer.o \
 		  Model.o \
 		  Knowledge.o \
