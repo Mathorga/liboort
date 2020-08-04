@@ -15,6 +15,10 @@ Copyright (C) 2020  Luka Micheletti
 
 namespace oort {
     class Layer {
+    protected:
+        uint32_t inSize;
+        uint32_t outSize;
+
     public:
         Layer(const uint32_t inSize, const uint32_t outSize);
         virtual void step(math::dtensor input) = 0;
@@ -23,9 +27,6 @@ namespace oort {
 
         uint32_t getInSize();
         uint32_t getOutSize();
-    protected:
-        uint32_t inSize;
-        uint32_t outSize;
     };
 }
 

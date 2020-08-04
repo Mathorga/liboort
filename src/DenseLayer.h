@@ -17,19 +17,6 @@ Copyright (C) 2020  Luka Micheletti
 
 namespace oort {
     class DenseLayer : public Layer {
-    public:
-        // Creates a DenseLayer given its input size and output size.
-        DenseLayer(const uint32_t inSize, const uint32_t outSize);
-        void step(math::dtensor input);
-        void backprop();
-        void print();
-
-        // Getters.
-        math::dtensor2d getWeight();
-        math::DUnFunc* getActivationFunction();
-
-        // Setters.
-        void setActivationFunction(math::DUnFunc* function);
     private:
         // Layer weight matrix.
         math::dtensor2d weight;
@@ -45,6 +32,20 @@ namespace oort {
 
         // Layer activation function.
         math::DUnFunc* activationFunction;
+
+    public:
+        // Creates a DenseLayer given its input size and output size.
+        DenseLayer(const uint32_t inSize, const uint32_t outSize);
+        void step(math::dtensor input);
+        void backprop();
+        void print();
+
+        // Getters.
+        math::dtensor2d getWeight();
+        math::DUnFunc* getActivationFunction();
+
+        // Setters.
+        void setActivationFunction(math::DUnFunc* function);
     };
 }
 
