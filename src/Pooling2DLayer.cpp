@@ -99,7 +99,13 @@ namespace oort {
             for (uint32_t row = 0; row < outHeight; row ++) {
                 // Loop through output cols.
                 for (uint32_t col = 0; col < outWidth; col++) {
-                    
+                    //TODO This whole block can be extracted to a dedicated function.
+                    // Loop through values in the current pool.
+                    for (uint32_t i = 0; i < this->poolWidth; i++) {
+                        for (uint32_t j = 0; j < this->poolHeight; j++) {
+                            
+                        }
+                    }
                 }
             }
         }
