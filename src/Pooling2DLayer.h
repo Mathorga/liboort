@@ -1,3 +1,13 @@
+/*
+********************************************************************************
+Pooling2DLayer.h
+
+TODO
+
+Copyright (C) 2020  Luka Micheletti
+********************************************************************************
+*/
+
 #ifndef __POOLING_2D_LAYER__
 #define __POOLING_2D_LAYER__
 
@@ -32,10 +42,10 @@ namespace oort {
         uint32_t poolHeight;
 
         // Layer values before activation.
-        math::dtensor2d composedValues;
+        math::dtensor3d composedValues;
 
         // Layer values after activation.
-        math::dtensor2d activatedValues;
+        math::dtensor3d activatedValues;
 
     public:
         // Unstrided unpadded constructor: creates a 2D pooling layer with stride equal to the pool size and zero padding.

@@ -30,10 +30,10 @@ namespace oort {
         this->poolHeight = poolHeight;
 
         // Allocate composed values.
-        math::alloc(&(this->composedValues), inWidth / poolWidth, inHeight / poolHeight);
+        math::alloc(&(this->composedValues), inWidth / poolWidth, inHeight / poolHeight, channelsNum);
 
         // Allocate activated values.
-        math::alloc(&(this->activatedValues), inWidth / poolWidth, inHeight / poolHeight);
+        math::alloc(&(this->activatedValues), inWidth / poolWidth, inHeight / poolHeight, channelsNum);
     }
 
     Pooling2DLayer::Pooling2DLayer(const uint32_t horizontalStride,
@@ -71,12 +71,14 @@ namespace oort {
         // Allocate composed values.
         math::alloc(&(this->composedValues),
                     (inWidth - poolWidth + horizontalPadding + horizontalStride) / horizontalStride,
-                    (inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride);
+                    (inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride,
+                    channelsNum);
 
         // Allocate activated values.
         math::alloc(&(this->activatedValues),
                     (inWidth - poolWidth + horizontalPadding + horizontalStride) / horizontalStride,
-                    (inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride);
+                    (inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride,
+                    channelsNum);
     }
 
     void Pooling2DLayer::step(math::dtensor input) {
@@ -87,8 +89,20 @@ namespace oort {
         // Copy general input tensor to temporary 3D tensor.
         math::copy(input3d, input);
 
-        // for () {
-        // }
+        // Temporary out size.
+        uint32_t outWidth = (this->inWidth - this->poolWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
+        uint32_t outHeight = (this->inHeight - this->poolHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
+
+        // Loop through channels.
+        for (uint32_t channel = 0; channel < input3d.depth; channel++) {
+            // Loop through output rows.
+            for (uint32_t row = 0; row < outHeight; row ++) {
+                // Loop through output cols.
+                for (uint32_t col = 0; col < outWidth; col++) {
+                    
+                }
+            }
+        }
     }
 
     uint32_t Pooling2DLayer::getHorizontalStride() {
