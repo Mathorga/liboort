@@ -96,8 +96,8 @@ namespace oort {
         }
         void print(const math::dtensor2d t) {
             printf("\nDTENSOR2D\n");
-            for (uint32_t i = 0; i < t.height; i++) {
-                for (uint32_t j = 0; j < t.width; j++) {
+            for (uint32_t j = 0; j < t.height; j++) {
+                for (uint32_t i = 0; i < t.width; i++) {
                     printf("%.8f\t", t.values[IDX2D(i, j, t.width)]);
                 }
                 printf("\n");
@@ -124,8 +124,8 @@ namespace oort {
         }
         void print(const math::itensor2d t) {
             printf("\nITENSOR2D %dx%d\n", t.width, t.height);
-            for (uint32_t i = 0; i < t.height; i++) {
-                for (uint32_t j = 0; j < t.width; j++) {
+            for (uint32_t j = 0; j < t.height; j++) {
+                for (uint32_t i = 0; i < t.width; i++) {
                     printf("%d\t", t.values[IDX2D(i, j, t.width)]);
                 }
                 printf("\n");

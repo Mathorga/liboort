@@ -16,8 +16,8 @@
 // Translates bidimensional indexes to a monodimensional one.
 // |i| is the row index.
 // |j| is the column index.
-// |n| is the number of columns (length of the rows).
-#define IDX2D(i, j, n) ((i * n) + j)
+// |m| is the number of columns (length of the rows).
+#define IDX2D(i, j, m) ((m * j) + i)
 // Translates tridimensional indexes to a monodimensional one.
 // |i| is the index in the first dimension.
 // |j| is the index in the second dimension.
