@@ -80,7 +80,10 @@ namespace oort {
                        const uint32_t poolWidth,
                        const uint32_t poolHeight);
 
-        void step(math::dtensor input);
+        void step(const math::dtensor input);
+
+        //TODO Extract to utility file.
+        double maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.

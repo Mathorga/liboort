@@ -103,6 +103,18 @@ namespace oort {
                 printf("\n");
             }
         }
+        void print(const math::dtensor3d t) {
+            printf("\nITENSOR3D %dx%dx%d\n", t.width, t.height, t.depth);
+            for (uint32_t k = 0; k < t.depth; k++) {
+                for (uint32_t j = 0; j < t.height; j++) {
+                    for (uint32_t i = 0; i < t.width; i++) {
+                        printf("%.8f\t", t.values[IDX3D(i, j, k, t.width, t.height)]);
+                    }
+                    printf("\n");
+                }
+                printf("\n");
+            }
+        }
         void print(const math::itensor1d t) {
             printf("\nITENSOR1D %d\n", t.width);
             for (uint32_t i = 0; i < t.width; i++) {
@@ -117,6 +129,17 @@ namespace oort {
                     printf("%d\t", t.values[IDX2D(i, j, t.width)]);
                 }
                 printf("\n");
+            }
+        }
+        void print(const math::itensor3d t) {
+            printf("\nITENSOR3D %dx%dx%d\n", t.width, t.height, t.depth);
+            for (uint32_t k = 0; k < t.depth; k++) {
+                for (uint32_t j = 0; j < t.height; j++) {
+                    for (uint32_t i = 0; i < t.width; i++) {
+                        printf("%d\t", t.values[IDX3D(i, j, k, t.width, t.height)]);
+                    }
+                    printf("\n");
+                }
             }
         }
     }

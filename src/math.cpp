@@ -122,6 +122,15 @@ namespace oort {
 
             return error::NO_ERROR;
         }
+        error rinit(const dtensor3d t, const double max) {
+            srand(time(NULL));
+
+            for (uint32_t i = 0; i < t.width * t.height * t.depth; i++) {
+                t.values[i] = drand(0, max);
+            }
+
+            return error::NO_ERROR;
+        }
         error init(const dtensor t, const double value) {
             // Get the total size of the tensor.
             uint32_t size = 0;

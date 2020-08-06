@@ -81,7 +81,7 @@ namespace oort {
                     channelsNum);
     }
 
-    void Pooling2DLayer::step(math::dtensor input) {
+    void Pooling2DLayer::step(const math::dtensor input) {
         // Create a temporary 3D input tensor of dimensions inWidth, inHeight, channelsNum.
         math::dtensor3d input3d;
         math::alloc(&input3d, this->inWidth, this->inHeight, this->channelsNum);
@@ -113,5 +113,17 @@ namespace oort {
 
     uint32_t Pooling2DLayer::getHorizontalStride() {
         return this->horizontalStride;
+    }
+
+    double Pooling2DLayer::maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
+        double max = 0;
+
+        // Horizontally loop through the pool.
+        for (uint32_t column = startColumn; column < startColumn + this->poolWidth; column++) {
+            // Vertically loop through the pool.
+            for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
+                
+            }
+        }
     }
 }

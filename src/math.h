@@ -24,7 +24,7 @@
 // |k| is the index in the third dimension.
 // |m| is the size of the first dimension.
 // |n| is the size of the second dimension.
-#define IDX3D(i, j, k, m, n) (((i * m) + j) + (m * n * k))
+#define IDX3D(i, j, k, m, n) ((m * n * k) + (m * j) + i)
 
 namespace oort {
     namespace math {
@@ -221,6 +221,7 @@ namespace oort {
         error rinit(const dtensor t, const double max);
         error rinit(const dtensor1d t, const double max);
         error rinit(const dtensor2d t, const double max);
+        error rinit(const dtensor3d t, const double max);
         error init(const dtensor t, const double value);
         error init(const dtensor1d t, const double value);
         error init(const dtensor2d t, const double value);
