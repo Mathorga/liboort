@@ -274,6 +274,7 @@ namespace oort {
         error alloc(itensor3d* t, const uint32_t width, const uint32_t height, const uint32_t depth);
         error copy(const dtensor1d t1, const dtensor t2);
         error copy(const dtensor2d t1, const dtensor t2);
+        error copy(const dtensor3d t1, const dtensor t2);
         error copy(const dtensor1d t1, const dtensor1d t2);
         error copy(const dtensor2d t1, const dtensor2d t2);
         error copy(const dtensor3d t1, const dtensor3d t2);

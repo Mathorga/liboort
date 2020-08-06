@@ -80,9 +80,12 @@ namespace oort {
     }
 
     void Pooling2DLayer::step(math::dtensor input) {
-        // Create a temporary 2D input tensor.
-        math::dtensor2d input2d;
-        math::alloc(&input2d, this->inWidth, this->inHeight);
+        // Create a temporary 3D input tensor of dimensions inWidth, inHeight, channelsNum.
+        math::dtensor3d input3d;
+        math::alloc(&input3d, this->inWidth, this->inHeight, this->channelsNum);
+
+        // Copy general input tensor to temporary 3D tensor.
+        math::copy(input3d, input);
 
         // for () {
         // }
