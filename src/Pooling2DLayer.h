@@ -38,13 +38,37 @@ namespace oort {
         math::dtensor2d activatedValues;
 
     public:
-        // Full constructor: creates a 2D pooling layer from all given sizes.
+        // Unstrided unpadded constructor: creates a 2D pooling layer with stride equal to the pool size and zero padding.
         // @param inWidth The width the input tensor has to be.
         // @param inHeight The height the input tensor has to be.
         // @param channelsNum The number of channel the layer works on (number of accepted channels).
         // @param poolWidth The width of the pool to apply to the input tensor.
         // @param poolHeight The height of the pool to apply to the input tensor.
-        Pooling2DLayer(const uint32_t inWidth, const uint32_t inHeight, const uint32_t channelsNum, const uint32_t poolWidth, const uint32_t poolHeight);
+        Pooling2DLayer(const uint32_t inWidth,
+                       const uint32_t inHeight,
+                       const uint32_t channelsNum,
+                       const uint32_t poolWidth,
+                       const uint32_t poolHeight);
+
+        // Full constructor: creates a 2D pooling layer given stride and padding.
+        // @param horizontalStride The amount of positions to move between horizontal samplings.
+        // @param verticalStride The amount of positions to move between vertical samplings.
+        // @param horizontalPadding The number of units to consider above and below the input data.
+        // @param verticalPadding The number of units to consider to the left and right of the input data.
+        // @param inWidth The width the input tensor has to be.
+        // @param inHeight The height the input tensor has to be.
+        // @param channelsNum The number of channel the layer works on (number of accepted channels).
+        // @param poolWidth The width of the pool to apply to the input tensor.
+        // @param poolHeight The height of the pool to apply to the input tensor.
+        Pooling2DLayer(const uint32_t horizontalStride,
+                       const uint32_t verticalStride,
+                       const uint32_t horizontalPadding,
+                       const uint32_t verticalPadding,
+                       const uint32_t inWidth,
+                       const uint32_t inHeight,
+                       const uint32_t channelsNum,
+                       const uint32_t poolWidth,
+                       const uint32_t poolHeight);
 
         void step(math::dtensor input);
 
