@@ -112,7 +112,7 @@ namespace oort {
                     printf("\nPIPPO %d %d, %.8f\n", col, row, this->maxPool(input3d, channel, col, row));
 
                     // Set composed values.
-                    this->composedValues.values[IDX3D(outCol, outRow, channel, outWidth, outHeight)] = this->maxPool(input3d, channel, col, row);
+                    this->composedValues.values[IDX3D(outRow, outCol, channel, outWidth, outHeight)] = this->avgPool(input3d, channel, col, row);
 
                     printf("\n\n");
                 }
