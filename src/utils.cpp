@@ -104,7 +104,7 @@ namespace oort {
             }
         }
         void print(const math::dtensor3d t) {
-            printf("\nITENSOR3D %dx%dx%d\n", t.width, t.height, t.depth);
+            printf("\nDTENSOR3D %dx%dx%d\n", t.width, t.height, t.depth);
             for (uint32_t k = 0; k < t.depth; k++) {
                 for (uint32_t j = 0; j < t.height; j++) {
                     for (uint32_t i = 0; i < t.width; i++) {

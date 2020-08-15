@@ -34,6 +34,9 @@ namespace oort {
 
         // Allocate activated values.
         math::alloc(&(this->activatedValues), inWidth / poolWidth, inHeight / poolHeight, channelsNum);
+
+        // Define activation function.
+        this->activationFunction = new math::Identity();
     }
 
     Pooling2DLayer::Pooling2DLayer(const uint32_t horizontalStride,
@@ -79,6 +82,9 @@ namespace oort {
                     (inWidth - poolWidth + horizontalPadding + horizontalStride) / horizontalStride,
                     (inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride,
                     channelsNum);
+
+        // Define activation function.
+        this->activationFunction = new math::Identity();
     }
 
     void Pooling2DLayer::step(const math::dtensor input) {
@@ -95,25 +101,31 @@ namespace oort {
 
         // Loop through channels.
         for (uint32_t channel = 0; channel < input3d.depth; channel++) {
-            // Loop through output rows.
-            for (uint32_t row = 0; row < outHeight; row ++) {
-                // Loop through output cols.
-                for (uint32_t col = 0; col < outWidth; col++) {
-                    //TODO This whole block can be extracted to a dedicated function.
-                    // Loop through values in the current pool.
-                    for (uint32_t i = 0; i < this->poolWidth; i++) {
-                        for (uint32_t j = 0; j < this->poolHeight; j++) {
-                            
-                        }
-                    }
+            // Loop through input columns.
+            for (uint32_t col = 0; col < this->inWidth; col += this->poolWidth) {
+                // Loop through input rows.
+                for (uint32_t row = 0; row < this->inHeight; row += this->poolHeight) {
+                    // Compute current output row and column.
+                    uint32_t outRow = (row - this->poolWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
+                    uint32_t outCol = (col - this->poolHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
+
+                    // Set composed values.
+                    this->composedValues.values[IDX3D(outRow, outCol, channel, outWidth, outHeight)] = this->maxPool(channel, row, col);
                 }
             }
         }
+        utils::print(input3d);
+        utils::print(this->composedValues);
+
+        // Activate layer.
+        math::prim(this->activatedValues, this->composedValues, this->activationFunction);
+
+        // Free temporary tensor.
+        math::dealloc(input3d);
     }
 
-    uint32_t Pooling2DLayer::getHorizontalStride() {
-        return this->horizontalStride;
-    }
+    void Pooling2DLayer::backprop() {}
+    void Pooling2DLayer::print() {}
 
     double Pooling2DLayer::maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
         double max = 0;
@@ -122,8 +134,37 @@ namespace oort {
         for (uint32_t column = startColumn; column < startColumn + this->poolWidth; column++) {
             // Vertically loop through the pool.
             for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
-                
+                // Fetch the current value.
+                double currentValue = this->composedValues.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
+
+                // Check if the current value is greater than the last max.
+                if (currentValue > max) {
+                    // Update the overall max.
+                    max = currentValue;
+                }
             }
         }
+
+        return max;
+    }
+
+    double Pooling2DLayer::avgPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
+        double sum = 0;
+
+        // Horizontally loop through the pool.
+        for (uint32_t column = startColumn; column < startColumn + this->poolWidth; column++) {
+            // Vertically loop through the pool.
+            for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
+                // Fetch the current value and add it to the sum.
+                sum += this->composedValues.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
+            }
+        }
+
+        // Return the average on the pool size.
+        return sum / (this->poolWidth * this->poolHeight);
+    }
+
+    uint32_t Pooling2DLayer::getHorizontalStride() {
+        return this->horizontalStride;
     }
 }

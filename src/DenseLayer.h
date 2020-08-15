@@ -35,6 +35,8 @@ namespace oort {
 
     public:
         // Creates a DenseLayer given its input size and output size.
+        // @param inSize The total input size of the layer.
+        // @param outSize The total output size of the layer.
         DenseLayer(const uint32_t inSize, const uint32_t outSize);
         void step(math::dtensor input);
         void backprop();

@@ -47,6 +47,9 @@ namespace oort {
         // Layer values after activation.
         math::dtensor3d activatedValues;
 
+        // Layer activation function.
+        math::DUnFunc* activationFunction;
+
     public:
         // Unstrided unpadded constructor: creates a 2D pooling layer with stride equal to the pool size and zero padding.
         // @param inWidth The width the input tensor has to be.
@@ -81,9 +84,12 @@ namespace oort {
                        const uint32_t poolHeight);
 
         void step(const math::dtensor input);
+        void backprop();
+        void print();
 
         //TODO Extract to utility file.
         double maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+        double avgPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.
