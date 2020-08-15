@@ -1,5 +1,15 @@
-#ifndef __CONV_LAYER__
-#define __CONV_LAYER__
+/*
+********************************************************************************
+ConvolutionalLayer.h
+
+TODO
+
+Copyright (C) 2020  Luka Micheletti
+********************************************************************************
+*/
+
+#ifndef __CONVOLUTIONAL_LAYER__
+#define __CONVOLUTIONAL_LAYER__
 
 #include "Layer.h"
 

@@ -2,7 +2,7 @@
 ********************************************************************************
 Pooling2DLayer.h
 
-TODO
+The class implements a standard pooling layer on multi-channel 2D input.
 
 Copyright (C) 2020  Luka Micheletti
 ********************************************************************************
