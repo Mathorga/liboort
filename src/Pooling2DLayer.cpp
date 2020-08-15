@@ -108,13 +108,9 @@ namespace oort {
                     // Compute current output row and column.
                     uint32_t outRow = (row - this->poolWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
                     uint32_t outCol = (col - this->poolHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
-                    
-                    printf("\nPIPPO %d %d, %.8f\n", col, row, this->maxPool(input3d, channel, col, row));
 
                     // Set composed values.
                     this->composedValues.values[IDX3D(outRow, outCol, channel, outWidth, outHeight)] = this->avgPool(input3d, channel, col, row);
-
-                    printf("\n\n");
                 }
             }
         }
@@ -141,7 +137,6 @@ namespace oort {
                 // Fetch the current value.
                 double currentValue = input.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
 
-                printf("\nCurrent Value %d %d %d %.8f\n", row, column, channel, currentValue);
                 // Check if the current value is greater than the last max.
                 if (currentValue > max) {
                     // Update the overall max.
