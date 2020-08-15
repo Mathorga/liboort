@@ -554,7 +554,7 @@ namespace oort {
                 err = error::WRONG_SIZE;
             } else {
                 // Sizes match, so copy.
-                for (uint32_t i = 0; i < t1.width; i++) {
+                for (uint32_t i = 0; i < size; i++) {
                     t1.values[i] = t2.values[i];
                 }
             }
@@ -581,7 +581,7 @@ namespace oort {
                 err = error::WRONG_SIZE;
             } else {
                 // Sizes match, so copy.
-                for (uint32_t i = 0; i < t1.width; i++) {
+                for (uint32_t i = 0; i < size; i++) {
                     t1.values[i] = t2.values[i];
                 }
             }
@@ -603,12 +603,14 @@ namespace oort {
                 }
             }
 
+            // printf("\nSIZE %d\n", size);
+
             if (size != t1.width * t1.height * t1.depth) {
                 // The overall size of t2 does not match the size of t1.
                 err = error::WRONG_SIZE;
             } else {
                 // Sizes match, so copy.
-                for (uint32_t i = 0; i < t1.width; i++) {
+                for (uint32_t i = 0; i < size; i++) {
                     t1.values[i] = t2.values[i];
                 }
             }

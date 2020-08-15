@@ -108,9 +108,13 @@ namespace oort {
                     // Compute current output row and column.
                     uint32_t outRow = (row - this->poolWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
                     uint32_t outCol = (col - this->poolHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
+                    
+                    printf("\nPIPPO %d %d, %.8f\n", col, row, this->maxPool(input3d, channel, col, row));
 
                     // Set composed values.
-                    this->composedValues.values[IDX3D(outRow, outCol, channel, outWidth, outHeight)] = this->maxPool(channel, row, col);
+                    this->composedValues.values[IDX3D(outCol, outRow, channel, outWidth, outHeight)] = this->maxPool(input3d, channel, col, row);
+
+                    printf("\n\n");
                 }
             }
         }
@@ -127,7 +131,7 @@ namespace oort {
     void Pooling2DLayer::backprop() {}
     void Pooling2DLayer::print() {}
 
-    double Pooling2DLayer::maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
+    double Pooling2DLayer::maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
         double max = 0;
 
         // Horizontally loop through the pool.
@@ -135,8 +139,9 @@ namespace oort {
             // Vertically loop through the pool.
             for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
                 // Fetch the current value.
-                double currentValue = this->composedValues.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
+                double currentValue = input.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
 
+                printf("\nCurrent Value %d %d %d %.8f\n", row, column, channel, currentValue);
                 // Check if the current value is greater than the last max.
                 if (currentValue > max) {
                     // Update the overall max.
@@ -148,7 +153,7 @@ namespace oort {
         return max;
     }
 
-    double Pooling2DLayer::avgPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
+    double Pooling2DLayer::avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
         double sum = 0;
 
         // Horizontally loop through the pool.
@@ -156,7 +161,7 @@ namespace oort {
             // Vertically loop through the pool.
             for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
                 // Fetch the current value and add it to the sum.
-                sum += this->composedValues.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
+                sum += input.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
             }
         }
 

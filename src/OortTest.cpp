@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]) {
     math::dtensor testInput;
     math::alloc(&testInput, 4 * 4);
     math::rinit(testInput, 1.0);
-    utils::print(testInput);
+    // utils::print(testInput);
     testLayer->step(testInput);
 
     return 0;

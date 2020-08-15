@@ -88,8 +88,8 @@ namespace oort {
         void print();
 
         //TODO Extract to utility file.
-        double maxPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
-        double avgPool(const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+        double maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+        double avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.
