@@ -16,6 +16,13 @@ Copyright (C) 2020  Luka Micheletti
 namespace oort {
     class PoolingLayer : public Layer {
     protected:
+        enum poolingFunction {
+            MAX,
+            AVG,
+            MIN,
+            MED
+        };
+
         uint32_t channelsNum;
 
     public:
