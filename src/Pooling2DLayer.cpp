@@ -8,7 +8,8 @@ namespace oort {
                                    const uint32_t poolHeight) :
     PoolingLayer(inWidth * inHeight * channelsNum,
                  (inWidth / poolWidth) * (inHeight / poolHeight) * channelsNum,
-                 channelsNum) {
+                 channelsNum,
+                 PoolingFunction::MAX) {
         // Set default stride to pool width in order not to overlap pool samples.
         this->horizontalStride = poolWidth;
         this->verticalStride = poolHeight;
@@ -28,9 +29,6 @@ namespace oort {
 
         // Set filter height.
         this->poolHeight = poolHeight;
-
-        // Set default pooling function to MAX.
-        this->poolingFunction = PoolingFunction::MAX;
 
         // Allocate composed values.
         math::alloc(&(this->composedValues), inWidth / poolWidth, inHeight / poolHeight, channelsNum);
@@ -55,7 +53,8 @@ namespace oort {
                                    math::DUnFunc* activationFunction) :
     PoolingLayer(inWidth * inHeight * channelsNum,
                  ((inWidth - poolWidth + horizontalPadding + horizontalStride) / horizontalStride) * ((inHeight - poolHeight + verticalPadding + verticalStride) / verticalStride) * channelsNum,
-                 channelsNum) {
+                 channelsNum,
+                 poolingFunction) {
         // Set stride.
         this->horizontalStride = horizontalStride;
         this->verticalStride = verticalStride;
@@ -75,9 +74,6 @@ namespace oort {
 
         // Set filter height.
         this->poolHeight = poolHeight;
-
-        // Set pooling function.
-        this->poolingFunction = poolingFunction;
 
         // Allocate composed values.
         math::alloc(&(this->composedValues),
@@ -148,10 +144,12 @@ namespace oort {
     }
 
     void Pooling2DLayer::backprop() {}
+
     void Pooling2DLayer::print() {}
 
     double Pooling2DLayer::maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
-        double max = 0;
+        // Set the max to the smallest possible value.
+        double max = DBL_MIN;
 
         // Horizontally loop through the pool.
         for (uint32_t column = startColumn; column < startColumn + this->poolWidth; column++) {
@@ -187,11 +185,107 @@ namespace oort {
         return sum / (this->poolWidth * this->poolHeight);
     }
 
-    double Pooling2DLayer::minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {}
+    double Pooling2DLayer::minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {
+        // Set the min to the maximum possible value.
+        double min = DBL_MAX;
+
+        // Horizontally loop through the pool.
+        for (uint32_t column = startColumn; column < startColumn + this->poolWidth; column++) {
+            // Vertically loop through the pool.
+            for (uint32_t row = startRow; row < startRow + this->poolHeight; row++) {
+                // Fetch the current value.
+                double currentValue = input.values[IDX3D(row, column, channel, this->inWidth, this->inHeight)];
+
+                // Check if the current value is less than the last min.
+                if (currentValue < min) {
+                    // Update the overall min.
+                    min = currentValue;
+                }
+            }
+        }
+
+        return min;
+    }
 
     double Pooling2DLayer::medPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {}
 
     uint32_t Pooling2DLayer::getHorizontalStride() {
         return this->horizontalStride;
+    }
+
+    uint32_t Pooling2DLayer::getVerticalStride() {
+        return this->verticalStride;
+    }
+
+    uint32_t Pooling2DLayer::getHorizontalPadding() {
+        return this->horizontalPadding;
+    }
+
+    uint32_t Pooling2DLayer::getVerticalPadding() {
+        return this->verticalPadding;
+    }
+
+    uint32_t Pooling2DLayer::getInWidth() {
+        return this->inWidth;
+    }
+
+    uint32_t Pooling2DLayer::getInHeight() {
+        return this->inHeight;
+    }
+
+    uint32_t Pooling2DLayer::getPoolWidth() {
+        return this->poolWidth;
+    }
+
+    uint32_t Pooling2DLayer::getPoolHeight() {
+        return this->poolHeight;
+    }
+
+    PoolingLayer::PoolingFunction Pooling2DLayer::getPoolingFunction() {
+        return this->poolingFunction;
+    }
+
+    math::dtensor3d Pooling2DLayer::getComposedValues() {
+        return this->composedValues;
+    }
+
+    math::dtensor3d Pooling2DLayer::getActivatedValues() {
+        return this->activatedValues;
+    }
+
+    math::DUnFunc* Pooling2DLayer::getActivationFunction() {
+        return this->activationFunction;
+    }
+
+    void Pooling2DLayer::setHorizontalStride(const uint32_t horizontalStride) {
+        this->horizontalStride = horizontalStride;
+    }
+
+    void Pooling2DLayer::setVerticalStride(const uint32_t verticalStride) {
+        this->verticalStride = verticalStride;
+    }
+
+    void Pooling2DLayer::setHorizontalPadding(const uint32_t horizontalPadding) {
+        this->horizontalPadding = horizontalPadding;
+    }
+
+    void Pooling2DLayer::setVerticalPadding(const uint32_t verticalPadding) {
+        this->verticalPadding = verticalPadding;
+    }
+
+    void Pooling2DLayer::setPoolWidth(const uint32_t poolWidth) {
+        this->poolWidth = poolWidth;
+    }
+
+    void Pooling2DLayer::setPoolHeight(const uint32_t poolHeight) {
+        this->poolHeight = poolHeight;
+    }
+
+    void Pooling2DLayer::setPoolingFunction(const PoolingLayer::PoolingFunction poolingFunction) {
+        this->poolingFunction = poolingFunction;
+    }
+
+    void Pooling2DLayer::setActivationFunction(math::DUnFunc* activationFunction) {
+        this->activationFunction = activationFunction;
     }
 }

@@ -94,15 +94,113 @@ namespace oort {
         void backprop();
         void print();
 
-        //TODO Extract to utility file.
+        // Performs a max pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool over.
+        // @param channel The specific channel to pool over.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
         double maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs an average pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool over.
+        // @param channel The specific channel to pool over.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
         double avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs a min pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool over.
+        // @param channel The specific channel to pool over.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
         double minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs a median pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool over.
+        // @param channel The specific channel to pool over.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
         double medPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.
         uint32_t getHorizontalStride();
+
+        // Returns the vertical stride.
+        // @return The vertical stride.
+        uint32_t getVerticalStride();
+
+        // Returns the horizontal padding.
+        // @return The horizontal padding.
+        uint32_t getHorizontalPadding();
+
+        // Returns the vertical padding.
+        // @return The vertical padding.
+        uint32_t getVerticalPadding();
+
+        // Returns the input width.
+        // @return The input width.
+        uint32_t getInWidth();
+
+        // Returns the input height.
+        // @return The input height.
+        uint32_t getInHeight();
+
+        // Returns the pool width.
+        // @return The pool width.
+        uint32_t getPoolWidth();
+
+        // Returns the pool height.
+        // @return The pool height.
+        uint32_t getPoolHeight();
+
+        // Returns the set pooling function.
+        // @return The set pooling function.
+        PoolingFunction getPoolingFunction();
+
+        // Returns the composed values tensor.
+        // @return The composed values tensor.
+        math::dtensor3d getComposedValues();
+
+        // Returns the activated values tensor.
+        // @return The activated values tensor.
+        math::dtensor3d getActivatedValues();
+
+        // Returns the layer activation function.
+        // @return The layer activation function.
+        math::DUnFunc* getActivationFunction();
+
+        // Sets the horizontal stride.
+        // @param horizontalStride The horizontal stride to set.
+        void setHorizontalStride(const uint32_t horizontalStride);
+
+        // Sets the vertical stride.
+        // @param verticalStride The vertical stride to set.
+        void setVerticalStride(const uint32_t verticalStride);
+
+        // Sets the horizontal padding.
+        // @param horizontalPadding The horizontal padding to set.
+        void setHorizontalPadding(const uint32_t horizontalPadding);
+
+        // Sets the vertical padding.
+        // @param verticalPadding The vertical padding to set.
+        void setVerticalPadding(const uint32_t verticalPadding);
+
+        // Sets the pool width.
+        // @param poolWidth The pool width to set.
+        void setPoolWidth(const uint32_t poolWidth);
+
+        // Sets the pool height.
+        // @param poolHeight The pool height to set.
+        void setPoolHeight(const uint32_t poolHeight);
+
+        // Sets the pooling function (MAX, AVG, MIN, MED).
+        // @param poolingFunction The pooling function to set (MAX, AVG, MIN, MED).
+        void setPoolingFunction(const PoolingFunction poolingFunction);
+
+        // Sets the layer activation function.
+        // @param activationFunction The activation function to set.
+        void setActivationFunction(math::DUnFunc* activationFunction);
 
     };
 }

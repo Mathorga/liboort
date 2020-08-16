@@ -21,6 +21,9 @@ namespace oort {
 
     public:
         Layer(const uint32_t inSize, const uint32_t outSize);
+
+        // Performs a single step through the whole layer.
+        // @param input The input tensor to process (from the previous layer or network input).
         virtual void step(math::dtensor input) = 0;
         virtual void backprop() = 0;
         virtual void print() = 0;

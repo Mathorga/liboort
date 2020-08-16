@@ -6,6 +6,8 @@
 #include <time.h>
 // Fixed size int types definitions.
 #include <stdint.h>
+// DBL_MAX constant.
+#include <float.h>
 // Debug.
 #include <stdio.h>
 

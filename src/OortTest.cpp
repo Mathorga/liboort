@@ -6,9 +6,9 @@ using namespace oort;
 
 int main(int argc, char const *argv[]) {
 
-    Layer* testLayer = new Pooling2DLayer(6, 6, 1, 3, 3);
+    Layer* testLayer = new Pooling2DLayer(10, 10, 1, 2, 2);
     math::dtensor testInput;
-    math::alloc(&testInput, 6 * 6);
+    math::alloc(&testInput, 10 * 10);
     math::rinit(testInput, 1.0);
     // utils::print(testInput);
     testLayer->step(testInput);

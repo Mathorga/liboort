@@ -23,10 +23,14 @@ namespace oort {
             MED
         };
 
+        // Number of channels of the layer.
         uint32_t channelsNum;
 
+        // Pooling function used in the layer.
+        PoolingFunction poolingFunction;
+
     public:
-        PoolingLayer(const uint32_t inSize, const uint32_t outSize, const uint32_t channelsNum);
+        PoolingLayer(const uint32_t inSize, const uint32_t outSize, const uint32_t channelsNum, const PoolingFunction poolingFunction);
     };
 }
 
