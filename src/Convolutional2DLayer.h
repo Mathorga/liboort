@@ -34,6 +34,10 @@ namespace oort {
         // Expected height of the input tensor.
         uint32_t inHeight;
 
+        // Filters to convolute the input with.
+        // The number of filters determines the number of output channels (or at least has to be the same).
+        math::dtensor3d* filters;
+
         // Width of the applied filter.
         uint32_t filterWidth;
 
