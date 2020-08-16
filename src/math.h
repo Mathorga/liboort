@@ -175,18 +175,29 @@ namespace oort {
             double operator() (const dtensor1d t1, const dtensor1d t2);
         };
 
-        // Functions definitions.
-        // Calculates the sigmoid of the given value.
+        // Function definitions.
+
+        // Computes the sigmoid of the given value.
+        // @param value The value to compute at.
         double sigmoid(const double value);
-        // Calculates the fast sigmoid of the given value.
+
+        // Computes the fast sigmoid of the given value.
+        // @param value The value to compute at.
         double fsigmoid(const double value);
-        // Calculates the derivative sigmoid of the given value.
+
+        // Computes the derivative of the sigmoid at the given value.
+        // @param value The value to compute at.
         double dsigmoid(const double value);
-        // Calculates the derivative fast sigmoid of the given value.
+
+        // Computes the derivative of the fast sigmoid at the given value.
+        // @param value The value to compute at.
         double dfsigmoid(const double value);
 
-        // Returns a random double number between <low> and <high>.
-        double drand(double low, double high);
+        // Returns a random double number between @param low and @param high.
+        // @param low The bottom limit.
+        // @param high The top limit.
+        double drand(const double low, const double high);
+
         // Returns a random integer number between <low> and <high>.
         uint32_t irand(const uint32_t low, const uint32_t high);
 
