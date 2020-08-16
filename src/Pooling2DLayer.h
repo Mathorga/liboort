@@ -41,6 +41,9 @@ namespace oort {
         // Height of the applied pool.
         uint32_t poolHeight;
 
+        // Function to be applied to each pool.
+        PoolingFunction poolingFunction;
+
         // Layer values before activation.
         math::dtensor3d composedValues;
 
@@ -73,6 +76,8 @@ namespace oort {
         // @param channelsNum The number of channel the layer works on (number of accepted channels).
         // @param poolWidth The width of the pool to apply to the input tensor.
         // @param poolHeight The height of the pool to apply to the input tensor.
+        // @param poolingFunction The pooling function to be used (MAX, AVG, MIN, MED).
+        // @param activationFunction The activation function to be applied to the layer.
         Pooling2DLayer(const uint32_t horizontalStride,
                        const uint32_t verticalStride,
                        const uint32_t horizontalPadding,
@@ -81,7 +86,9 @@ namespace oort {
                        const uint32_t inHeight,
                        const uint32_t channelsNum,
                        const uint32_t poolWidth,
-                       const uint32_t poolHeight);
+                       const uint32_t poolHeight,
+                       const PoolingFunction poolingFunction,
+                       math::DUnFunc* activationFunction);
 
         void step(const math::dtensor input);
         void backprop();
@@ -90,6 +97,8 @@ namespace oort {
         //TODO Extract to utility file.
         double maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
         double avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+        double minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+        double medPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.

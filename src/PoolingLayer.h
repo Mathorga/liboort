@@ -16,7 +16,7 @@ Copyright (C) 2020  Luka Micheletti
 namespace oort {
     class PoolingLayer : public Layer {
     protected:
-        enum poolingFunction {
+        enum PoolingFunction {
             MAX,
             AVG,
             MIN,
