@@ -24,6 +24,7 @@ namespace oort {
                     uint32_t outCol = (col - this->filterHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
                     
                     //TODO Apply filter.
+                    this->composedValues.values[IDX3D(outRow, outCol, channel, outWidth, outHeight)] = this->convolute(input3d, channel, col, row);
                 }
             }
         }
@@ -31,4 +32,6 @@ namespace oort {
 
     void Convolutional2DLayer::backprop() {}
     void Convolutional2DLayer::print() {}
+
+    double Convolutional2DLayer::convolute(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow) {}
 }

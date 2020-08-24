@@ -53,11 +53,18 @@ namespace oort {
         // Layer activation function.
         math::DUnFunc* activationFunction;
 
+        // Apply the channel-th filter to the given input.
+        // @param input The input tensor to convolute on.
+        // @param channel The specific output channel to convolute on.
+        // @param startColumn The column from which to start convoluting (the size of the filter is specified by the associated member).
+        // @param startRow The row from which to start convoluting (the size of the filter is specified by the associated member).
+        // @return The computed output of the convolution.
+        double convolute(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
     public:
         void step(const math::dtensor input);
         void backprop();
         void print();
-        
     };
 }
 

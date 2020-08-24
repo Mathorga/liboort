@@ -53,6 +53,38 @@ namespace oort {
         // Layer activation function.
         math::DUnFunc* activationFunction;
 
+        // Performs a max pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool on.
+        // @param channel The specific channel to pool on.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
+        // @return The computed output of the pooling.
+        double maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs an average pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool on.
+        // @param channel The specific channel to pool on.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
+        // @return The computed output of the pooling.
+        double avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs a min pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool on.
+        // @param channel The specific channel to pool on.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
+        // @return The computed output of the pooling.
+        double minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
+        // Performs a median pooling operation given an input tensor and starting positions.
+        // @param input The input tensor to pool on.
+        // @param channel The specific channel to pool on.
+        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
+        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
+        // @return The computed output of the pooling.
+        double medPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
+
     public:
         // Unstrided unpadded constructor: creates a 2D pooling layer with stride equal to the pool size and zero padding.
         // @param inWidth The width the input tensor has to be.
@@ -93,34 +125,6 @@ namespace oort {
         void step(const math::dtensor input);
         void backprop();
         void print();
-
-        // Performs a max pooling operation given an input tensor and starting positions.
-        // @param input The input tensor to pool over.
-        // @param channel The specific channel to pool over.
-        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
-        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
-        double maxPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
-
-        // Performs an average pooling operation given an input tensor and starting positions.
-        // @param input The input tensor to pool over.
-        // @param channel The specific channel to pool over.
-        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
-        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
-        double avgPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
-
-        // Performs a min pooling operation given an input tensor and starting positions.
-        // @param input The input tensor to pool over.
-        // @param channel The specific channel to pool over.
-        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
-        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
-        double minPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
-
-        // Performs a median pooling operation given an input tensor and starting positions.
-        // @param input The input tensor to pool over.
-        // @param channel The specific channel to pool over.
-        // @param startColumn The column from which to start pooling (the size of the pool is specified by the associated member).
-        // @param startRow The row from which to start pooling (the size of the pool is specified by the associated member).
-        double medPool(const math::dtensor3d input, const uint32_t channel, const uint32_t startColumn, const uint32_t startRow);
 
         // Returns the horizontal stride.
         // @return The horizontal stride.
