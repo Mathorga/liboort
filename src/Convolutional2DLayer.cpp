@@ -27,9 +27,8 @@ namespace oort {
                 }
             }
         }
-
-        
     }
+
     void Convolutional2DLayer::backprop() {}
     void Convolutional2DLayer::print() {}
 }
