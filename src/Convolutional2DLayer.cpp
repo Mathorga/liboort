@@ -13,6 +13,21 @@ namespace oort {
         uint32_t outWidth = (this->inWidth - this->filterWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
         uint32_t outHeight = (this->inHeight - this->filterHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
 
+        // Loop through output channels.
+        for (uint32_t channel = 0; channel < this->outChannelsNum; channel++) {
+            // Loop through input columns.
+            for (uint32_t col = 0; col < this->inWidth; col += this->filterWidth) {
+                // Loop through input rows.
+                for (uint32_t row = 0; row < this->inHeight; row += this->filterHeight) {
+                    // Compute current output row and column.
+                    uint32_t outRow = (row - this->filterWidth + this->horizontalPadding + this->horizontalStride) / this->horizontalStride;
+                    uint32_t outCol = (col - this->filterHeight + this->verticalPadding + this->verticalStride) / this->verticalStride;
+                    
+                    //TODO Apply filter.
+                }
+            }
+        }
+
         
     }
     void Convolutional2DLayer::backprop() {}
